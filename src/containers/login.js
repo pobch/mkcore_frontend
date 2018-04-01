@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
+import { Link } from 'react-router-dom'
 
 import { logInAction } from '../actions'
 
@@ -30,22 +31,28 @@ class LogIn extends Component {
     const { handleSubmit } = this.props
 
     return (
-      <form onSubmit={ handleSubmit(this.onSubmit) } >
-        <h5 className="text-xs-left" >Log in page jaaaa</h5>
-        <Field
-          name="email"
-          placeholder="Your e-mail address"
-          component={ this.renderField }
-          type="text"
-        />
-        <Field 
-          name="password"
-          placeholder="Your password"
-          component={ this.renderField }
-          type="password"
-        />
-        <button type="submit" className="btn btn-primary">Submit</button>
-      </form>
+      <div>
+        <form onSubmit={ handleSubmit(this.onSubmit) } >
+          <h5 className="text-xs-left" >Log in page jaaaa</h5>
+          <Field
+            name="email"
+            placeholder="Your e-mail address"
+            component={ this.renderField }
+            type="text"
+          />
+          <Field 
+            name="password"
+            placeholder="Your password"
+            component={ this.renderField }
+            type="password"
+          />
+          <button type="submit" className="btn btn-primary">Submit</button>
+          <Link className="btn btn-danger" to="/">Back to home</Link>
+        </form>
+        <div className="text-danger long-text" >
+          { this.props.data.token ? 'Token : ' + this.props.data.token : '' }
+        </div>
+      </div>
     )
   }
 }
@@ -61,9 +68,15 @@ function validate(values) {
   return errors
 }
 
+function mapStateToProps(state) {
+  return {
+    data: state.data
+  }
+}
+
 export default reduxForm({
   validate,
   form: 'LogInForm'
 })(
-  connect(null, { logInAction })(LogIn)
+  connect(mapStateToProps, { logInAction })(LogIn)
 )

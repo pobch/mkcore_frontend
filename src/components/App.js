@@ -1,11 +1,18 @@
 import React, { Component } from 'react'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Link } from 'react-router-dom'
 
 import LogIn from '../containers/login'
 
 function Home(props) {
   return (
-    <div>Home Page !!!</div>
+    <div>
+      <h5>Home Page !!!</h5>
+      <div className="text-xs-center">
+        <Link className="btn btn-primary" to="/login">
+          Log in
+        </Link>
+      </div>
+    </div>
   )
 }
 

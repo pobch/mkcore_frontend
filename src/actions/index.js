@@ -11,14 +11,14 @@ export function logInAction(values) {
   return async (dispatch) => {
     try {
       const response = await axios.post(URL_LOGIN, { email, password })
-      console.log('response before dispatch :', response)
       dispatch({
-        type: AUTHENTICATED
+        type: AUTHENTICATED,
+        payload: response.data
       })
     } catch(error) {
-      console.error('error before dispatch :', error)
       dispatch({
-        type: AUTHEN_ERROR
+        type: AUTHEN_ERROR,
+        payload: error.message
       })
     }
   }
