@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
 
 import LogIn from '../containers/login'
 
@@ -16,16 +16,25 @@ function Home(props) {
   )
 }
 
+function NotFound(props) {
+  return (
+    <div>
+      <h5>404 Not Found jaaa</h5>
+    </div>
+  )
+}
+
 class App extends Component {
   render() {
     return (
       <div className="container">
         <h1 className="text-xs-center">Makrub Front-end</h1>
         <BrowserRouter>
-          <div>
+          <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/login" component={LogIn} />
-          </div>
+            <Route exact path="/login" component={LogIn} />
+            <Route component={NotFound} />
+          </Switch>
         </BrowserRouter>
       </div>
     )

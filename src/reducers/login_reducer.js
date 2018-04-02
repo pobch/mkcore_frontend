@@ -1,12 +1,15 @@
-import { AUTHENTICATED, AUTHEN_ERROR } from '../actions'
+import _ from 'lodash'
+import { AUTHENTICATED, AUTHEN_ERROR, UNAUTHENTICATED, CLEAR_ERROR } from '../actions'
 
 
 export default function(state = {}, action) {
-  switch(action.type){
+  switch(action.type) {
     case AUTHENTICATED:
-      return { ...state, ...action.payload }
+      return { authenticated: true }
     case AUTHEN_ERROR:
-      return { ...state, token: action.payload }
+      return { authenticated: false, error: action.payload }
+    case CLEAR_ERROR:
+      return _.omit(state, 'error')
     default:
       return state
   }

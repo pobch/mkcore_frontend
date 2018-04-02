@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
-import { Link } from 'react-router-dom'
+import { Link, Prompt } from 'react-router-dom'
 
-import { logInAction } from '../actions'
+import { logInAction, onLeaveLogInPage } from '../actions'
 
 
 class LogIn extends Component {
@@ -29,6 +29,7 @@ class LogIn extends Component {
 
   render() {
     const { handleSubmit } = this.props
+    const { error, authenticated } = this.props.auth
 
     return (
       <div>
@@ -50,8 +51,12 @@ class LogIn extends Component {
           <Link className="btn btn-danger" to="/">Back to home</Link>
         </form>
         <div className="text-danger long-text" >
-          { this.props.data.token ? 'Token : ' + this.props.data.token : '' }
+          { error ? error : (authenticated ? 'Log in successfully' : '') }
         </div>
+        <Prompt message={() => {
+          this.props.onLeaveLogInPage()
+          return true
+        }} />
       </div>
     )
   }
@@ -70,7 +75,7 @@ function validate(values) {
 
 function mapStateToProps(state) {
   return {
-    data: state.data
+    auth: state.auth
   }
 }
 
@@ -78,5 +83,5 @@ export default reduxForm({
   validate,
   form: 'LogInForm'
 })(
-  connect(mapStateToProps, { logInAction })(LogIn)
+  connect(mapStateToProps, { logInAction, onLeaveLogInPage })(LogIn)
 )

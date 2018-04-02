@@ -5,7 +5,7 @@ import logInReducer from './login_reducer'
 
 const rootReducer = combineReducers({
   form: formReducer,
-  data: logInReducer
+  auth: logInReducer
 })
 
 export default rootReducer
