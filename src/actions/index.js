@@ -32,3 +32,11 @@ export function onLeaveLogInPage() {
     type: CLEAR_ERROR
   }
 }
+
+export function logOutAction() {
+  localStorage.clear()
+  console.log('clear localstorage and logged out')
+  return {
+    type: UNAUTHENTICATED
+  }
+}

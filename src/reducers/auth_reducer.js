@@ -9,7 +9,10 @@ export default function(state = {}, action) {
     case AUTHEN_ERROR:
       return { authenticated: false, error: action.payload }
     case CLEAR_ERROR:
+      // only clear error key, but maintain 'authenticated' status
       return _.omit(state, 'error')
+    case UNAUTHENTICATED:
+      return { authenticated: false }
     default:
       return state
   }
