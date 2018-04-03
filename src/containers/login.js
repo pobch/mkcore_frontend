@@ -17,7 +17,7 @@ class LogIn extends Component {
           {...field.input}
         />
         <div className="text-xs-left" >
-          { field.meta.touched ? field.meta.error : '' }
+          { field.meta.touched ? (field.meta.error ? field.meta.error : '\u00A0') : '\u00A0' }
         </div>
       </div>
     )
@@ -34,7 +34,7 @@ class LogIn extends Component {
     return (
       <div>
         <form onSubmit={ handleSubmit(this.onSubmit) } >
-          <h5 className="text-xs-left" >Log in page jaaaa</h5>
+          <h5 className="text-xs-left" >Log in page</h5>
           <Field
             name="email"
             placeholder="Your e-mail address"

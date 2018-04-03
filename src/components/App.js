@@ -11,11 +11,13 @@ import requireAuth from '../helpers/require_auth'
 function Home(props) {
   return (
     <div>
-      <h5>Home Page !!!</h5>
+      <h5>Home Page</h5>
       <div className="text-xs-center">
         <Link className="btn btn-primary" to="/login">Log in</Link>
         <Link className="btn btn-danger" to="/logout">Log Out</Link>
-        <Link to="/user-rooms">Rooms(for logged in users)</Link>
+        <div>
+          <Link to="/user-rooms">Rooms<br/><i>(logged in users only)</i></Link>
+        </div>
       </div>
     </div>
   )
