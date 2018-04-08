@@ -5,8 +5,13 @@ import { connect } from 'react-redux'
 import { logOutAction } from '../actions' 
 
 class LogOut extends Component {
+  state = {
+    clicked: false
+  }
+
   clickButton = () => {
     this.props.logOutAction()
+    this.setState({ clicked: true })
   }
 
   render(){
@@ -17,6 +22,9 @@ class LogOut extends Component {
         <div className="text-xs-center">
           <button className="btn btn-primary" onClick={this.clickButton} >Log Out</button>
           <Link className="btn btn-danger" to="/">Home</Link>
+          <div className="text-danger" style={ this.state.clicked ? {} : {display: 'none'} }>
+            Cleared localStorage, Deleted 'Authorization' header and Logged out
+          </div>
         </div>
       </div>
     )

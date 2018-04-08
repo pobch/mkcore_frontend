@@ -4,8 +4,9 @@ body {
   font-family: sans-serif;
 }
 
-form a {
-  margin-left: 10px;
+.btn {
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .long-text {
