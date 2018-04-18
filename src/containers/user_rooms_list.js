@@ -3,21 +3,32 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { fetchOwnRooms } from '../actions'
+import { fetchOwnRooms, fetchGuestRooms } from '../actions'
 
 
 class UserRoomsList extends Component {
   componentDidMount() {
     this.props.fetchOwnRooms()
+    this.props.fetchGuestRooms()
   }
 
-  renderRooms() {
-    return _.map(this.props.ownRooms, (room) => {
-      return (
-        <li key={room.id || room.detail }>
-          ID = {room.id}, Title = {room.title}, Code = {room.room_code}, ERROR = {room.detail}
-        </li>
-      )
+  renderRooms = (roomprop, {owner} = {owner: true}) => {
+    return _.map(roomprop, (room) => {
+      if (room.detail) {
+        return <li key={room.detail}>ERROR = {room.detail}</li>
+      } else {
+        return (
+          <div key={room.id}>
+            <li style={{marginBottom: '5px'}}>
+              <Link to={ owner ? `/user/rooms/${room.id}` : `/`} 
+                className={`btn ${owner ? 'btn-primary' : 'btn-danger'}`}>
+                {owner ? 'Edit' : 'Home'}
+              </Link>
+              ID = {room.id}, Title = {room.title}
+            </li>
+          </div>
+        )
+      }
     })
   }
   
@@ -31,13 +42,14 @@ class UserRoomsList extends Component {
       <div>
         <h5>User's Rooms Page (PRIVATE)</h5>
         <ul>
-          <h5>Rooms which you are the owner</h5>
-          { this.renderRooms() }
+          <h5>Rooms you have created</h5>
+          { this.renderRooms(this.props.ownRooms) }
         </ul>
         <ul>
-          <h5>Rooms which you can access (guest)</h5>
+          <h5>Rooms you have joined</h5>
+          { this.renderRooms(this.props.guestRooms, {owner: false}) }
         </ul>
-        <Link to="/">Home</Link>
+        <Link className="btn btn-primary" to="/">Home</Link>
       </div>
     )
   }
@@ -45,8 +57,9 @@ class UserRoomsList extends Component {
 
 function mapStateToProps(state) {
   return {
-    ownRooms: state.ownRooms
+    ownRooms: state.ownRooms,
+    guestRooms: state.guestRooms
   }
 }
 
-export default connect(mapStateToProps, { fetchOwnRooms })(UserRoomsList)
+export default connect(mapStateToProps, { fetchOwnRooms, fetchGuestRooms })(UserRoomsList)

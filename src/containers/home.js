@@ -14,7 +14,7 @@ class Home extends Component {
             <Link className="btn btn-primary" to="/login">Log in</Link> 
           }
           <div>
-            <Link to="/user/rooms">Rooms<br/><i>(logged in users only)</i></Link>
+            <Link className="btn btn-primary" to="/user/rooms" style={{marginTop: '5px'}} >Rooms</Link>
           </div>
         </div>
       </div>

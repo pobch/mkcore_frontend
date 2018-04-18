@@ -54,7 +54,7 @@ class LogIn extends Component {
           { error ? error : (authenticated ? 'Log in successfully' : '') }
         </div>
         <Prompt message={() => {
-          this.props.onLeaveLogInPage()
+          this.props.onLeaveLogInPage() // remove error msg (if any) when leaving this page
           return true
         }} />
       </div>
