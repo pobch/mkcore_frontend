@@ -8,7 +8,7 @@ class Home extends Component {
     return (
       <div>
         <h5>Home Page</h5>
-        <div className="text-xs-center">
+        <div className="text-xs-left">
           { this.props.auth.authenticated ? 
             <Link className="btn btn-danger" to="/logout">Log Out</Link> :
             <Link className="btn btn-primary" to="/login">Log in</Link> 

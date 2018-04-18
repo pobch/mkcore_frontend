@@ -49,6 +49,7 @@ class UserRoomsList extends Component {
           <h5>Rooms you have joined</h5>
           { this.renderRooms(this.props.guestRooms, {owner: false}) }
         </ul>
+        <Link className="btn btn-primary" to="/user/rooms/create">Create</Link>
         <Link className="btn btn-primary" to="/">Home</Link>
       </div>
     )

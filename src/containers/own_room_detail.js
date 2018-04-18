@@ -33,11 +33,8 @@ class RoomDetail extends Component {
       <div>
         <label htmlFor={field.input.name}>{field.label}</label><br/>
         { field.type === 'textarea' ? 
-          <textarea {...field.input} /> :
-          <input 
-            type={field.type}
-            {...field.input}
-          />
+          <textarea {...field.input} rows="5" cols="25"/> :
+          <input type={field.type} {...field.input}/>
         }
       </div>
     )
@@ -57,8 +54,8 @@ class RoomDetail extends Component {
     return (
       <div>
         <form onSubmit={ handleSubmit(this.onSubmit) }>
+          <h6><i>Current Room Title : {this.props.room.title}</i></h6>
           <h5>Edit this room</h5>
-          <h6>{this.props.room.title}</h6>
           <Field 
             name="title"
             component={this.renderField}

@@ -10,6 +10,7 @@ export const FETCH_GUESTROOMS = 'fetch_guest_rooms'
 export const FETCH_GUEST_ERROR = 'fetch_guestrooms_error'
 export const FETCH_OWN_ROOM = 'fetch_specific_room_the_user_owns'
 export const UPDATE_OWN_ROOM = 'update_own_room'
+export const CREATE_ROOM = 'create_own_room'
 
 const URL_LOGIN = 'http://localhost:8000/api/auth/login/'
 const URL_FETCH_OWNROOMS = 'http://localhost:8000/api/rooms/?query=owner'
@@ -112,5 +113,19 @@ export function updateRoom(id, values) {
       type: UPDATE_OWN_ROOM,
       payload: response
     })
+  }
+}
+
+export function createRoom(values) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(URL_RETRIEVE_UPDATE_OWNROOM, values)
+      dispatch({
+        type: CREATE_ROOM,
+        payload: response
+      })
+    } catch(error) {
+      console.log(error)
+    }
   }
 }

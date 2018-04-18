@@ -6,6 +6,7 @@ import LogIn from '../containers/login'
 import LogOut from '../containers/logout'
 import UserRoomsList from '../containers/user_rooms_list'
 import RoomDetail from '../containers/own_room_detail'
+import CreateRoom from '../containers/user_create_room'
 
 import onlyUserCanAccess from '../helpers/only_user_can_access'
 
@@ -13,7 +14,7 @@ import onlyUserCanAccess from '../helpers/only_user_can_access'
 function NotFound(props) {
   return (
     <div>
-      <h5>404 Not Found</h5>
+      <h5>Not Found Page</h5>
     </div>
   )
 }
@@ -30,7 +31,8 @@ class App extends Component {
             <Route exact path="/logout" component={LogOut} />
             {/* <Route exact path="/user/rooms" component={onlyUserCanAccess(UserRoomsList)} /> */}
             <Route exact path="/user/rooms" component={UserRoomsList} />
-            <Route path="/user/rooms/:id" component={RoomDetail} />
+            <Route exact path="/user/rooms/create" component={CreateRoom} />
+            <Route exact path="/user/rooms/:id(\d+)" component={RoomDetail} />
             <Route component={NotFound} />
           </Switch>
         </BrowserRouter>
