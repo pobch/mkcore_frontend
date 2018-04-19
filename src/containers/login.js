@@ -24,7 +24,7 @@ class LogIn extends Component {
   }
 
   onSubmit = (values) => {
-    this.props.logInAction(values)
+    this.props.logInAction(values, () => {this.props.history.push('/')})
   }
 
   render() {

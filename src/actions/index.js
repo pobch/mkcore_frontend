@@ -21,7 +21,7 @@ const URL_FETCH_GUESTROOMS = 'http://localhost:8000/api/rooms/?query=guest'
 const URL_RETRIEVE_UPDATE_OWNROOM = 'http://localhost:8000/api/rooms/' // + id
 const URL_SIGNUP = 'http://localhost:8000/api/auth/register/'
 
-export function logInAction(values) {
+export function logInAction(values, callback) {
   const { email, password } = values
 
   return async (dispatch) => {
@@ -37,6 +37,7 @@ export function logInAction(values) {
       dispatch({
         type: AUTHENTICATED
       })
+      callback()
     } catch(error) {
       dispatch({
         type: AUTHEN_ERROR,
@@ -52,8 +53,9 @@ export function onLeaveLogInPage() {
   }
 }
 
-export function logOutAction() {
+export function logOutAction(callback) {
   localStorage.clear()
+  callback()
   return {
     type: UNAUTHENTICATED
   }

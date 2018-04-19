@@ -10,7 +10,7 @@ class LogOut extends Component {
   }
 
   clickButton = () => {
-    this.props.logOutAction()
+    this.props.logOutAction(() => {this.props.history.push('/')})
     this.setState({ clicked: true })
   }
 
