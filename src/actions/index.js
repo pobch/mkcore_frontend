@@ -12,6 +12,8 @@ export const FETCH_OWN_ROOM = 'fetch_specific_room_the_user_owns'
 export const UPDATE_OWN_ROOM = 'update_own_room'
 export const CREATE_ROOM = 'create_own_room'
 export const SIGN_UP = 'sign_up'
+export const HIDE_COMPONENT = 'hide_this_component'
+export const SHOW_COMPONENT = 'show_this_component'
 
 const URL_LOGIN = 'http://localhost:8000/api/auth/login/'
 const URL_FETCH_OWNROOMS = 'http://localhost:8000/api/rooms/?query=owner'
@@ -140,5 +142,19 @@ export function signUpAction(values, callback) {
       payload: response
     })
     callback()
+  }
+}
+
+export function hideComponentAction() {
+  return {
+    type: HIDE_COMPONENT,
+    payload: false
+  }
+}
+
+export function showComponentAction() {
+  return {
+    type: SHOW_COMPONENT,
+    payload: true
   }
 }

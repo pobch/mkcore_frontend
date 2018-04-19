@@ -54,25 +54,37 @@ class RoomDetail extends Component {
     return (
       <div>
         <form onSubmit={ handleSubmit(this.onSubmit) }>
-          <h6><i>Current Room Title : {this.props.room.title}</i></h6>
           <h5>Edit this room</h5>
           <Field 
             name="title"
             component={this.renderField}
             label="Room Title"
             type="text"
-          />
+            />
           <br/>
           <Field
             name="description"
             component={this.renderField}
             label="Room Description"
             type="textarea"
-          />
+            />
 
           <button type="submit" className="btn btn-primary">Save</button>
-          <Link to='/user/rooms' className="btn btn-danger">Cancel</Link>
+          <button onClick={ this.props.history.goBack } className="btn btn-danger">Cancel</button>
         </form>
+          <p>
+            <i>
+              Current Room Title : {this.props.room.title}
+              <br/>
+              Current Description : {this.props.room.description}
+              <br/>
+              Current Survey Owner/ Instructor : {this.props.room.instructor_name}
+              <br/>
+              Current Room's Code : {this.props.room.room_code}
+              <br/>
+              Current Room's Password : {this.props.room.room_password}
+            </i>
+          </p>
       </div>
     )
   }

@@ -3,10 +3,11 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { fetchOwnRooms, fetchGuestRooms } from '../actions'
+import { fetchOwnRooms, fetchGuestRooms, showComponentAction, hideComponentAction } from '../actions'
+import CreateRoom from './user_create_room'
 
 
-class UserRoomsList extends Component {
+class UserRoomsList extends Component {  
   componentDidMount() {
     this.props.fetchOwnRooms()
     this.props.fetchGuestRooms()
@@ -17,17 +18,25 @@ class UserRoomsList extends Component {
       if (room.detail) {
         return <li key={room.detail}>ERROR = {room.detail}</li>
       } else {
-        return (
-          <div key={room.id}>
-            <li style={{marginBottom: '5px'}}>
-              <Link to={ owner ? `/user/rooms/${room.id}` : `/`} 
-                className={`btn ${owner ? 'btn-primary' : 'btn-danger'}`}>
-                {owner ? 'Edit' : 'Home'}
-              </Link>
-              ID = {room.id}, Title = {room.title}
-            </li>
-          </div>
-        )
+        if(owner) {
+          return (
+            <div key={room.id}>
+              <li style={{marginBottom: '5px'}}>
+                <Link to={`/user/rooms/${room.id}`} className="btn btn-primary">Edit</Link>
+                ID = {room.id}, Title = {room.title}
+              </li>
+            </div>
+          )
+        } else {
+          return (
+            <div key={room.id}>
+              <li style={{marginBottom: '5px'}}>
+                <button className="btn btn-danger">Edit</button>
+                ID = {room.id}, Title = {room.title}
+              </li>
+            </div>
+          )
+        }
       }
     })
   }
@@ -37,7 +46,7 @@ class UserRoomsList extends Component {
     // if(_.isEmpty(this.props.ownRooms)) {
     //   return <div>Loading...</div>
     // }
-
+    
     return (
       <div>
         <h5>User's Rooms Page (PRIVATE)</h5>
@@ -49,8 +58,20 @@ class UserRoomsList extends Component {
           <h5>Rooms you have joined</h5>
           { this.renderRooms(this.props.guestRooms, {owner: false}) }
         </ul>
-        <Link className="btn btn-primary" to="/user/rooms/create">Create</Link>
-        <Link className="btn btn-primary" to="/">Home</Link>
+        
+        <button className="btn btn-primary" 
+          onClick={ (event) => { 
+            this.props.showComponent ? this.props.hideComponentAction() : this.props.showComponentAction() 
+          } }
+        >Create</button>
+        
+        <button className="btn btn-primary">Join</button>
+        
+        <div style={{marginTop: '5px'}}>
+          { this.props.showComponent ? <CreateRoom /> : ''}
+          
+          <Link className="btn btn-danger" to="/" style={{marginTop: '5px'}}>Home</Link>
+        </div>
       </div>
     )
   }
@@ -59,8 +80,15 @@ class UserRoomsList extends Component {
 function mapStateToProps(state) {
   return {
     ownRooms: state.ownRooms,
-    guestRooms: state.guestRooms
+    guestRooms: state.guestRooms,
+    showComponent: state.showComponent
   }
 }
 
-export default connect(mapStateToProps, { fetchOwnRooms, fetchGuestRooms })(UserRoomsList)
+export default connect(mapStateToProps, { 
+    fetchOwnRooms, 
+    fetchGuestRooms, 
+    showComponentAction, 
+    hideComponentAction 
+  }
+)(UserRoomsList)

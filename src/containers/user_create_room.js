@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import RoomDetail from './own_room_detail'
-import { createRoom } from '../actions'
+import { createRoom, hideComponentAction } from '../actions'
 
 
 class CreateRoom extends Component {
@@ -12,15 +12,14 @@ class CreateRoom extends Component {
     return (
       <div>
         <label htmlFor={field.input.name}>{field.label}</label>
-        <input type={field.type} {...field.input}/>
+        <input className="form-control" type={field.type} {...field.input}/>
       </div>
     )
   }
 
   onSubmit = (values) => {
-    values.guests = null
-    values.user = null
     this.props.createRoom(values)
+    this.props.hideComponentAction()
   }
 
   render() {
@@ -32,21 +31,49 @@ class CreateRoom extends Component {
             name="title"
             component={this.renderField}
             type="text"
-            label="Input Room Title"
+            label="Room Title :"
           />
           <Field
             name="description"
             component={this.renderField}
             type="text"
-            label="Input Description"
+            label="Description :"
           />
+          <Field
+            name="instructor_name"
+            component={this.renderField}
+            type="text"
+            label="Survey Owner's Name :"
+          />
+          <Field
+            name="room_code"
+            component={this.renderField}
+            type="text"
+            label="Your Room's Code (guests will use this code and password to join this room)"
+          />
+          <Field
+            name="room_password"
+            component={this.renderField}
+            type="text"
+            label="Your Room's Password (guests will use this code and password to join this room)"
+          />
+
           <button className="btn btn-primary" type="submit">Submit</button>
-          <Link className="btn btn-danger" to="/user/rooms">Cancel</Link>
+          <button className="btn btn-danger" onClick={ (event) => { this.props.hideComponentAction() } }>Close</button>
         </form>
-        <RoomDetail match={{params: {id:13}}}/>
+        {/* <RoomDetail match={{params: {id:13}}}/> */}
       </div>
     )
   }
 }
 
-export default connect(null, { createRoom })(reduxForm({form: 'createRoomForm'})(CreateRoom))
+function validate(values) {
+  const errors = {}
+  return errors
+}
+
+export default connect(null, { createRoom, hideComponentAction })(
+  reduxForm({
+    form: 'createRoomForm',
+    validate
+  })(CreateRoom))

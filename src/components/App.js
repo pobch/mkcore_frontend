@@ -6,7 +6,6 @@ import LogIn from '../containers/login'
 import LogOut from '../containers/logout'
 import UserRoomsList from '../containers/user_rooms_list'
 import RoomDetail from '../containers/own_room_detail'
-import CreateRoom from '../containers/user_create_room'
 import SignUp from '../containers/signup'
 
 import onlyUserCanAccess from '../helpers/only_user_can_access'
@@ -24,7 +23,7 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <h1 className="text-xs-center">Makrub Front-end</h1>
+        <h1 className="text-xs-center">Front-end</h1>
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={Home} />
@@ -33,7 +32,6 @@ class App extends Component {
             <Route exact path="/signup" component={SignUp}/>
             {/* <Route exact path="/user/rooms" component={onlyUserCanAccess(UserRoomsList)} /> */}
             <Route exact path="/user/rooms" component={UserRoomsList} />
-            <Route exact path="/user/rooms/create" component={CreateRoom} />
             <Route exact path="/user/rooms/:id(\d+)" component={RoomDetail} />
             <Route component={NotFound} />
           </Switch>
