@@ -11,11 +11,13 @@ export const FETCH_GUEST_ERROR = 'fetch_guestrooms_error'
 export const FETCH_OWN_ROOM = 'fetch_specific_room_the_user_owns'
 export const UPDATE_OWN_ROOM = 'update_own_room'
 export const CREATE_ROOM = 'create_own_room'
+export const SIGN_UP = 'sign_up'
 
 const URL_LOGIN = 'http://localhost:8000/api/auth/login/'
 const URL_FETCH_OWNROOMS = 'http://localhost:8000/api/rooms/?query=owner'
 const URL_FETCH_GUESTROOMS = 'http://localhost:8000/api/rooms/?query=guest'
 const URL_RETRIEVE_UPDATE_OWNROOM = 'http://localhost:8000/api/rooms/' // + id
+const URL_SIGNUP = 'http://localhost:8000/api/auth/register/'
 
 export function logInAction(values) {
   const { email, password } = values
@@ -127,5 +129,16 @@ export function createRoom(values) {
     } catch(error) {
       console.log(error)
     }
+  }
+}
+
+export function signUpAction(values, callback) {
+  return async (dispatch) => {
+    const response = await axios.post(URL_SIGNUP, values)
+    dispatch({
+      type: SIGN_UP,
+      payload: response
+    })
+    callback()
   }
 }

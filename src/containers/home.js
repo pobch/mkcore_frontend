@@ -11,7 +11,14 @@ class Home extends Component {
         <div className="text-xs-left">
           { this.props.auth.authenticated ? 
             <Link className="btn btn-danger" to="/logout">Log Out</Link> :
-            <Link className="btn btn-primary" to="/login">Log in</Link> 
+            <div>
+              <div>
+                <Link className="btn btn-primary" to="/signup">Sign Up</Link>
+              </div>
+              <div>
+                <Link className="btn btn-primary" to="/login" style={{marginTop: '5px'}}>Log in</Link>
+              </div>
+            </div>
           }
           <div>
             <Link className="btn btn-primary" to="/user/rooms" style={{marginTop: '5px'}} >Rooms</Link>
