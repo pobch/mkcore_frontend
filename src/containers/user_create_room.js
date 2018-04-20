@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import { reduxForm, Field } from 'redux-form'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 
 import RoomDetail from './own_room_detail'
 import { createRoom, hideComponentAction } from '../actions'

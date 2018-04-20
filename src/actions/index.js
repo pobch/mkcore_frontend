@@ -160,3 +160,9 @@ export function showComponentAction() {
     payload: true
   }
 }
+
+export function deleteRoom(id) {
+  return async (dispatch) => {
+    const response = await axios.delete(`${URL_RETRIEVE_UPDATE_OWNROOM}${id}/`)
+  }
+}

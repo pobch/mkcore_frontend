@@ -8,7 +8,8 @@ import UserRoomsList from '../containers/user_rooms_list'
 import RoomDetail from '../containers/own_room_detail'
 import SignUp from '../containers/signup'
 
-import onlyUserCanAccess from '../helpers/only_user_can_access'
+import onlyUserCanAccess from '../hoc/only_user_can_access'
+import onlyAnonCanAccess from '../hoc/only_anon_can_access'
 
 
 function NotFound(props) {
@@ -27,11 +28,11 @@ class App extends Component {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/login" component={LogIn} />
-            <Route exact path="/logout" component={LogOut} />
-            <Route exact path="/signup" component={SignUp}/>
-            {/* <Route exact path="/user/rooms" component={onlyUserCanAccess(UserRoomsList)} /> */}
-            <Route exact path="/user/rooms" component={UserRoomsList} />
+            <Route exact path="/login" component={onlyAnonCanAccess(LogIn)} />
+            <Route exact path="/logout" component={onlyUserCanAccess(LogOut)} />
+            <Route exact path="/signup" component={onlyAnonCanAccess(SignUp)}/>
+            <Route exact path="/user/rooms" component={onlyUserCanAccess(UserRoomsList)} />
+            {/* <Route exact path="/user/rooms" component={UserRoomsList} /> */}
             <Route exact path="/user/rooms/:id(\d+)" component={RoomDetail} />
             <Route component={NotFound} />
           </Switch>

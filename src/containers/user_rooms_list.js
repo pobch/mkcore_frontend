@@ -3,7 +3,10 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { fetchOwnRooms, fetchGuestRooms, showComponentAction, hideComponentAction } from '../actions'
+import { 
+  fetchOwnRooms, fetchGuestRooms, showComponentAction, 
+  hideComponentAction, deleteRoom 
+} from '../actions'
 import CreateRoom from './user_create_room'
 
 
@@ -11,6 +14,10 @@ class UserRoomsList extends Component {
   componentDidMount() {
     this.props.fetchOwnRooms()
     this.props.fetchGuestRooms()
+  }
+
+  onClickToDeleteRoom = (id, event) => {
+    console.log('id that will be deleted ======', id)
   }
 
   renderRooms = (roomprop, {owner} = {owner: true}) => {
@@ -23,6 +30,7 @@ class UserRoomsList extends Component {
             <div key={room.id}>
               <li style={{marginBottom: '5px'}}>
                 <Link to={`/user/rooms/${room.id}`} className="btn btn-primary">Edit</Link>
+                <button onClick={ (event) => {this.onClickToDeleteRoom(room.id, event)} } className="btn btn-danger">Delete</button>
                 ID = {room.id}, Title = {room.title}
               </li>
             </div>
@@ -89,6 +97,7 @@ export default connect(mapStateToProps, {
     fetchOwnRooms, 
     fetchGuestRooms, 
     showComponentAction, 
-    hideComponentAction 
+    hideComponentAction,
+    deleteRoom
   }
 )(UserRoomsList)

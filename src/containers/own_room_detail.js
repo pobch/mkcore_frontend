@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import _ from 'lodash'
 import {fetchOwnRoom, updateRoom} from '../actions'
 import { reduxForm, Field } from 'redux-form'
-import { Link } from 'react-router-dom'
 
 
 class RoomDetail extends Component {
