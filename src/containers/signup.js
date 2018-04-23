@@ -15,8 +15,8 @@ class SignUp extends Component {
     return (
       <div className={props.meta.touched && props.meta.error ? 'form-group has-danger' : 'form-group'}>
         <label htmlFor={props.input.name}>{props.label}</label>
-        <input className="form-control" type={props.type} {...props.input}/>
-        <div className='text-help'>
+        <input className="form-control form-control-danger" type={props.type} {...props.input}/>
+        <div className='form-control-feedback'>
           { props.meta.touched && props.meta.error ? props.meta.error : '\u00A0'}
         </div>
       </div>

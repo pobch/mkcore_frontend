@@ -4,6 +4,7 @@ import authReducer from './auth_reducer'
 import ownRoomsReducer from './ownRooms_reducer'
 import guestRoomsReducer from './guestRooms_reducer'
 import showComponentReducer from './show_component'
+import errorReducer from './error_reducer'
 
 
 const rootReducer = combineReducers({
@@ -11,7 +12,8 @@ const rootReducer = combineReducers({
   auth: authReducer,
   ownRooms: ownRoomsReducer,
   guestRooms: guestRoomsReducer,
-  showComponent: showComponentReducer
+  showComponent: showComponentReducer,
+  error: errorReducer
 })
 
 export default rootReducer

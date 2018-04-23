@@ -10,16 +10,20 @@ export const FETCH_GUESTROOMS = 'fetch_guest_rooms'
 export const FETCH_GUEST_ERROR = 'fetch_guestrooms_error'
 export const FETCH_OWN_ROOM = 'fetch_specific_room_the_user_owns'
 export const UPDATE_OWN_ROOM = 'update_own_room'
+export const DELETE_OWN_ROOM = 'delete_own_room'
 export const CREATE_ROOM = 'create_own_room'
 export const SIGN_UP = 'sign_up'
 export const HIDE_COMPONENT = 'hide_this_component'
 export const SHOW_COMPONENT = 'show_this_component'
+export const JOIN_ROOM = 'join_room'
+export const RESET_ERROR = 'reset_error_msg'
 
 const URL_LOGIN = 'http://localhost:8000/api/auth/login/'
 const URL_FETCH_OWNROOMS = 'http://localhost:8000/api/rooms/?query=owner'
 const URL_FETCH_GUESTROOMS = 'http://localhost:8000/api/rooms/?query=guest'
 const URL_RETRIEVE_UPDATE_OWNROOM = 'http://localhost:8000/api/rooms/' // + id
 const URL_SIGNUP = 'http://localhost:8000/api/auth/register/'
+const URL_JOIN_ROOM = URL_RETRIEVE_UPDATE_OWNROOM + 'join/'
 
 export function logInAction(values, callback) {
   const { email, password } = values
@@ -163,6 +167,33 @@ export function showComponentAction() {
 
 export function deleteRoom(id) {
   return async (dispatch) => {
-    const response = await axios.delete(`${URL_RETRIEVE_UPDATE_OWNROOM}${id}/`)
+    await axios.delete(`${URL_RETRIEVE_UPDATE_OWNROOM}${id}/`)
+    dispatch({
+      type: DELETE_OWN_ROOM,
+      payload: id
+    })
+  }
+}
+
+export function joinRoomAction(values) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.patch(URL_JOIN_ROOM, values)
+      dispatch({
+        type: JOIN_ROOM,
+        payload: response
+      })
+    } catch(e) {
+      dispatch({
+        type: FETCH_GUEST_ERROR,
+        payload: e.response
+      })
+    }
+  }
+}
+
+export function resetError() {
+  return {
+    type: RESET_ERROR
   }
 }

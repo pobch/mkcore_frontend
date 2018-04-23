@@ -9,14 +9,14 @@ import { logInAction, onLeaveLogInPage } from '../actions'
 class LogIn extends Component {
   renderField = (field) => {
     return (
-      <div className="form-group">
+      <div className={field.meta.touched && field.meta.error ? 'form-group has-danger' : 'form-group'}>
         <input 
-          className="form-control"
+          className="form-control form-control-danger"
           placeholder={ field.placeholder }
           type={ field.type }
           {...field.input}
         />
-        <div className="text-xs-left" >
+        <div className="text-xs-left form-control-feedback" >
           { field.meta.touched ? (field.meta.error ? field.meta.error : '\u00A0') : '\u00A0' }
         </div>
       </div>
