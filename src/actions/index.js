@@ -127,6 +127,7 @@ export function updateRoom(id, values) {
 }
 
 export function createRoom(values) {
+  console.log(values)
   return async (dispatch) => {
     try {
       const response = await axios.post(URL_RETRIEVE_UPDATE_OWNROOM, values)
@@ -178,7 +179,7 @@ export function deleteRoom(id) {
 export function joinRoomAction(values) {
   return async (dispatch) => {
     try {
-      const response = await axios.patch(URL_JOIN_ROOM, values)
+      const response = await axios.post(URL_JOIN_ROOM, values)
       dispatch({
         type: JOIN_ROOM,
         payload: response
