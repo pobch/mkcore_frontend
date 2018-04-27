@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import { 
   fetchOwnRooms, fetchGuestRooms, showComponentAction, 
-  hideComponentAction, deleteRoom, resetError
+  hideComponentAction, deleteRoom, resetError, leaveRoom
 } from '../actions'
 import {FETCH_GUEST_ERROR} from '../actions'
 import CreateRoom from './user_create_room'
@@ -38,6 +38,14 @@ class UserRoomsList extends Component {
     this.setState({ confirmationPopup: false, joinRoomPopup: false });
   };
 
+  openJoinRoomModal = (event) => {
+    this.setState({ joinRoomPopup: true })
+  }
+
+  onLeaveRoom = (id) => {
+    this.props.leaveRoom(id)
+  }
+
   renderRooms = (roomProp, {owner} = {owner: true}) => {
     // console.log(roomProp)
     return _.map(roomProp, (room) => {
@@ -63,7 +71,8 @@ class UserRoomsList extends Component {
           return (
             <div key={room.id}>
               <li style={{marginBottom: '5px'}}>
-                <button className="btn btn-danger">Survey</button>
+                <Link to={`/user/answers/${room.id}`} className="btn btn-primary">Edit Survey</Link>
+                <button className="btn btn-danger" onClick={() => {this.onLeaveRoom(room.id)}}>Leave</button>
                 ID = {room.id}, Title = {room.title}
               </li>
             </div>
@@ -71,10 +80,6 @@ class UserRoomsList extends Component {
         }
       }
     })
-  }
-
-  openJoinRoomModal = (event) => {
-    this.setState({ joinRoomPopup: true })
   }
   
   render() {
@@ -154,6 +159,7 @@ export default connect(mapStateToProps, {
     showComponentAction, 
     hideComponentAction,
     deleteRoom,
-    resetError
+    resetError,
+    leaveRoom
   }
 )(UserRoomsList)

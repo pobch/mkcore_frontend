@@ -17,6 +17,7 @@ export const HIDE_COMPONENT = 'hide_this_component'
 export const SHOW_COMPONENT = 'show_this_component'
 export const JOIN_ROOM = 'join_room'
 export const RESET_ERROR = 'reset_error_msg'
+export const LEAVE_ROOM = 'leave_room'
 
 const URL_LOGIN = 'http://localhost:8000/api/auth/login/'
 const URL_FETCH_OWNROOMS = 'http://localhost:8000/api/rooms/?query=owner'
@@ -24,6 +25,7 @@ const URL_FETCH_GUESTROOMS = 'http://localhost:8000/api/rooms/?query=guest'
 const URL_RETRIEVE_UPDATE_OWNROOM = 'http://localhost:8000/api/rooms/' // + id
 const URL_SIGNUP = 'http://localhost:8000/api/auth/register/'
 const URL_JOIN_ROOM = URL_RETRIEVE_UPDATE_OWNROOM + 'join/'
+const URL_LEAVE_ROOM = URL_RETRIEVE_UPDATE_OWNROOM + 'unjoin/'
 
 export function logInAction(values, callback) {
   const { email, password } = values
@@ -196,5 +198,16 @@ export function joinRoomAction(values) {
 export function resetError() {
   return {
     type: RESET_ERROR
+  }
+}
+
+export function leaveRoom(id) {
+  return async (dispatch) => {
+    const response = await axios.post(URL_LEAVE_ROOM, {room_id: id})
+    console.log('res ====', response)
+    dispatch({
+      type: LEAVE_ROOM,
+      payload: id
+    })
   }
 }

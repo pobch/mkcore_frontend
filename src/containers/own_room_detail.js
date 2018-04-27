@@ -3,7 +3,18 @@ import {connect} from 'react-redux'
 import _ from 'lodash'
 import {fetchOwnRoom, updateRoom} from '../actions'
 import { reduxForm, Field } from 'redux-form'
+import { DateTimePicker, DropdownList } from 'react-widgets'
+import Moment from 'moment'
+import momentLocalizer from 'react-widgets-moment'
+import { Link } from 'react-router-dom'
 
+import 'react-widgets/dist/css/react-widgets.css'
+
+
+Moment.locale('en')
+momentLocalizer()
+
+const publish = ['draft', 'active', 'closed']
 
 class RoomDetail extends Component {
   componentDidMount() {
@@ -23,8 +34,9 @@ class RoomDetail extends Component {
   // }
 
   onSubmit = (values) => {
-    const { id } = this.props.match.params
-    this.props.updateRoom(id, values)
+    console.log('value ====', values)
+    // const { id } = this.props.match.params
+    // this.props.updateRoom(id, values)
   }
 
   renderField = (field) => {
@@ -35,6 +47,24 @@ class RoomDetail extends Component {
           <textarea {...field.input} rows="5" cols="25"/> :
           <input type={field.type} {...field.input}/>
         }
+      </div>
+    )
+  }
+
+  renderDateTime = ({ input: {name, onChange, value}, label }) => {
+    return (
+      <div>
+        <label htmlFor={name}>{label}</label><br/>
+        <DateTimePicker onChange={onChange} value={value ? new Date(value) : null }/>
+      </div>
+    )
+  }
+
+  renderDropdownList = ({ input, label, data }) => {
+    return (
+      <div>
+        <label htmlFor={input.name}>{label}</label><br/>
+        <DropdownList {...input} data={data}/>
       </div>
     )
   }
@@ -59,17 +89,59 @@ class RoomDetail extends Component {
             component={this.renderField}
             label="Room Title"
             type="text"
-            />
-          <br/>
+          />
           <Field
             name="description"
             component={this.renderField}
             label="Room Description"
             type="textarea"
-            />
+          />
+          <Field
+            name="instructor_name"
+            component={this.renderField}
+            label="Survey Owner's Name :"
+            type="text"
+          />
+          <Field
+            name="room_code"
+            component={this.renderField}
+            label="Your Room's Code (guests will use this code and password to join this room)"
+            type="text"
+          />
+          <Field
+            name="room_password"
+            component={this.renderField}
+            label="Your Room's Password (guests will use this code and password to join this room)"
+            type="text"
+          />
+          <Field
+            name="start_at"
+            component={this.renderDateTime}
+            label="Room start at :"
+            type=""
+          />
+          <Field
+            name="end_at"
+            component={this.renderDateTime}
+            label="Room end at :"
+            type=""
+          />
+          <Field
+            name="status"
+            component={this.renderDropdownList}
+            label="Draft, Publish or Close this room?"
+            type=""
+            data={publish}
+          />
 
-          <button type="submit" className="btn btn-primary">Save</button>
-          <button onClick={ this.props.history.goBack } className="btn btn-danger">Cancel</button>
+          <div style={{margin: "10px 0px"}}>
+            <Link to={`user/rooms/${this.props.room.id}/survey`} className="btn btn-primary">Build a Survey</Link>
+          </div>
+          
+          <div>
+            <button type="submit" className="btn btn-primary">Save</button>
+            <button onClick={ this.props.history.goBack } className="btn btn-danger">Cancel</button>
+          </div>
         </form>
           <p>
             <i>
