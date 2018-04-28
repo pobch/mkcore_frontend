@@ -7,6 +7,7 @@ import LogOut from '../containers/logout'
 import UserRoomsList from '../containers/user_rooms_list'
 import RoomDetail from '../containers/own_room_detail'
 import SignUp from '../containers/signup'
+import SurveyEdit from '../containers/user_survey_edit'
 
 import onlyUserCanAccess from '../hoc/only_user_can_access'
 import onlyAnonCanAccess from '../hoc/only_anon_can_access'
@@ -34,6 +35,7 @@ class App extends Component {
             <Route exact path="/user/rooms" component={onlyUserCanAccess(UserRoomsList)} />
             {/* <Route exact path="/user/rooms" component={UserRoomsList} /> */}
             <Route exact path="/user/rooms/:id(\d+)" component={RoomDetail} />
+            <Route exact path="/user/rooms/:id(\d+)/survey" component={SurveyEdit} />
             <Route component={NotFound} />
           </Switch>
         </BrowserRouter>

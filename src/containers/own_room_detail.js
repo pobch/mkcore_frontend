@@ -34,9 +34,8 @@ class RoomDetail extends Component {
   // }
 
   onSubmit = (values) => {
-    console.log('value ====', values)
-    // const { id } = this.props.match.params
-    // this.props.updateRoom(id, values)
+    const { id } = this.props.match.params
+    this.props.updateRoom(id, values)
   }
 
   renderField = (field) => {
@@ -83,6 +82,11 @@ class RoomDetail extends Component {
     return (
       <div>
         <form onSubmit={ handleSubmit(this.onSubmit) }>
+
+          <div>
+            <Link to={`/user/rooms/${this.props.room.id}/survey`} className="btn btn-primary">Edit Survey</Link>
+          </div>
+
           <h5>Edit this room</h5>
           <Field 
             name="title"
@@ -134,13 +138,9 @@ class RoomDetail extends Component {
             data={publish}
           />
 
-          <div style={{margin: "10px 0px"}}>
-            <Link to={`user/rooms/${this.props.room.id}/survey`} className="btn btn-primary">Build a Survey</Link>
-          </div>
-          
           <div>
             <button type="submit" className="btn btn-primary">Save</button>
-            <button onClick={ this.props.history.goBack } className="btn btn-danger">Cancel</button>
+            <button type="button" onClick={ this.props.history.goBack } className="btn btn-danger">Cancel</button>
           </div>
         </form>
           <p>
@@ -162,9 +162,10 @@ class RoomDetail extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
+  const roomData = _.keyBy(state.ownRooms, 'id')[ownProps.match.params.id]
   return {
-    room: _.keyBy(state.ownRooms, 'id')[ownProps.match.params.id] || state.ownRooms[0],
-    initialValues: _.keyBy(state.ownRooms, 'id')[ownProps.match.params.id] || state.ownRooms[0]
+    room: roomData,
+    initialValues: roomData
   }
 }
 

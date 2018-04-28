@@ -57,7 +57,8 @@ class UserRoomsList extends Component {
             <div key={room.id}>
               <li style={{marginBottom: '5px'}}>
                 <Link to={`/user/rooms/${room.id}`} className="btn btn-primary">Edit</Link>
-                <button onClick={ () => {this.openConfirmDeleteModal(room.id)} } 
+                <button type="button" 
+                  onClick={ () => {this.openConfirmDeleteModal(room.id)} } 
                   className="btn btn-danger"
                   // data-toggle="modal"        // Bootstrap v4 
                   // data-target="#myModal"     // Bootstrap v4
@@ -72,7 +73,7 @@ class UserRoomsList extends Component {
             <div key={room.id}>
               <li style={{marginBottom: '5px'}}>
                 <Link to={`/user/answers/${room.id}`} className="btn btn-primary">Edit Survey</Link>
-                <button className="btn btn-danger" onClick={() => {this.onLeaveRoom(room.id)}}>Leave</button>
+                <button type="button" className="btn btn-danger" onClick={() => {this.onLeaveRoom(room.id)}}>Leave</button>
                 ID = {room.id}, Title = {room.title}
               </li>
             </div>
@@ -107,13 +108,14 @@ class UserRoomsList extends Component {
         </ul>
         { this.props.error[FETCH_GUEST_ERROR] ? <div>ERROR {this.props.error[FETCH_GUEST_ERROR]}</div> : null }
         
-        <button className="btn btn-primary" 
+        <button type="button" 
+          className="btn btn-primary" 
           onClick={ (event) => { 
             this.props.showComponent ? this.props.hideComponentAction() : this.props.showComponentAction() 
           } }
         >Create</button>
         
-        <button className="btn btn-primary" onClick={this.openJoinRoomModal}>Join</button>
+        <button type="button" className="btn btn-primary" onClick={this.openJoinRoomModal}>Join</button>
         
         <div style={{marginTop: '5px'}}>
           { this.props.showComponent ? <CreateRoom /> : ''}

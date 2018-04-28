@@ -57,7 +57,7 @@ class CreateRoom extends Component {
           />
 
           <button className="btn btn-primary" type="submit">Submit</button>
-          <button className="btn btn-danger" onClick={ (event) => { this.props.hideComponentAction() } }>Close</button>
+          <button className="btn btn-danger" type="button" onClick={ (event) => { this.props.hideComponentAction() } }>Close</button>
         </form>
         {/* <RoomDetail match={{params: {id:13}}}/> */}
       </div>
