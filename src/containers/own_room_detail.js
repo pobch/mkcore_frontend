@@ -140,7 +140,8 @@ class RoomDetail extends Component {
 
           <div>
             <button type="submit" className="btn btn-primary">Save</button>
-            <button type="button" onClick={ this.props.history.goBack } className="btn btn-danger">Cancel</button>
+            <Link to="/user/rooms" className="btn btn-danger">Cancel</Link>
+            {/* <button type="button" onClick={ this.props.history.goBack } className="btn btn-danger">Back</button> */}
           </div>
         </form>
           <p>
