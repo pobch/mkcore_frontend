@@ -78,7 +78,7 @@ class RoomDetail extends Component {
     }
     
     const { handleSubmit } = this.props
-
+    
     return (
       <div>
         <form onSubmit={ handleSubmit(this.onSubmit) }>
