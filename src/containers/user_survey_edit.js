@@ -6,6 +6,8 @@ import {Link} from 'react-router-dom'
 
 import {fetchOwnRoom, updateRoom} from '../actions'
 import RenderSurvey from '../components/user_survey_edit_render'
+import Portal from '../components/portal'
+import SaveCompleteModal from '../components/modal_save_complete'
 
 // survey structure:
 // {
@@ -29,6 +31,10 @@ import RenderSurvey from '../components/user_survey_edit_render'
 // }
 
 class SurveyEdit extends Component {
+  state = {
+    showSaveCompleteModal: false
+  }
+
   componentDidMount() {
     const { id } = this.props.match.params
     this.props.fetchOwnRoom(id)
@@ -38,6 +44,7 @@ class SurveyEdit extends Component {
     // console.log('Submitted values ===', values)
     const { id } = this.props.match.params
     this.props.updateRoom(id, values)
+    this.setState({showSaveCompleteModal: true})
   }
 
   findInitialPropsToPass = () => {
@@ -76,6 +83,16 @@ class SurveyEdit extends Component {
             <Link to={`/user/rooms/${this.props.match.params.id}`} className="btn btn-danger">Cancel</Link>
           </div>
         </form>
+
+        { this.state.showSaveCompleteModal && (
+          <Portal>
+            <SaveCompleteModal
+              onConfirm={(event) => {
+                this.setState({showSaveCompleteModal: false})
+              }}
+            />
+          </Portal>
+        )}
       </div>
     )
   }

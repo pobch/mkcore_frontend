@@ -129,7 +129,6 @@ export function updateRoom(id, values) {
 }
 
 export function createRoom(values) {
-  console.log(values)
   return async (dispatch) => {
     try {
       const response = await axios.post(URL_RETRIEVE_UPDATE_OWNROOM, values)
@@ -204,7 +203,6 @@ export function resetError() {
 export function leaveRoom(id) {
   return async (dispatch) => {
     const response = await axios.post(URL_LEAVE_ROOM, {room_id: id})
-    console.log('res ====', response)
     dispatch({
       type: LEAVE_ROOM,
       payload: id
