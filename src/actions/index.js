@@ -19,8 +19,8 @@ export const JOIN_ROOM = 'join_room'
 export const RESET_ERROR = 'reset_error_msg'
 export const LEAVE_ROOM = 'leave_room'
 
-// const BASE_API_URL = 'http://localhost:8000/api/'
-const BASE_API_URL = 'https://mkcore.herokuapp.com/api/'
+const BASE_API_URL = process.env.REACT_APP_API_URL // environment variable
+
 const URL_LOGIN = `${BASE_API_URL}auth/login/`
 const URL_FETCH_OWNROOMS = `${BASE_API_URL}rooms/?query=owner`
 const URL_FETCH_GUESTROOMS = `${BASE_API_URL}rooms/?query=guest`
