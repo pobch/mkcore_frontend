@@ -8,10 +8,9 @@ class Home extends Component {
     return (
       <div>
         <h5>Home Page</h5>
-        <h6>We have not yet configed smtp server for production</h6>
-        <h6>Use this test account if you want to test our app right now:</h6>
-        <h6><i>E-mail: test@pob.com</i></h6>
-        <h6><i>Password: guestpass123</i></h6>
+        <h6>We have not yet implemented smtp server for production.</h6>
+        <h6>Click Log in and use the test account on that page if you want to try our app.</h6>
+
         <div className="text-xs-left">
           { this.props.auth.authenticated ? 
             <Link className="btn btn-danger" to="/logout">Log Out</Link> :
