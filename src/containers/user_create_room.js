@@ -15,9 +15,13 @@ class CreateRoom extends Component {
     )
   }
 
-  onSubmit = (values) => {
-    this.props.createRoom(values)
-    this.props.hideComponentAction()
+  onSubmit = async (values) => {
+    try {
+      await this.props.createRoom(values)
+      this.props.hideComponentAction()
+    } catch(error) {
+      // console.log('err', error)
+    }
   }
 
   render() {
@@ -70,7 +74,13 @@ function validate(values) {
   return errors
 }
 
-export default connect(null, { createRoom, hideComponentAction })(
+function mapStateToProps(state) {
+  return {
+    errors: state.errors
+  }
+}
+
+export default connect(mapStateToProps, { createRoom, hideComponentAction })(
   reduxForm({
     form: 'createRoomForm',
     validate

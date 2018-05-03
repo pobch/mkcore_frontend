@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import axios from 'axios'
-import { AUTHENTICATED, AUTHEN_ERROR, UNAUTHENTICATED, CLEAR_ERROR } from '../actions'
+import { AUTHENTICATED, AUTHEN_ERROR, UNAUTHENTICATED, CLEAR_AUTH_ERROR_MSG } from '../actions'
 
 
 export default function(state = {}, action) {
@@ -11,7 +11,7 @@ export default function(state = {}, action) {
     case AUTHEN_ERROR:
       delete axios.defaults.headers.common['Authorization']
       return { authenticated: false, error: action.payload }
-    case CLEAR_ERROR:
+    case CLEAR_AUTH_ERROR_MSG:
       // only clear error key, but maintain 'authenticated' status
       return _.omit(state, 'error')
     case UNAUTHENTICATED:

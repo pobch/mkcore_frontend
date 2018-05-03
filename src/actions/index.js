@@ -1,23 +1,26 @@
 import axios from 'axios'
 
+export const SIGN_UP = 'sign_up'
 export const AUTHENTICATED = 'authenticated'
-export const AUTHEN_ERROR = 'authentication_error'
 export const UNAUTHENTICATED = 'unauthenticated'
-export const CLEAR_ERROR = 'clearError'
+export const AUTHEN_ERROR = 'authentication_error'
+export const CLEAR_AUTH_ERROR_MSG = 'clear_authen_error_msg'
+
 export const FETCH_OWNROOMS = 'fetch_rooms_the_user_owns'
-export const FETCH_OWN_ERROR = 'fetch_ownrooms_error'
-export const FETCH_GUESTROOMS = 'fetch_guest_rooms'
-export const FETCH_GUEST_ERROR = 'fetch_guestrooms_error'
 export const FETCH_OWN_ROOM = 'fetch_specific_room_the_user_owns'
+export const CREATE_OWN_ROOM = 'create_own_room'
 export const UPDATE_OWN_ROOM = 'update_own_room'
 export const DELETE_OWN_ROOM = 'delete_own_room'
-export const CREATE_ROOM = 'create_own_room'
-export const SIGN_UP = 'sign_up'
+export const ERROR_IN_OWNROOMS = 'ownrooms_error_from_api'
+
+export const FETCH_GUESTROOMS = 'fetch_guest_rooms'
+export const JOIN_ROOM = 'join_room'
+export const LEAVE_ROOM = 'leave_room'
+export const ERROR_IN_GUESTROOMS = 'guestrooms_error_from_api'
+export const CLEAR_ERROR_MSG = 'clear_error_message'
+
 export const HIDE_COMPONENT = 'hide_this_component'
 export const SHOW_COMPONENT = 'show_this_component'
-export const JOIN_ROOM = 'join_room'
-export const RESET_ERROR = 'reset_error_msg'
-export const LEAVE_ROOM = 'leave_room'
 
 const BASE_API_URL = process.env.REACT_APP_API_URL // environment variable
 
@@ -57,7 +60,7 @@ export function logInAction(values, callback) {
 
 export function onLeaveLogInPage() {
   return {
-    type: CLEAR_ERROR
+    type: CLEAR_AUTH_ERROR_MSG
   }
 }
 
@@ -79,7 +82,7 @@ export function fetchOwnRooms() {
       })
     } catch(error) {
       dispatch({
-        type: FETCH_OWN_ERROR,
+        type: ERROR_IN_OWNROOMS,
         payload: error.response
       })
     }
@@ -96,7 +99,7 @@ export function fetchOwnRoom(id) {
       })
     } catch(error) {
       dispatch({
-        type: FETCH_OWN_ERROR,
+        type: ERROR_IN_OWNROOMS,
         payload: error.response
       })
     }
@@ -113,7 +116,7 @@ export function fetchGuestRooms() {
       })
     } catch(error) {
       dispatch({
-        type: FETCH_GUEST_ERROR,
+        type: ERROR_IN_GUESTROOMS,
         payload: error.response
       })
     }
@@ -135,11 +138,15 @@ export function createRoom(values) {
     try {
       const response = await axios.post(URL_RETRIEVE_UPDATE_OWNROOM, values)
       dispatch({
-        type: CREATE_ROOM,
+        type: CREATE_OWN_ROOM,
         payload: response
       })
     } catch(error) {
-      console.log(error)
+      dispatch({
+        type: ERROR_IN_OWNROOMS,
+        payload: error.response
+      })
+      throw error // return error to catch{} in the container component who call this function  
     }
   }
 }
@@ -189,7 +196,7 @@ export function joinRoomAction(values) {
       })
     } catch(e) {
       dispatch({
-        type: FETCH_GUEST_ERROR,
+        type: ERROR_IN_GUESTROOMS,
         payload: e.response
       })
     }
@@ -198,13 +205,13 @@ export function joinRoomAction(values) {
 
 export function resetError() {
   return {
-    type: RESET_ERROR
+    type: CLEAR_ERROR_MSG
   }
 }
 
 export function leaveRoom(id) {
   return async (dispatch) => {
-    const response = await axios.post(URL_LEAVE_ROOM, {room_id: id})
+    await axios.post(URL_LEAVE_ROOM, {room_id: id})
     dispatch({
       type: LEAVE_ROOM,
       payload: id

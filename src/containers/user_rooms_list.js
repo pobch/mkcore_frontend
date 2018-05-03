@@ -7,7 +7,6 @@ import {
   fetchOwnRooms, fetchGuestRooms, showComponentAction, 
   hideComponentAction, deleteRoom, resetError, leaveRoom
 } from '../actions'
-import {FETCH_GUEST_ERROR} from '../actions'
 import CreateRoom from './user_create_room'
 import Portal from '../components/portal'
 import ConfirmDeleteModal from '../components/modal_confirm_delete'
@@ -39,6 +38,7 @@ class UserRoomsList extends Component {
   };
 
   openJoinRoomModal = (event) => {
+    this.props.hideComponentAction()
     this.setState({ joinRoomPopup: true })
   }
 
@@ -49,36 +49,27 @@ class UserRoomsList extends Component {
   renderRooms = (roomProp, {owner} = {owner: true}) => {
     // console.log(roomProp)
     return _.map(roomProp, (room) => {
-      if (room.detail) {
-        return <li key={room.detail}>ERROR = {room.detail}</li>
+      if(owner) {
+        return (
+          <li style={{marginBottom: '5px'}} key={room.id}>
+            <Link to={`/user/rooms/${room.id}`} className="btn btn-primary">Edit</Link>
+            <button type="button" 
+              onClick={ () => {this.openConfirmDeleteModal(room.id)} } 
+              className="btn btn-danger"
+              // data-toggle="modal"        // Bootstrap v4 
+              // data-target="#myModal"     // Bootstrap v4
+            >Delete</button>
+            ID = {room.id}, Title = {room.title}
+          </li>
+        )
       } else {
-        if(owner) {
-          return (
-            <div key={room.id}>
-              <li style={{marginBottom: '5px'}}>
-                <Link to={`/user/rooms/${room.id}`} className="btn btn-primary">Edit</Link>
-                <button type="button" 
-                  onClick={ () => {this.openConfirmDeleteModal(room.id)} } 
-                  className="btn btn-danger"
-                  // data-toggle="modal"        // Bootstrap v4 
-                  // data-target="#myModal"     // Bootstrap v4
-                >Delete</button>
-                ID = {room.id}, Title = {room.title}
-              </li>
-            </div>
-            
-          )
-        } else {
-          return (
-            <div key={room.id}>
-              <li style={{marginBottom: '5px'}}>
-                <Link to={`/user/answers/${room.id}`} className="btn btn-primary">Edit Survey</Link>
-                <button type="button" className="btn btn-danger" onClick={() => {this.onLeaveRoom(room.id)}}>Leave</button>
-                ID = {room.id}, Title = {room.title}
-              </li>
-            </div>
-          )
-        }
+        return (
+          <li style={{marginBottom: '5px'}} key={room.id}>
+            <Link to={`/user/answers/${room.id}`} className="btn btn-primary">Edit Survey</Link>
+            <button type="button" className="btn btn-danger" onClick={() => {this.onLeaveRoom(room.id)}}>Leave</button>
+            ID = {room.id}, Title = {room.title}
+          </li>
+        )
       }
     })
   }
@@ -88,7 +79,7 @@ class UserRoomsList extends Component {
     // if(_.isEmpty(this.props.ownRooms)) {
     //   return <div>Loading...</div>
     // }
-
+    
     return (
       <div>
         {/* Reset Error msg when leaving the page */}
@@ -106,22 +97,46 @@ class UserRoomsList extends Component {
           <h5>Rooms you have joined</h5>
           { this.renderRooms(this.props.guestRooms, {owner: false}) }
         </ul>
-        { this.props.error[FETCH_GUEST_ERROR] ? <div>ERROR {this.props.error[FETCH_GUEST_ERROR]}</div> : null }
-        
+        <ul>
+          { _.map(this.props.errors, (value,key) => {
+            if(key === 'detail') {
+              // if key = detail, value will be string (e.g., 'Not found')
+              return <li key={key}>ERROR {value}</li>
+            } else {
+              // e.g., key = room_code, value = [ 'error msg1', 'error msg2' ]
+              return (
+                <li key={key}>
+                  <ul>
+                    {_.map(value, (v,indx) => {
+                      return <li key={indx}>ERROR {v}</li>
+                    })}
+                  </ul>
+                </li>
+              )
+            }
+          })}
+        </ul>
+
         <button type="button" 
           className="btn btn-primary" 
           onClick={ (event) => { 
             this.props.showComponent ? this.props.hideComponentAction() : this.props.showComponentAction() 
-          } }
-        >Create</button>
+          } }>
+        Create
+        </button>
         
-        <button type="button" className="btn btn-primary" onClick={this.openJoinRoomModal}>Join</button>
+        <button type="button" 
+          className="btn btn-primary" 
+          onClick={this.openJoinRoomModal}>
+        Join
+        </button>
         
         <div style={{marginTop: '5px'}}>
           { this.props.showComponent ? <CreateRoom /> : ''}
           
           <Link className="btn btn-danger" to="/" style={{marginTop: '5px'}}>Home</Link>
         </div>
+
         {this.state.confirmationPopup && (
           <Portal>
             <ConfirmDeleteModal
@@ -151,7 +166,7 @@ function mapStateToProps(state) {
     ownRooms: state.ownRooms,
     guestRooms: state.guestRooms,
     showComponent: state.showComponent,
-    error: state.error
+    errors: state.errors
   }
 }
 

@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { 
-  FETCH_OWNROOMS, FETCH_OWN_ROOM, FETCH_OWN_ERROR, 
-  UPDATE_OWN_ROOM, CREATE_ROOM, DELETE_OWN_ROOM, 
+  FETCH_OWNROOMS, FETCH_OWN_ROOM,
+  UPDATE_OWN_ROOM, CREATE_OWN_ROOM, DELETE_OWN_ROOM, 
   UNAUTHENTICATED, AUTHEN_ERROR 
 } from '../actions'
 
@@ -11,19 +11,17 @@ export default function(state = [], action) {
       return action.payload.data
     case FETCH_OWN_ROOM:
     case UPDATE_OWN_ROOM:
-      const foundIndex = _.findIndex(state, ['id', action.payload.data.id])
-      if (foundIndex < 0) { // not found
+      const foundFirstIndex = _.findIndex(state, ['id', action.payload.data.id])
+      if (foundFirstIndex < 0) { // not found
         return [action.payload.data, ...state]
       }
       const newState = [...state] // copy array
-      newState[foundIndex] = action.payload.data
+      newState[foundFirstIndex] = action.payload.data // replace new data to the same position
       return newState
-    case CREATE_ROOM:
+    case CREATE_OWN_ROOM:
       return [action.payload.data, ...state]
     case DELETE_OWN_ROOM:
       return _.filter(state, (value, indx) => value.id !== action.payload)
-    case FETCH_OWN_ERROR:
-      return [ action.payload.data ]
     case UNAUTHENTICATED:
     case AUTHEN_ERROR:
       return []

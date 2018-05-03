@@ -13,7 +13,7 @@ const rootReducer = combineReducers({
   ownRooms: ownRoomsReducer,
   guestRooms: guestRoomsReducer,
   showComponent: showComponentReducer,
-  error: errorReducer
+  errors: errorReducer
 })
 
 export default rootReducer
