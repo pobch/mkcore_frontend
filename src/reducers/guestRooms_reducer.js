@@ -1,5 +1,8 @@
 import _ from 'lodash'
-import { FETCH_GUESTROOMS, UNAUTHENTICATED, AUTHEN_ERROR, JOIN_ROOM, LEAVE_ROOM } from '../actions'
+import { 
+  FETCH_GUESTROOMS, UNAUTHENTICATED, AUTHEN_ERROR, JOIN_ROOM, 
+  LEAVE_ROOM, DELETE_OWN_ROOM 
+} from '../actions'
 
 export default function(state = [], action) {
   switch(action.type) {
@@ -14,6 +17,7 @@ export default function(state = [], action) {
       newState[foundFirstIndex] = action.payload.data // replace new data to the same position
       return newState
     case LEAVE_ROOM:
+    case DELETE_OWN_ROOM:
       return _.filter(state, (value) => value.id !== action.payload)
     case UNAUTHENTICATED:
     case AUTHEN_ERROR:

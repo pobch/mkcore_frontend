@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { 
   ERROR_IN_GUESTROOMS, ERROR_IN_OWNROOMS,
   CLEAR_ERROR_MSG, JOIN_ROOM, CREATE_OWN_ROOM 
