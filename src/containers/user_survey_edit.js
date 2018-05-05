@@ -9,26 +9,6 @@ import RenderSurvey from '../components/user_survey_edit_render'
 import Portal from '../components/portal'
 import SaveCompleteModal from '../components/modal_save_complete'
 
-// survey structure:
-// {
-//   survey: [
-//     {
-//       id: 1 
-//       question: 'what is it?',
-//       answerType: 'text'
-//       choices: null
-//     },
-//     {
-//       id: 5
-//       question: 'choose color',
-//       answerType: 'choices',
-//       choices: [
-//         {choiceText: 'red'}, 
-//         {choiceText: 'blue'}
-//       ]
-//     }
-//   ]
-// }
 
 class SurveyEdit extends Component {
   state = {
@@ -104,15 +84,17 @@ function mapStateToProps(state, ownProps) {
   // case there is truthy data in 'survey', then assign 'surveyData=survey'
   const surveyData = roomData && (roomData.survey || [])
   return {
-    room: {survey: surveyData}, // need another prop bcoz if there is only 'initialValues' prop, 
-                                // 'enableReinitialize' will intervene it
+    room: {survey: surveyData},  
     initialValues: {survey: surveyData}
+    // need another prop other than 'initialValues' bcoz if there is only 'initialValues' prop, 
+    // 'enableReinitialize' will intervene it (i.e., makes 'initialValues' not change its values 
+    // even a global state has changed)
   }
 }
 
 export default connect(mapStateToProps, {fetchOwnRoom, updateRoom})(
   reduxForm({
     form: 'surveyForm',
-    enableReinitialize: true
+    enableReinitialize: true // make all <Field /> can receive initialValues more than once
   })(SurveyEdit)
 )

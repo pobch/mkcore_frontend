@@ -5,9 +5,10 @@ import Home from '../containers/home'
 import LogIn from '../containers/login'
 import LogOut from '../containers/logout'
 import UserRoomsList from '../containers/user_rooms_list'
-import RoomDetail from '../containers/own_room_detail'
+import EditRoom from '../containers/user_own_room_edit'
 import SignUp from '../containers/signup'
 import SurveyEdit from '../containers/user_survey_edit'
+import GuestAnswer from '../containers/user_guest_answer'
 
 import onlyUserCanAccess from '../hoc/only_user_can_access'
 import onlyAnonCanAccess from '../hoc/only_anon_can_access'
@@ -34,8 +35,9 @@ class App extends Component {
             <Route exact path="/signup" component={onlyAnonCanAccess(SignUp)}/>
             <Route exact path="/user/rooms" component={onlyUserCanAccess(UserRoomsList)} />
             {/* <Route exact path="/user/rooms" component={UserRoomsList} /> */}
-            <Route exact path="/user/rooms/:id(\d+)" component={RoomDetail} />
+            <Route exact path="/user/rooms/:id(\d+)" component={EditRoom} />
             <Route exact path="/user/rooms/:id(\d+)/survey" component={SurveyEdit} />
+            <Route exact path="/user/rooms/:id(\d+)/answer" component={GuestAnswer}/>
             <Route component={NotFound} />
           </Switch>
         </BrowserRouter>

@@ -14,6 +14,7 @@ export const DELETE_OWN_ROOM = 'delete_own_room'
 export const ERROR_IN_OWNROOMS = 'ownrooms_error_from_api'
 
 export const FETCH_GUESTROOMS = 'fetch_guest_rooms'
+export const FETCH_GUEST_ROOM = 'fetch_one_guest_room'
 export const JOIN_ROOM = 'join_room'
 export const LEAVE_ROOM = 'leave_room'
 export const ERROR_IN_GUESTROOMS = 'guestrooms_error_from_api'
@@ -112,6 +113,23 @@ export function fetchGuestRooms() {
       const response = await axios.get(URL_FETCH_GUESTROOMS)
       dispatch({
         type: FETCH_GUESTROOMS,
+        payload: response
+      })
+    } catch(error) {
+      dispatch({
+        type: ERROR_IN_GUESTROOMS,
+        payload: error.response
+      })
+    }
+  }
+}
+
+export function fetchGuestRoom(id) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${URL_RETRIEVE_UPDATE_OWNROOM}${id}/`)
+      dispatch({
+        type: FETCH_GUEST_ROOM,
         payload: response
       })
     } catch(error) {

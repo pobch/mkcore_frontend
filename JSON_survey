@@ -1,0 +1,30 @@
+'survey' structure in room obj:
+
+{
+  id: 3,
+  title: 'Room Title',
+  room_code: '1234',
+  room_password: '5678',
+  ...
+
+  survey: [
+    {
+      id: 3,
+      question: 'what is it?',
+      answerType: 'text',
+      choices: null
+    },
+    {
+      id: 5,
+      question: 'choose color',
+      answerType: 'choices',
+      choices: [
+        {choiceText: 'red'}, 
+        {choiceText: 'blue'}
+      ]
+    },
+    {
+      ...
+    }
+  ]
+}

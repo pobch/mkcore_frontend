@@ -2,26 +2,6 @@ import _ from 'lodash'
 import React, {Component} from 'react'
 import {Field, FieldArray} from 'redux-form'
 
-// survey structure:
-// {
-//   survey: [
-//     {
-//       id: 1 
-//       question: 'what is it?',
-//       answerType: 'text'
-//       choices: null
-//     },
-//     {
-//       id: 5
-//       question: 'choose color',
-//       answerType: 'choices',
-//       choices: [
-//         {choiceText: 'red'}, 
-//         {choiceText: 'blue'}
-//       ]
-//     }
-//   ]
-// }
 
 export default class RenderSurvey extends Component {
   state = {

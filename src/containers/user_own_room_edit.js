@@ -16,7 +16,7 @@ momentLocalizer()
 
 const publish = ['draft', 'active', 'closed']
 
-class RoomDetail extends Component {
+class EditRoom extends Component {
   componentDidMount() {
     const { id } = this.props.match.params
     this.props.fetchOwnRoom(id)
@@ -84,7 +84,7 @@ class RoomDetail extends Component {
         <form onSubmit={ handleSubmit(this.onSubmit) }>
 
           <div>
-            <Link to={`/user/rooms/${this.props.room.id}/survey`} className="btn btn-primary">Edit Survey</Link>
+            <Link to={`/user/rooms/${this.props.room.id}/survey`} className="btn btn-primary">Create/Edit Survey</Link>
           </div>
 
           <h5>Edit this room</h5>
@@ -146,12 +146,6 @@ class RoomDetail extends Component {
         </form>
           <p>
             <i>
-              Current Room Title : {this.props.room.title}
-              <br/>
-              Current Description : {this.props.room.description}
-              <br/>
-              Current Survey Owner/ Instructor : {this.props.room.instructor_name}
-              <br/>
               Current Room's Code : {this.props.room.room_code}
               <br/>
               Current Room's Password : {this.props.room.room_password}
@@ -173,5 +167,5 @@ function mapStateToProps(state, ownProps) {
 export default connect(mapStateToProps, { fetchOwnRoom, updateRoom })(
   reduxForm({
     form: 'editOwnRoomForm'
-  })(RoomDetail)
+  })(EditRoom)
 )

@@ -1,0 +1,21 @@
+{
+  answer: [
+    {
+      id: 1,
+      questionId: 3,
+      question: 'what is it?',
+      answerType: 'text',
+      answerText: 'it is a dog'
+    },
+    {
+      id: 2,
+      questionId: 5,
+      question: 'choose color',
+      answerType: 'choices',
+      answerChoice: 'blue'
+    },
+    {
+      ...
+    }
+  ]   
+}

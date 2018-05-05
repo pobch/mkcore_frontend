@@ -1,13 +1,14 @@
 import _ from 'lodash'
 import { 
   FETCH_GUESTROOMS, UNAUTHENTICATED, AUTHEN_ERROR, JOIN_ROOM, 
-  LEAVE_ROOM, DELETE_OWN_ROOM 
+  LEAVE_ROOM, DELETE_OWN_ROOM, FETCH_GUEST_ROOM
 } from '../actions'
 
 export default function(state = [], action) {
   switch(action.type) {
     case FETCH_GUESTROOMS:
       return action.payload.data // array of Room objects
+    case FETCH_GUEST_ROOM:
     case JOIN_ROOM:
       const foundFirstIndex = _.findIndex(state, ['id', action.payload.data.id])
       if (foundFirstIndex < 0) { // not found

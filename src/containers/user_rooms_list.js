@@ -7,7 +7,7 @@ import {
   fetchOwnRooms, fetchGuestRooms, showComponentAction, 
   hideComponentAction, deleteRoom, resetError, leaveRoom
 } from '../actions'
-import CreateRoom from './user_create_room'
+import CreateRoom from './user_own_room_create'
 import Portal from '../components/portal'
 import ConfirmDeleteModal from '../components/modal_confirm_delete'
 import JoinRoomModal from '../containers/modal_join_room'
@@ -65,7 +65,7 @@ class UserRoomsList extends Component {
       } else {
         return (
           <li style={{marginBottom: '5px'}} key={room.id}>
-            <Link to={`/user/answers/${room.id}`} className="btn btn-primary">Edit Survey</Link>
+            <Link to={`/user/rooms/${room.id}/answer`} className="btn btn-primary">Answer Survey</Link>
             <button type="button" className="btn btn-danger" onClick={() => {this.onLeaveRoom(room.id)}}>Leave</button>
             ID = {room.id}, Title = {room.title}
           </li>
