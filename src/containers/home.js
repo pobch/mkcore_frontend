@@ -8,8 +8,10 @@ class Home extends Component {
     return (
       <div>
         <h5>Home Page</h5>
-        <h6>We have not yet implemented smtp server for production.</h6>
-        <h6>Click Log in and use the test account on that page if you want to try our app.</h6>
+        <i>
+          We have not yet implemented smtp server for production.<br/>
+          Click Log in and use the test account on that page if you want to try our app.
+        </i>
 
         <div className="text-xs-left">
           { this.props.auth.authenticated ? 

@@ -29,7 +29,7 @@ class GuestAnswer extends Component {
       fields.map((name, indx) => {
         return (
           <div key={indx}>
-            <h4><b>{fields.get(indx).question}</b></h4>
+            <h4><b>{`#${indx+1} ${fields.get(indx).question}`}</b></h4>
             
             {fields.get(indx).answerType === 'text' &&
               <div>
@@ -75,7 +75,7 @@ class GuestAnswer extends Component {
         />
 
         {this.props.canEditAnswer ? 
-          <button type="submit">Answer</button> :
+          <button type="submit" className="btn btn-primary">Answer</button> :
           <div style={{color:'red'}}>
             <i>Cannot edit the survey because you have already answered this survey 
               or there is no survey created in this room</i>

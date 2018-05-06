@@ -39,7 +39,11 @@ export default class RenderSurvey extends Component {
                   component="input"
                   type="text"
                 />
-                <button type="button" onClick={() => fields.remove(index)}>-</button>
+                <button type="button" 
+                  onClick={() => fields.remove(index)}
+                  className="btn btn-danger">
+                  -
+                </button>
               </li>
             )
           })
@@ -68,8 +72,9 @@ export default class RenderSurvey extends Component {
             })
           }} 
           className="btn btn-primary">
-          +
+          +Question
         </button>
+        <hr/>
         {
           fields.map((value,index) => {
             const {id} = fields.get(index)
@@ -136,6 +141,7 @@ export default class RenderSurvey extends Component {
                   />
                 }
                 
+                <hr/>
               </li>
             )
           })

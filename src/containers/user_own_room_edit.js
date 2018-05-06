@@ -83,11 +83,12 @@ class EditRoom extends Component {
       <div>
         <form onSubmit={ handleSubmit(this.onSubmit) }>
 
+          <h5>Edit this room</h5>
+          <hr/>
           <div>
             <Link to={`/user/rooms/${this.props.room.id}/survey`} className="btn btn-primary">Create/Edit Survey</Link>
           </div>
 
-          <h5>Edit this room</h5>
           <Field 
             name="title"
             component={this.renderField}
