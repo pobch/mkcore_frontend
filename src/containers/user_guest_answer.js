@@ -2,17 +2,26 @@ import _ from 'lodash'
 import React, {Component} from 'react'
 import { reduxForm, Field, FieldArray } from 'redux-form'
 import { connect } from 'react-redux'
+import { Link, Prompt } from 'react-router-dom'
 
-import { fetchGuestRoom } from '../actions'
+import { fetchGuestRoom, submitAnswer, fetchAnswer, resetError } from '../actions'
 
 
 class GuestAnswer extends Component {
   componentDidMount() {
-    this.props.fetchGuestRoom(this.props.match.params.id)
+    const roomId = this.props.match.params.id
+    this.props.fetchAnswer(roomId)
+    this.props.fetchGuestRoom(roomId)
+  }
+
+  componentWillUnmount() {
+    this.props.resetError()
   }
   
   onSubmit = (values) => {
     console.log('submit ===', values)
+    const roomId = this.props.match.params.id
+    this.props.submitAnswer(roomId, values)
   }
 
   renderAnswer = ({fields}) => {
@@ -57,53 +66,69 @@ class GuestAnswer extends Component {
 
   render() {
     const { handleSubmit } = this.props
-    console.log('InitValues ===',this.props.initialValues)
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
-        
+
         <FieldArray
           name="answer"
           component={this.renderAnswer}
         />
-        
-        <button type="submit">Answer</button>
+
+        {this.props.canEditAnswer ? 
+          <button type="submit">Answer</button> :
+          <div style={{color:'red'}}>
+            <i>Cannot edit the survey because you have already answered this survey 
+              or there is no survey created in this room</i>
+          </div>
+        }
+        <Link to="/user/rooms" className="btn btn-danger">Cancel</Link>
+
       </form>
     )
   }
 }
 
 function mapStateToProps(state, ownProps) {
-  // console.log(typeof ownProps.match.params.id) // String type
+  let canEditAnswer = false
+  // ownProps.match.params.id is String type
   const room = _.find(state.guestRooms, ['id', +ownProps.match.params.id])
   
   // Not every room has survey. Some rooms have survey=null
   if(!room || _.isEmpty(room.survey)) { // _.isEmpty for [],{},null,undefined will return true
     return {
-      survey: null
+      survey: null,
+      canEditAnswer
     }
   }
   
-  // case: there is at least 1 question
   // build initialValues
   const {survey} = room
-  const answer = []
-  survey.forEach((eachQuestion, indx) => {
-    const eachAnswer = {
-      id: indx + 1,
-      questionId: eachQuestion.id,
-      question: eachQuestion.question,
-      answerType: eachQuestion.answerType
-    }
-    // no initialValues for 'answerText' and 'answerChoice'
-    answer.push(eachAnswer)
-  })
+  const existAnswer = _.find(state.answers, ['room', +ownProps.match.params.id])
+  let answer = []
+  if(existAnswer) { // case: the guest has already answered the survey before.
+    answer = existAnswer.answer
+    canEditAnswer = false  
+  } else { // case: there is at least 1 question and the guest has never answered the survey yet
+    survey.forEach((eachQuestion, indx) => {
+      const eachAnswer = {
+        id: indx + 1,
+        questionId: eachQuestion.id,
+        question: eachQuestion.question,
+        answerType: eachQuestion.answerType
+      }
+      // no initialValues for 'answerText' and 'answerChoice'
+      answer.push(eachAnswer)
+    })
+    canEditAnswer = true
+  }
   return {
     survey,
+    canEditAnswer,
     initialValues: {answer}
   }
 }
 
-export default connect(mapStateToProps, { fetchGuestRoom })(
+export default connect(mapStateToProps, { fetchGuestRoom, submitAnswer, fetchAnswer, resetError })(
   reduxForm({
     form: 'answerForm'
     // enableReinitialize: true

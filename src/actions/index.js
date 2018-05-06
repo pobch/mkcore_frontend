@@ -17,8 +17,12 @@ export const FETCH_GUESTROOMS = 'fetch_guest_rooms'
 export const FETCH_GUEST_ROOM = 'fetch_one_guest_room'
 export const JOIN_ROOM = 'join_room'
 export const LEAVE_ROOM = 'leave_room'
-export const ERROR_IN_GUESTROOMS = 'guestrooms_error_from_api'
 export const CLEAR_ERROR_MSG = 'clear_error_message'
+export const ERROR_IN_GUESTROOMS = 'guestrooms_error_from_api'
+
+export const SUBMIT_ANSWER = 'submit_a_survey_answer'
+export const FETCH_ANSWER = 'fetch_an_existing_answer'
+export const ERROR_IN_ANSWERS = 'answers_error_from_api'
 
 export const HIDE_COMPONENT = 'hide_this_component'
 export const SHOW_COMPONENT = 'show_this_component'
@@ -32,6 +36,7 @@ const URL_RETRIEVE_UPDATE_OWNROOM = `${BASE_API_URL}rooms/` // + id
 const URL_SIGNUP = `${BASE_API_URL}auth/register/`
 const URL_JOIN_ROOM = URL_RETRIEVE_UPDATE_OWNROOM + 'join/'
 const URL_LEAVE_ROOM = URL_RETRIEVE_UPDATE_OWNROOM + 'unjoin/'
+const URL_CREATE_ANSWER = BASE_API_URL + 'answers/'
 
 export function logInAction(values, callback) {
   const { email, password } = values
@@ -234,5 +239,32 @@ export function leaveRoom(id) {
       type: LEAVE_ROOM,
       payload: id
     })
+  }
+}
+
+export function submitAnswer(roomId, {answer}) {
+  return async (dispatch) => {
+    const response = await axios.post(URL_CREATE_ANSWER, {room: +roomId, answer})
+    dispatch({
+      type: SUBMIT_ANSWER,
+      payload: response
+    })
+  }
+}
+
+export function fetchAnswer(roomId) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${URL_CREATE_ANSWER}${roomId}/`)
+      dispatch({
+        type: FETCH_ANSWER,
+        payload: response
+      })
+    } catch(error) {
+      dispatch({
+        type: ERROR_IN_ANSWERS,
+        payload: error.response
+      })
+    }
   }
 }
