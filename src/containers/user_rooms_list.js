@@ -87,7 +87,7 @@ class UserRoomsList extends Component {
     
     return (
       <div>
-        <h5>User's Rooms Page (PRIVATE)</h5>
+        <h5>Rooms Page (only logged in users can access)</h5>
         <ul>
           <h5>Rooms you have created</h5>
           { this.renderRooms(this.props.ownRooms) }
@@ -100,11 +100,11 @@ class UserRoomsList extends Component {
           { _.map(this.props.errors, (value,key) => {
             if(key === 'detail') {
               // if key = detail, value will be string (e.g., 'Not found')
-              return <li key={key}>ERROR {value}</li>
+              return <li key={key} style={{color: 'red'}}>ERROR {value}</li>
             } else {
               // e.g., key = room_code, value = [ 'error msg1', 'error msg2' ]
               return (
-                <li key={key}>
+                <li key={key} style={{color: 'red'}}>
                   <ul>
                     {_.map(value, (v,indx) => {
                       return <li key={indx}>ERROR {v}</li>

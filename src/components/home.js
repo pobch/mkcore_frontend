@@ -7,7 +7,7 @@ export default class Home extends Component {
       <div>
         <h5>Home Page</h5>
         <ul>
-          <li>We have not yet implemented smtp server for production.</li>
+          <li>We have not implemented smtp server for production yet.</li>
           <li>Click Log in and use the test account on that page if you want to try our app.</li>
         </ul>
       </div>
