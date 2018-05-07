@@ -5,9 +5,9 @@ import {Field, FieldArray} from 'redux-form'
 
 export default class RenderSurvey extends Component {
   state = {
-    showChoiceFieldId: this.props.initChoiceQuestionId,
-    showTextFieldId: this.props.initTextQuestionId,
-    maxQuestionId: this.props.initMaxId
+    showChoiceFieldId: this.props.initChoiceQuestionId, // object
+    showTextFieldId: this.props.initTextQuestionId, // object 
+    maxQuestionId: this.props.initMaxId // integer
   }
 
   renderQuestionField = (field) => {
@@ -41,7 +41,7 @@ export default class RenderSurvey extends Component {
                 />
                 <button type="button" 
                   onClick={() => fields.remove(index)}
-                  className="btn btn-danger">
+                  className="btn btn-danger mb-1">
                   -
                 </button>
               </li>
@@ -66,10 +66,10 @@ export default class RenderSurvey extends Component {
           onClick={() => {
             const {id} = defaultNewQuestion
             fields.push(defaultNewQuestion)
-            this.setState({
-              maxQuestionId: this.state.maxQuestionId + 1,
-              showTextFieldId: {...this.state.showTextFieldId, [id]: id}
-            })
+            this.setState((prevState) => ({
+              maxQuestionId: prevState.maxQuestionId + 1,
+              showTextFieldId: {...prevState.showTextFieldId, [id]: id}
+            }))
           }} 
           className="btn btn-primary">
           +Question
@@ -83,10 +83,10 @@ export default class RenderSurvey extends Component {
                 
                 <button type="button" 
                   onClick={() => {
-                    this.setState({
-                      showChoiceFieldId: _.omit(this.state.showChoiceFieldId, id),
-                      showTextFieldId: _.omit(this.state.showTextFieldId, id)
-                    })
+                    this.setState((prevState) => ({
+                      showChoiceFieldId: _.omit(prevState.showChoiceFieldId, id),
+                      showTextFieldId: _.omit(prevState.showTextFieldId, id)
+                    }))
                     fields.remove(index)
                   }} 
                   className="btn btn-danger">
@@ -95,30 +95,30 @@ export default class RenderSurvey extends Component {
 
                 <div>
                   Answer Type : 
-                  <button type="button" 
+                  <button type="button" className="btn btn-info m-1"
                     onClick={() => {
                       const wantedValue = {...fields.get(index), answerType:'text', choices:null}
                       fields.remove(index)
                       fields.insert(index, wantedValue)
                       // change(`${value}.answerType`, 'text') 
                       // change(`${value}.choices`, null)       // These 2 lines are alternative to 3 lines above
-                      this.setState({
-                        showChoiceFieldId: _.omit(this.state.showChoiceFieldId, id),
-                        showTextFieldId: {...this.state.showTextFieldId, [id]: id}
-                      })
+                      this.setState((prevState) => ({
+                        showChoiceFieldId: _.omit(prevState.showChoiceFieldId, id),
+                        showTextFieldId: {...prevState.showTextFieldId, [id]: id}
+                      }))
                     }}>
                     Text
                   </button>
 
-                  <button type="button" 
+                  <button type="button" className="btn btn-info m-1"
                     onClick={() => {
                       const wantedValue = {...fields.get(index), answerType: 'choices'}
                       fields.remove(index)
                       fields.insert(index, wantedValue)
-                      this.setState({
-                        showChoiceFieldId: {...this.state.showChoiceFieldId, [id]: id},
-                        showTextFieldId: _.omit(this.state.showTextFieldId, id)
-                      })
+                      this.setState((prevState) => ({
+                        showChoiceFieldId: {...prevState.showChoiceFieldId, [id]: id},
+                        showTextFieldId: _.omit(prevState.showTextFieldId, id)
+                      }))
                     }}>
                     Choices
                   </button>

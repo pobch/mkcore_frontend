@@ -40,11 +40,11 @@ class EditRoom extends Component {
 
   renderField = (field) => {
     return (
-      <div>
+      <div className="form-group">
         <label htmlFor={field.input.name}>{field.label}</label><br/>
         { field.type === 'textarea' ? 
-          <textarea {...field.input} rows="5" cols="25"/> :
-          <input type={field.type} {...field.input}/>
+          <textarea className="form-control" {...field.input} rows="5" cols="25"/> :
+          <input className="form-control" type={field.type} {...field.input}/>
         }
       </div>
     )
@@ -138,7 +138,7 @@ class EditRoom extends Component {
             type=""
             data={publish}
           />
-
+          <hr/>
           <div>
             <button type="submit" className="btn btn-primary">Save</button>
             <Link to="/user/rooms" className="btn btn-danger">Cancel</Link>
