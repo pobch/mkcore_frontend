@@ -2,7 +2,7 @@ import _ from 'lodash'
 import React, {Component} from 'react'
 import { reduxForm, Field, FieldArray } from 'redux-form'
 import { connect } from 'react-redux'
-import { Link, Prompt } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { fetchGuestRoom, submitAnswer, fetchAnswer, resetError } from '../actions'
 

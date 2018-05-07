@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
-import { Link, Prompt } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { 
@@ -23,6 +23,11 @@ class UserRoomsList extends Component {
   componentDidMount() {
     this.props.fetchOwnRooms()
     this.props.fetchGuestRooms()
+  }
+
+  componentWillUnmount() {
+    // Reset Error msg when leaving the page
+    this.props.resetError()
   }
 
   onDeleteRoom = (id, event) => {
@@ -82,12 +87,6 @@ class UserRoomsList extends Component {
     
     return (
       <div>
-        {/* Reset Error msg when leaving the page */}
-        <Prompt message={() => {
-          this.props.resetError()
-          return true}}
-        />
-
         <h5>User's Rooms Page (PRIVATE)</h5>
         <ul>
           <h5>Rooms you have created</h5>

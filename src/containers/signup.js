@@ -12,12 +12,15 @@ class SignUp extends Component {
   }
 
   renderField = (props) => {
+    const { touched, error } = props.meta
     return (
-      <div className={props.meta.touched && props.meta.error ? 'form-group has-danger' : 'form-group'}>
+      <div className="form-group">
         <label htmlFor={props.input.name}>{props.label}</label>
-        <input className="form-control form-control-danger" type={props.type} {...props.input}/>
-        <div className='form-control-feedback'>
-          { props.meta.touched && props.meta.error ? props.meta.error : '\u00A0'}
+        <input className={touched && error ? 'form-control is-invalid' : 'form-control'} 
+          type={props.type} 
+          {...props.input}/>
+        <div className='invalid-feedback'>
+          { touched && error ? error : null}
         </div>
       </div>
     )
@@ -28,6 +31,7 @@ class SignUp extends Component {
 
     return (
       <div>
+        <h5>Sign Up Page</h5>
         <form onSubmit={handleSubmit(this.onSubmit)}>
           
           <Field

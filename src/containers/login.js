@@ -1,23 +1,28 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
-import { Link, Prompt } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { logInAction, onLeaveLogInPage } from '../actions'
 
 
 class LogIn extends Component {
+  componentWillUnmount(){
+    this.props.onLeaveLogInPage() // remove error msg (if any) when leaving this page
+  }
+
   renderField = (field) => {
+    const { touched, error } = field.meta
     return (
-      <div className={field.meta.touched && field.meta.error ? 'form-group has-danger' : 'form-group'}>
+      <div className="form-group">
         <input 
-          className="form-control form-control-danger"
+          className={touched && error ? 'form-control is-invalid' : 'form-control'}
           placeholder={ field.placeholder }
           type={ field.type }
           {...field.input}
         />
-        <div className="text-xs-left form-control-feedback" >
-          { field.meta.touched ? (field.meta.error ? field.meta.error : '\u00A0') : '\u00A0' }
+        <div className="invalid-feedback" >
+          { touched && error ? error : null }
         </div>
       </div>
     )
@@ -33,12 +38,12 @@ class LogIn extends Component {
 
     return (
       <div>
+        <h5 className="text-xs-left" >Log in page</h5>
         <h6>Testing Account</h6>
         <h6><i>E-mail: test@pob.com</i></h6>
         <h6><i>Password: guestpass123</i></h6>
 
         <form onSubmit={ handleSubmit(this.onSubmit) } >
-          <h5 className="text-xs-left" >Log in page</h5>
           <Field
             name="email"
             placeholder="Your e-mail address"
@@ -57,10 +62,6 @@ class LogIn extends Component {
         <div className="text-danger long-text" >
           { error ? error : (authenticated ? 'Log in successfully' : '') }
         </div>
-        <Prompt message={() => {
-          this.props.onLeaveLogInPage() // remove error msg (if any) when leaving this page
-          return true
-        }} />
       </div>
     )
   }
