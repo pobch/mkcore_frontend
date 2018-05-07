@@ -2,12 +2,16 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
+import icon from '../static/main_icon.svg'
+
 
 class TopNavbar extends Component {
   render() {
     return (
       <nav className="navbar navbar-expand-md navbar-light bg-light">
-        <Link to="/" className="navbar-brand">SurveyApp</Link>
+        <Link to="/" className="navbar-brand">
+          <img src={icon} width="30" height="30" alt="App"/>
+        </Link>
         
         {/* Nav button when collapse on small screen */}
         <button className="navbar-toggler" type="button" 
