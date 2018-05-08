@@ -21,7 +21,7 @@ class LogOut extends Component {
         Are you sure you want to log out?
         <div className="text-xs-left">
           <button type="button" className="btn btn-primary" onClick={this.clickButton} >Log Out</button>
-          <Link className="btn btn-danger" to="/">Home</Link>
+          <Link className="btn btn-info" to="/">Home</Link>
           <div className="text-danger" style={ this.state.clicked ? {} : {display: 'none'} }>
             Cleared localStorage, Deleted 'Authorization' header and Logged out
           </div>

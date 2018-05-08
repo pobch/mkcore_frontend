@@ -12,9 +12,9 @@ export default class RenderSurvey extends Component {
 
   renderQuestionField = (field) => {
     return (
-      <div>
+      <div className="form-group">
         <label>Enter the question</label>
-        <input type="text" {...field.input}/>
+        <input type="text" {...field.input} className="form-control"/>
       </div>
     )
   }
@@ -23,7 +23,7 @@ export default class RenderSurvey extends Component {
     return (
       <ul>
         <button type="button"
-          className="btn btn-primary"
+          className="btn btn-primary mb-1"
           onClick={() => {
             fields.push({})
           }}>
@@ -32,18 +32,19 @@ export default class RenderSurvey extends Component {
         {
           fields.map((value, index) => {
             return (
-              <li key={index}>
-                <label>{`Choice #${index + 1} : `}</label>
-                <Field
-                  name={`${value}.choiceText`}
-                  component="input"
-                  type="text"
-                />
+              <li key={index} className="form-inline">
                 <button type="button" 
                   onClick={() => fields.remove(index)}
                   className="btn btn-danger mb-1">
                   -
                 </button>
+                <label>{`Choice #${index + 1} : `}</label>
+                <Field
+                  name={`${value}.choiceText`}
+                  component="input"
+                  type="text"
+                  className="form-control"
+                />
               </li>
             )
           })
@@ -79,8 +80,7 @@ export default class RenderSurvey extends Component {
           fields.map((value,index) => {
             const {id} = fields.get(index)
             return (
-              <li key={index}>
-                
+              <li key={index} className="form-group">
                 <button type="button" 
                   onClick={() => {
                     this.setState((prevState) => ({
@@ -89,11 +89,12 @@ export default class RenderSurvey extends Component {
                     }))
                     fields.remove(index)
                   }} 
-                  className="btn btn-danger">
-                  Delete
+                  className="btn btn-danger mx-1">
+                Delete
                 </button>
+                <b>{`Question #${index+1}`}</b>
 
-                <div>
+                <div className="form-group form-inline">
                   Answer Type : 
                   <button type="button" className="btn btn-info m-1"
                     onClick={() => {
@@ -128,10 +129,12 @@ export default class RenderSurvey extends Component {
                   name={`${value}.question`}
                   component={this.renderQuestionField}
                 />
-                <div>
-                  Expected answer : 
-                  {_.includes(this.state.showTextFieldId, id) && ' Text Type'}
-                  {_.includes(this.state.showChoiceFieldId, id) && ' Choice Type'}
+                <div className="form-group">
+                  Expected answer :
+                  <i> 
+                    {_.includes(this.state.showTextFieldId, id) && ' Text Type'}
+                    {_.includes(this.state.showChoiceFieldId, id) && ' Choice Type'}
+                  </i>
                 </div>
                 
                 {_.includes(this.state.showChoiceFieldId, id) && 

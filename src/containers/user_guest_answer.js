@@ -32,12 +32,12 @@ class GuestAnswer extends Component {
             <h4><b>{`#${indx+1} ${fields.get(indx).question}`}</b></h4>
             
             {fields.get(indx).answerType === 'text' &&
-              <div>
+              <div className="form-group">
                 Your answer :
                 <Field
                   name={`${name}.answerText`}
-                  component="input"
-                  type="text"
+                  component="textarea"
+                  className="form-control"
                 />
               </div>
             }
@@ -45,19 +45,21 @@ class GuestAnswer extends Component {
             {fields.get(indx).answerType === 'choices' &&
               this.props.survey[indx].choices.map((value, i) => {
                 return (
-                  <div key={i}>
+                  <div key={i} className="form-check form-group">
                     <Field
                       name={`${name}.answerChoice`}
                       component="input"
                       type="radio"
                       value={value.choiceText}
+                      className="form-check-input"
                     />{' '}
-                    {value.choiceText}
+                  {value.choiceText}
                   </div>
                 )
               })
             }
-
+            
+            <hr/>
           </div>
         )
       })

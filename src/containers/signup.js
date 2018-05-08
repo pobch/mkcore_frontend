@@ -70,7 +70,7 @@ class SignUp extends Component {
           />
           
           <button type="submit" className="btn btn-primary">Register</button>
-          <Link to="/" className="btn btn-danger">Home</Link>
+          <Link to="/" className="btn btn-info">Home</Link>
         </form>
       </div>
     )

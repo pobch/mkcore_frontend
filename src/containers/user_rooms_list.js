@@ -9,16 +9,21 @@ import {
 } from '../actions'
 import CreateRoom from './user_own_room_create'
 import Portal from '../components/portal'
-import ConfirmDeleteModal from '../components/modal_confirm_delete'
+import ConfirmModal from '../components/modal_confirm'
 import JoinRoomModal from '../containers/modal_join_room'
 
 
 class UserRoomsList extends Component {  
   state = { 
     confirmationPopup: false,
-    deleteId: null,
-    joinRoomPopup: false
+    deleteRoomId: null,
+    joinRoomPopup: false,
+    leaveRoomId: null
   }
+
+  // For Bootstrap v4 modal connection between <button> (for open modal) and Modal itself
+  confirmDeleteModalHTMLId = 'confirmDeleteModal' // must add # in front of id in 'data-target'
+  confirmLeaveRoomHTMLId = 'confirmLeaveRoomModal' // must add # in front of id in 'data-target'
 
   componentDidMount() {
     this.props.fetchOwnRooms()
@@ -29,13 +34,13 @@ class UserRoomsList extends Component {
     // Reset Error msg when leaving the page
     this.props.resetError()
   }
+  
+  openConfirmDeleteModal = (id) => {
+    this.setState({ confirmationPopup: true, deleteRoomId: id })
+  }
 
   onDeleteRoom = (id, event) => {
     this.props.deleteRoom(id)
-  }
-
-  openConfirmDeleteModal = (id) => {
-    this.setState({ confirmationPopup: true, deleteId: id })
   }
 
   closeModal = () => {
@@ -47,7 +52,11 @@ class UserRoomsList extends Component {
     this.setState({ joinRoomPopup: true })
   }
 
-  onLeaveRoom = (id) => {
+  openConfirmLeaveRoomModal = (id) => {
+    this.setState({leaveRoomId: id})
+  }
+
+  onLeaveRoom = (id, event) => {
     this.props.leaveRoom(id)
   }
 
@@ -57,21 +66,36 @@ class UserRoomsList extends Component {
       if(owner) {
         return (
           <li style={{marginBottom: '5px'}} key={room.id}>
-            <Link to={`/user/rooms/${room.id}`} className="btn btn-primary">Edit</Link>
+            <Link to={`/user/rooms/${room.id}`} className="btn btn-info">
+              Edit
+            </Link>
             <button type="button" 
               onClick={ () => {this.openConfirmDeleteModal(room.id)} } 
               className="btn btn-danger"
-              // data-toggle="modal"        // Bootstrap v4 
-              // data-target="#myModal"     // Bootstrap v4
-            >Delete</button>
+              data-toggle="modal"                                 // Bootstrap v4 
+              data-target={`#${this.confirmDeleteModalHTMLId}`}   // Bootstrap v4
+            >
+              Delete
+            </button>
+            
             ID = {room.id}, Title = {room.title}
           </li>
         )
       } else {
         return (
           <li style={{marginBottom: '5px'}} key={room.id}>
-            <Link to={`/user/rooms/${room.id}/answer`} className="btn btn-primary">Answer Survey</Link>
-            <button type="button" className="btn btn-danger" onClick={() => {this.onLeaveRoom(room.id)}}>Leave</button>
+            <Link to={`/user/rooms/${room.id}/answer`} className="btn btn-success">
+              Answer Survey
+            </Link>
+            <button type="button" 
+              onClick={() => {this.openConfirmLeaveRoomModal(room.id)}}
+              className="btn btn-danger"
+              data-toggle="modal"                               // Bootstrap v4
+              data-target={`#${this.confirmLeaveRoomHTMLId}`}   // Bootstrap v4
+            >
+              Leave
+            </button>
+            
             ID = {room.id}, Title = {room.title}
           </li>
         )
@@ -84,7 +108,7 @@ class UserRoomsList extends Component {
     // if(_.isEmpty(this.props.ownRooms)) {
     //   return <div>Loading...</div>
     // }
-    
+
     return (
       <div>
         <h5>Rooms Page (only logged in users can access)</h5>
@@ -126,35 +150,61 @@ class UserRoomsList extends Component {
         
         <button type="button" 
           className="btn btn-primary" 
-          onClick={this.openJoinRoomModal}>
+          onClick={this.openJoinRoomModal}
+          data-toggle="modal"           // Bootstrap v4 
+          data-target="#joinRoomModal"   // Bootstrap v4
+        >
         Join
         </button>
         
         <div style={{marginTop: '5px'}}>
           { this.props.showComponent ? <CreateRoom /> : ''}
           
-          <Link className="btn btn-danger" to="/" style={{marginTop: '5px'}}>Home</Link>
+          <Link className="btn btn-info" to="/" style={{marginTop: '5px'}}>Home</Link>
         </div>
 
-        {this.state.confirmationPopup && (
+        {/* {this.state.confirmationPopup && ( */}
+
+          {/* // Bootstrap 4 with data-* className */}
           <Portal>
-            <ConfirmDeleteModal
+            {/* Confirm Delete Room Modal */}
+            <ConfirmModal
+              htmlId={this.confirmDeleteModalHTMLId}
+              modalTitle="Confirm Your Action"
+              modalBody="Are you sure you want to delete this room?"
               onCancel={ () => {this.closeModal()} }
               onConfirm={ (event) => {
                 this.closeModal()
-                this.onDeleteRoom(this.state.deleteId, event)
+                this.onDeleteRoom(this.state.deleteRoomId, event)
               }}
             />
           </Portal>
-        )}
-        {this.state.joinRoomPopup && (
+        {/* )} */}
+
+          <Portal>
+            {/* Confirm Leave Room Modal */}
+            <ConfirmModal
+              htmlId={this.confirmLeaveRoomHTMLId}
+              modalTitle="Confirm Your Action"
+              modalBody="Are you sure you want to leave this room?"
+              onCancel={() => {}}   // Let Bootstrap control the closing modal action
+              onConfirm={ (event) => {
+                this.onLeaveRoom(this.state.leaveRoomId, event)
+              }}
+            />
+          </Portal>
+
+        {/* {this.state.joinRoomPopup && ( */}
+          
+          {/* // Bootstrap 4 with data-* className */}
           <Portal>
             <JoinRoomModal
               onCancel={ () => {this.closeModal()} }
               closeModalFunc={ this.closeModal }
             />
           </Portal>
-        )}
+        {/* )} */}
+
       </div>
     )
   }
