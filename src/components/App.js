@@ -30,7 +30,7 @@ class App extends Component {
       <div className="container">
         <BrowserRouter>
           <div>
-            <TopNavbar />
+            <Route path="/" component={TopNavbar} />
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/login" component={onlyAnonCanAccess(LogIn)} />

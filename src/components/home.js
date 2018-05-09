@@ -8,7 +8,7 @@ export default class Home extends Component {
     return (
       <div>
         <h5>Home Page</h5>
-        <img src={helloSvg} className="rounded img-fluid my-3" alt="Image" style={{width: '20rem'}}/>
+        <img src={helloSvg} className="rounded img-fluid my-3" alt="Hello" style={{width: '20rem'}}/>
         <div>
           Note :
           <ul style={{maxWidth: '30rem'}}>

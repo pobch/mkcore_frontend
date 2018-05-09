@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 import icon from '../static/main_icon.svg'
@@ -15,14 +15,15 @@ class TopNavbar extends Component {
   }
   
   render() {
-    // get URL path from address bar (not include domain)
-    const pageURL = window.location.pathname + window.location.search
+    // // // Get active URL path (without domain name) 
+    // // // Note : this component must be <Route>'s child to be able to use 'props.location'
+    // const activeURL = this.props.location.pathname + this.props.location.search
 
     return (
       <nav className="navbar navbar-expand-md navbar-light bg-light">
-        <Link to="/" className="navbar-brand">
+        <NavLink to="/" className="navbar-brand" activeClassName="active">
           <img src={icon} width="30" height="30" alt="App"/>
-        </Link>
+        </NavLink>
         
         {/* Nav button when collapse on small screen */}
         <button className={`navbar-toggler ${this.state.toggleNavbar ? '' : 'collapsed'}`} type="button" 
@@ -41,40 +42,45 @@ class TopNavbar extends Component {
             
             { this.props.auth.authenticated ? 
               <li className="nav-item">
-                <Link to="/logout" 
-                  className={`nav-link ${pageURL === '/logout' && 'active'}`} 
+                <NavLink to="/logout" 
+                  className="nav-link"
+                  activeClassName="active" 
                   onClick={this.collapseNavbar}>
                 Log Out
-                </Link>
+                </NavLink>
               </li> :
               <React.Fragment>
                 <li className="nav-item">
-                  <Link to="/signup" 
-                    className={`nav-link ${pageURL === '/signup' && 'active'}`}
+                  <NavLink to="/signup" 
+                    className="nav-link"
+                    activeClassName="active"
                     onClick={this.collapseNavbar}>
                   Sign Up
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link to="/login" 
-                    className={`nav-link ${pageURL === '/login' && 'active'}`} 
+                  <NavLink to="/login" 
+                    className="nav-link"
+                    activeClassName="active"
                     onClick={this.collapseNavbar}>
                   Log in
-                  </Link>
+                  </NavLink>
                 </li>
               </React.Fragment>
             }
             <li className="nav-item">
-              <Link to="/user/rooms" 
-                className={`nav-link ${pageURL === '/user/rooms' && 'active'}`}
+              <NavLink exact to="/user/rooms" 
+                className="nav-link"
+                activeClassName="active"
                 onClick={this.collapseNavbar}>
               Rooms
-              </Link>
+              </NavLink>
             </li>
 
           </ul>
         </div>
       </nav>
+      
     )
   }
 }
