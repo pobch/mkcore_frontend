@@ -39,7 +39,7 @@ class LogIn extends Component {
     return (
       <div>
         <h5 className="text-xs-left" >Log in page</h5>
-        <h6>Testing Account</h6>
+        <h6>Test Account :-</h6>
         <h6><i>E-mail: test@pob.com</i></h6>
         <h6><i>Password: guestpass123</i></h6>
 

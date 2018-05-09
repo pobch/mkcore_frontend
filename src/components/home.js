@@ -9,10 +9,15 @@ export default class Home extends Component {
       <div>
         <h5>Home Page</h5>
         <img src={helloSvg} className="rounded img-fluid my-3" alt="Image" style={{width: '20rem'}}/>
-        <ul style={{maxWidth: '25rem'}}>
-          <li>We have not implemented smtp server for production yet.</li>
-          <li>Click Log in and use the test account on that page if you want to try our app.</li>
-        </ul>
+        <div>
+          Note :
+          <ul style={{maxWidth: '30rem'}}>
+            <li>We have not implemented smtp server for production yet. 
+              So, the confirmation e-mail for completing sign-up process will not work at this moment.</li>
+            <li>If you want to try out our app, go to 'Log in' page and use 
+              the test account detail on that page to log in.</li>
+          </ul>
+        </div>
       </div>
     )
   }
