@@ -60,7 +60,7 @@ class CreateRoom extends Component {
             label="Your Room's Password (guests will use this code and password to join this room)"
           />
 
-          <button className="btn btn-primary" type="submit">Submit</button>
+          <button className="btn btn-primary" type="submit">Save</button>
           <button className="btn btn-danger" type="button" onClick={ (event) => { this.props.hideComponentAction() } }>Close</button>
         </form>
         {/* <EditRoom match={{params: {id:13}}}/> */}

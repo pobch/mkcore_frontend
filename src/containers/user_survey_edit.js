@@ -60,7 +60,7 @@ class SurveyEdit extends Component {
 
           <div>
             <button type="submit" className="btn btn-primary">Save</button>
-            <Link to={`/user/rooms/${this.props.match.params.id}`} className="btn btn-danger">Cancel</Link>
+            <Link to="/user/rooms" className="btn btn-danger">Cancel</Link>
           </div>
         </form>
 

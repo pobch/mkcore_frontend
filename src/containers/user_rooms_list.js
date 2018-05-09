@@ -67,7 +67,10 @@ class UserRoomsList extends Component {
         return (
           <li style={{marginBottom: '5px'}} key={room.id}>
             <Link to={`/user/rooms/${room.id}`} className="btn btn-info">
-              Edit
+              Edit Info
+            </Link>
+            <Link to={`/user/rooms/${room.id}/survey`} className="btn btn-success">
+              Add/Edit Survey
             </Link>
             <button type="button" 
               onClick={ () => {this.openConfirmDeleteModal(room.id)} } 
@@ -77,8 +80,11 @@ class UserRoomsList extends Component {
             >
               Delete
             </button>
-            
-            ID = {room.id}, Title = {room.title}
+            <div>
+              <b>Room Title: {room.title}, Room ID: {room.id}</b>
+              <br/>
+              <i style={{color: 'red'}}>{`<RoomCode>/<Password>: <${room.room_code}>/<${room.room_password}>`}</i>
+            </div>
           </li>
         )
       } else {
@@ -95,8 +101,9 @@ class UserRoomsList extends Component {
             >
               Leave
             </button>
-            
-            ID = {room.id}, Title = {room.title}
+            <div>
+              <b>Room Title: {room.title}, Room ID = {room.id}</b> 
+            </div>
           </li>
         )
       }
@@ -113,11 +120,23 @@ class UserRoomsList extends Component {
       <div>
         <h5>Rooms Page (only logged in users can access)</h5>
         <ul>
-          <h5>Rooms you have created</h5>
+          <h5>Rooms you've already created</h5>
+
           { this.renderRooms(this.props.ownRooms) }
+
+          <button type="button" 
+            className="btn btn-primary" 
+            onClick={ (event) => { 
+              this.props.showComponent ? this.props.hideComponentAction() : this.props.showComponentAction() 
+            } }>
+          Create
+          </button>
+
+          { this.props.showComponent ? <CreateRoom /> : ''}
         </ul>
+
         <ul>
-          <h5>Rooms you have joined</h5>
+          <h5>Rooms you've already joined</h5>
           { this.renderRooms(this.props.guestRooms, {owner: false}) }
         </ul>
         <ul>
@@ -138,28 +157,18 @@ class UserRoomsList extends Component {
               )
             }
           })}
-        </ul>
 
-        <button type="button" 
-          className="btn btn-primary" 
-          onClick={ (event) => { 
-            this.props.showComponent ? this.props.hideComponentAction() : this.props.showComponentAction() 
-          } }>
-        Create
-        </button>
+          <button type="button" 
+            className="btn btn-primary" 
+            onClick={this.openJoinRoomModal}
+            data-toggle="modal"           // Bootstrap v4 
+            data-target="#joinRoomModal"   // Bootstrap v4
+          >
+          Join
+          </button>
+        </ul>
         
-        <button type="button" 
-          className="btn btn-primary" 
-          onClick={this.openJoinRoomModal}
-          data-toggle="modal"           // Bootstrap v4 
-          data-target="#joinRoomModal"   // Bootstrap v4
-        >
-        Join
-        </button>
-        
-        <div style={{marginTop: '5px'}}>
-          { this.props.showComponent ? <CreateRoom /> : ''}
-          
+        <div style={{marginTop: '5px'}}>          
           <Link className="btn btn-info" to="/" style={{marginTop: '5px'}}>Home</Link>
         </div>
 

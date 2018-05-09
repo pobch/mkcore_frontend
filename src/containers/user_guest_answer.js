@@ -42,7 +42,7 @@ class GuestAnswer extends Component {
               </div>
             }
 
-            {fields.get(indx).answerType === 'choices' &&
+            {fields.get(indx).answerType === 'choices' && 
               this.props.survey[indx].choices.map((value, i) => {
                 return (
                   <div key={i} className="form-check form-group">
@@ -132,7 +132,7 @@ function mapStateToProps(state, ownProps) {
 
 export default connect(mapStateToProps, { fetchGuestRoom, submitAnswer, fetchAnswer, resetError })(
   reduxForm({
-    form: 'answerForm'
-    // enableReinitialize: true
+    form: 'answerForm',
+    enableReinitialize: true
   })(GuestAnswer)
 )

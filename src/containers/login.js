@@ -3,12 +3,14 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { Link } from 'react-router-dom'
 
-import { logInAction, onLeaveLogInPage } from '../actions'
+import { logInAction, onLeaveLogInPage, resetError } from '../actions'
 
 
 class LogIn extends Component {
   componentWillUnmount(){
-    this.props.onLeaveLogInPage() // remove error msg (if any) when leaving this page
+    // remove error msg (if any) when leaving this page
+    this.props.onLeaveLogInPage()
+    this.props.resetError()
   }
 
   renderField = (field) => {
@@ -88,5 +90,5 @@ export default reduxForm({
   validate,
   form: 'LogInForm'
 })(
-  connect(mapStateToProps, { logInAction, onLeaveLogInPage })(LogIn)
+  connect(mapStateToProps, { logInAction, onLeaveLogInPage, resetError })(LogIn)
 )

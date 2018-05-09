@@ -3,8 +3,8 @@ import React from 'react'
 
 export default function SaveCompleteModal(props) {
   return (
-    <div id="myModal">
-      <div id="myModalContent">
+    <div className="modal fade" id="myModal" tabIndex="-1">
+      <div className="modal-dialog" id="myModalContent">
         <div>
           <h4>Notification</h4>
         </div>

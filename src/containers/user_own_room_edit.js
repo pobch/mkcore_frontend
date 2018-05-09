@@ -85,9 +85,6 @@ class EditRoom extends Component {
 
           <h5>Edit this room</h5>
           <hr/>
-          <div>
-            <Link to={`/user/rooms/${this.props.room.id}/survey`} className="btn btn-info">Create/Edit Survey</Link>
-          </div>
 
           <Field 
             name="title"
