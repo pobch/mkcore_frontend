@@ -32,7 +32,8 @@ class SignUp extends Component {
     return (
       <div>
         <h5>Sign Up Page</h5>
-        <form onSubmit={handleSubmit(this.onSubmit)}>
+        (Please wait about 5 sec for Heroku's services starting from sleep mode)
+        <form onSubmit={handleSubmit(this.onSubmit)} className="mt-3">
           
           <Field
             name="email"

@@ -122,7 +122,7 @@ class UserRoomsList extends Component {
     return (
       <div>
         <h5>Rooms Page</h5>
-        (For logged-in users only)
+        (Please wait about 5 sec for Heroku's services starting from sleep mode)
         <h5 className="breadcrumb my-3">Rooms you've already created</h5>
         <ul>
 

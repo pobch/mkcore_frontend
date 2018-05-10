@@ -73,7 +73,7 @@ class TopNavbar extends Component {
                 className="nav-link"
                 activeClassName="active"
                 onClick={this.collapseNavbar}>
-              Rooms
+              Rooms <i style={{fontSize: '0.5rem'}}>(Members only)</i>
               </NavLink>
             </li>
 

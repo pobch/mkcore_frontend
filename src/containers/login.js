@@ -41,9 +41,14 @@ class LogIn extends Component {
     return (
       <div>
         <h5 className="text-xs-left" >Log in page</h5>
-        <h6>Test Account :-</h6>
-        <h6><i>E-mail: test@pob.com</i></h6>
-        <h6><i>Password: guestpass123</i></h6>
+        (Please wait about 5 sec for Heroku's services starting from sleep mode)
+        <div className="text-danger mt-3">
+          <h6>Test Account :</h6>
+          <ul>
+            <li><h6><i>E-mail: test@pob.com</i></h6></li>
+            <li><h6><i>Password: guestpass123</i></h6></li>
+          </ul>
+        </div>
 
         <form onSubmit={ handleSubmit(this.onSubmit) } >
           <Field
