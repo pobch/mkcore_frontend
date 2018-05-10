@@ -43,17 +43,17 @@ class GuestAnswer extends Component {
             }
 
             {fields.get(indx).answerType === 'choices' && 
-              this.props.survey[indx].choices.map((value, i) => {
+              this.props.survey[indx].choices.map((question, i) => {
                 return (
                   <div key={i} className="form-check form-group">
                     <Field
                       name={`${name}.answerChoice`}
                       component="input"
                       type="radio"
-                      value={value.choiceText}
+                      value={question.choiceText}
                       className="form-check-input"
                     />{' '}
-                  {value.choiceText}
+                  {question.choiceText}
                   </div>
                 )
               })
@@ -67,28 +67,53 @@ class GuestAnswer extends Component {
   }
 
   render() {
-    const { handleSubmit } = this.props
-    return (
-      <form onSubmit={handleSubmit(this.onSubmit)}>
 
-        <FieldArray
-          name="answer"
-          component={this.renderAnswer}
-        />
+    // case: guest has not answered the survey yet
+    if(this.props.canEditAnswer) {
+      const { handleSubmit } = this.props
+      return (
+        <form onSubmit={handleSubmit(this.onSubmit)}>
 
-        {this.props.canEditAnswer ? 
-          <button type="submit" className="btn btn-primary">Answer</button> :
+          <FieldArray
+            name="answer"
+            component={this.renderAnswer}
+          />
+ 
           <div style={{color:'red'}}>
-            <i>Cannot edit the survey because you have already answered this survey 
-              or there is no survey created in this room</i>
+            <i>You can submit the answers only once</i>
           </div>
-        }
-        <Link to="/user/rooms" className="btn btn-danger">Cancel</Link>
+          
+          <button type="submit" className="btn btn-primary">Submit</button>
+          <Link to="/user/rooms" className="btn btn-danger">Cancel</Link>
 
-      </form>
+        </form>
+      )
+    }
+
+    // case: guest already answered the survey
+    return (
+      <div>
+        { this.props.initialValues && this.props.initialValues.answer && 
+          this.props.initialValues.answer.map((ans, indx) => {
+            return (
+              <div key={indx}>
+                <h4><b>{`#${indx+1} ${ans.question}`}</b></h4>
+                <b><i>Your Answer:</i></b> {ans.answerText || ans.answerChoice}
+                <hr/>
+              </div>
+            )
+          })
+        }
+        <div style={{color:'red'}}>
+          <i>You have already answered this survey 
+            -OR- There is no survey created in this room</i>
+        </div>
+        <Link to="/user/rooms" className="btn btn-danger">Cancel</Link>
+      </div>
     )
   }
 }
+
 
 function mapStateToProps(state, ownProps) {
   let canEditAnswer = false
