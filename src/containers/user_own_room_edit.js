@@ -18,6 +18,7 @@ const publish = ['draft', 'active', 'closed']
 
 class EditRoom extends Component {
   componentDidMount() {
+    window.scrollTo(0,0)
     const { id } = this.props.match.params
     this.props.fetchOwnRoom(id)
   }

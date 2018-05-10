@@ -26,6 +26,7 @@ class UserRoomsList extends Component {
   confirmLeaveRoomHTMLId = 'confirmLeaveRoomModal' // must add # in front of id in 'data-target'
 
   componentDidMount() {
+    window.scrollTo(0,0)
     this.props.fetchOwnRooms()
     this.props.fetchGuestRooms()
   }

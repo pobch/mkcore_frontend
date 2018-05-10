@@ -16,10 +16,11 @@ class SurveyEdit extends Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0,0)
     const { id } = this.props.match.params
     this.props.fetchOwnRoom(id)
   }
-  
+
   onSubmit = (values) => {
     // console.log('Submitted values ===', values)
     const { id } = this.props.match.params
