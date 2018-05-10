@@ -99,7 +99,9 @@ class GuestAnswer extends Component {
             return (
               <div key={indx}>
                 <h4><b>{`#${indx+1} ${ans.question}`}</b></h4>
-                <b><i>Your Answer:</i></b> {ans.answerText || ans.answerChoice}
+                <div style={{color: 'grey'}}>
+                  <i>Your Answer:</i> <b>{ans.answerText || ans.answerChoice}</b>
+                </div>
                 <hr/>
               </div>
             )

@@ -23,7 +23,7 @@ export default class RenderSurvey extends Component {
     return (
       <ul>
         <button type="button"
-          className="btn btn-primary mb-1"
+          className="btn btn-outline-primary mb-1 btn-sm"
           onClick={() => {
             fields.push({})
           }}>
@@ -35,7 +35,7 @@ export default class RenderSurvey extends Component {
               <li key={index} className="form-inline">
                 <button type="button" 
                   onClick={() => fields.remove(index)}
-                  className="btn btn-danger mb-1">
+                  className="btn btn-outline-danger mb-1 btn-sm">
                   -
                 </button>
                 <label>{`Choice #${index + 1} : `}</label>
@@ -89,14 +89,14 @@ export default class RenderSurvey extends Component {
                     }))
                     fields.remove(index)
                   }} 
-                  className="btn btn-danger mx-1">
+                  className="btn btn-danger mx-1 btn-sm">
                 Delete
                 </button>
                 <b>{`Question #${index+1}`}</b>
 
                 <div className="form-group form-inline">
                   Answer Type : 
-                  <button type="button" className="btn btn-info m-1"
+                  <button type="button" className="btn btn-outline-info m-1 btn-sm"
                     onClick={() => {
                       const wantedValue = {...fields.get(index), answerType:'text', choices:null}
                       fields.remove(index)
@@ -111,7 +111,7 @@ export default class RenderSurvey extends Component {
                     Text
                   </button>
 
-                  <button type="button" className="btn btn-info m-1"
+                  <button type="button" className="btn btn-outline-info m-1 btn-sm"
                     onClick={() => {
                       const wantedValue = {...fields.get(index), answerType: 'choices'}
                       fields.remove(index)

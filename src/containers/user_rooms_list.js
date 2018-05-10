@@ -67,44 +67,46 @@ class UserRoomsList extends Component {
       if(owner) {
         return (
           <li style={{marginBottom: '5px'}} key={room.id}>
-            <Link to={`/user/rooms/${room.id}`} className="btn btn-info">
+            <Link to={`/user/rooms/${room.id}`} className="btn btn-secondary btn-sm">
               Edit Info
             </Link>
-            <Link to={`/user/rooms/${room.id}/survey`} className="btn btn-success">
+            <Link to={`/user/rooms/${room.id}/survey`} className="btn btn-success btn-sm">
               Add/Edit Survey
             </Link>
             <button type="button" 
               onClick={ () => {this.openConfirmDeleteModal(room.id)} } 
-              className="btn btn-danger"
+              className="btn btn-danger btn-sm"
               data-toggle="modal"                                 // Bootstrap v4 
               data-target={`#${this.confirmDeleteModalHTMLId}`}   // Bootstrap v4
             >
               Delete
             </button>
-            <div>
-              <b>Room Title: {room.title}, Room ID: {room.id}</b>
+            <div style={{color: 'grey'}}>
+              Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
               <br/>
-              <i style={{color: 'red'}}>{`<RoomCode>/<Password>: <${room.room_code}>/<${room.room_password}>`}</i>
+              <i>{`<RoomCode>/<Password>: <${room.room_code}>/<${room.room_password}>`}</i>
             </div>
+            <hr/>
           </li>
         )
       } else {
         return (
           <li style={{marginBottom: '5px'}} key={room.id}>
-            <Link to={`/user/rooms/${room.id}/answer`} className="btn btn-success">
+            <Link to={`/user/rooms/${room.id}/answer`} className="btn btn-success btn-sm">
               Answer Survey
             </Link>
             <button type="button" 
               onClick={() => {this.openConfirmLeaveRoomModal(room.id)}}
-              className="btn btn-danger"
+              className="btn btn-danger btn-sm"
               data-toggle="modal"                               // Bootstrap v4
               data-target={`#${this.confirmLeaveRoomHTMLId}`}   // Bootstrap v4
             >
               Leave
             </button>
-            <div>
-              <b>Room Title: {room.title}, Room ID = {room.id}</b> 
+            <div style={{color: 'grey'}}>
+              Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
             </div>
+            <hr/>
           </li>
         )
       }
@@ -119,9 +121,10 @@ class UserRoomsList extends Component {
 
     return (
       <div>
-        <h5>Rooms Page (only logged in users can access)</h5>
+        <h5>Rooms Page</h5>
+        (For logged-in users only)
+        <h5 className="breadcrumb my-3">Rooms you've already created</h5>
         <ul>
-          <h5>Rooms you've already created</h5>
 
           { this.renderRooms(this.props.ownRooms) }
 
@@ -136,8 +139,8 @@ class UserRoomsList extends Component {
           { this.props.showComponent ? <CreateRoom /> : ''}
         </ul>
 
+        <h5 className="breadcrumb my-3">Rooms you've already joined</h5>
         <ul>
-          <h5>Rooms you've already joined</h5>
           { this.renderRooms(this.props.guestRooms, {owner: false}) }
         </ul>
         <ul>

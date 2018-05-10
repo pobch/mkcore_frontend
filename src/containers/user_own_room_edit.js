@@ -137,19 +137,17 @@ class EditRoom extends Component {
             data={publish}
           />
           <hr/>
+          <div style={{color: 'grey'}}>
+            <i>
+              Current Room's Code / Password : {`<${this.props.room.room_code}> / <${this.props.room.room_password}>`}
+            </i>
+          </div>
           <div>
-            <button type="submit" className="btn btn-primary">Save</button>
-            <Link to="/user/rooms" className="btn btn-danger">Cancel</Link>
+            <button type="submit" className="btn btn-primary my-2">Save</button>
+            <Link to="/user/rooms" className="btn btn-danger my-2">Cancel</Link>
             {/* <button type="button" onClick={ this.props.history.goBack } className="btn btn-danger">Back</button> */}
           </div>
         </form>
-          <p>
-            <i>
-              Current Room's Code : {this.props.room.room_code}
-              <br/>
-              Current Room's Password : {this.props.room.room_password}
-            </i>
-          </p>
       </div>
     )
   }
