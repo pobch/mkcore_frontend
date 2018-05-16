@@ -20,7 +20,6 @@ class GuestAnswer extends Component {
   }
   
   onSubmit = (values) => {
-    console.log('submit ===', values)
     const roomId = this.props.match.params.id
     this.props.submitAnswer(roomId, values)
   }
@@ -68,7 +67,6 @@ class GuestAnswer extends Component {
   }
 
   render() {
-
     // case: guest has not answered the survey yet
     if(this.props.canEditAnswer) {
       const { handleSubmit } = this.props

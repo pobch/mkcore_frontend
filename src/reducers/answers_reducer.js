@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { SUBMIT_ANSWER, FETCH_ANSWER, LEAVE_ROOM, DELETE_OWN_ROOM } from '../actions'
 
 export default function(state = {}, action){
