@@ -3,16 +3,21 @@ import React from 'react'
 
 export default function SaveCompleteModal(props) {
   return (
-    <div className="modal fade" id="myModal" tabIndex="-1">
-      <div className="modal-dialog" id="myModalContent">
-        <div>
-          <h4>Notification</h4>
-        </div>
-        <div>
-          <p>Save Completed</p>
-        </div>
-        <div>
-          <button type="button" className="btn btn-danger" onClick={props.onConfirm}>Ok</button>
+    <div className="modal fade" id={props.htmlId} tabIndex="-1">
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h4 className="modal-title">Notification</h4>
+            <button type="button" className="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div className="modal-body">
+            Save Completed
+          </div>
+          <div className="modal-footer">
+            <button type="button" className="btn btn-primary" onClick={props.onConfirm} data-dismiss="modal">
+              Ok
+            </button>
+          </div>
         </div>
       </div>
     </div>

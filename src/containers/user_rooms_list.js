@@ -178,7 +178,7 @@ class UserRoomsList extends Component {
 
         {/* {this.state.confirmationPopup && ( */}
 
-          {/* // Bootstrap 4 with data-* className */}
+          {/* // Bootstrap v4, connect with data-* className */}
           <Portal>
             {/* Confirm Delete Room Modal */}
             <ConfirmModal
@@ -193,7 +193,8 @@ class UserRoomsList extends Component {
             />
           </Portal>
         {/* )} */}
-
+          
+          {/* // Bootstrap v4, connect with data-* className */}
           <Portal>
             {/* Confirm Leave Room Modal */}
             <ConfirmModal
@@ -209,7 +210,7 @@ class UserRoomsList extends Component {
 
         {/* {this.state.joinRoomPopup && ( */}
           
-          {/* // Bootstrap 4 with data-* className */}
+          {/* // Bootstrap v4, connect with data-* className */}
           <Portal>
             <JoinRoomModal
               onCancel={ () => {this.closeModal()} }

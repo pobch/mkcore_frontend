@@ -15,6 +15,9 @@ class SurveyEdit extends Component {
     showSaveCompleteModal: false
   }
 
+  // Bootstrap v4
+  saveCompleteModalHtmlId = 'saveCompleteModal' // must add # in front of id in 'data-target'
+
   componentDidMount() {
     window.scrollTo(0,0)
     const { id } = this.props.match.params
@@ -60,20 +63,29 @@ class SurveyEdit extends Component {
           />
 
           <div>
-            <button type="submit" className="btn btn-primary">Save</button>
+            <button type="submit" 
+              className="btn btn-primary"
+              data-toggle="modal"                               // Bootstrap v4
+              data-target={`#${this.saveCompleteModalHtmlId}`}  // Bootstrap v4
+            >
+            Save
+            </button>
             <Link to="/user/rooms" className="btn btn-danger">Cancel</Link>
           </div>
         </form>
 
-        { this.state.showSaveCompleteModal && (
+        {/* { this.state.showSaveCompleteModal && ( */}
+          
+          {/* Bootstrap v4 */}
           <Portal>
             <SaveCompleteModal
+              htmlId={this.saveCompleteModalHtmlId}
               onConfirm={(event) => {
                 this.setState({showSaveCompleteModal: false})
               }}
             />
           </Portal>
-        )}
+        {/* )} */}
       </div>
     )
   }
