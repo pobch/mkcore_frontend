@@ -2,13 +2,14 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {reduxForm, Field, Form, submit} from 'redux-form'
 
-import {joinRoomAction} from '../actions'
+import {joinRoomAction, fetchGuestRooms} from '../actions'
 
 
 class JoinRoomModal extends Component {
-  onSubmit = (values) => {
+  onSubmit = async (values) => {
     this.props.closeModalFunc()
-    this.props.joinRoomAction(values)
+    await this.props.joinRoomAction(values)
+    this.props.fetchGuestRooms()
     this.props.reset()
   }
 
@@ -61,7 +62,7 @@ class JoinRoomModal extends Component {
   }
 }
 
-export default connect(null, {joinRoomAction})(
+export default connect(null, {joinRoomAction, fetchGuestRooms})(
   reduxForm({
     form: 'joinRoomModalForm'
   })(JoinRoomModal)
