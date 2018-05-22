@@ -11,6 +11,8 @@ export const FETCH_OWN_ROOM = 'fetch_specific_room_the_user_owns'
 export const CREATE_OWN_ROOM = 'create_own_room'
 export const UPDATE_OWN_ROOM = 'update_own_room'
 export const DELETE_OWN_ROOM = 'delete_own_room'
+export const FETCH_JOIN_REQS_OF_OWN_ROOM = 'fetch_join_requests_of_one_own_room'
+export const ACCEPT_JOINREQ = 'accept_one_join_request'
 export const ERROR_IN_OWNROOMS = 'ownrooms_error_from_api'
 
 export const FETCH_GUESTROOMS = 'fetch_guest_rooms'
@@ -39,6 +41,7 @@ const URL_SIGNUP = `${BASE_API_URL}auth/register/`
 const URL_JOIN_ROOM = URL_RETRIEVE_UPDATE_OWNROOM + 'join/'
 const URL_LEAVE_ROOM = URL_RETRIEVE_UPDATE_OWNROOM + 'unjoin/'
 const URL_CREATE_ANSWER = BASE_API_URL + 'answers/'
+const URL_RETRIEVE_UPDATE_DEL_JOINREQ = `${BASE_API_URL}rooms/joinreqs/` // + joinReq's id
 
 export function logInAction(values, callback) {
   const { email, password } = values
@@ -158,6 +161,35 @@ export function fetchPendingRooms() {
   }
 }
 
+export function fetchJoinReqsOfOwnRoom(room_id) {
+  return async (dispatch) => {
+    const response = await axios.get(`${URL_RETRIEVE_UPDATE_OWNROOM}${room_id}/joinreqs/`)
+    dispatch({
+      type: FETCH_JOIN_REQS_OF_OWN_ROOM,
+      payload: response
+    })
+  }
+}
+
+export function acceptJoinReq(guestRoomRelationId) {
+  return async (dispatch) => {
+    await axios.patch(
+      `${URL_RETRIEVE_UPDATE_DEL_JOINREQ}${guestRoomRelationId}/`,
+      { accepted: true, accept_date: new Date() }
+    )
+    dispatch({
+      type: ACCEPT_JOINREQ,
+      payload: guestRoomRelationId
+    })
+  }
+}
+
+// export function denyJoinReq(guestRoomRelationId) {
+//   return async (dispatch) => {
+
+//   }
+// }
+
 export function updateRoom(id, values) {
   return async (dispatch) => {
     const response = await axios.patch(`${URL_RETRIEVE_UPDATE_OWNROOM}${id}/`, values)
@@ -229,6 +261,8 @@ export function joinRoomAction(values) {
         type: JOIN_ROOM,
         payload: response
       })
+      dispatch(fetchGuestRooms())
+      dispatch(fetchPendingRooms())
     } catch(e) {
       dispatch({
         type: ERROR_IN_GUESTROOMS,

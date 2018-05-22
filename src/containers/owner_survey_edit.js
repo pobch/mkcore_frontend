@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
 import {fetchOwnRoom, updateRoom} from '../actions'
-import RenderSurvey from '../components/user_survey_edit_render'
+import RenderSurvey from '../components/owner_survey_edit_render'
 import Portal from '../components/portal'
 import SaveCompleteModal from '../components/modal_save_complete'
 

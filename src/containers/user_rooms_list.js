@@ -7,10 +7,10 @@ import {
   fetchOwnRooms, fetchGuestRooms, fetchPendingRooms, showComponentAction, 
   hideComponentAction, deleteRoom, resetError, leaveRoom
 } from '../actions'
-import CreateRoom from './user_own_room_create'
+import CreateRoom from './owner_room_create'
 import Portal from '../components/portal'
 import ConfirmModal from '../components/modal_confirm'
-import JoinRoomModal from '../containers/modal_join_room'
+import JoinRoomModal from '../containers/modal_guest_join_room'
 
 
 class UserRoomsList extends Component {  
@@ -74,6 +74,9 @@ class UserRoomsList extends Component {
           <Link to={`/user/rooms/${room.id}/survey`} className="btn btn-success btn-sm">
             Add/Edit Survey
           </Link>
+          <Link to={`/user/rooms/${room.id}/joinreqs`} className="btn btn-dark btn-sm">
+            Join Requests
+          </Link>
           <button type="button" 
             onClick={ () => {this.openConfirmDeleteModal(room.id)} } 
             className="btn btn-danger btn-sm"
@@ -122,8 +125,9 @@ class UserRoomsList extends Component {
       return (
         <li key={info.id}>
           <div style={{color: 'grey'}}>
-            Title : <b style={{fontSize: '1.2rem'}}>{info.room_title}</b> (id : {info.room_guest})
+            Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{info.room_title}</b> (id : {info.room})
           </div>
+          <hr/>
         </li>
       )
     })
@@ -140,39 +144,43 @@ class UserRoomsList extends Component {
         <h5>Rooms Page</h5>
         (Please wait about 5 sec for Heroku's services starting from sleep mode)
 
-        <div className="shadow p-3 mb-5 bg-white rounded">
-          <h5 className="breadcrumb my-3">Rooms you've already created</h5>
-          <ul>
-            { this.renderOwnRooms(this.props.ownRooms) }
-          </ul>
-          <button type="button" 
-            className="btn btn-primary" 
-            onClick={ (event) => { 
-              this.props.showComponent ? this.props.hideComponentAction() : this.props.showComponentAction() 
-            } }>
-          Create
-          </button>
+        <div className="card my-4 bg-light">
+          <div className="card-body">
+            <h5 className="breadcrumb my-3">Rooms you've already created</h5>
+            <ul>
+              { this.renderOwnRooms(this.props.ownRooms) }
+            </ul>
+            <button type="button" 
+              className="btn btn-primary" 
+              onClick={ (event) => { 
+                this.props.showComponent ? this.props.hideComponentAction() : this.props.showComponentAction() 
+              } }>
+            Create
+            </button>
 
-          { this.props.showComponent ? <CreateRoom /> : ''}
+            { this.props.showComponent ? <CreateRoom /> : ''}
+          </div>
         </div>
 
-        <div className="shadow p-3 mb-5 bg-white rounded">
-          <h5 className="breadcrumb my-3">Rooms you've already joined</h5>
-          <ul>
-            { this.renderGuestRooms(this.props.guestRooms) }
-          </ul>
-          <h5 className="breadcrumb my-3">Pending Rooms</h5>
-          <ul>
-            { this.renderPendingRooms(this.props.pendingRoomsInfo) }
-          </ul>
-          <button type="button" 
-            className="btn btn-primary" 
-            onClick={this.openJoinRoomModal}
-            data-toggle="modal"           // Bootstrap v4 
-            data-target="#joinRoomModal"   // Bootstrap v4
-          >
-          Join
-          </button>
+        <div className="card bg-light">
+          <div className="card-body">
+            <h5 className="breadcrumb my-3">Rooms you've already joined</h5>
+            <ul>
+              { this.renderGuestRooms(this.props.guestRooms) }
+            </ul>
+            <h5 className="breadcrumb my-3">Pending Rooms</h5>
+            <ul>
+              { this.renderPendingRooms(this.props.pendingRoomsInfo) }
+            </ul>
+            <button type="button" 
+              className="btn btn-primary" 
+              onClick={this.openJoinRoomModal}
+              data-toggle="modal"           // Bootstrap v4 
+              data-target="#joinRoomModal"   // Bootstrap v4
+            >
+            Join
+            </button>
+          </div>
         </div>
 
         <ul>

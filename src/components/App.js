@@ -6,11 +6,12 @@ import Home from './home'
 import LogIn from '../containers/login'
 import LogOut from '../containers/logout'
 import UserRoomsList from '../containers/user_rooms_list'
-import EditRoom from '../containers/user_own_room_edit'
+import EditRoom from '../containers/owner_room_edit'
 import SignUp from '../containers/signup'
-import SurveyEdit from '../containers/user_survey_edit'
-import GuestAnswer from '../containers/user_guest_answer'
+import SurveyEdit from '../containers/owner_survey_edit'
+import GuestAnswer from '../containers/guest_answer'
 import TopNavbar from '../containers/topNavbar'
+import ViewJoinReqs from '../containers/owner_view_join_reqs'
 
 import onlyUserCanAccess from '../hoc/only_user_can_access'
 import onlyAnonCanAccess from '../hoc/only_anon_can_access'
@@ -41,6 +42,7 @@ class App extends Component {
               <Route exact path="/user/rooms/:id(\d+)" component={EditRoom} />
               <Route exact path="/user/rooms/:id(\d+)/survey" component={SurveyEdit} />
               <Route exact path="/user/rooms/:id(\d+)/answer" component={GuestAnswer}/>
+              <Route exact path="/user/rooms/:id(\d+)/joinreqs" component={ViewJoinReqs}/>
               <Route component={NotFound} />
             </Switch>
           </div>

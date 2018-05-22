@@ -7,6 +7,7 @@ import answersReducer from './answers_reducer'
 import showComponentReducer from './show_component'
 import errorReducer from './error_reducer'
 import pendingRoomsInfoReducer from './pendingRoomsInfo_reducer'
+import joinReqsInfoReducer from './joinReqsInfo_reducer'
 
 
 const rootReducer = combineReducers({
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   ownRooms: ownRoomsReducer,
   guestRooms: guestRoomsReducer,
   pendingRoomsInfo: pendingRoomsInfoReducer,
+  joinReqsInfo: joinReqsInfoReducer,
   answers: answersReducer,
   showComponent: showComponentReducer,
   errors: errorReducer
