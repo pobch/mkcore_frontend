@@ -12,8 +12,11 @@ export const CREATE_OWN_ROOM = 'create_own_room'
 export const UPDATE_OWN_ROOM = 'update_own_room'
 export const DELETE_OWN_ROOM = 'delete_own_room'
 export const FETCH_JOIN_REQS_OF_OWN_ROOM = 'fetch_join_requests_of_one_own_room'
-export const ACCEPT_JOINREQ = 'accept_one_join_request'
 export const ERROR_IN_OWNROOMS = 'ownrooms_error_from_api'
+
+export const ACCEPT_JOINREQ = 'accept_one_join_request'
+export const DENY_JOINREQ = 'deny_one_join_request'
+export const RESET_JOINREQS_LIST = 'clear_joinreqs_in_store'
 
 export const FETCH_GUESTROOMS = 'fetch_guest_rooms'
 export const FETCH_GUEST_ROOM = 'fetch_one_guest_room'
@@ -173,9 +176,10 @@ export function fetchJoinReqsOfOwnRoom(room_id) {
 
 export function acceptJoinReq(guestRoomRelationId) {
   return async (dispatch) => {
-    await axios.patch(
-      `${URL_RETRIEVE_UPDATE_DEL_JOINREQ}${guestRoomRelationId}/`,
-      { accepted: true, accept_date: new Date() }
+    await axios.patch(`${URL_RETRIEVE_UPDATE_DEL_JOINREQ}${guestRoomRelationId}/`,
+      { accepted: true, 
+        accept_date: new Date() 
+      }
     )
     dispatch({
       type: ACCEPT_JOINREQ,
@@ -184,11 +188,15 @@ export function acceptJoinReq(guestRoomRelationId) {
   }
 }
 
-// export function denyJoinReq(guestRoomRelationId) {
-//   return async (dispatch) => {
-
-//   }
-// }
+export function denyJoinReq(guestRoomRelationId) {
+  return async (dispatch) => {
+    await axios.delete(`${URL_RETRIEVE_UPDATE_DEL_JOINREQ}${guestRoomRelationId}/`)
+    dispatch({
+      type: DENY_JOINREQ,
+      payload: guestRoomRelationId
+    })
+  }
+}
 
 export function updateRoom(id, values) {
   return async (dispatch) => {

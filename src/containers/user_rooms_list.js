@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { 
-  fetchOwnRooms, fetchGuestRooms, fetchPendingRooms, showComponentAction, 
+  fetchOwnRooms, fetchGuestRooms, fetchPendingRooms, denyJoinReq, showComponentAction, 
   hideComponentAction, deleteRoom, resetError, leaveRoom
 } from '../actions'
 import CreateRoom from './owner_room_create'
@@ -68,13 +68,18 @@ class UserRoomsList extends Component {
     return _.map(ownRooms, (room) => {
       return (
         <li style={{marginBottom: '5px'}} key={room.id}>
-          <Link to={`/user/rooms/${room.id}`} className="btn btn-secondary btn-sm">
-            Edit Info
-          </Link>
           <Link to={`/user/rooms/${room.id}/survey`} className="btn btn-success btn-sm">
             Add/Edit Survey
           </Link>
-          <Link to={`/user/rooms/${room.id}/joinreqs`} className="btn btn-dark btn-sm">
+          <Link to={`/user/rooms/${room.id}`} className="btn btn-dark btn-sm">
+            Edit Info
+          </Link>
+          <Link className="btn btn-dark btn-sm"
+            to={{
+              pathname: `/user/rooms/${room.id}/joinreqs`,
+              state: {room_title: room.title, room_id: room.id}
+            }}
+          >
             Join Requests
           </Link>
           <button type="button" 
@@ -126,6 +131,10 @@ class UserRoomsList extends Component {
         <li key={info.id}>
           <div style={{color: 'grey'}}>
             Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{info.room_title}</b> (id : {info.room})
+            <button type="button" className="btn btn-secondary btn-sm mx-2"
+              onClick={() => {this.props.denyJoinReq(info.id)}}>
+            Cancel Request
+            </button>
           </div>
           <hr/>
         </li>
@@ -148,7 +157,10 @@ class UserRoomsList extends Component {
           <div className="card-body">
             <h5 className="breadcrumb my-3">Rooms you've already created</h5>
             <ul>
-              { this.renderOwnRooms(this.props.ownRooms) }
+              { _.isEmpty(this.props.ownRooms) ?
+                <i style={{color: 'grey'}}>[ Empty ]</i> :
+                this.renderOwnRooms(this.props.ownRooms)
+              }
             </ul>
             <button type="button" 
               className="btn btn-primary" 
@@ -166,11 +178,17 @@ class UserRoomsList extends Component {
           <div className="card-body">
             <h5 className="breadcrumb my-3">Rooms you've already joined</h5>
             <ul>
-              { this.renderGuestRooms(this.props.guestRooms) }
+              { _.isEmpty(this.props.guestRooms) ?
+                <i style={{color: 'grey'}}>[ Empty ]</i> :
+                this.renderGuestRooms(this.props.guestRooms) 
+              }
             </ul>
             <h5 className="breadcrumb my-3">Pending Rooms</h5>
             <ul>
-              { this.renderPendingRooms(this.props.pendingRoomsInfo) }
+              { _.isEmpty(this.props.pendingRoomsInfo) ?
+                <i style={{color: 'grey'}}>[ Empty ]</i> : 
+                this.renderPendingRooms(this.props.pendingRoomsInfo) 
+              }
             </ul>
             <button type="button" 
               className="btn btn-primary" 
@@ -270,6 +288,7 @@ export default connect(mapStateToProps, {
     fetchGuestRooms, 
     fetchPendingRooms,
     showComponentAction, 
+    denyJoinReq,
     hideComponentAction,
     deleteRoom,
     resetError,
