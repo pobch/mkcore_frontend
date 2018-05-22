@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { 
-  fetchOwnRooms, fetchGuestRooms, showComponentAction, 
+  fetchOwnRooms, fetchGuestRooms, fetchPendingRooms, showComponentAction, 
   hideComponentAction, deleteRoom, resetError, leaveRoom
 } from '../actions'
 import CreateRoom from './user_own_room_create'
@@ -29,6 +29,7 @@ class UserRoomsList extends Component {
     window.scrollTo(0,0)
     this.props.fetchOwnRooms()
     this.props.fetchGuestRooms()
+    this.props.fetchPendingRooms()
   }
 
   componentWillUnmount() {
@@ -61,58 +62,73 @@ class UserRoomsList extends Component {
     this.props.leaveRoom(id)
   }
 
-  renderRooms = (roomProp, {owner} = {owner: true}) => {
-    // console.log(roomProp)
-    return _.map(roomProp, (room) => {
-      if(owner) {
-        return (
-          <li style={{marginBottom: '5px'}} key={room.id}>
-            <Link to={`/user/rooms/${room.id}`} className="btn btn-secondary btn-sm">
-              Edit Info
-            </Link>
-            <Link to={`/user/rooms/${room.id}/survey`} className="btn btn-success btn-sm">
-              Add/Edit Survey
-            </Link>
-            <button type="button" 
-              onClick={ () => {this.openConfirmDeleteModal(room.id)} } 
-              className="btn btn-danger btn-sm"
-              data-toggle="modal"                                 // Bootstrap v4 
-              data-target={`#${this.confirmDeleteModalHTMLId}`}   // Bootstrap v4
-            >
-              Delete
-            </button>
-            <div style={{color: 'grey'}}>
-              Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
-              <br/>
-              <i>{`<RoomCode>/<Password>: <${room.room_code}>/<${room.room_password}>`}</i>
-            </div>
-            <hr/>
-          </li>
-        )
-      } else {
-        return (
-          <li style={{marginBottom: '5px'}} key={room.id}>
-            <Link to={`/user/rooms/${room.id}/answer`} className="btn btn-success btn-sm">
-              Answer Survey
-            </Link>
-            <button type="button" 
-              onClick={() => {this.openConfirmLeaveRoomModal(room.id)}}
-              className="btn btn-danger btn-sm"
-              data-toggle="modal"                               // Bootstrap v4
-              data-target={`#${this.confirmLeaveRoomHTMLId}`}   // Bootstrap v4
-            >
-              Leave
-            </button>
-            <div style={{color: 'grey'}}>
-              Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
-            </div>
-            <hr/>
-          </li>
-        )
-      }
+  // renderRooms = (roomProp, {owner} = {owner: true}) => {}
+
+  renderOwnRooms = (ownRooms) => {
+    return _.map(ownRooms, (room) => {
+      return (
+        <li style={{marginBottom: '5px'}} key={room.id}>
+          <Link to={`/user/rooms/${room.id}`} className="btn btn-secondary btn-sm">
+            Edit Info
+          </Link>
+          <Link to={`/user/rooms/${room.id}/survey`} className="btn btn-success btn-sm">
+            Add/Edit Survey
+          </Link>
+          <button type="button" 
+            onClick={ () => {this.openConfirmDeleteModal(room.id)} } 
+            className="btn btn-danger btn-sm"
+            data-toggle="modal"                                 // Bootstrap v4 
+            data-target={`#${this.confirmDeleteModalHTMLId}`}   // Bootstrap v4
+          >
+            Delete
+          </button>
+          <div style={{color: 'grey'}}>
+            Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
+            <br/>
+            <i>{`<RoomCode>/<Password>: <${room.room_code}>/<${room.room_password}>`}</i>
+          </div>
+          <hr/>
+        </li>
+      )
+    })
+  } 
+      
+  renderGuestRooms = (guestRooms) => {
+    return _.map(guestRooms, (room) => {
+      return (
+        <li style={{marginBottom: '5px'}} key={room.id}>
+          <Link to={`/user/rooms/${room.id}/answer`} className="btn btn-success btn-sm">
+            Answer Survey
+          </Link>
+          <button type="button" 
+            onClick={() => {this.openConfirmLeaveRoomModal(room.id)}}
+            className="btn btn-danger btn-sm"
+            data-toggle="modal"                               // Bootstrap v4
+            data-target={`#${this.confirmLeaveRoomHTMLId}`}   // Bootstrap v4
+          >
+            Leave
+          </button>
+          <div style={{color: 'grey'}}>
+            Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
+          </div>
+          <hr/>
+        </li>
+      )
     })
   }
-  
+
+  renderPendingRooms = (pendingInfo) => {
+    return _.map(pendingInfo, (info) => {
+      return (
+        <li key={info.id}>
+          <div style={{color: 'grey'}}>
+            Title : <b style={{fontSize: '1.2rem'}}>{info.room_title}</b> (id : {info.room_guest})
+          </div>
+        </li>
+      )
+    })
+  }
+
   render() {
     // No need to check empty state bcoz lodash _.map() when the first argument is empty object will return empty array 
     // if(_.isEmpty(this.props.ownRooms)) {
@@ -123,11 +139,12 @@ class UserRoomsList extends Component {
       <div>
         <h5>Rooms Page</h5>
         (Please wait about 5 sec for Heroku's services starting from sleep mode)
-        <h5 className="breadcrumb my-3">Rooms you've already created</h5>
-        <ul>
 
-          { this.renderRooms(this.props.ownRooms) }
-
+        <div className="shadow p-3 mb-5 bg-white rounded">
+          <h5 className="breadcrumb my-3">Rooms you've already created</h5>
+          <ul>
+            { this.renderOwnRooms(this.props.ownRooms) }
+          </ul>
           <button type="button" 
             className="btn btn-primary" 
             onClick={ (event) => { 
@@ -137,12 +154,27 @@ class UserRoomsList extends Component {
           </button>
 
           { this.props.showComponent ? <CreateRoom /> : ''}
-        </ul>
+        </div>
 
-        <h5 className="breadcrumb my-3">Rooms you've already joined</h5>
-        <ul>
-          { this.renderRooms(this.props.guestRooms, {owner: false}) }
-        </ul>
+        <div className="shadow p-3 mb-5 bg-white rounded">
+          <h5 className="breadcrumb my-3">Rooms you've already joined</h5>
+          <ul>
+            { this.renderGuestRooms(this.props.guestRooms) }
+          </ul>
+          <h5 className="breadcrumb my-3">Pending Rooms</h5>
+          <ul>
+            { this.renderPendingRooms(this.props.pendingRoomsInfo) }
+          </ul>
+          <button type="button" 
+            className="btn btn-primary" 
+            onClick={this.openJoinRoomModal}
+            data-toggle="modal"           // Bootstrap v4 
+            data-target="#joinRoomModal"   // Bootstrap v4
+          >
+          Join
+          </button>
+        </div>
+
         <ul>
           { _.map(this.props.errors, (value,key) => {
             if(key === 'detail') {
@@ -161,15 +193,6 @@ class UserRoomsList extends Component {
               )
             }
           })}
-
-          <button type="button" 
-            className="btn btn-primary" 
-            onClick={this.openJoinRoomModal}
-            data-toggle="modal"           // Bootstrap v4 
-            data-target="#joinRoomModal"   // Bootstrap v4
-          >
-          Join
-          </button>
         </ul>
         
         <div style={{marginTop: '5px'}}>          
@@ -228,6 +251,7 @@ function mapStateToProps(state) {
   return {
     ownRooms: state.ownRooms,
     guestRooms: state.guestRooms,
+    pendingRoomsInfo: state.pendingRoomsInfo,
     showComponent: state.showComponent,
     errors: state.errors
   }
@@ -236,6 +260,7 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, { 
     fetchOwnRooms, 
     fetchGuestRooms, 
+    fetchPendingRooms,
     showComponentAction, 
     hideComponentAction,
     deleteRoom,

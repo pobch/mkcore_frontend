@@ -15,6 +15,7 @@ export const ERROR_IN_OWNROOMS = 'ownrooms_error_from_api'
 
 export const FETCH_GUESTROOMS = 'fetch_guest_rooms'
 export const FETCH_GUEST_ROOM = 'fetch_one_guest_room'
+export const FETCH_PENDING_ROOMS_INFO = 'fetch_pending_rooms_relation_info'
 export const JOIN_ROOM = 'join_room'
 export const LEAVE_ROOM = 'leave_room'
 export const CLEAR_ERROR_MSG = 'clear_error_message'
@@ -32,6 +33,7 @@ const BASE_API_URL = process.env.REACT_APP_API_URL // environment variable
 const URL_LOGIN = `${BASE_API_URL}auth/login/`
 const URL_FETCH_OWNROOMS = `${BASE_API_URL}rooms/?query=owner`
 const URL_FETCH_GUESTROOMS = `${BASE_API_URL}rooms/?query=guest`
+const URL_FETCH_PENDINGROOMS_INFO = `${BASE_API_URL}rooms/pending/`
 const URL_RETRIEVE_UPDATE_OWNROOM = `${BASE_API_URL}rooms/` // + id
 const URL_SIGNUP = `${BASE_API_URL}auth/register/`
 const URL_JOIN_ROOM = URL_RETRIEVE_UPDATE_OWNROOM + 'join/'
@@ -143,6 +145,16 @@ export function fetchGuestRoom(id) {
         payload: error.response
       })
     }
+  }
+}
+
+export function fetchPendingRooms() {
+  return async (dispatch) => {
+    const response = await axios.get(URL_FETCH_PENDINGROOMS_INFO)
+    dispatch({
+      type: FETCH_PENDING_ROOMS_INFO,
+      payload: response
+    })
   }
 }
 

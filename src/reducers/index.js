@@ -6,6 +6,7 @@ import guestRoomsReducer from './guestRooms_reducer'
 import answersReducer from './answers_reducer'
 import showComponentReducer from './show_component'
 import errorReducer from './error_reducer'
+import pendingRoomsInfoReducer from './pendingRoomsInfo_reducer'
 
 
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   ownRooms: ownRoomsReducer,
   guestRooms: guestRoomsReducer,
+  pendingRoomsInfo: pendingRoomsInfoReducer,
   answers: answersReducer,
   showComponent: showComponentReducer,
   errors: errorReducer
