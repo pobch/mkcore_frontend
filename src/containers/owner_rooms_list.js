@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 
 import Portal from '../components/portal'
 import ConfirmModal from '../components/modal_confirm'
+import BotNavbar from '../components/botNavbar'
 
 import {
   fetchOwnRooms, deleteRoom, showComponentAction, hideComponentAction,
@@ -106,6 +107,8 @@ class OwnerRoomsList extends Component {
             { this.props.showComponent ? <CreateRoom /> : ''}
           </div>
         </div>
+
+        <BotNavbar/>
 
         {/* Confirm Delete Room Modal */}
         <Portal>
