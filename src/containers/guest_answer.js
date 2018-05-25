@@ -83,7 +83,7 @@ class GuestAnswer extends Component {
           </div>
           
           <button type="submit" className="btn btn-primary">Submit</button>
-          <Link to="/user/rooms" className="btn btn-danger">Cancel</Link>
+          <Link to="/guest/rooms" className="btn btn-danger">Cancel</Link>
 
         </form>
       )
@@ -109,7 +109,7 @@ class GuestAnswer extends Component {
           <i>You have already answered this survey 
             -OR- There is no survey created in this room</i>
         </div>
-        <Link to="/user/rooms" className="btn btn-danger">Cancel</Link>
+        <Link to="/guest/rooms" className="btn btn-danger">Cancel</Link>
       </div>
     )
   }

@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { 
-  FETCH_OWNROOMS, FETCH_OWN_ROOM,
+  FETCH_OWNROOMS, FETCH_OWN_ROOM, PUBLISH_OWN_ROOM,
   UPDATE_OWN_ROOM, CREATE_OWN_ROOM, DELETE_OWN_ROOM, 
   UNAUTHENTICATED, AUTHEN_ERROR 
 } from '../actions'
@@ -11,6 +11,7 @@ export default function(state = [], action) {
       return action.payload.data
     case FETCH_OWN_ROOM:
     case UPDATE_OWN_ROOM:
+    case PUBLISH_OWN_ROOM:
       const foundFirstIndex = _.findIndex(state, ['id', action.payload.data.id])
       if (foundFirstIndex < 0) { // not found
         return [action.payload.data, ...state]

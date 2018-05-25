@@ -70,7 +70,7 @@ class SurveyEdit extends Component {
             >
             Save
             </button>
-            <Link to="/user/rooms" className="btn btn-danger">Cancel</Link>
+            <Link to="/owner/rooms" className="btn btn-danger">Cancel</Link>
           </div>
         </form>
 

@@ -1,0 +1,12 @@
+:root {
+  --primary-brand-color: #27a7da;
+  --secondary-brand-color: #157bbf;
+  --brand-contrast-color: #ffffff;
+  --primary-text-color: #000000;
+  --secondary-text-color: #9e9e9e;
+  --primary-background-color: #ffffff;
+  --secondary-background-color: #f4f4f4;
+  --success-color: #2aff72;
+  --fail-color: #ff2e34;
+  --primary-font: "Kanit", sans-serif;
+}

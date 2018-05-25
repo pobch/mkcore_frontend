@@ -1,0 +1,14 @@
+.form-group {
+  margin-bottom: 1em;
+  text-align: left;
+}
+.feedback {
+  font-size: 0.8em;
+  margin-bottom: 0.4em;
+}
+.feedback:empty {
+  display: none;
+}
+.feedback.invalid {
+  color: var(--fail-color);
+}

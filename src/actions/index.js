@@ -10,6 +10,7 @@ export const FETCH_OWNROOMS = 'fetch_rooms_the_user_owns'
 export const FETCH_OWN_ROOM = 'fetch_specific_room_the_user_owns'
 export const CREATE_OWN_ROOM = 'create_own_room'
 export const UPDATE_OWN_ROOM = 'update_own_room'
+export const PUBLISH_OWN_ROOM = 'publish_own_room'
 export const DELETE_OWN_ROOM = 'delete_own_room'
 export const FETCH_JOIN_REQS_OF_OWN_ROOM = 'fetch_join_requests_of_one_own_room'
 export const ERROR_IN_OWNROOMS = 'ownrooms_error_from_api'
@@ -203,6 +204,21 @@ export function updateRoom(id, values) {
     const response = await axios.patch(`${URL_RETRIEVE_UPDATE_OWNROOM}${id}/`, values)
     dispatch({
       type: UPDATE_OWN_ROOM,
+      payload: response
+    })
+  }
+}
+
+export function publishRoom(id) {
+  return async (dispatch) => {
+    const response = await axios.patch(`${URL_RETRIEVE_UPDATE_OWNROOM}${id}/`, 
+      {
+        status: 'active', 
+        published_at: new Date()
+      }
+    )
+    dispatch({
+      type: PUBLISH_OWN_ROOM,
       payload: response
     })
   }
