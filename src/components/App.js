@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 import LogIn from '../containers/login'
 import LogOut from '../containers/logout'
@@ -10,6 +10,7 @@ import SignUp from '../containers/signup'
 import SurveyEdit from '../containers/owner_survey_edit'
 import GuestAnswer from '../containers/guest_answer'
 import ViewJoinReqs from '../containers/owner_view_join_reqs'
+import Profile from '../containers/profile'
 
 import onlyUserCanAccess from '../hoc/only_user_can_access'
 import onlyAnonCanAccess from '../hoc/only_anon_can_access'
@@ -29,17 +30,18 @@ class App extends Component {
       <div className="container">
         <BrowserRouter>
           <Switch>
-            <Route exact path="/" component={onlyUserCanAccess(GuestRoomsList)} />
+            <Route exact path="/" render={() => <Redirect to="/guest/rooms"/>} />
             <Route exact path="/login" component={onlyAnonCanAccess(LogIn)} />
             <Route exact path="/logout" component={onlyUserCanAccess(LogOut)} />
             <Route exact path="/signup" component={onlyAnonCanAccess(SignUp)}/>
             <Route exact path="/guest/rooms" component={onlyUserCanAccess(GuestRoomsList)} />
             <Route exact path="/guest/rooms/:id(\d+)/answer" component={GuestAnswer}/>
             {/* <Route exact path="/user/rooms" component={GuestRoomsList} /> */}
-            <Route exact path="/owner/rooms" component={OwnerRoomsList}/>
+            <Route exact path="/owner/rooms" component={onlyUserCanAccess(OwnerRoomsList)}/>
             <Route exact path="/owner/rooms/:id(\d+)" component={EditRoom} />
             <Route exact path="/owner/rooms/:id(\d+)/survey" component={SurveyEdit} />
             <Route exact path="/owner/rooms/:id(\d+)/joinreqs" component={ViewJoinReqs}/>
+            <Route exact path="/profile" component={onlyUserCanAccess(Profile)}/>
             <Route component={NotFound} />
           </Switch>
         </BrowserRouter>

@@ -7,8 +7,11 @@ import {
   fetchOwnRooms, fetchGuestRooms, fetchPendingRooms, denyJoinReq, showComponentAction, 
   hideComponentAction, deleteRoom, resetError, leaveRoom
 } from '../actions'
+
 import Portal from '../components/portal'
 import ConfirmModal from '../components/modal_confirm'
+import BotNavbar from '../components/botNavbar'
+
 import JoinRoomModal from '../containers/modal_guest_join_room'
 
 
@@ -150,10 +153,8 @@ class GuestRoomsList extends Component {
             }
           })}
         </ul>
-        
-        <div style={{marginTop: '5px'}}>          
-          <Link className="btn btn-info" to="/" style={{marginTop: '5px'}}>Home</Link>
-        </div>
+
+        <BotNavbar/>
           
           {/* // Bootstrap v4, connect with data-* className */}
           <Portal>
