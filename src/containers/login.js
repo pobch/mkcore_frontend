@@ -65,6 +65,7 @@ class LogIn extends Component {
           />
           <button type="submit" className="btn btn-primary">Submit</button>
           <Link className="btn btn-info" to="/">Home</Link>
+          <Link className="btn btn-info" to="/signup">Sign Up</Link>
         </form>
         <div className="text-danger long-text" >
           { error ? error : (authenticated ? 'Log in successfully' : '') }
