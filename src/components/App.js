@@ -10,7 +10,7 @@ import EditRoom from '../containers/owner_room_edit'
 import SignUp from '../containers/signup'
 import SurveyEdit from '../containers/owner_survey_edit'
 import GuestAnswer from '../containers/guest_answer'
-import TopNavbar from '../containers/topNavbar'
+import BotNavbar from '../containers/botNavbar'
 import ViewJoinReqs from '../containers/owner_view_join_reqs'
 
 import onlyUserCanAccess from '../hoc/only_user_can_access'
@@ -31,7 +31,7 @@ class App extends Component {
       <div className="container">
         <BrowserRouter>
           <div>
-            <Route path="/" component={TopNavbar} />
+            <Route path="/" component={BotNavbar} />
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/login" component={onlyAnonCanAccess(LogIn)} />

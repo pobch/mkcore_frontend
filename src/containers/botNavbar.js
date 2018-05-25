@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import icon from '../static/main_icon.svg'
 
 
-class TopNavbar extends Component {
+class BotNavbar extends Component {
   state = {
     toggleNavbar: ''
   }
@@ -91,4 +91,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(TopNavbar)
+export default connect(mapStateToProps)(BotNavbar)
