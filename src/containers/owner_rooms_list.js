@@ -56,12 +56,6 @@ class OwnerRoomsList extends Component {
     return _.map(draftRooms, (room) => {
       return (
         <li style={{marginBottom: '5px'}} key={room.id}>
-          <Link to={`/owner/rooms/${room.id}/survey`} className="btn btn-success btn-sm">
-            Add/Edit Survey
-          </Link>
-          <Link to={`/owner/rooms/${room.id}`} className="btn btn-dark btn-sm">
-            Edit Info
-          </Link>
           <button type="button"
             onClick={ () => {this.openConfirmPublishModal(room.id)} }
             className="btn btn-danger btn-sm"
@@ -72,8 +66,9 @@ class OwnerRoomsList extends Component {
             className="btn btn-danger btn-sm"
           > Delete
           </button>
-          <div style={{color: 'grey'}}>
-            Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
+          <div style={{color: 'grey'}} 
+            onClick={() => this.props.history.push(`/owner/rooms/${room.id}`)}
+          > Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
             <br/>
             <i>{`<RoomCode>/<Password>: <${room.room_code}>/<${room.room_password}>`}</i>
           </div>
@@ -87,24 +82,21 @@ class OwnerRoomsList extends Component {
     return _.map(publishedRooms, (room) => {
       return (
         <li style={{marginBottom: '5px'}} key={room.id}>
-          <Link to={`/owner/rooms/${room.id}`} className="btn btn-dark btn-sm">
-            View Info
-          </Link>
           <Link className="btn btn-dark btn-sm"
             to={{
               pathname: `/owner/rooms/${room.id}/joinreqs`,
               state: {room_title: room.title, room_id: room.id}
             }}
-          >
-            Join Requests
+          > Join Requests
           </Link>
           <button type="button" 
             onClick={ () => {this.openConfirmDeleteModal(room.id)} } 
             className="btn btn-danger btn-sm"
           > Delete
           </button>
-          <div style={{color: 'grey'}}>
-            Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
+          <div style={{color: 'grey'}}
+            onClick={() => this.props.history.push(`/owner/rooms/${room.id}/view`)}
+          > Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
             <br/>
             <i>{`<RoomCode>/<Password>: <${room.room_code}>/<${room.room_password}>`}</i>
           </div>

@@ -1,12 +1,14 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import _ from 'lodash'
-import {fetchOwnRoom, updateRoom} from '../actions'
 import { reduxForm, Field } from 'redux-form'
 import { DateTimePicker, DropdownList } from 'react-widgets'
 import Moment from 'moment'
 import momentLocalizer from 'react-widgets-moment'
 import { Link } from 'react-router-dom'
+
+import TopTabBar from '../components/topTabBar'
+import {fetchOwnRoom, updateRoom} from '../actions'
 
 import 'react-widgets/dist/css/react-widgets.css'
 
@@ -79,14 +81,22 @@ class EditRoom extends Component {
     }
     
     const { handleSubmit } = this.props
+    const {id} = this.props.match.params
     
     return (
       <div>
+        
+        <TopTabBar 
+          title_tab1="Edit Info" 
+          linkPath_tab1={`/owner/rooms/${id}`}
+          title_tab2="Create/Edit Survey"
+          linkPath_tab2={`/owner/rooms/${id}/survey`}
+        />
+
+        <h5>Edit this room</h5>
+        <hr/>
+
         <form onSubmit={ handleSubmit(this.onSubmit) }>
-
-          <h5>Edit this room</h5>
-          <hr/>
-
           <Field 
             name="title"
             component={this.renderField}
