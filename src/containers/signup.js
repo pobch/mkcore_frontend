@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { signUpAction } from '../actions'
+import icon from '../static/hello-2.svg'
 
 
 class SignUp extends Component {
@@ -15,13 +16,15 @@ class SignUp extends Component {
     const { touched, error } = props.meta
     return (
       <div className="form-group">
-        <label htmlFor={props.input.name}>{props.label}</label>
-        <input className={touched && error ? 'form-control is-invalid' : 'form-control'} 
-          type={props.type} 
-          {...props.input}/>
-        <div className='invalid-feedback'>
+        <div className="feedback invalid">
           { touched && error ? error : null}
         </div>
+        <input
+          className={touched && error ? 'form-control invalid' : 'form-control'}
+          placeholder={ props.placeholder }
+          type={ props.type }
+          {...props.input}
+        />
       </div>
     )
   }
@@ -30,48 +33,55 @@ class SignUp extends Component {
     const { handleSubmit } = this.props
 
     return (
-      <div>
-        <h5>Sign Up Page</h5>
-        (Please wait about 5 sec for Heroku's services starting from sleep mode)
-        <form onSubmit={handleSubmit(this.onSubmit)} className="mt-3">
-          
+      <div className="login">
+        <div className="login-header">
+          <img src={icon} width="150" height="150" alt="Icon"/>
+        </div>
+        <form
+          className="login-form"
+          onSubmit={handleSubmit(this.onSubmit)}
+        >
           <Field
             name="email"
+            placeholder="อีเมล"
             component={this.renderField}
             type="email"
-            label="E-mail Address :"
-          />
-          
-          <Field 
-            name="password"
-            component={this.renderField}
-            type="password"
-            label="Password :"
           />
 
-          <Field 
-            name="password2"
+          <Field
+            name="password"
+            placeholder="รหัสผ่าน"
             component={this.renderField}
             type="password"
-            label="Confirm Your Password :"
           />
-  
+
+          <Field
+            name="password2"
+            placeholder="ยืนยันรหัสผ่าน"
+            component={this.renderField}
+            type="password"
+          />
+
           <Field
             name="first_name"
+            placeholder="ชื่อจริง"
             component={this.renderField}
             type="text"
-            label="First Name :"
           />
-          
+
           <Field
             name="last_name"
+            placeholder="นามสกุล"
             component={this.renderField}
             type="text"
-            label="Last Name :"
           />
-          
-          <button type="submit" className="btn btn-primary">Register</button>
-          <Link to="/" className="btn btn-info">Home</Link>
+
+          <button type="submit" className="login-button">
+            <i className="twf twf-arrow-bold-right" />
+          </button>
+          <div className="login-footer">
+            <Link to="/" className="brand-contrast">ย้อนกลับ</Link>
+          </div>
         </form>
       </div>
     )
@@ -82,11 +92,11 @@ function validate(values) {
   const errors = {}
   for(let key of ['email', 'password', 'password2', 'first_name', 'last_name']) {
     if(!values[key]) {
-      errors[key] = 'This field is required'
+      errors[key] = 'กรุณากรอกข้อมูลของท่าน'
     }
   }
   if(values.password !== values.password2) {
-    errors.password2 = 'Confirm password must be the same as password'
+    errors.password2 = 'รหัสผ่านไม่ตรงกัน'
   }
   return errors
 }

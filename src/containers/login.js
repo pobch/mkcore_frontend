@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form'
 import { Link } from 'react-router-dom'
 
 import { logInAction, onLeaveLogInPage, resetError } from '../actions'
-
+import icon from '../static/hello-2.svg'
 
 class LogIn extends Component {
   componentWillUnmount(){
@@ -17,15 +17,15 @@ class LogIn extends Component {
     const { touched, error } = field.meta
     return (
       <div className="form-group">
-        <input 
-          className={touched && error ? 'form-control is-invalid' : 'form-control'}
+        <div className="feedback invalid">
+          { touched && error ? error : null }
+        </div>
+        <input
+          className={touched && error ? 'form-control invalid' : 'form-control'}
           placeholder={ field.placeholder }
           type={ field.type }
           {...field.input}
         />
-        <div className="invalid-feedback" >
-          { touched && error ? error : null }
-        </div>
       </div>
     )
   }
@@ -39,36 +39,39 @@ class LogIn extends Component {
     const { error, authenticated } = this.props.auth
 
     return (
-      <div>
-        <h5 className="text-xs-left" >Log in page</h5>
-        (Please wait about 5 sec for Heroku's services starting from sleep mode)
-        <div className="text-danger mt-3">
-          <h6>Test Account :</h6>
-          <ul>
-            <li><h6><i>E-mail: test@pob.com</i></h6></li>
-            <li><h6><i>Password: guestpass123</i></h6></li>
-          </ul>
+      <div className="login">
+        <div className="login-header">
+          <img src={icon} width="150" height="150" alt="Icon"/>
+          <label>Test Account :</label>
+          <div>E-mail: test@pob.com</div>
+          <div>Password: guestpass123</div>
         </div>
-
-        <form onSubmit={ handleSubmit(this.onSubmit) } >
+        <div className={ error ? 'feedback invalid' : 'feedback success' }>
+          { error ? error : (authenticated ? 'Log in successfully' : '') }
+        </div>
+        <form
+          className="login-form"
+          onSubmit={ handleSubmit(this.onSubmit) }
+        >
           <Field
             name="email"
-            placeholder="Your e-mail address"
+            placeholder="อีเมล"
             component={ this.renderField }
             type="text"
           />
-          <Field 
+          <Field
             name="password"
-            placeholder="Your password"
+            placeholder="รหัสผ่าน"
             component={ this.renderField }
             type="password"
           />
-          <button type="submit" className="btn btn-primary">Submit</button>
-          <Link className="btn btn-info" to="/">Home</Link>
-          <Link className="btn btn-info" to="/signup">Sign Up</Link>
+          <button type="submit" className="login-button">
+            <i className="twf twf-arrow-bold-right" />
+          </button>
         </form>
-        <div className="text-danger long-text" >
-          { error ? error : (authenticated ? 'Log in successfully' : '') }
+        <div className="login-footer">
+          <span>ยังไม่มีบัญชี? </span>
+          <Link className="brand-contrast" to="/signup">สร้างบัญชีใหม่</Link>
         </div>
       </div>
     )
@@ -78,10 +81,10 @@ class LogIn extends Component {
 function validate(values) {
   const errors = {}
   if (!values.email) {
-    errors.email = 'Please enter your e-mail address'
+    errors.email = 'กรุณากรอกอีเมล'
   }
   if (!values.password) {
-    errors.password = 'Password cannot be blank'
+    errors.password = 'กรุณากรอกพาสเวิร์ด'
   }
   return errors
 }
