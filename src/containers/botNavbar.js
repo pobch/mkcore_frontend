@@ -69,7 +69,7 @@ class BotNavbar extends Component {
               </React.Fragment>
             }
             <li className="nav-item">
-              <NavLink exact to="/user/rooms" 
+              <NavLink exact to="/guest/rooms" 
                 className="nav-link"
                 activeClassName="active"
                 onClick={this.collapseNavbar}>

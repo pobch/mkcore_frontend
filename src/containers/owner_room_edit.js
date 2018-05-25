@@ -144,7 +144,7 @@ class EditRoom extends Component {
           </div>
           <div>
             <button type="submit" className="btn btn-primary my-2">Save</button>
-            <Link to="/user/rooms" className="btn btn-danger my-2">Cancel</Link>
+            <Link to="/owner/rooms" className="btn btn-danger my-2">Cancel</Link>
             {/* <button type="button" onClick={ this.props.history.goBack } className="btn btn-danger">Back</button> */}
           </div>
         </form>

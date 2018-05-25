@@ -7,27 +7,23 @@ import {
   fetchOwnRooms, fetchGuestRooms, fetchPendingRooms, denyJoinReq, showComponentAction, 
   hideComponentAction, deleteRoom, resetError, leaveRoom
 } from '../actions'
-import CreateRoom from './owner_room_create'
 import Portal from '../components/portal'
 import ConfirmModal from '../components/modal_confirm'
 import JoinRoomModal from '../containers/modal_guest_join_room'
 
 
-class UserRoomsList extends Component {  
+class GuestRoomsList extends Component {  
   state = { 
     confirmationPopup: false,
-    deleteRoomId: null,
     joinRoomPopup: false,
     leaveRoomId: null
   }
 
   // For Bootstrap v4 modal connection between <button> (for open modal) and Modal itself
-  confirmDeleteModalHTMLId = 'confirmDeleteModal' // must add # in front of id in 'data-target'
   confirmLeaveRoomHTMLId = 'confirmLeaveRoomModal' // must add # in front of id in 'data-target'
 
   componentDidMount() {
     window.scrollTo(0,0)
-    this.props.fetchOwnRooms()
     this.props.fetchGuestRooms()
     this.props.fetchPendingRooms()
   }
@@ -36,18 +32,10 @@ class UserRoomsList extends Component {
     // Reset Error msg when leaving the page
     this.props.resetError()
   }
-  
-  openConfirmDeleteModal = (id) => {
-    this.setState({ confirmationPopup: true, deleteRoomId: id })
-  }
-
-  onDeleteRoom = (id, event) => {
-    this.props.deleteRoom(id)
-  }
 
   closeModal = () => {
-    this.setState({ confirmationPopup: false, joinRoomPopup: false });
-  };
+    this.setState({ confirmationPopup: false, joinRoomPopup: false })
+  }
 
   openJoinRoomModal = (event) => {
     this.props.hideComponentAction()
@@ -62,50 +50,13 @@ class UserRoomsList extends Component {
     this.props.leaveRoom(id)
   }
 
-  // renderRooms = (roomProp, {owner} = {owner: true}) => {}
-
-  renderOwnRooms = (ownRooms) => {
-    return _.map(ownRooms, (room) => {
-      return (
-        <li style={{marginBottom: '5px'}} key={room.id}>
-          <Link to={`/user/rooms/${room.id}/survey`} className="btn btn-success btn-sm">
-            Add/Edit Survey
-          </Link>
-          <Link to={`/user/rooms/${room.id}`} className="btn btn-dark btn-sm">
-            Edit Info
-          </Link>
-          <Link className="btn btn-dark btn-sm"
-            to={{
-              pathname: `/user/rooms/${room.id}/joinreqs`,
-              state: {room_title: room.title, room_id: room.id}
-            }}
-          >
-            Join Requests
-          </Link>
-          <button type="button" 
-            onClick={ () => {this.openConfirmDeleteModal(room.id)} } 
-            className="btn btn-danger btn-sm"
-            data-toggle="modal"                                 // Bootstrap v4 
-            data-target={`#${this.confirmDeleteModalHTMLId}`}   // Bootstrap v4
-          >
-            Delete
-          </button>
-          <div style={{color: 'grey'}}>
-            Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
-            <br/>
-            <i>{`<RoomCode>/<Password>: <${room.room_code}>/<${room.room_password}>`}</i>
-          </div>
-          <hr/>
-        </li>
-      )
-    })
-  } 
+  // renderRooms = (roomProp, {owner} = {owner: true}) => {} 
       
   renderGuestRooms = (guestRooms) => {
     return _.map(guestRooms, (room) => {
       return (
         <li style={{marginBottom: '5px'}} key={room.id}>
-          <Link to={`/user/rooms/${room.id}/answer`} className="btn btn-success btn-sm">
+          <Link to={`/guest/rooms/${room.id}/answer`} className="btn btn-success btn-sm">
             Answer Survey
           </Link>
           <button type="button" 
@@ -150,29 +101,8 @@ class UserRoomsList extends Component {
 
     return (
       <div>
-        <h5>Rooms Page</h5>
+        <h5>Guest Rooms Page</h5>
         (Please wait about 5 sec for Heroku's services starting from sleep mode)
-
-        <div className="card my-4 bg-light">
-          <div className="card-body">
-            <h5 className="breadcrumb my-3">Rooms you've already created</h5>
-            <ul>
-              { _.isEmpty(this.props.ownRooms) ?
-                <i style={{color: 'grey'}}>[ Empty ]</i> :
-                this.renderOwnRooms(this.props.ownRooms)
-              }
-            </ul>
-            <button type="button" 
-              className="btn btn-primary" 
-              onClick={ (event) => { 
-                this.props.showComponent ? this.props.hideComponentAction() : this.props.showComponentAction() 
-              } }>
-            Create
-            </button>
-
-            { this.props.showComponent ? <CreateRoom /> : ''}
-          </div>
-        </div>
 
         <div className="card bg-light">
           <div className="card-body">
@@ -224,24 +154,6 @@ class UserRoomsList extends Component {
         <div style={{marginTop: '5px'}}>          
           <Link className="btn btn-info" to="/" style={{marginTop: '5px'}}>Home</Link>
         </div>
-
-        {/* {this.state.confirmationPopup && ( */}
-
-          {/* // Bootstrap v4, connect with data-* className */}
-          <Portal>
-            {/* Confirm Delete Room Modal */}
-            <ConfirmModal
-              htmlId={this.confirmDeleteModalHTMLId}
-              modalTitle="Confirm Your Action"
-              modalBody="Are you sure you want to delete this room?"
-              onCancel={ () => {this.closeModal()} }
-              onConfirm={ (event) => {
-                this.closeModal()
-                this.onDeleteRoom(this.state.deleteRoomId, event)
-              }}
-            />
-          </Portal>
-        {/* )} */}
           
           {/* // Bootstrap v4, connect with data-* className */}
           <Portal>
@@ -275,7 +187,6 @@ class UserRoomsList extends Component {
 
 function mapStateToProps(state) {
   return {
-    ownRooms: state.ownRooms,
     guestRooms: state.guestRooms,
     pendingRoomsInfo: state.pendingRoomsInfo,
     showComponent: state.showComponent,
@@ -283,15 +194,13 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { 
-    fetchOwnRooms, 
+export default connect(mapStateToProps, {  
     fetchGuestRooms, 
+    leaveRoom,
     fetchPendingRooms,
-    showComponentAction, 
     denyJoinReq,
+    showComponentAction, 
     hideComponentAction,
-    deleteRoom,
-    resetError,
-    leaveRoom
+    resetError
   }
-)(UserRoomsList)
+)(GuestRoomsList)
