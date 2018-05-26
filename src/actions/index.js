@@ -96,6 +96,7 @@ export function fetchOwnRooms() {
         payload: response
       })
     } catch(error) {
+      console.log(error)
       dispatch({
         type: ERROR_IN_OWNROOMS,
         payload: error.response

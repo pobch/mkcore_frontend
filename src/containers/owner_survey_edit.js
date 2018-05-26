@@ -8,6 +8,7 @@ import {fetchOwnRoom, updateRoom} from '../actions'
 import RenderSurvey from '../components/owner_survey_edit_render'
 import Portal from '../components/portal'
 import SaveCompleteModal from '../components/modal_save_complete'
+import TopTabBar from '../components/topTabBar'
 
 
 class SurveyEdit extends Component {
@@ -47,9 +48,18 @@ class SurveyEdit extends Component {
     }
     
     const { handleSubmit } = this.props
+    const { id } = this.props.match.params
     // console.log('render count : ', 1)
     return (
       <div>
+        
+        <TopTabBar 
+          title_tab1="Edit Info" 
+          linkPath_tab1={`/owner/rooms/${id}`}
+          title_tab2="Create/Edit Survey"
+          linkPath_tab2={`/owner/rooms/${id}/survey`}
+        />
+
         <form onSubmit={handleSubmit(this.onSubmit)}>
           <FieldArray 
             name="survey" 
