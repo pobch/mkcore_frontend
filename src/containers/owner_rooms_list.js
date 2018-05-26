@@ -111,6 +111,15 @@ class OwnerRoomsList extends Component {
       <div>
         <h5>Owner Rooms Page</h5>
 
+        <button type="button" 
+          className="btn btn-primary" 
+          onClick={ () => { 
+            this.props.showComponent ? this.props.hideComponentAction() : this.props.showComponentAction() 
+          } }>
+        Create
+        </button>
+        { this.props.showComponent ? <CreateRoom /> : ''}
+        
         <div className="card my-4 bg-light">
           <div className="card-body">
             <h5 className="breadcrumb my-3">Draft Rooms</h5>
@@ -127,15 +136,6 @@ class OwnerRoomsList extends Component {
                 : this.renderPublishedRooms(this.props.publishedRooms)
               }
             </ul>
-            <button type="button" 
-              className="btn btn-primary" 
-              onClick={ () => { 
-                this.props.showComponent ? this.props.hideComponentAction() : this.props.showComponentAction() 
-              } }>
-            Create
-            </button>
-
-            { this.props.showComponent ? <CreateRoom /> : ''}
           </div>
         </div>
 

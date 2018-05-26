@@ -16,8 +16,6 @@ import 'react-widgets/dist/css/react-widgets.css'
 Moment.locale('en')
 momentLocalizer()
 
-const publish = ['draft', 'active', 'closed']
-
 class EditRoom extends Component {
   componentDidMount() {
     window.scrollTo(0,0)
@@ -58,15 +56,6 @@ class EditRoom extends Component {
       <div>
         <label htmlFor={name}>{label}</label><br/>
         <DateTimePicker onChange={onChange} value={value ? new Date(value) : null }/>
-      </div>
-    )
-  }
-
-  renderDropdownList = ({ input, label, data }) => {
-    return (
-      <div>
-        <label htmlFor={input.name}>{label}</label><br/>
-        <DropdownList {...input} data={data}/>
       </div>
     )
   }
@@ -138,13 +127,6 @@ class EditRoom extends Component {
             component={this.renderDateTime}
             label="Room end at :"
             type=""
-          />
-          <Field
-            name="status"
-            component={this.renderDropdownList}
-            label="Draft, Publish or Close this room?"
-            type=""
-            data={publish}
           />
           <hr/>
           <div style={{color: 'grey'}}>

@@ -2,6 +2,8 @@ import _ from 'lodash'
 import React, {Component} from 'react'
 import {Field, FieldArray} from 'redux-form'
 
+import Accordion from '../components/accordion'
+
 
 export default class RenderSurvey extends Component {
   state = {
@@ -12,10 +14,9 @@ export default class RenderSurvey extends Component {
 
   renderQuestionField = (field) => {
     return (
-      <div className="form-group">
-        <label>Enter the question</label>
-        <input type="text" {...field.input} className="form-control"/>
-      </div>
+      <span>
+        <input type="text" placeholder="Enter the question" {...field.input}/>
+      </span>
     )
   }
 
@@ -63,6 +64,82 @@ export default class RenderSurvey extends Component {
 
     return (
       <ul>
+        {
+          fields.map((value,index) => {
+            const {id} = fields.get(index)
+            return (
+              <li key={index}>
+                <button type="button" 
+                  onClick={() => {
+                    this.setState((prevState) => ({
+                      showChoiceFieldId: _.omit(prevState.showChoiceFieldId, id),
+                      showTextFieldId: _.omit(prevState.showTextFieldId, id)
+                    }))
+                    fields.remove(index)
+                  }} 
+                  className="btn btn-danger mx-1 btn-sm">
+                Delete
+                </button>
+                
+                <b>{`#${index+1} : `}</b>
+                <Field
+                  name={`${value}.question`}
+                  component={this.renderQuestionField}
+                />
+                
+                <Accordion>
+                  <div className="form-group form-inline">
+                    Answer Type : 
+                    <button type="button" className="btn btn-outline-info m-1 btn-sm"
+                      onClick={() => {
+                        const wantedValue = {...fields.get(index), answerType:'text', choices:null}
+                        fields.remove(index)
+                        fields.insert(index, wantedValue)
+                        // change(`${value}.answerType`, 'text') 
+                        // change(`${value}.choices`, null)       // These 2 lines are alternative to 3 lines above
+                        this.setState((prevState) => ({
+                          showChoiceFieldId: _.omit(prevState.showChoiceFieldId, id),
+                          showTextFieldId: {...prevState.showTextFieldId, [id]: id}
+                        }))
+                      }}>
+                      Text
+                    </button>
+
+                    <button type="button" className="btn btn-outline-info m-1 btn-sm"
+                      onClick={() => {
+                        const wantedValue = {...fields.get(index), answerType: 'choices'}
+                        fields.remove(index)
+                        fields.insert(index, wantedValue)
+                        this.setState((prevState) => ({
+                          showChoiceFieldId: {...prevState.showChoiceFieldId, [id]: id},
+                          showTextFieldId: _.omit(prevState.showTextFieldId, id)
+                        }))
+                      }}>
+                      Choices
+                    </button>
+                  </div>
+
+                  <div className="form-group">
+                    Expected answer :
+                    <i> 
+                      {_.includes(this.state.showTextFieldId, id) && ' Text Type'}
+                      {_.includes(this.state.showChoiceFieldId, id) && ' Choice Type'}
+                    </i>
+                  </div>
+                  
+                  {_.includes(this.state.showChoiceFieldId, id) && 
+                    <FieldArray
+                      name={`${value}.choices`}
+                      component={this.renderChoiceField}
+                    />
+                  }
+                </Accordion>
+                <hr/>
+              </li>
+            )
+          })
+        }
+
         <button type="button" 
           onClick={() => {
             const {id} = defaultNewQuestion
@@ -76,79 +153,6 @@ export default class RenderSurvey extends Component {
           +Question
         </button>
         <hr/>
-        {
-          fields.map((value,index) => {
-            const {id} = fields.get(index)
-            return (
-              <li key={index} className="form-group">
-                <button type="button" 
-                  onClick={() => {
-                    this.setState((prevState) => ({
-                      showChoiceFieldId: _.omit(prevState.showChoiceFieldId, id),
-                      showTextFieldId: _.omit(prevState.showTextFieldId, id)
-                    }))
-                    fields.remove(index)
-                  }} 
-                  className="btn btn-danger mx-1 btn-sm">
-                Delete
-                </button>
-                <b>{`Question #${index+1}`}</b>
-
-                <div className="form-group form-inline">
-                  Answer Type : 
-                  <button type="button" className="btn btn-outline-info m-1 btn-sm"
-                    onClick={() => {
-                      const wantedValue = {...fields.get(index), answerType:'text', choices:null}
-                      fields.remove(index)
-                      fields.insert(index, wantedValue)
-                      // change(`${value}.answerType`, 'text') 
-                      // change(`${value}.choices`, null)       // These 2 lines are alternative to 3 lines above
-                      this.setState((prevState) => ({
-                        showChoiceFieldId: _.omit(prevState.showChoiceFieldId, id),
-                        showTextFieldId: {...prevState.showTextFieldId, [id]: id}
-                      }))
-                    }}>
-                    Text
-                  </button>
-
-                  <button type="button" className="btn btn-outline-info m-1 btn-sm"
-                    onClick={() => {
-                      const wantedValue = {...fields.get(index), answerType: 'choices'}
-                      fields.remove(index)
-                      fields.insert(index, wantedValue)
-                      this.setState((prevState) => ({
-                        showChoiceFieldId: {...prevState.showChoiceFieldId, [id]: id},
-                        showTextFieldId: _.omit(prevState.showTextFieldId, id)
-                      }))
-                    }}>
-                    Choices
-                  </button>
-                </div>
-
-                <Field
-                  name={`${value}.question`}
-                  component={this.renderQuestionField}
-                />
-                <div className="form-group">
-                  Expected answer :
-                  <i> 
-                    {_.includes(this.state.showTextFieldId, id) && ' Text Type'}
-                    {_.includes(this.state.showChoiceFieldId, id) && ' Choice Type'}
-                  </i>
-                </div>
-                
-                {_.includes(this.state.showChoiceFieldId, id) && 
-                  <FieldArray
-                    name={`${value}.choices`}
-                    component={this.renderChoiceField}
-                  />
-                }
-                
-                <hr/>
-              </li>
-            )
-          })
-        }
       </ul>
     )
   }

@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 // Higher-Order Components (HOC):
 export default function(NestedComponent){
   class PrivateComponent extends Component {
+    
     componentWillMount(){
       if(!this.props.auth.authenticated) {
         this.props.history.push('/login')
