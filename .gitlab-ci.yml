@@ -33,6 +33,6 @@ deploy_dev:
         --form "token=$DEPLOY_TOKEN"
         --form "variables[TRIGGER_NAME]=ktapp"
         --form "ref=develop"
-        https://gitlab.studiotwist.co/api/v4/projects/39/trigger/pipeline
+        https://gitlab.studiotwist.co/api/v4/projects/41/trigger/pipeline
   only:
     - develop
