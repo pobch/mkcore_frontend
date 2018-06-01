@@ -4,7 +4,7 @@ import React from 'react'
 export default function ConfirmModal(props) {
   return (
     // // BootStrap 4
-    <div className="modal fade" id={props.htmlId} tabIndex="-1">
+    <div className={props.className} id={props.htmlId} tabIndex="-1">
       <div className="modal-dialog">
         <div className="modal-content">
 
