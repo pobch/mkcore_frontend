@@ -55,7 +55,7 @@ class OwnerRoomsList extends Component {
   renderDraftRooms = (draftRooms) => {
     return _.map(draftRooms, (room) => {
       return (
-        <li style={{marginBottom: '5px'}} key={room.id}>
+        <li className="list-item" key={room.id}>
           <button type="button"
             onClick={ () => {this.openConfirmPublishModal(room.id)} }
             className="btn btn-danger btn-sm"
@@ -72,7 +72,6 @@ class OwnerRoomsList extends Component {
             <br/>
             <i>{`<RoomCode>/<Password>: <${room.room_code}>/<${room.room_password}>`}</i>
           </div>
-          <hr/>
         </li>
       )
     })
@@ -81,7 +80,7 @@ class OwnerRoomsList extends Component {
   renderPublishedRooms = (publishedRooms) => {
     return _.map(publishedRooms, (room) => {
       return (
-        <li style={{marginBottom: '5px'}} key={room.id}>
+        <li className="list-item" key={room.id}>
           <Link className="btn btn-dark btn-sm"
             to={{
               pathname: `/owner/rooms/${room.id}/joinreqs`,
@@ -100,7 +99,6 @@ class OwnerRoomsList extends Component {
             <br/>
             <i>{`<RoomCode>/<Password>: <${room.room_code}>/<${room.room_password}>`}</i>
           </div>
-          <hr/>
         </li>
       )
     })
@@ -109,7 +107,7 @@ class OwnerRoomsList extends Component {
   render() {
     return (
       <div className="wrapper">
-        <div className="header">Owner Rooms Page</div>
+        <div className="header">ห้อง</div>
         <div className="body">
           <div className="body-header">
             <button type="button"
@@ -122,15 +120,15 @@ class OwnerRoomsList extends Component {
             { this.props.showComponent ? <CreateRoom /> : ''}
           </div>
           <div className="body-content">
-            <h5 className="breadcrumb my-3">Draft Rooms</h5>
-            <ul>
+            <div className="list-title">แบบร่าง</div>
+            <ul className="list-body">
               { _.isEmpty(this.props.draftRooms)
                 ? <i style={{color: 'grey'}}>[ Empty ]</i>
                 : this.renderDraftRooms(this.props.draftRooms)
               }
             </ul>
-            <h5>Published Rooms</h5>
-            <ul>
+            <div className="list-title">แบบร่าง</div>
+            <ul className="list-body">
               { _.isEmpty(this.props.publishedRooms)
                 ? <i style={{color: 'grey'}}>[ Empty ]</i>
                 : this.renderPublishedRooms(this.props.publishedRooms)
