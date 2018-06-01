@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { 
-  fetchOwnRooms, fetchGuestRooms, fetchPendingRooms, denyJoinReq, showComponentAction, 
-  hideComponentAction, deleteRoom, resetError, leaveRoom
+  fetchGuestRooms, fetchPendingRooms, denyJoinReq, showComponentAction, 
+  hideComponentAction, resetError, leaveRoom
 } from '../actions'
 
 import Portal from '../components/portal'

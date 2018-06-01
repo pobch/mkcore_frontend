@@ -71,6 +71,8 @@ class OwnerRoomsList extends Component {
           > Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
             <br/>
             <i>{`<RoomCode>/<Password>: <${room.room_code}>/<${room.room_password}>`}</i>
+            <br/>
+            <i>{room.start_at ? `This room will start at ${room.start_at}` : null}</i>
           </div>
         </li>
       )
@@ -98,6 +100,8 @@ class OwnerRoomsList extends Component {
           > Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
             <br/>
             <i>{`<RoomCode>/<Password>: <${room.room_code}>/<${room.room_password}>`}</i>
+            <br/>
+            <i>{room.start_at ? `This room will start at ${room.start_at}` : null}</i>
           </div>
         </li>
       )
