@@ -5,7 +5,9 @@
   background-color: var(--secondary-background-color);
 }
 .navbar-item {
+  display: table;
   width: 33.33%;
+  height: 5.75rem;
   line-height: 1;
   font-size: 1rem;
   float: left;
@@ -20,8 +22,10 @@
   font-size: 2rem;
 }
 .nav-link {
-  display: block;
-  padding-top: 1.2rem;
-  padding-bottom: 1.2rem;
+  display: table-cell;
+  vertical-align: middle;
   color: var(--secondary-text-color);
+}
+.nav-link.active {
+  color: var(--primary-brand-color);
 }

@@ -17,7 +17,9 @@
   min-height: 100%;
 }
 .header,
-.body-header {
+.body-header,
+.list-title,
+.list-item {
   padding-left: 5%;
   padding-right: 5%;
 }
@@ -30,9 +32,27 @@
   background-color: var(--secondary-background-color);
   border-bottom: 1px solid var(--border-color);
 }
+.body {
+  max-height: calc(100vh - 10rem);
+  overflow: auto;
+}
 .body-header {
   padding-top: 2rem;
   padding-bottom: 2rem;
   text-align: center;
   background-color: var(--primary-brand-color);
+}
+.list-title {
+  padding-top: 0.75em;
+  padding-bottom: 0.75em;
+  font-size: 0.9em;
+  font-weight: 600;
+  color: var(--secondary-text-color);
+  background-color: var(--secondary-background-color);
+}
+.list-item {
+  padding-top: 0.75em;
+  padding-bottom: 0.75em;
+  font-size: 1.25em;
+  border-bottom: 1px solid var(--border-color);
 }
