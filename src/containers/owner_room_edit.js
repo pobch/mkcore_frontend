@@ -2,12 +2,16 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import _ from 'lodash'
 import { reduxForm, Field } from 'redux-form'
-import { DateTimePicker, DropdownList } from 'react-widgets'
+import { DateTimePicker } from 'react-widgets'
 import Moment from 'moment'
 import momentLocalizer from 'react-widgets-moment'
 import { Link } from 'react-router-dom'
 
+import SurveyEdit from '../components/owner_survey_edit'
 import TopTabBar from '../components/topTabBar'
+import Portal from '../components/portal'
+import SaveCompleteModal from '../components/modal_save_complete'
+
 import {fetchOwnRoom, updateRoom} from '../actions'
 
 import 'react-widgets/dist/css/react-widgets.css'
@@ -36,16 +40,20 @@ class EditRoom extends Component {
 
   onSubmit = (values) => {
     const { id } = this.props.match.params
-    this.props.updateRoom(id, values)
+    console.log('id ===', id)
+    console.log('values ===', values)
+    // this.props.updateRoom(id, values)
   }
 
   renderField = (field) => {
     return (
       <div className="form-group">
         <label htmlFor={field.input.name}>{field.label}</label><br/>
-        { field.type === 'textarea' ? 
-          <textarea className="form-control" {...field.input} rows="5" cols="25"/> :
-          <input className="form-control" type={field.type} {...field.input}/>
+        { field.type === 'disabled'
+          ? <input className="form-control" type='text' {...field.input} disabled/>
+          : field.type === 'textarea' 
+          ? <textarea className="form-control" {...field.input} rows="5" cols="25"/> 
+          : <input className="form-control" type={field.type} {...field.input}/>
         }
       </div>
     )
@@ -75,6 +83,9 @@ class EditRoom extends Component {
     return (
       <div>
         
+        <h5>Edit this room</h5>
+        <hr/>
+
         <TopTabBar 
           title_tab1="Edit Info" 
           linkPath_tab1={`/owner/rooms/${id}`}
@@ -82,64 +93,71 @@ class EditRoom extends Component {
           linkPath_tab2={`/owner/rooms/${id}/survey`}
         />
 
-        <h5>Edit this room</h5>
-        <hr/>
-
         <form onSubmit={ handleSubmit(this.onSubmit) }>
-          <Field 
-            name="title"
-            component={this.renderField}
-            label="Room Title"
-            type="text"
-          />
-          <Field
-            name="description"
-            component={this.renderField}
-            label="Room Description"
-            type="textarea"
-          />
-          <Field
-            name="instructor_name"
-            component={this.renderField}
-            label="Survey Owner's Name :"
-            type="text"
-          />
-          <Field
-            name="room_code"
-            component={this.renderField}
-            label="Your Room's Code (guests will use this code and password to join this room)"
-            type="text"
-          />
-          <Field
-            name="room_password"
-            component={this.renderField}
-            label="Your Room's Password (guests will use this code and password to join this room)"
-            type="text"
-          />
-          <Field
-            name="start_at"
-            component={this.renderDateTime}
-            label="Room start at :"
-            type=""
-          />
-          <Field
-            name="end_at"
-            component={this.renderDateTime}
-            label="Room end at :"
-            type=""
-          />
-          <hr/>
-          <div style={{color: 'grey'}}>
-            <i>
-              Current Room's Code / Password : {`<${this.props.room.room_code}> / <${this.props.room.room_password}>`}
-            </i>
+          <div className='content-tab1'>
+            <Field 
+              name="title"
+              component={this.renderField}
+              label="Room Title"
+              type="text"
+            />
+            <Field
+              name="description"
+              component={this.renderField}
+              label="Room Description"
+              type="textarea"
+            />
+            <Field
+              name="instructor_name"
+              component={this.renderField}
+              label="Survey Owner's Name :"
+              type="text"
+            />
+            <Field
+              name="room_code"
+              component={this.renderField}
+              label="Your Room's Code (guests will use this code and password to join this room)"
+              type="disabled"
+            />
+            {/* <Field
+              name="room_password"
+              component={this.renderField}
+              label="Your Room's Password (guests will use this code and password to join this room)"
+              type="text"
+            /> */}
+            <Field
+              name="start_at"
+              component={this.renderDateTime}
+              label="Room start at :"
+              type=""
+            />
+            <Field
+              name="end_at"
+              component={this.renderDateTime}
+              label="Room end at :"
+              type=""
+            />
+            <hr/>
+            <div>
+              <button type="submit" className="btn btn-primary my-2">Save</button>
+              <Link to="/owner/rooms" className="btn btn-danger my-2">Cancel</Link>
+              {/* <button type="button" onClick={ this.props.history.goBack } className="btn btn-danger">Back</button> */}
+            </div>
           </div>
-          <div>
-            <button type="submit" className="btn btn-primary my-2">Save</button>
-            <Link to="/owner/rooms" className="btn btn-danger my-2">Cancel</Link>
-            {/* <button type="button" onClick={ this.props.history.goBack } className="btn btn-danger">Back</button> */}
+          <div className='content-tab2'>
+              <SurveyEdit room={this.props.room}/>
           </div>
         </form>
+        
+        <Portal>
+          <SaveCompleteModal
+            htmlId={this.saveCompleteModalHtmlId}
+            onConfirm={(event) => {
+              this.setState({showSaveCompleteModal: false})
+            }}
+          />
+        </Portal>
+
       </div>
     )
   }
@@ -147,6 +165,9 @@ class EditRoom extends Component {
 
 function mapStateToProps(state, ownProps) {
   const roomData = _.keyBy(state.ownRooms, 'id')[ownProps.match.params.id]
+  if(roomData) {
+    roomData.survey = roomData.survey || []
+  }
   return {
     room: roomData,
     initialValues: roomData
@@ -155,6 +176,7 @@ function mapStateToProps(state, ownProps) {
 
 export default connect(mapStateToProps, { fetchOwnRoom, updateRoom })(
   reduxForm({
-    form: 'editOwnRoomForm'
+    form: 'editOwnRoomForm',
+    enableReinitialize: true
   })(EditRoom)
 )

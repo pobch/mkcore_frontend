@@ -53,12 +53,12 @@ class CreateRoom extends Component {
             type="text"
             label="Your Room's Code (guests will use this code and password to join this room)"
           />
-          <Field
+          {/* <Field
             name="room_password"
             component={this.renderField}
             type="text"
             label="Your Room's Password (guests will use this code and password to join this room)"
-          />
+          /> */}
 
           <button className="btn btn-primary" type="submit">Save</button>
           <button className="btn btn-danger" type="button" onClick={ (event) => { this.props.hideComponentAction() } }>Close</button>

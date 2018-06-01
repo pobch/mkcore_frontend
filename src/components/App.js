@@ -7,7 +7,6 @@ import GuestRoomsList from '../containers/guest_rooms_list'
 import OwnerRoomsList from '../containers/owner_rooms_list'
 import EditRoom from '../containers/owner_room_edit'
 import SignUp from '../containers/signup'
-import SurveyEdit from '../containers/owner_survey_edit'
 import GuestAnswer from '../containers/guest_answer'
 import ViewJoinReqs from '../containers/owner_view_join_reqs'
 import Profile from '../containers/profile'
@@ -39,7 +38,6 @@ class App extends Component {
             {/* <Route exact path="/user/rooms" component={GuestRoomsList} /> */}
             <Route exact path="/owner/rooms" component={onlyUserCanAccess(OwnerRoomsList)}/>
             <Route exact path="/owner/rooms/:id(\d+)" component={EditRoom} />
-            <Route exact path="/owner/rooms/:id(\d+)/survey" component={SurveyEdit} />
             <Route exact path="/owner/rooms/:id(\d+)/joinreqs" component={ViewJoinReqs}/>
             <Route exact path="/profile" component={onlyUserCanAccess(Profile)}/>
             <Route component={NotFound} />
