@@ -55,7 +55,7 @@ export default class RenderSurvey extends Component {
   }
 
   render () {
-    const {fields, change} = this.props
+    const {fields} = this.props
     const defaultNewQuestion = {
       id: this.state.maxQuestionId + 1,
       answerType: 'text',
