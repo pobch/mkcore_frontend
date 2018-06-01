@@ -1,0 +1,27 @@
+.navbar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: var(--secondary-background-color);
+}
+.navbar-item {
+  width: 33.33%;
+  line-height: 1;
+  font-size: 1rem;
+  float: left;
+  text-align: center;
+}
+.navbar-item:last-child {
+  border-right: none;
+}
+.navbar-item .twf {
+  width: 100%;
+  margin-bottom: 0.8rem;
+  font-size: 2rem;
+}
+.nav-link {
+  display: block;
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+  color: var(--secondary-text-color);
+}

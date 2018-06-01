@@ -17,7 +17,7 @@ class LogIn extends Component {
     const { touched, error } = field.meta
     return (
       <div className="form-group">
-        <div className="feedback invalid">
+        <div className="feedback invalid anmt-fadein">
           { touched && error ? error : null }
         </div>
         <input

@@ -1,9 +1,11 @@
+@import './static/styles/animation.css'; /* Animation */
 @import './static/styles/variables.css'; /* Global variables */
 
 @import './static/styles/default.css'; /* Native HTML tag */
 @import './static/styles/font.css'; /* Form */
 @import './static/styles/form.css'; /* Form */
 @import './static/styles/layout.css'; /* Layout */
+@import './static/styles/navbar.css'; /* Navbar */
 @import './static/styles/responsive.css'; /* Responsive */
 @import './static/styles/utilities.css'; /* Utilities */
 

@@ -15,7 +15,7 @@ import CreateRoom from './owner_room_create'
 
 
 class OwnerRoomsList extends Component {
-  state = { 
+  state = {
     confirmDeletePopup: false,
     deleteRoomId: null,
     confirmPublishPopup: false,
@@ -31,7 +31,7 @@ class OwnerRoomsList extends Component {
     // Reset Error msg when leaving the page
     this.props.resetError()
   }
-  
+
   openConfirmDeleteModal = (id) => {
     this.setState({ confirmDeletePopup: true, deleteRoomId: id })
   }
@@ -47,7 +47,7 @@ class OwnerRoomsList extends Component {
   openConfirmPublishModal = (id) => {
     this.setState({ confirmPublishPopup: true, publishRoomId: id })
   }
-  
+
   onPublishRoom = (id) => {
     this.props.publishRoom(id)
   }
@@ -61,12 +61,12 @@ class OwnerRoomsList extends Component {
             className="btn btn-danger btn-sm"
           > Publish
           </button>
-          <button type="button" 
-            onClick={ () => {this.openConfirmDeleteModal(room.id)} } 
+          <button type="button"
+            onClick={ () => {this.openConfirmDeleteModal(room.id)} }
             className="btn btn-danger btn-sm"
           > Delete
           </button>
-          <div style={{color: 'grey'}} 
+          <div style={{color: 'grey'}}
             onClick={() => this.props.history.push(`/owner/rooms/${room.id}`)}
           > Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
             <br/>
@@ -89,8 +89,8 @@ class OwnerRoomsList extends Component {
             }}
           > Join Requests
           </Link>
-          <button type="button" 
-            onClick={ () => {this.openConfirmDeleteModal(room.id)} } 
+          <button type="button"
+            onClick={ () => {this.openConfirmDeleteModal(room.id)} }
             className="btn btn-danger btn-sm"
           > Delete
           </button>
@@ -108,31 +108,31 @@ class OwnerRoomsList extends Component {
 
   render() {
     return (
-      <div>
-        <h5>Owner Rooms Page</h5>
-
-        <button type="button" 
-          className="btn btn-primary" 
-          onClick={ () => { 
-            this.props.showComponent ? this.props.hideComponentAction() : this.props.showComponentAction() 
-          } }>
-        Create
-        </button>
-        { this.props.showComponent ? <CreateRoom /> : ''}
-        
-        <div className="card my-4 bg-light">
-          <div className="card-body">
+      <div className="wrapper">
+        <div className="header">Owner Rooms Page</div>
+        <div className="body">
+          <div className="body-header">
+            <button type="button"
+              className="btn full large basic"
+              onClick={ () => {
+                this.props.showComponent ? this.props.hideComponentAction() : this.props.showComponentAction()
+              } }>
+            Create
+            </button>
+            { this.props.showComponent ? <CreateRoom /> : ''}
+          </div>
+          <div className="body-content">
             <h5 className="breadcrumb my-3">Draft Rooms</h5>
             <ul>
-              { _.isEmpty(this.props.draftRooms) 
-                ? <i style={{color: 'grey'}}>[ Empty ]</i> 
+              { _.isEmpty(this.props.draftRooms)
+                ? <i style={{color: 'grey'}}>[ Empty ]</i>
                 : this.renderDraftRooms(this.props.draftRooms)
               }
             </ul>
             <h5>Published Rooms</h5>
             <ul>
               { _.isEmpty(this.props.publishedRooms)
-                ? <i style={{color: 'grey'}}>[ Empty ]</i> 
+                ? <i style={{color: 'grey'}}>[ Empty ]</i>
                 : this.renderPublishedRooms(this.props.publishedRooms)
               }
             </ul>
@@ -197,7 +197,7 @@ export default connect(mapStateToProps, {
   fetchOwnRooms,
   publishRoom,
   deleteRoom,
-  showComponentAction, 
+  showComponentAction,
   hideComponentAction,
   resetError
 })(OwnerRoomsList)

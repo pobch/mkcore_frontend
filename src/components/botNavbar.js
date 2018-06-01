@@ -5,28 +5,31 @@ import {Link, NavLink} from 'react-router-dom'
 export default class BotNavbar extends Component {
   render() {
     return (
-      <nav className="navbar navbar-expand-md navbar-light bg-light">
-          
-        <ul className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <NavLink exact to="/guest/rooms" 
+      <nav className="navbar">
+
+        <ul className="navbar-nav clearfix">
+          <li className="navbar-item">
+            <NavLink exact to="/guest/rooms"
               className="nav-link"
               activeClassName="active">
-            Guest Rooms
+            <i className="twf twf-home" />
+            หน้าแรก
             </NavLink>
           </li>
-          <li className="nav-item">
-            <NavLink exact to="/owner/rooms" 
+          <li className="navbar-item">
+            <NavLink exact to="/owner/rooms"
               className="nav-link"
               activeClassName="active">
-            Owner Rooms
+            <i className="twf twf-sign-in" />
+            ห้อง
             </NavLink>
           </li>
-          <li className="nav-item">
-            <NavLink exact to="/profile" 
+          <li className="navbar-item">
+            <NavLink exact to="/profile"
               className="nav-link"
               activeClassName="active">
-            Profile
+            <i className="twf twf-user-circle" />
+            บัญชี
             </NavLink>
           </li>
         </ul>
