@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function SaveCompleteModal(props) {
   return (
-    <div className="modal fade" id={props.htmlId} tabIndex="-1">
+    <div className={props.className} id={props.htmlId} tabIndex="-1">
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">

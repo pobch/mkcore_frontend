@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
+import { Link } from 'react-router-dom'
 import { reduxForm, Field } from 'redux-form'
 import { connect } from 'react-redux'
 
-import { createRoom, hideComponentAction } from '../actions'
+import { createRoom } from '../actions'
 
 
 class CreateRoom extends Component {
@@ -61,7 +62,7 @@ class CreateRoom extends Component {
           /> */}
 
           <button className="btn btn-primary" type="submit">Save</button>
-          <button className="btn btn-danger" type="button" onClick={ (event) => { this.props.hideComponentAction() } }>Close</button>
+          <Link className="btn btn-danger" to="/owner/rooms">Close</Link>
         </form>
         {/* <EditRoom match={{params: {id:13}}}/> */}
       </div>
@@ -80,7 +81,7 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { createRoom, hideComponentAction })(
+export default connect(mapStateToProps, { createRoom })(
   reduxForm({
     form: 'createRoomForm',
     validate

@@ -8,10 +8,8 @@ import ConfirmModal from '../components/modal_confirm'
 import BotNavbar from '../components/botNavbar'
 
 import {
-  fetchOwnRooms, deleteRoom, showComponentAction, hideComponentAction,
-  publishRoom, resetError
+  fetchOwnRooms, deleteRoom, publishRoom, resetError
 } from '../actions'
-import CreateRoom from './owner_room_create'
 
 
 class OwnerRoomsList extends Component {
@@ -116,14 +114,7 @@ class OwnerRoomsList extends Component {
         <div className="header">Owner Rooms Page</div>
         <div className="body">
           <div className="body-header">
-            <button type="button"
-              className="btn full large basic"
-              onClick={ () => {
-                this.props.showComponent ? this.props.hideComponentAction() : this.props.showComponentAction()
-              } }>
-            Create
-            </button>
-            { this.props.showComponent ? <CreateRoom /> : ''}
+            <Link className="btn full large basic" to="/owner/rooms/create">Create</Link>
           </div>
           <div className="body-content">
             <h5 className="breadcrumb my-3">Draft Rooms</h5>
@@ -201,7 +192,5 @@ export default connect(mapStateToProps, {
   fetchOwnRooms,
   publishRoom,
   deleteRoom,
-  showComponentAction,
-  hideComponentAction,
   resetError
 })(OwnerRoomsList)

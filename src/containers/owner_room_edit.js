@@ -21,6 +21,11 @@ Moment.locale('en')
 momentLocalizer()
 
 class EditRoom extends Component {
+  
+  state = {
+    openSaveCompleteModal: false
+  }
+  
   componentDidMount() {
     window.scrollTo(0,0)
     const { id } = this.props.match.params
@@ -40,9 +45,8 @@ class EditRoom extends Component {
 
   onSubmit = (values) => {
     const { id } = this.props.match.params
-    console.log('id ===', id)
-    console.log('values ===', values)
-    // this.props.updateRoom(id, values)
+    this.props.updateRoom(id, values)
+    this.setState({openSaveCompleteModal: true})
   }
 
   renderField = (field) => {
@@ -151,6 +155,7 @@ class EditRoom extends Component {
         
         <Portal>
           <SaveCompleteModal
+            className={this.state.openSaveCompleteModal ? 'show' : 'hide'}
             htmlId={this.saveCompleteModalHtmlId}
             onConfirm={(event) => {
               this.setState({showSaveCompleteModal: false})
