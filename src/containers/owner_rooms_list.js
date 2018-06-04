@@ -137,8 +137,7 @@ class OwnerRoomsList extends Component {
         {/* Confirm Delete Room Modal */}
         <Portal>
           <ConfirmModal
-            className={ this.state.confirmDeletePopup ? 'show' : 'hide' }
-            htmlId=''
+            className={ this.state.confirmDeletePopup ? 'modal show' : 'modal hide' }
             modalTitle="Confirm Your Action"
             modalBody="Are you sure you want to delete this room?"
             onCancel={ () => {this.closeModal()} }
@@ -152,8 +151,7 @@ class OwnerRoomsList extends Component {
         {/* Confirm Publish Room Modal */}
         <Portal>
           <ConfirmModal
-            className={ this.state.confirmPublishPopup ? 'show' : 'hide' }
-            htmlId=''
+            className={ this.state.confirmPublishPopup ? 'modal show' : 'modal hide' }
             modalTitle="Confirm Your Action"
             modalBody="After publish this room, you will no longer be able to edit its info.
               Are you sure you want to publish this room anyway?"
