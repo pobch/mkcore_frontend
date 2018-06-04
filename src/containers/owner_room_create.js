@@ -1,25 +1,28 @@
 import React, {Component} from 'react'
-import { Link } from 'react-router-dom'
-import { reduxForm, Field } from 'redux-form'
+import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
+
+import TopTabBar from '../components/topTabBar'
+import RoomInfoEdit from '../components/owner_formElement_roomInfo'
+import SurveyEdit from '../components/owner_formElement_survey1'
+import Portal from '../components/portal'
+import SaveCompleteModal from '../components/modal_save_complete'
 
 import { createRoom } from '../actions'
 
+import { validateOwnRoomCreateEdit } from '../form_validators'
+
 
 class CreateRoom extends Component {
-  renderField = (field) => {
-    return (
-      <div>
-        <label htmlFor={field.input.name}>{field.label}</label>
-        <input className="form-control" type={field.type} {...field.input}/>
-      </div>
-    )
+
+  state = {
+    openSaveCompleteModal: false
   }
 
   onSubmit = async (values) => {
     try {
       await this.props.createRoom(values)
-      this.props.hideComponentAction()
+      this.setState({openSaveCompleteModal: true})
     } catch(error) {
       // console.log('err', error)
     }
@@ -29,50 +32,37 @@ class CreateRoom extends Component {
     const { handleSubmit } = this.props
     return (
       <div>
-        <form onSubmit={ handleSubmit(this.onSubmit) }>
-          <Field
-            name="title"
-            component={this.renderField}
-            type="text"
-            label="Room Title :"
-          />
-          <Field
-            name="description"
-            component={this.renderField}
-            type="text"
-            label="Description :"
-          />
-          <Field
-            name="instructor_name"
-            component={this.renderField}
-            type="text"
-            label="Survey Owner's Name :"
-          />
-          <Field
-            name="room_code"
-            component={this.renderField}
-            type="text"
-            label="Your Room's Code (guests will use this code and password to join this room)"
-          />
-          {/* <Field
-            name="room_password"
-            component={this.renderField}
-            type="text"
-            label="Your Room's Password (guests will use this code and password to join this room)"
-          /> */}
 
-          <button className="btn btn-primary" type="submit">Save</button>
-          <Link className="btn btn-danger" to="/owner/rooms">Close</Link>
+        <h5>Create room</h5>
+        <hr/>
+
+        <TopTabBar 
+          titleTab1="Info"
+          titleTab2="Create Survey"
+        />
+
+        <form onSubmit={ handleSubmit(this.onSubmit) }>
+          <div className='content-tab1'>
+            <RoomInfoEdit roomCodeDisabled={false}/>
+          </div>
+          <div className='content-tab2'>
+            <SurveyEdit room={''}/>
+          </div>  
         </form>
-        {/* <EditRoom match={{params: {id:13}}}/> */}
+
+        <Portal>
+          <SaveCompleteModal
+            className={this.state.openSaveCompleteModal ? 'show' : 'hide'}
+            htmlId={this.saveCompleteModalHtmlId}
+            onConfirm={(event) => {
+              this.setState({showSaveCompleteModal: false})
+            }}
+          />
+        </Portal>
+
       </div>
     )
   }
-}
-
-function validate(values) {
-  const errors = {}
-  return errors
 }
 
 function mapStateToProps(state) {
@@ -84,5 +74,5 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, { createRoom })(
   reduxForm({
     form: 'createRoomForm',
-    validate
+    validate: validateOwnRoomCreateEdit
   })(CreateRoom))

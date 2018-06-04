@@ -68,7 +68,7 @@ class OwnerRoomsList extends Component {
             onClick={() => this.props.history.push(`/owner/rooms/${room.id}`)}
           > Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
             <br/>
-            <i>{`<RoomCode>/<Password>: <${room.room_code}>/<${room.room_password}>`}</i>
+            <i>{`<RoomCode>: <${room.room_code}>`}</i>
             <br/>
             <i>{room.start_at ? `This room will start at ${room.start_at}` : null}</i>
           </div>
@@ -97,7 +97,7 @@ class OwnerRoomsList extends Component {
             onClick={() => this.props.history.push(`/owner/rooms/${room.id}/view`)}
           > Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
             <br/>
-            <i>{`<RoomCode>/<Password>: <${room.room_code}>/<${room.room_password}>`}</i>
+            <i>{`<RoomCode>: <${room.room_code}>`}</i>
             <br/>
             <i>{room.start_at ? `This room will start at ${room.start_at}` : null}</i>
           </div>

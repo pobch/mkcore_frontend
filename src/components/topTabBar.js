@@ -1,26 +1,32 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Link} from 'react-router-dom'
 
 
 export default class TopTabBar extends Component {
   
+  state = {
+    tab1Active: true,
+    tab2Active: false
+  }
+
   static propTypes = {
-    title_tab1: PropTypes.string.isRequired,
-    linkPath_tab1: PropTypes.string.isRequired,
-    title_tab2: PropTypes.string.isRequired,
-    linkPath_tab2: PropTypes.string.isRequired
+    titleTab1: PropTypes.string.isRequired,
+    titleTab2: PropTypes.string.isRequired
   }
 
   render() {
     return (
       <div>
-        <Link to={this.props.linkPath_tab1}>
-          {this.props.title_tab1}
-        </Link>
-        <Link to={this.props.linkPath_tab2}>
-          {this.props.title_tab2}
-        </Link>
+        <div 
+          className={ this.state.tab1Active ? 'active' : '' }
+          onClick={() => {this.setState({tab1Active: true, tab2Active: false})}}
+        >{this.props.titleTab1}
+        </div>
+        <div
+          className={ this.state.tab2Active ? 'active' : ''}
+          onClick={() => {this.setState({tab1Active: false, tab2Active: true})}}
+        >{this.props.titleTab2}
+        </div>
       </div>
     )
   }
