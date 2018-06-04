@@ -150,12 +150,11 @@ class OwnerRoomsList extends Component {
         <BotNavbar/>
 
         {/* Confirm Delete Room Modal */}
-<<<<<<< HEAD
         <Portal>
           <ConfirmModal
             className={ this.state.confirmDeletePopup ? 'modal show' : 'modal hide' }
             modalTitle="Confirm Your Action"
-            modalBody="Are you sure you want to delete this room?"
+            modalBody="ยืนยันว่าต้องการลบห้องนี้?"
             onCancel={ () => {this.closeModal()} }
             onConfirm={ () => {
               this.closeModal()
@@ -169,8 +168,7 @@ class OwnerRoomsList extends Component {
           <ConfirmModal
             className={ this.state.confirmPublishPopup ? 'modal show' : 'modal hide' }
             modalTitle="Confirm Your Action"
-            modalBody="After publish this room, you will no longer be able to edit its info.
-              Are you sure you want to publish this room anyway?"
+            modalBody="หลังจากยืนยันแล้ว จะไม่สามารถแก้ไขได้อีก"
             onCancel={ () => {this.closeModal()} }
             onConfirm={ () => {
               this.closeModal()
@@ -178,30 +176,6 @@ class OwnerRoomsList extends Component {
             }}
           />
         </Portal>
-=======
-        <ConfirmModal
-          className={ this.state.confirmDeletePopup ? 'show' : 'hide' }
-          htmlId=''
-          modalBody="ยืนยันว่าต้องการลบห้องนี้?"
-          onCancel={ () => {this.closeModal()} }
-          onConfirm={ () => {
-            this.closeModal()
-            this.onDeleteRoom(this.state.deleteRoomId)
-          }}
-        />
-
-        {/* Confirm Publish Room Modal */}
-        <ConfirmModal
-          className={ this.state.confirmPublishPopup ? 'show' : 'hide' }
-          htmlId=''
-          modalBody="หลังจากยืนยันแล้ว จะไม่สามารถแก้ไขได้อีก"
-          onCancel={ () => {this.closeModal()} }
-          onConfirm={ () => {
-            this.closeModal()
-            this.onPublishRoom(this.state.publishRoomId)
-          }}
-        />
->>>>>>> e190c60caad8e24b78ba198b43a04fc967d93b8e
 
       </div>
     )
