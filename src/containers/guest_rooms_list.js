@@ -80,7 +80,7 @@ class GuestRoomsList extends Component {
   }
 
   render() {
-    // No need to check empty state bcoz lodash _.map() when the first argument is empty object will return empty array 
+    // No need to check empty state bcoz lodash _.map() when the first argument is empty object will return empty array
     // if(_.isEmpty(this.props.ownRooms)) {
     //   return <div>Loading...</div>
     // }
@@ -99,7 +99,7 @@ class GuestRoomsList extends Component {
             <ul>
               { _.isEmpty(this.props.guestRooms) ?
                 <i style={{color: 'grey'}}>[ Empty ]</i> :
-                this.renderGuestRooms(this.props.guestRooms) 
+                this.renderGuestRooms(this.props.guestRooms)
               }
             </ul>
 
@@ -114,11 +114,10 @@ class GuestRoomsList extends Component {
             <h5 className="breadcrumb my-3">Pending Rooms</h5>
             <ul>
               { _.isEmpty(this.props.pendingRoomsInfo) ?
-                <i style={{color: 'grey'}}>[ Empty ]</i> : 
-                this.renderPendingRooms(this.props.pendingRoomsInfo) 
+                <i style={{color: 'grey'}}>[ Empty ]</i> :
+                this.renderPendingRooms(this.props.pendingRoomsInfo)
               }
             </ul>
-
           </div>
         </div>
 
@@ -173,8 +172,8 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {  
-    fetchGuestRooms, 
+export default connect(mapStateToProps, {
+    fetchGuestRooms,
     leaveRoom,
     fetchPendingRooms,
     denyJoinReq,
