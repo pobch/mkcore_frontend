@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
+import Portal from '../components/portal'
 import ConfirmModal from '../components/modal_confirm'
 import BotNavbar from '../components/botNavbar'
 
