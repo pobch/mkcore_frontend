@@ -3,7 +3,6 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-import Portal from '../components/portal'
 import ConfirmModal from '../components/modal_confirm'
 import BotNavbar from '../components/botNavbar'
 
@@ -128,7 +127,7 @@ class OwnerRoomsList extends Component {
         <div className="header">ห้อง</div>
         <div className="body">
           <div className="body-header">
-            <Link className="btn full large basic" to="/owner/rooms/create">สร้างห้อง</Link>
+            <Link className="btn" to="/owner/rooms/create">สร้างห้อง</Link>
           </div>
           <div className="body-content">
             <div className="list-title">แบบร่าง</div>
@@ -151,32 +150,28 @@ class OwnerRoomsList extends Component {
         <BotNavbar/>
 
         {/* Confirm Delete Room Modal */}
-        <Portal>
-          <ConfirmModal
-            className={ this.state.confirmDeletePopup ? 'modal show' : 'modal hide' }
-            modalTitle="Confirm Your Action"
-            modalBody="ยืนยันว่าต้องการลบห้องนี้?"
-            onCancel={ () => {this.closeModal()} }
-            onConfirm={ () => {
-              this.closeModal()
-              this.onDeleteRoom(this.state.deleteRoomId)
-            }}
-          />
-        </Portal>
+        <ConfirmModal
+          className={ this.state.confirmDeletePopup ? 'show' : 'hide' }
+          htmlId=''
+          modalBody="ยืนยันว่าต้องการลบห้องนี้?"
+          onCancel={ () => {this.closeModal()} }
+          onConfirm={ () => {
+            this.closeModal()
+            this.onDeleteRoom(this.state.deleteRoomId)
+          }}
+        />
 
         {/* Confirm Publish Room Modal */}
-        <Portal>
-          <ConfirmModal
-            className={ this.state.confirmPublishPopup ? 'modal show' : 'modal hide' }
-            modalTitle="Confirm Your Action"
-            modalBody="หลังจากยืนยันแล้ว จะไม่สามารถแก้ไขได้อีก"
-            onCancel={ () => {this.closeModal()} }
-            onConfirm={ () => {
-              this.closeModal()
-              this.onPublishRoom(this.state.publishRoomId)
-            }}
-          />
-        </Portal>
+        <ConfirmModal
+          className={ this.state.confirmPublishPopup ? 'show' : 'hide' }
+          htmlId=''
+          modalBody="หลังจากยืนยันแล้ว จะไม่สามารถแก้ไขได้อีก"
+          onCancel={ () => {this.closeModal()} }
+          onConfirm={ () => {
+            this.closeModal()
+            this.onPublishRoom(this.state.publishRoomId)
+          }}
+        />
 
       </div>
     )
