@@ -10,11 +10,21 @@
   float: right;
 }
 .inline-child > * {
-  margin-right: 1em;
+  margin-right: 0.8em;
 }
 .inline-child > *:last-child {
   margin-right: 0;
 }
 .brand-contrast,.brand-contrast:hover {
   color: var(--brand-contrast-color);
+}
+.feedback {
+  font-size: 0.8em;
+  margin-bottom: 0.4em;
+}
+.feedback:empty {
+  display: none;
+}
+.feedback.invalid {
+  color: var(--fail-color);
 }

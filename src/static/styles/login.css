@@ -14,6 +14,11 @@
 .login-form {
   text-align: center;
 }
+.login-form input[type=text],
+.login-form input[type=email],
+.login-form input[type=password] {
+  box-shadow: var(--box-shadow);
+}
 .login-button {
   width: 2.8em;
   height: 2.8em;

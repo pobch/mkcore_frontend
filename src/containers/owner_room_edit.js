@@ -73,12 +73,10 @@ class EditRoom extends Component {
             </div>
           </div>
           <div className="tab-footer clearfix">
-            <Link to="/owner/rooms" className="btn basic float-left">
-              <i className="twf twf-chevron-left before" />
-              ย้อนกลับ
+            <Link to="/owner/rooms" className="float-left">
+              <i className="twf twf-arrow-bold-left" />
             </Link>
             <button type="submit" className="float-right">
-              <i className="twf twf-floppy before" />
               บันทึก
             </button>
           </div>

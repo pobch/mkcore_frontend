@@ -1,6 +1,6 @@
 .tab-nav {
-  height: 4rem;
-  line-height: 4rem;
+  height: 4.25rem;
+  line-height: 4.25rem;
 }
 .tab-nav li {
   position: relative;
@@ -46,23 +46,28 @@
 .tab-content {
   position: relative;
   width: 100%;
-  height: calc(100vh - 8.25rem);
+  height: calc(100vh - 8.5rem);
   background-color: var(--secondary-background-color);
 }
 .tab-body {
   position: absolute;
   width: 100%;
-  height: calc(100% - 5.5rem);
-  overflow: auto;
+  height: 100%;
 }
 .tab-footer {
   position: absolute;
-  bottom: 0;
+  top: -8.5rem;
   width: 100%;
-  padding: 1.25rem 5%;
-  background-color: var(--primary-background-color);
+  padding: 0.5rem 5%;
 }
-.tab-footer > * {
+.tab-footer > a {
+  line-height: 1;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: 1.75rem;
+}
+.tab-footer > button {
+  line-height: 1;
   padding-top: 1rem;
   padding-bottom: 1rem;
   font-size: 1.25rem;
@@ -71,10 +76,12 @@
   position: absolute;
   top: 0;
   width: 100%;
+  max-height: calc(100vh - 8.5rem);
   padding: 5%;
   opacity: 0;
   visibility: hidden;
   z-index: -1;
+  overflow: auto;
   -webkit-transition: all 0.25s ease;
   -moz-transition: all 0.25s ease;
   -o-transition: all 0.25s ease;

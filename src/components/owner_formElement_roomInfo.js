@@ -12,7 +12,7 @@ export default class RoomInfoEdit extends Component {
 
   renderField = (field) => {
     return (
-      <div className="form-group">
+      <div className={ field.type === 'disabled' ? "form-group disabled" : "form-group" }>
         <label htmlFor={field.input.name}>
           {field.label}
           { field.meta.touched && field.meta.error ? <span className="feedback invalid anmt-fadein">*{field.meta.error}</span> : '' }
@@ -39,7 +39,7 @@ export default class RoomInfoEdit extends Component {
   render() {
 
     return (
-      <div className="form-info">
+      <div className="form-minimal">
         <Field
           name="room_code"
           component={this.renderField}
@@ -53,21 +53,21 @@ export default class RoomInfoEdit extends Component {
           type="text"
         />
         <Field
-          name="description"
-          component={this.renderField}
-          label="รายละเอียด"
-          type="textarea"
-        />
-        <Field
           name="instructor_name"
           component={this.renderField}
           label="เจ้าของห้อง"
           type="text"
         />
         <Field
+          name="description"
+          component={this.renderField}
+          label="รายละเอียด"
+          type="textarea"
+        />
+        <Field
           name="start_at"
           component={this.renderDateTime}
-          label="เริ่มต้นเวลา"
+          label="เริ่มเวลา"
           type=""
         />
         <Field

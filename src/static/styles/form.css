@@ -6,13 +6,34 @@
   display: block;
   margin-bottom: 0.25em;
 }
-.feedback {
-  font-size: 0.8em;
-  margin-bottom: 0.4em;
+.form-minimal .form-group {
+  margin-bottom: 2px;
+  background-color: var(--primary-background-color);
 }
-.feedback:empty {
-  display: none;
+.form-minimal .form-group.disabled {
+  background-color: var(--disabled-color);
 }
-.feedback.invalid {
-  color: var(--fail-color);
+.form-minimal .form-group:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+.form-minimal .form-group > * {
+  float: left;
+}
+.form-minimal label {
+  width: 9rem;
+  line-height: 1;
+  padding: 1.5em;
+  margin-bottom: 0;
+  font-size: 0.9em;
+}
+.form-minimal label + * {
+  width: calc(100% - 9rem);
+  padding-left: 0;
+  border: none;
+}
+.form-minimal label + * input {
+  padding-left: 0;
+  border: none;
 }

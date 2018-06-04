@@ -32,9 +32,11 @@
   right: 0;
 }
 .rw-datetime-picker .rw-select button {
-  padding: 1em 1.5em;
+  padding: 1.5em 1.2em;
   font-size: 0.9em;
   border-right: 1px solid var(--brand-contrast-color);
+  color: var(--primary-text-color);
+  background-color: var(--disabled-color);
 }
 .rw-datetime-picker .rw-select button:last-child {
   border-right: none;
@@ -84,7 +86,6 @@
   cursor: pointer;
   text-align: center;
   border: 1px solid transparent;
-  border-radius: 4px;
 }
 .rw-cell:hover,.rw-cell.rw-state-focus:hover,.rw-list-option:hover {
   background-color: var(--primary-brand-color);
@@ -187,7 +188,6 @@
   max-width: 600px;
   min-height: 16em;
   max-height: 60vh;
-  border-radius: 0;
   overflow: auto;
   background-color: var(--primary-background-color);
   box-shadow: var(--box-shadow);

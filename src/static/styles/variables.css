@@ -9,6 +9,7 @@
   --border-color: #e3e3e3;
   --success-color: #2aff72;
   --fail-color: #ff2e34;
+  --disabled-color: #e4e4e4;
   --box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
   --primary-font: "Kanit", sans-serif;
 }
