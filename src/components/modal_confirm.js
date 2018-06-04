@@ -5,7 +5,7 @@ export default function ConfirmModal(props) {
 
   return (
     // // BootStrap 4
-    <div className={`modal ${props.className}`} id={props.htmlId}>
+    <div className={props.className}>
       <div className="modal-wrapper">
         <div className="modal-content">
           <div className="modal-body">

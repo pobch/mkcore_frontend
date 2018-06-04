@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import _ from 'lodash'
+import {Link} from 'react-router-dom'
 
 import { fetchJoinReqsOfOwnRoom, acceptJoinReq, denyJoinReq, RESET_JOINREQS_LIST } from '../actions'
 
@@ -46,6 +47,9 @@ class ViewJoinReqs extends Component {
             )
           }) }
         </ul>
+        
+        <Link to="/owner/rooms">Cancel</Link>
+        
       </div>
     )
   }

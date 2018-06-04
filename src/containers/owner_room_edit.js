@@ -28,6 +28,14 @@ class EditRoom extends Component {
   }
 
   onSubmit = (values) => {
+    if(!values.survey) {
+      values.survey = []
+    } else {
+      _.map(values.survey, (eachQuestion, indx) => {
+        eachQuestion.id = indx + 1
+        return eachQuestion
+      })
+    }
     const { id } = this.props.match.params
     this.props.updateRoom(id, values)
     this.setState({openSaveCompleteModal: true})

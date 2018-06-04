@@ -1,9 +1,15 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
 import EachQuestion from '../containers/owner_formElement_survey3'
 
 
 export default class RenderSurvey extends Component {
+
+  static propTypes = {
+    roomId: PropTypes.string,
+    fields: PropTypes.object.isRequired
+  }
 
   render () {
     const {fields} = this.props
