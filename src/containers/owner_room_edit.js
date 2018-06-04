@@ -84,7 +84,7 @@ class EditRoom extends Component {
             className={this.state.openSaveCompleteModal ? 'show' : 'hide'}
             htmlId={this.saveCompleteModalHtmlId}
             onConfirm={(event) => {
-              this.setState({showSaveCompleteModal: false})
+              this.setState({openSaveCompleteModal: false})
             }}
           />
         </Portal>
