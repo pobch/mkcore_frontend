@@ -5,9 +5,6 @@ import Moment from 'moment'
 import momentLocalizer from 'react-widgets-moment'
 import { DateTimePicker } from 'react-widgets'
 
-import 'react-widgets/dist/css/react-widgets.css'
-
-
 Moment.locale('en')
 momentLocalizer()
 
@@ -16,24 +13,24 @@ export default class RoomInfoEdit extends Component {
   renderField = (field) => {
     return (
       <div className="form-group">
-        <label htmlFor={field.input.name}>{field.label}</label><br/>
+        <label htmlFor={field.input.name}>
+          {field.label}
+          { field.meta.touched && field.meta.error ? <span className="feedback invalid anmt-fadein">*{field.meta.error}</span> : '' }
+        </label>
         { field.type === 'disabled'
-          ? <input className="form-control" type='text' {...field.input} disabled/>
+          ? <input id={field.input.name} className="form-control" type='text' {...field.input} disabled/>
           : field.type === 'textarea'
-          ? <textarea className="form-control" {...field.input} rows="5" cols="25"/>
-          : <input className="form-control" type={field.type} {...field.input}/>
+          ? <textarea id={field.input.name} className="form-control" {...field.input} rows="5" cols="25"/>
+          : <input id={field.input.name} className="form-control" type={field.type} {...field.input}/>
         }
-        <div>
-          { field.meta.touched && field.meta.error ? field.meta.error : '' }
-        </div>
       </div>
     )
   }
 
   renderDateTime = ({ input: {name, onChange, value}, label }) => {
     return (
-      <div>
-        <label htmlFor={name}>{label}</label><br/>
+      <div className="form-group">
+        <label htmlFor={name}>{label}</label>
         <DateTimePicker onChange={onChange} value={value ? new Date(value) : null }/>
       </div>
     )
@@ -42,41 +39,41 @@ export default class RoomInfoEdit extends Component {
   render() {
 
     return (
-      <div>
+      <div className="form-info">
         <Field
           name="room_code"
           component={this.renderField}
-          label="Your Room's Code (guests will use this code and password to join this room)"
+          label="รหัสห้อง"
           type={this.props.roomCodeDisabled ? 'disabled' : 'text'}
         />
         <Field
           name="title"
           component={this.renderField}
-          label="Room Title"
+          label="ชื่อ"
           type="text"
         />
         <Field
           name="description"
           component={this.renderField}
-          label="Room Description"
+          label="รายละเอียด"
           type="textarea"
         />
         <Field
           name="instructor_name"
           component={this.renderField}
-          label="Survey Owner's Name :"
+          label="เจ้าของห้อง"
           type="text"
         />
         <Field
           name="start_at"
           component={this.renderDateTime}
-          label="Room start at :"
+          label="เริ่มต้นเวลา"
           type=""
         />
         <Field
           name="end_at"
           component={this.renderDateTime}
-          label="Room end at :"
+          label="จบเวลา"
           type=""
         />
       </div>

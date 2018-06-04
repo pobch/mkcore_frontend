@@ -34,13 +34,10 @@ class CreateRoom extends Component {
     return (
       <div className="wrapper">
         <div className="header">สร้างห้อง</div>
-        <hr/>
-
         <TopTabBar
           titleTab1="ข้อมูล"
           titleTab2="แบบสอบถาม"
         />
-
         <form
           className="tab-content"
           onSubmit={ handleSubmit(this.onSubmit) }
@@ -54,8 +51,8 @@ class CreateRoom extends Component {
             </div>
           </div>
           <div className="tab-footer">
-            <button type="submit">Save</button>
-            <Link to="/owner/rooms" className="btn btn-danger">Cancel</Link>
+            <button type="submit">บันทึก</button>
+            <Link to="/owner/rooms" className="btn">ย้อนกลับ</Link>
           </div>
         </form>
 

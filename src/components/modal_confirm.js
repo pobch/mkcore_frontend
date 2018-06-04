@@ -11,7 +11,7 @@ export default function ConfirmModal(props) {
           <div className="modal-body">
             {props.modalBody}
           </div>
-          <div className="inline-button">
+          <div className="inline-child">
             <button type="button" className="btn" onClick={props.onConfirm}>
             ยืนยัน
             </button>

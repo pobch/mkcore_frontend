@@ -9,12 +9,10 @@
 .float-right {
   float: right;
 }
-.inline-button button,
-.inline-button .btn {
+.inline-child > * {
   margin-right: 1em;
 }
-.inline-button button:last-child,
-.inline-button .btn:last-child {
+.inline-child > *:last-child {
   margin-right: 0;
 }
 .brand-contrast,.brand-contrast:hover {

@@ -60,7 +60,6 @@ class EditRoom extends Component {
           titleTab1="ข้อมูล"
           titleTab2="แบบสอบถาม"
         />
-
         <form
           className="tab-content"
           onSubmit={ handleSubmit(this.onSubmit) }
@@ -73,9 +72,15 @@ class EditRoom extends Component {
               <SurveyEdit roomId={id}/>
             </div>
           </div>
-          <div className="tab-footer inline-button">
-            <button type="submit">บันทึก</button>
-            <Link to="/owner/rooms" className="btn basic">ย้อนกลับ</Link>
+          <div className="tab-footer clearfix">
+            <Link to="/owner/rooms" className="btn basic float-left">
+              <i className="twf twf-chevron-left before" />
+              ย้อนกลับ
+            </Link>
+            <button type="submit" className="float-right">
+              <i className="twf twf-floppy before" />
+              บันทึก
+            </button>
           </div>
         </form>
 

@@ -62,15 +62,15 @@ class OwnerRoomsList extends Component {
   renderDraftRooms = (draftRooms) => {
     return _.map(draftRooms, (room) => {
       return (
-        <li className="list-item clearfix" key={room.id} onClick={() => this.props.history.push(`/owner/rooms/${room.id}`)}>
+        <li className="list-item clearfix anmt-fadein" key={room.id} onClick={() => this.props.history.push(`/owner/rooms/${room.id}`)}>
           <div className="float-left">
             <h3>{room.title}</h3>
             <div className="list-item-meta">
               {room.room_code}
-              {room.start_at ? `· ${room.start_at}` : null}
+              {room.start_at ? ` -- ${room.start_at}` : null}
             </div>
           </div>
-          <div className="float-right inline-button">
+          <div className="float-right inline-child">
             <button type="button"
               onClick={ (e) => {this.openConfirmPublishModal(e, room.id)} }
             >
@@ -96,11 +96,11 @@ class OwnerRoomsList extends Component {
             <h3>{room.title}</h3>
             <div className="list-item-meta">
               {room.room_code}
-              {room.start_at ? `· ${room.start_at}` : null}
+              {room.start_at ? ` -- ${room.start_at}` : null}
             </div>
           </div>
 
-          <div className="float-right inline-button">
+          <div className="float-right inline-child">
             <Link className="btn"
               to={{
                 pathname: `/owner/rooms/${room.id}/joinreqs`,
@@ -153,7 +153,7 @@ class OwnerRoomsList extends Component {
         {/* Confirm Delete Room Modal */}
         <Portal>
           <ConfirmModal
-            className={ this.state.confirmDeletePopup ? 'modal show' : 'modal hide' }
+            className={ this.state.confirmDeletePopup ? 'show' : 'hide' }
             modalBody="ยืนยันว่าต้องการลบห้องนี้?"
             onCancel={ () => {this.closeModal()} }
             onConfirm={ () => {
@@ -166,7 +166,7 @@ class OwnerRoomsList extends Component {
         {/* Confirm Publish Room Modal */}
         <Portal>
           <ConfirmModal
-            className={ this.state.confirmPublishPopup ? 'modal show' : 'modal hide' }
+            className={ this.state.confirmPublishPopup ? 'show' : 'hide' }
             modalBody="หลังจากยืนยันแล้ว จะไม่สามารถแก้ไขได้อีก"
             onCancel={ () => {this.closeModal()} }
             onConfirm={ () => {
