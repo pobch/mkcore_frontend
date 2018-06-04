@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 
 export default class TopTabBar extends Component {
-  
+
   state = {
     tab1Active: true,
     tab2Active: false
@@ -16,18 +16,16 @@ export default class TopTabBar extends Component {
 
   render() {
     return (
-      <div>
-        <div 
-          className={ this.state.tab1Active ? 'active' : '' }
+      <ul className={ this.state.tab2Active ? 'tab-nav clearfix second' : 'tab-nav clearfix first'}>
+        <li
           onClick={() => {this.setState({tab1Active: true, tab2Active: false})}}
         >{this.props.titleTab1}
-        </div>
-        <div
-          className={ this.state.tab2Active ? 'active' : ''}
+        </li>
+        <li
           onClick={() => {this.setState({tab1Active: false, tab2Active: true})}}
         >{this.props.titleTab2}
-        </div>
-      </div>
+        </li>
+      </ul>
     )
   }
 }

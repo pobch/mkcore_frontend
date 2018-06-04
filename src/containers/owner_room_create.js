@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
+import {Link} from 'react-router-dom'
 
 import TopTabBar from '../components/topTabBar'
 import RoomInfoEdit from '../components/owner_formElement_roomInfo'
@@ -31,23 +32,31 @@ class CreateRoom extends Component {
   render() {
     const { handleSubmit } = this.props
     return (
-      <div>
-
-        <h5>Create room</h5>
+      <div className="wrapper">
+        <div className="header">สร้างห้อง</div>
         <hr/>
 
-        <TopTabBar 
-          titleTab1="Info"
-          titleTab2="Create Survey"
+        <TopTabBar
+          titleTab1="ข้อมูล"
+          titleTab2="แบบสอบถาม"
         />
 
-        <form onSubmit={ handleSubmit(this.onSubmit) }>
-          <div className='content-tab1'>
-            <RoomInfoEdit roomCodeDisabled={false}/>
+        <form
+          className="tab-content"
+          onSubmit={ handleSubmit(this.onSubmit) }
+        >
+          <div className='tab-body'>
+            <div className='tab-item'>
+              <RoomInfoEdit roomCodeDisabled={false}/>
+            </div>
+            <div className='tab-item'>
+              <SurveyEdit room={''}/>
+            </div>
           </div>
-          <div className='content-tab2'>
-            <SurveyEdit room={''}/>
-          </div>  
+          <div className="tab-footer">
+            <button type="submit">Save</button>
+            <Link to="/owner/rooms" className="btn btn-danger">Cancel</Link>
+          </div>
         </form>
 
         <Portal>

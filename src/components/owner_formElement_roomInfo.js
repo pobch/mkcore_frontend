@@ -12,15 +12,15 @@ Moment.locale('en')
 momentLocalizer()
 
 export default class RoomInfoEdit extends Component {
-  
+
   renderField = (field) => {
     return (
       <div className="form-group">
         <label htmlFor={field.input.name}>{field.label}</label><br/>
         { field.type === 'disabled'
           ? <input className="form-control" type='text' {...field.input} disabled/>
-          : field.type === 'textarea' 
-          ? <textarea className="form-control" {...field.input} rows="5" cols="25"/> 
+          : field.type === 'textarea'
+          ? <textarea className="form-control" {...field.input} rows="5" cols="25"/>
           : <input className="form-control" type={field.type} {...field.input}/>
         }
         <div>
@@ -40,7 +40,7 @@ export default class RoomInfoEdit extends Component {
   }
 
   render() {
-        
+
     return (
       <div>
         <Field
@@ -49,7 +49,7 @@ export default class RoomInfoEdit extends Component {
           label="Your Room's Code (guests will use this code and password to join this room)"
           type={this.props.roomCodeDisabled ? 'disabled' : 'text'}
         />
-        <Field 
+        <Field
           name="title"
           component={this.renderField}
           label="Room Title"
@@ -79,11 +79,6 @@ export default class RoomInfoEdit extends Component {
           label="Room end at :"
           type=""
         />
-        <hr/>
-        <div>
-          <button type="submit" className="btn btn-primary my-2">Save</button>
-          <Link to="/owner/rooms" className="btn btn-danger my-2">Cancel</Link>
-        </div>
       </div>
     )
   }

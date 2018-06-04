@@ -10,18 +10,13 @@ export default class SurveyEdit extends Component {
   render() {
     return (
       <div>
-        <FieldArray 
-          name="survey" 
-          component={RenderSurvey} 
+        <FieldArray
+          name="survey"
+          component={RenderSurvey}
           props={{
             roomId: this.props.roomId
           }}
         />
-
-        <div>
-          <button type="submit">Save</button>
-          <Link to="/owner/rooms" className="btn btn-danger">Cancel</Link>
-        </div>
       </div>
     )
   }
@@ -33,10 +28,10 @@ export default class SurveyEdit extends Component {
 //   // case there is truthy data in 'survey', then assign 'surveyData=survey'
 //   const surveyData = roomData && (roomData.survey || [])
 //   return {
-//     room: {survey: surveyData},  
+//     room: {survey: surveyData},
 //     initialValues: {survey: surveyData}
-//     // need another prop other than 'initialValues' bcoz if there is only 'initialValues' prop, 
-//     // 'enableReinitialize' will intervene it (i.e., makes 'initialValues' not change its values 
+//     // need another prop other than 'initialValues' bcoz if there is only 'initialValues' prop,
+//     // 'enableReinitialize' will intervene it (i.e., makes 'initialValues' not change its values
 //     // even a global state has changed)
 //   }
 // }
