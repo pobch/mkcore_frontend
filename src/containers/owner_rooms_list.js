@@ -128,7 +128,7 @@ class OwnerRoomsList extends Component {
         <div className="header">ห้อง</div>
         <div className="body">
           <div className="body-header">
-            <Link className="btn full large basic" to="/owner/rooms/create">สร้างห้อง</Link>
+            <Link className="btn" to="/owner/rooms/create">สร้างห้อง</Link>
           </div>
           <div className="body-content">
             <div className="list-title">แบบร่าง</div>

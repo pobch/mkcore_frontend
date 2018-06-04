@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import _ from 'lodash'
 import { reduxForm } from 'redux-form'
+import {Link} from 'react-router-dom'
 
 import TopTabBar from '../components/topTabBar'
 import RoomInfoEdit from '../components/owner_formElement_roomInfo'
@@ -15,11 +16,11 @@ import {validateOwnRoomCreateEdit} from '../form_validators'
 
 
 class EditRoom extends Component {
-  
+
   state = {
     openSaveCompleteModal: false
   }
-  
+
   componentDidMount() {
     window.scrollTo(0,0)
     const { id } = this.props.match.params
@@ -48,30 +49,36 @@ class EditRoom extends Component {
     if(this.props.room.detail) { // there is an error msg
       return <div>ERROR = {this.props.room.detail}</div>
     }
-    
+
     const { handleSubmit } = this.props
     const { id } = this.props.match.params
-    
-    return (
-      <div>
-        
-        <h5>Edit this room</h5>
-        <hr/>
 
-        <TopTabBar 
-          titleTab1="Edit Info"
-          titleTab2="Edit Survey"
+    return (
+      <div className="wrapper">
+        <div className="header">แก้ไขห้อง</div>
+        <TopTabBar
+          titleTab1="ข้อมูล"
+          titleTab2="แบบสอบถาม"
         />
 
-        <form onSubmit={ handleSubmit(this.onSubmit) }>
-          <div className='content-tab1'>
-            <RoomInfoEdit roomCodeDisabled={true}/>
+        <form
+          className="tab-content"
+          onSubmit={ handleSubmit(this.onSubmit) }
+        >
+          <div className="tab-body">
+            <div className='tab-item'>
+              <RoomInfoEdit roomCodeDisabled={true}/>
+            </div>
+            <div className='tab-item'>
+              <SurveyEdit roomId={id}/>
+            </div>
           </div>
-          <div className='content-tab2'>
-            <SurveyEdit roomId={id}/>
+          <div className="tab-footer inline-button">
+            <button type="submit">บันทึก</button>
+            <Link to="/owner/rooms" className="btn basic">ย้อนกลับ</Link>
           </div>
         </form>
-        
+
         <Portal>
           <SaveCompleteModal
             className={this.state.openSaveCompleteModal ? 'show' : 'hide'}
