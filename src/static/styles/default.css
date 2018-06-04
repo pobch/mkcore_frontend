@@ -28,7 +28,7 @@ ul {
 }
 h1,h2,h3,h4,h5,h6 {
   margin-top: 0;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.5em;
 }
 input::placeholder {
   color: var(--secondary-text-color);
@@ -45,10 +45,13 @@ input[type=text],input[type=email],input[type=password] {
   font-size: 0.9em;
   box-shadow: var(--box-shadow);
 }
-button,input[type=submit] {
+button,input[type=submit],.btn {
+  display: inline-block;
+  line-height: 1;
   padding: 0.9em;
   font-size: 0.8em;
   font-weight: 600;
+  font-family: var(--primary-font);
   cursor: pointer;
   border: none;
   color: var(--brand-contrast-color);
@@ -58,19 +61,23 @@ button,input[type=submit] {
   -o-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
-button.full,input[type=submit].full {
-  width: 100%;
-  text-align: center;
-}
-button:hover,input[type=submit]:hover {
+button:hover,input[type=submit]:hover,.btn:hover {
+  color: var(--brand-contrast-color);
   background-color: var(--secondary-brand-color);
 }
-button.basic,input[type=submit].basic {
-  color: var(--primary-text-color);
-  background-color: var(--brand-contrast-color);
-  box-shadow: var(--box-shadow);
+button.basic,input[type=submit].basic,.btn.basic {
+  color: var(--secondary-text-color);
+  background-color: var(--secondary-background-color);
 }
-button.large,input[type=submit].large {
-  padding: 1em 1.5em;
-  font-size: 1.5rem;
+button.basic:hover,input[type=submit].basic:hover,.btn.basic:hover {
+  color: var(--brand-contrast-color);
+  background-color: var(--primary-brand-color);
+}
+button.delete,input[type=submit].delete,.btn.delete {
+  color: #ffffff;
+  background-color: var(--fail-color);
+}
+button.delete:hover,input[type=submit].delete:hover,.btn.delete:hover {
+  color: #ffffff;
+  background-color: #cc0e13;
 }

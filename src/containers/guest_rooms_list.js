@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { 
-  fetchGuestRooms, fetchPendingRooms, denyJoinReq, showComponentAction, 
+import {
+  fetchGuestRooms, fetchPendingRooms, denyJoinReq, showComponentAction,
   hideComponentAction, resetError, leaveRoom
 } from '../actions'
 
@@ -15,8 +15,8 @@ import BotNavbar from '../components/botNavbar'
 import JoinRoomModal from '../containers/modal_guest_join_room'
 
 
-class GuestRoomsList extends Component {  
-  state = { 
+class GuestRoomsList extends Component {
+  state = {
     confirmationPopup: false,
     joinRoomPopup: false,
     leaveRoomId: null
@@ -53,8 +53,8 @@ class GuestRoomsList extends Component {
     this.props.leaveRoom(id)
   }
 
-  // renderRooms = (roomProp, {owner} = {owner: true}) => {} 
-      
+  // renderRooms = (roomProp, {owner} = {owner: true}) => {}
+
   renderGuestRooms = (guestRooms) => {
     return _.map(guestRooms, (room) => {
       return (
@@ -62,7 +62,7 @@ class GuestRoomsList extends Component {
           <Link to={`/guest/rooms/${room.id}/answer`} className="btn btn-success btn-sm">
             Answer Survey
           </Link>
-          <button type="button" 
+          <button type="button"
             onClick={() => {this.openConfirmLeaveRoomModal(room.id)}}
             className="btn btn-danger btn-sm"
             data-toggle="modal"                               // Bootstrap v4
@@ -97,7 +97,7 @@ class GuestRoomsList extends Component {
   }
 
   render() {
-    // No need to check empty state bcoz lodash _.map() when the first argument is empty object will return empty array 
+    // No need to check empty state bcoz lodash _.map() when the first argument is empty object will return empty array
     // if(_.isEmpty(this.props.ownRooms)) {
     //   return <div>Loading...</div>
     // }
@@ -113,20 +113,20 @@ class GuestRoomsList extends Component {
             <ul>
               { _.isEmpty(this.props.guestRooms) ?
                 <i style={{color: 'grey'}}>[ Empty ]</i> :
-                this.renderGuestRooms(this.props.guestRooms) 
+                this.renderGuestRooms(this.props.guestRooms)
               }
             </ul>
             <h5 className="breadcrumb my-3">Pending Rooms</h5>
             <ul>
               { _.isEmpty(this.props.pendingRoomsInfo) ?
-                <i style={{color: 'grey'}}>[ Empty ]</i> : 
-                this.renderPendingRooms(this.props.pendingRoomsInfo) 
+                <i style={{color: 'grey'}}>[ Empty ]</i> :
+                this.renderPendingRooms(this.props.pendingRoomsInfo)
               }
             </ul>
-            <button type="button" 
-              className="btn btn-primary" 
+            <button type="button"
+              className="btn btn-primary"
               onClick={this.openJoinRoomModal}
-              data-toggle="modal"           // Bootstrap v4 
+              data-toggle="modal"           // Bootstrap v4
               data-target="#joinRoomModal"   // Bootstrap v4
             >
             Join
@@ -155,13 +155,12 @@ class GuestRoomsList extends Component {
         </ul>
 
         <BotNavbar/>
-          
+
           {/* // Bootstrap v4, connect with data-* className */}
           <Portal>
             {/* Confirm Leave Room Modal */}
             <ConfirmModal
               htmlId={this.confirmLeaveRoomHTMLId}
-              modalTitle="Confirm Your Action"
               modalBody="Are you sure you want to leave this room?"
               onCancel={() => {}}   // Let Bootstrap control the closing modal action
               onConfirm={ (event) => {
@@ -171,7 +170,7 @@ class GuestRoomsList extends Component {
           </Portal>
 
         {/* {this.state.joinRoomPopup && ( */}
-          
+
           {/* // Bootstrap v4, connect with data-* className */}
           <Portal>
             <JoinRoomModal
@@ -195,12 +194,12 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {  
-    fetchGuestRooms, 
+export default connect(mapStateToProps, {
+    fetchGuestRooms,
     leaveRoom,
     fetchPendingRooms,
     denyJoinReq,
-    showComponentAction, 
+    showComponentAction,
     hideComponentAction,
     resetError
   }

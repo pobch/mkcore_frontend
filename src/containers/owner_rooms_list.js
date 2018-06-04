@@ -3,7 +3,6 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-import Portal from '../components/portal'
 import ConfirmModal from '../components/modal_confirm'
 import BotNavbar from '../components/botNavbar'
 
@@ -30,7 +29,9 @@ class OwnerRoomsList extends Component {
     this.props.resetError()
   }
 
-  openConfirmDeleteModal = (id) => {
+  openConfirmDeleteModal = (e, id) => {
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
     this.setState({ confirmDeletePopup: true, deleteRoomId: id })
   }
 
@@ -42,7 +43,9 @@ class OwnerRoomsList extends Component {
     this.setState({ confirmDeletePopup: false, confirmPublishPopup: false })
   }
 
-  openConfirmPublishModal = (id) => {
+  openConfirmPublishModal = (e, id) => {
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
     this.setState({ confirmPublishPopup: true, publishRoomId: id })
   }
 
@@ -50,27 +53,34 @@ class OwnerRoomsList extends Component {
     this.props.publishRoom(id)
   }
 
+  handleRequestLink = (e) => {
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+  }
+
   renderDraftRooms = (draftRooms) => {
     return _.map(draftRooms, (room) => {
       return (
-        <li className="list-item" key={room.id}>
-          <button type="button"
-            onClick={ () => {this.openConfirmPublishModal(room.id)} }
-            className="btn btn-danger btn-sm"
-          > Publish
-          </button>
-          <button type="button"
-            onClick={ () => {this.openConfirmDeleteModal(room.id)} }
-            className="btn btn-danger btn-sm"
-          > Delete
-          </button>
-          <div style={{color: 'grey'}}
-            onClick={() => this.props.history.push(`/owner/rooms/${room.id}`)}
-          > Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
-            <br/>
-            <i>{`<RoomCode>/<Password>: <${room.room_code}>/<${room.room_password}>`}</i>
-            <br/>
-            <i>{room.start_at ? `This room will start at ${room.start_at}` : null}</i>
+        <li className="list-item clearfix" key={room.id} onClick={() => this.props.history.push(`/owner/rooms/${room.id}`)}>
+          <div className="float-left">
+            <h3>{room.title}</h3>
+            <div className="list-item-meta">
+              {room.room_code}
+              {room.start_at ? `· ${room.start_at}` : null}
+            </div>
+          </div>
+          <div className="float-right inline-button">
+            <button type="button"
+              onClick={ (e) => {this.openConfirmPublishModal(e, room.id)} }
+            >
+              <i className="twf twf-file-text-o" />
+            </button>
+            <button type="button"
+              onClick={ (e) => {this.openConfirmDeleteModal(e, room.id)} }
+              className="delete"
+            >
+              <i className="twf twf-trash-o" />
+            </button>
           </div>
         </li>
       )
@@ -80,26 +90,31 @@ class OwnerRoomsList extends Component {
   renderPublishedRooms = (publishedRooms) => {
     return _.map(publishedRooms, (room) => {
       return (
-        <li className="list-item" key={room.id}>
-          <Link className="btn btn-dark btn-sm"
-            to={{
-              pathname: `/owner/rooms/${room.id}/joinreqs`,
-              state: {room_title: room.title, room_id: room.id}
-            }}
-          > Join Requests
-          </Link>
-          <button type="button"
-            onClick={ () => {this.openConfirmDeleteModal(room.id)} }
-            className="btn btn-danger btn-sm"
-          > Delete
-          </button>
-          <div style={{color: 'grey'}}
-            onClick={() => this.props.history.push(`/owner/rooms/${room.id}/view`)}
-          > Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
-            <br/>
-            <i>{`<RoomCode>/<Password>: <${room.room_code}>/<${room.room_password}>`}</i>
-            <br/>
-            <i>{room.start_at ? `This room will start at ${room.start_at}` : null}</i>
+        <li className="list-item clearfix" key={room.id} onClick={() => this.props.history.push(`/owner/rooms/${room.id}/view`)}>
+          <div className="float-left">
+            <h3>{room.title}</h3>
+            <div className="list-item-meta">
+              {room.room_code}
+              {room.start_at ? `· ${room.start_at}` : null}
+            </div>
+          </div>
+
+          <div className="float-right inline-button">
+            <Link className="btn"
+              to={{
+                pathname: `/owner/rooms/${room.id}/joinreqs`,
+                state: {room_title: room.title, room_id: room.id}
+              }}
+              onClick={ (e) => {this.handleRequestLink(e)} }
+            >
+              <i className="twf twf-ln-users" />
+            </Link>
+            <button type="button"
+              onClick={ (e) => {this.openConfirmDeleteModal(e, room.id)} }
+              className="delete"
+            >
+              <i className="twf twf-trash-o" />
+            </button>
           </div>
         </li>
       )
@@ -112,20 +127,20 @@ class OwnerRoomsList extends Component {
         <div className="header">ห้อง</div>
         <div className="body">
           <div className="body-header">
-            <Link className="btn full large basic" to="/owner/rooms/create">Create</Link>
+            <Link className="btn full large basic" to="/owner/rooms/create">สร้างห้อง</Link>
           </div>
           <div className="body-content">
             <div className="list-title">แบบร่าง</div>
             <ul className="list-body">
               { _.isEmpty(this.props.draftRooms)
-                ? <i style={{color: 'grey'}}>[ Empty ]</i>
+                ? <li className="list-item empty">ยังไม่มีห้องที่ถูกสร้าง</li>
                 : this.renderDraftRooms(this.props.draftRooms)
               }
             </ul>
-            <div className="list-title">แบบร่าง</div>
+            <div className="list-title">เผยแพร่แล้ว</div>
             <ul className="list-body">
               { _.isEmpty(this.props.publishedRooms)
-                ? <i style={{color: 'grey'}}>[ Empty ]</i>
+                ? <li className="list-item empty">ยังไม่มีห้องที่ถูกเผยแพร่</li>
                 : this.renderPublishedRooms(this.props.publishedRooms)
               }
             </ul>
@@ -135,35 +150,28 @@ class OwnerRoomsList extends Component {
         <BotNavbar/>
 
         {/* Confirm Delete Room Modal */}
-        <Portal>
-          <ConfirmModal
-            className={ this.state.confirmDeletePopup ? 'show' : 'hide' }
-            htmlId=''
-            modalTitle="Confirm Your Action"
-            modalBody="Are you sure you want to delete this room?"
-            onCancel={ () => {this.closeModal()} }
-            onConfirm={ () => {
-              this.closeModal()
-              this.onDeleteRoom(this.state.deleteRoomId)
-            }}
-          />
-        </Portal>
+        <ConfirmModal
+          className={ this.state.confirmDeletePopup ? 'show' : 'hide' }
+          htmlId=''
+          modalBody="ยืนยันว่าต้องการลบห้องนี้?"
+          onCancel={ () => {this.closeModal()} }
+          onConfirm={ () => {
+            this.closeModal()
+            this.onDeleteRoom(this.state.deleteRoomId)
+          }}
+        />
 
         {/* Confirm Publish Room Modal */}
-        <Portal>
-          <ConfirmModal
-            className={ this.state.confirmPublishPopup ? 'show' : 'hide' }
-            htmlId=''
-            modalTitle="Confirm Your Action"
-            modalBody="After publish this room, you will no longer be able to edit its info.
-              Are you sure you want to publish this room anyway?"
-            onCancel={ () => {this.closeModal()} }
-            onConfirm={ () => {
-              this.closeModal()
-              this.onPublishRoom(this.state.publishRoomId)
-            }}
-          />
-        </Portal>
+        <ConfirmModal
+          className={ this.state.confirmPublishPopup ? 'show' : 'hide' }
+          htmlId=''
+          modalBody="หลังจากยืนยันแล้ว จะไม่สามารถแก้ไขได้อีก"
+          onCancel={ () => {this.closeModal()} }
+          onConfirm={ () => {
+            this.closeModal()
+            this.onPublishRoom(this.state.publishRoomId)
+          }}
+        />
 
       </div>
     )
