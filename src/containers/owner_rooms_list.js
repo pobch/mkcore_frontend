@@ -154,7 +154,6 @@ class OwnerRoomsList extends Component {
         <Portal>
           <ConfirmModal
             className={ this.state.confirmDeletePopup ? 'modal show' : 'modal hide' }
-            modalTitle="Confirm Your Action"
             modalBody="ยืนยันว่าต้องการลบห้องนี้?"
             onCancel={ () => {this.closeModal()} }
             onConfirm={ () => {
@@ -168,7 +167,6 @@ class OwnerRoomsList extends Component {
         <Portal>
           <ConfirmModal
             className={ this.state.confirmPublishPopup ? 'modal show' : 'modal hide' }
-            modalTitle="Confirm Your Action"
             modalBody="หลังจากยืนยันแล้ว จะไม่สามารถแก้ไขได้อีก"
             onCancel={ () => {this.closeModal()} }
             onConfirm={ () => {

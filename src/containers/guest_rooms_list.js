@@ -150,7 +150,6 @@ class GuestRoomsList extends Component {
           {/* Confirm Leave Room Modal */}
           <ConfirmModal
             className={this.state.leaveRoomConfirmPopup ? 'modal show' : 'modal hide'}
-            modalTitle="Confirm Your Action"
             modalBody="Are you sure you want to leave this room?"
             onCancel={ this.closeModal }
             onConfirm={ () => {
