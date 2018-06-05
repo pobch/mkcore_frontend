@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function SaveCompleteModal(props) {
   return (
-    <div className={`modal ${props.className}`} id={props.htmlId}>
+    <div className={`modal ${props.className}`}>
       <div className="modal-wrapper">
         <div className="modal-content">
           <div className="modal-body">บันทึกเรียบร้อย</div>

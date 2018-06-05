@@ -34,6 +34,9 @@ export const ERROR_IN_ANSWERS = 'answers_error_from_api'
 export const HIDE_COMPONENT = 'hide_this_component'
 export const SHOW_COMPONENT = 'show_this_component'
 
+export const FETCH_PROFILE = 'fetch_user_profile'
+export const UPDATE_PROFILE = 'update_user_profile'
+
 const BASE_API_URL = process.env.REACT_APP_API_URL // environment variable
 
 const URL_LOGIN = `${BASE_API_URL}auth/login/`
@@ -46,6 +49,7 @@ const URL_JOIN_ROOM = URL_RETRIEVE_UPDATE_OWNROOM + 'join/'
 const URL_LEAVE_ROOM = URL_RETRIEVE_UPDATE_OWNROOM + 'unjoin/'
 const URL_CREATE_ANSWER = BASE_API_URL + 'answers/'
 const URL_RETRIEVE_UPDATE_DEL_JOINREQ = `${BASE_API_URL}rooms/joinreqs/` // + joinReq's id
+const URL_RETRIEVE_UPDATE_PROFILE = `${BASE_API_URL}users/` // + user_id from localStorage
 
 export function logInAction(values, callback) {
   const { email, password } = values
@@ -313,9 +317,19 @@ export function leaveRoom(id) {
   }
 }
 
-export function submitAnswer(roomId, {answer}) {
+export function saveNewAnswer(roomId, values) {
   return async (dispatch) => {
-    const response = await axios.post(URL_CREATE_ANSWER, {room: +roomId, answer})
+    const response = await axios.post(URL_CREATE_ANSWER, {room: +roomId, ...values})
+    dispatch({
+      type: SUBMIT_ANSWER,
+      payload: response
+    })
+  }
+}
+
+export function updateAnswer(rowId, values) {
+  return async (dispatch) => {
+    const response = await axios.patch(`${URL_CREATE_ANSWER}${rowId}/`, values)
     dispatch({
       type: SUBMIT_ANSWER,
       payload: response
@@ -326,7 +340,7 @@ export function submitAnswer(roomId, {answer}) {
 export function fetchAnswer(roomId) {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${URL_CREATE_ANSWER}${roomId}/`)
+      const response = await axios.get(`${URL_CREATE_ANSWER}byroomid/${roomId}/`)
       dispatch({
         type: FETCH_ANSWER,
         payload: response
@@ -336,6 +350,37 @@ export function fetchAnswer(roomId) {
         type: ERROR_IN_ANSWERS,
         payload: error.response
       })
+    }
+  }
+}
+
+export function fetchProfile() {
+  return async (dispatch) => {
+    const user_id = localStorage.getItem('user_id')
+    try {
+      const response = await axios.get(`${URL_RETRIEVE_UPDATE_PROFILE}${user_id}/`)
+      dispatch({
+        type: FETCH_PROFILE,
+        payload: response
+      })
+    } catch(error) {
+      console.log(error)
+    }
+  }
+}
+
+export function updateProfile(values) {
+  return async (dispatch) => {
+    const user_id = localStorage.getItem('user_id')
+    try {
+      const response = await axios.patch(`${URL_RETRIEVE_UPDATE_PROFILE}${user_id}/`, values)
+      dispatch({
+        type: UPDATE_PROFILE,
+        payload: response
+      })
+
+    } catch(error) {
+      console.log(error)
     }
   }
 }

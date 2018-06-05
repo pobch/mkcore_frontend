@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import { FieldArray} from 'redux-form'
-import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import RenderSurvey from '../components/owner_formElement_survey2'

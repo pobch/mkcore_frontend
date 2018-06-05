@@ -63,7 +63,6 @@ class CreateRoom extends Component {
         <Portal>
           <SaveCompleteModal
             className={this.state.openSaveCompleteModal ? 'show' : 'hide'}
-            htmlId={this.saveCompleteModalHtmlId}
             onConfirm={(event) => {
               this.setState({openSaveCompleteModal: false})
             }}

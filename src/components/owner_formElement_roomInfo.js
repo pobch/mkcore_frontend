@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {Field} from 'redux-form'
-import {Link} from 'react-router-dom'
 import Moment from 'moment'
 import momentLocalizer from 'react-widgets-moment'
 import { DateTimePicker } from 'react-widgets'

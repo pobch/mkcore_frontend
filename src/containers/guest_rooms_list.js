@@ -103,7 +103,7 @@ class GuestRoomsList extends Component {
               }
             </ul>
 
-            <h5 className="breadcrumb my-3">Joined Room (Answered)</h5>
+            <h5 className="breadcrumb my-3">Joined Room (Answered or No Survey)</h5>
             <ul>
               {/* { _.isEmpty(this.props.guestRooms) ?
                 <i style={{color: 'grey'}}>[ Empty ]</i> :
