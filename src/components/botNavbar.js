@@ -5,7 +5,7 @@ import {NavLink} from 'react-router-dom'
 export default class BotNavbar extends Component {
   render() {
     return (
-      <nav className="navbar">
+      <nav className="navbar fixed">
 
         <ul className="navbar-nav clearfix">
           <li className="navbar-item">

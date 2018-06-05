@@ -19,7 +19,8 @@ class ViewJoinReqs extends Component {
   render() {
     return (
       <div className="wrapper">
-        <div className="header spacing-side">
+        <div className="wrapper-background fixed" />
+        <div className="header fixed spacing-side">
           <Link to="/owner/rooms" className="float-left">
             <i className="twf twf-arrow-bold-left" />
           </Link>
@@ -61,10 +62,10 @@ class ViewJoinReqs extends Component {
             }) }
           </ul>
           <div className="list-title spacing-side">เข้าร่วมแล้ว</div>
+          <ul className="list-body">
+            <li className="list-item empty">ไม่มีผู้เข้าร่วม</li>
+          </ul>
         </div>
-        <ul style={{color: 'grey'}} className="list-group list-group-flush">
-
-        </ul>
       </div>
     )
   }

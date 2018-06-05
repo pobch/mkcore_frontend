@@ -130,7 +130,8 @@ class OwnerRoomsList extends Component {
   render() {
     return (
       <div className="wrapper">
-        <div className="header">ห้อง</div>
+        <div className="wrapper-background fixed" />
+        <div className="header fixed">ห้องของฉัน</div>
         <div className="body">
           <div className="body-header spacing-side">
             <Link className="btn" to="/owner/rooms/create">สร้างห้อง</Link>
@@ -172,7 +173,7 @@ class OwnerRoomsList extends Component {
         <Portal>
           <ConfirmModal
             className={ this.state.confirmPublishPopup ? 'show' : 'hide' }
-            modalBody="หลังจากยืนยันแล้ว จะไม่สามารถแก้ไขได้อีก"
+            modalBody="เมื่อเผยแพร่แล้วจะแก้ไขไม่ได้"
             onCancel={ () => {this.closeModal()} }
             onConfirm={ () => {
               this.closeModal()

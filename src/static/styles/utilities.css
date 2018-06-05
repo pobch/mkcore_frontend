@@ -37,10 +37,16 @@
 .feedback.invalid {
   color: var(--fail-color);
 }
+.spacing-cover {
+  padding: 1.5rem;
+}
 .spacing-side {
-  padding-right: 4%;
-  padding-left: 4%;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
 }
 .pointer {
   cursor: pointer;
+}
+.secondary-bg {
+  background-color: var(--secondary-background-color);
 }

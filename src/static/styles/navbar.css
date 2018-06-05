@@ -1,7 +1,5 @@
 .navbar {
-  position: absolute;
   bottom: 0;
-  width: 100%;
   background-color: var(--secondary-background-color);
 }
 .navbar-item {

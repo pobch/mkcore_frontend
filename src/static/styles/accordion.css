@@ -19,7 +19,7 @@
   transform: rotate(90deg);
 }
 .accordion.show .accordion-body {
-  max-height: 500px;
+  max-height: 600px;
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
   overflow: auto;

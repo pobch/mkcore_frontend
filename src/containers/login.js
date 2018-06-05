@@ -42,9 +42,6 @@ class LogIn extends Component {
       <div className="login">
         <div className="login-header">
           <img src={icon} width="150" height="150" alt="Icon"/>
-          <label>Test Account :</label>
-          <div>E-mail: test@pob.com</div>
-          <div>Password: guestpass123</div>
         </div>
         <div className={ error ? 'feedback invalid' : 'feedback success' }>
           { error ? error : (authenticated ? 'Log in successfully' : '') }
