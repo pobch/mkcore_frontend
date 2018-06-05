@@ -7,7 +7,7 @@ RUN apk add --update yarn
 WORKDIR /app/mkapp
 ADD . /app/mkapp
 RUN yarn install
-RUN yarn build
+RUN APP_ENV=$APP_ENV yarn build
 
 FROM nginx:alpine
 COPY --from=builder /app/mkapp/build /var/www/mkapp
