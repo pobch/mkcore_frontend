@@ -1,0 +1,9 @@
+.survey-list + button {
+  margin-top: 2em;
+}
+.survey-list:empty + button {
+  margin-top: 0;
+}
+.survey-type label {
+  margin-right: 0.8em;
+}

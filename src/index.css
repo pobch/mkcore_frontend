@@ -1,6 +1,8 @@
 @import './static/styles/animation.css'; /* Animation */
 @import './static/styles/variables.css'; /* Global variables */
 
+@import './static/styles/accordion.css'; /* Accordion*/
+@import './static/styles/button.css'; /* Button*/
 @import './static/styles/default.css'; /* Native HTML tag */
 @import './static/styles/font.css'; /* Form */
 @import './static/styles/form.css'; /* Form */
@@ -12,4 +14,8 @@
 @import './static/styles/utilities.css'; /* Utilities */
 
 /* Pages */
+@import './static/styles/survey.css'; /* Survey */
 @import './static/styles/login.css'; /* Login */
+
+/* Responsive */
+@import './static/styles/responsive.css'; /* Responsive */

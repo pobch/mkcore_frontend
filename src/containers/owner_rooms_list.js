@@ -62,23 +62,26 @@ class OwnerRoomsList extends Component {
   renderDraftRooms = (draftRooms) => {
     return _.map(draftRooms, (room) => {
       return (
-        <li className="list-item clearfix anmt-fadein" key={room.id} onClick={() => this.props.history.push(`/owner/rooms/${room.id}`)}>
-          <div className="float-left">
+        <li className="list-item clearfix spacing-side anmt-fadein pointer" key={room.id} onClick={() => this.props.history.push(`/owner/rooms/${room.id}`)}>
+          <div className="float-left col-7">
             <h3>{room.title}</h3>
             <div className="list-item-meta">
               {room.room_code}
               {room.start_at ? ` -- ${room.start_at}` : null}
             </div>
           </div>
-          <div className="float-right inline-child">
-            <button type="button"
+          <div className="float-right align-right col-3 inline-child">
+            <button
+              type="button"
+              className="iconize"
               onClick={ (e) => {this.openConfirmPublishModal(e, room.id)} }
             >
               <i className="twf twf-file-text-o" />
             </button>
-            <button type="button"
+            <button
+              type="button"
               onClick={ (e) => {this.openConfirmDeleteModal(e, room.id)} }
-              className="delete"
+              className="iconize delete"
             >
               <i className="twf twf-trash-o" />
             </button>
@@ -91,7 +94,7 @@ class OwnerRoomsList extends Component {
   renderPublishedRooms = (publishedRooms) => {
     return _.map(publishedRooms, (room) => {
       return (
-        <li className="list-item clearfix" key={room.id} onClick={() => this.props.history.push(`/owner/rooms/${room.id}/view`)}>
+        <li className="list-item clearfix spacing-side pointer" key={room.id} onClick={() => this.props.history.push(`/owner/rooms/${room.id}/view`)}>
           <div className="float-left">
             <h3>{room.title}</h3>
             <div className="list-item-meta">
@@ -101,7 +104,8 @@ class OwnerRoomsList extends Component {
           </div>
 
           <div className="float-right inline-child">
-            <Link className="btn"
+            <Link
+              className="btn iconize"
               to={{
                 pathname: `/owner/rooms/${room.id}/joinreqs`,
                 state: {room_title: room.title, room_id: room.id}
@@ -110,9 +114,10 @@ class OwnerRoomsList extends Component {
             >
               <i className="twf twf-ln-users" />
             </Link>
-            <button type="button"
+            <button
+              type="button"
               onClick={ (e) => {this.openConfirmDeleteModal(e, room.id)} }
-              className="delete"
+              className="iconize delete"
             >
               <i className="twf twf-trash-o" />
             </button>
@@ -127,18 +132,18 @@ class OwnerRoomsList extends Component {
       <div className="wrapper">
         <div className="header">ห้อง</div>
         <div className="body">
-          <div className="body-header">
+          <div className="body-header spacing-side">
             <Link className="btn" to="/owner/rooms/create">สร้างห้อง</Link>
           </div>
           <div className="body-content">
-            <div className="list-title">แบบร่าง</div>
+            <div className="list-title spacing-side">แบบร่าง</div>
             <ul className="list-body">
               { _.isEmpty(this.props.draftRooms)
                 ? <li className="list-item empty">ยังไม่มีห้องที่ถูกสร้าง</li>
                 : this.renderDraftRooms(this.props.draftRooms)
               }
             </ul>
-            <div className="list-title">เผยแพร่แล้ว</div>
+            <div className="list-title spacing-side">เผยแพร่แล้ว</div>
             <ul className="list-body">
               { _.isEmpty(this.props.publishedRooms)
                 ? <li className="list-item empty">ยังไม่มีห้องที่ถูกเผยแพร่</li>

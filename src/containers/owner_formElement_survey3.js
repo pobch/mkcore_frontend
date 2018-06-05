@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 
 
 class EachQuestion extends Component {
-  
+
   state = {
     accordionOpen: true,
     accordionClass: 'show',
@@ -36,17 +36,17 @@ class EachQuestion extends Component {
   }
 
   renderQuestionField = (field) => {
-    return <input type="text" placeholder="Enter the question" {...field.input}/>
+    return <input type="text" id={field.id} placeholder="ตั้งคำถามที่นี่" {...field.input}/>
   }
-  
+
   renderChoiceField = ({fields}) => {
     return (
       <ul>
         {
           fields.map((value, index) => {
             return (
-              <li key={index} className="form-inline">
-                <button type="button" 
+              <li key={index} className="list-item form-inline">
+                <button type="button"
                   onClick={() => fields.remove(index)}
                   className="btn btn-outline-danger mb-1 btn-sm">
                   -
@@ -62,75 +62,79 @@ class EachQuestion extends Component {
             )
           })
         }
-        <button type="button"
-          className="btn btn-outline-primary mb-1 btn-sm"
+        <button
+          type="button"
           onClick={() => {
             fields.push({})
           }}>
-          +Choice
+          <i className="twf twf-minimal-plus before" />
+          เพิ่มตัวเลือก
         </button>
       </ul>
     )
   }
-  
+
   render() {
     return (
-      <li className={`${this.state.accordionClass}`}>
-        <span>
-          <button type="button" 
-            onClick={this.props.onClickDelete} 
-            className="btn btn-danger mx-1 btn-sm"
-          >Delete
-          </button>
-          
-          <b>{`#${this.props.index + 1} : `}</b>
-
+      <li className={`list-item accordion form-minimal number ${this.state.accordionClass}`}>
+        <div className="form-group accordion-header spacing-side">
+          <label htmlFor={`survey-item-${this.props.index + 1}`}>{`${this.props.index + 1}`}</label>
           <Field
+            id={`survey-item-${this.props.index + 1}`}
             name={`${this.props.value}.question`}
             component={this.renderQuestionField}
           />
-
-          <button type="button" onClick={this.onClickToggle}>Toggle</button>
-        </span>
-        
-        <div>
-          <div className="form-group form-inline">
-            Answer Type : 
-            <button type="button" className="btn btn-outline-info m-1 btn-sm"
-              onClick={() => {
-                this.props.onClickText()
-                this.setState({answerTypeText: true, answerTypeChoices: false})
-              }}
-            >Text
+          <div className="accordion-toggle">
+            <button
+              type="button"
+              onClick={this.props.onClickDelete}
+              className="plain delete"
+            >
+              <i className="twf twf-trash-o" />
             </button>
-
-            <button type="button" className="btn btn-outline-info m-1 btn-sm"
-              onClick={() => {
-                this.props.onClickChoices()
-                this.setState({answerTypeText: false, answerTypeChoices: true})
-              }}
-            >Choices
+            <button
+              type="button"
+              className="plain"
+              onClick={this.onClickToggle}
+            >
+              <i className="twf twf-chevron-right" />
             </button>
           </div>
+        </div>
 
-          <div className="form-group">
-            Expected answer :
-            <i> 
-              { this.state.answerTypeText && ' Text Type'}
-              { this.state.answerTypeChoices && ' Choice Type'}
-            </i>
+        <div className="accordion-body spacing-side">
+          <div className="survey-type">
+            <label>ชนิด :</label>
+            <span className="button-group">
+              <button
+                type="button"
+                className={ this.state.answerTypeText ? 'active' : null }
+                onClick={() => {
+                  this.props.onClickText()
+                  this.setState({answerTypeText: true, answerTypeChoices: false})
+                }}
+              >
+                พิมพ์ตอบ
+              </button>
+              <button
+                type="button"
+                className={ this.state.answerTypeChoices ? 'active' : null }
+                onClick={() => {
+                  this.props.onClickChoices()
+                  this.setState({answerTypeText: false, answerTypeChoices: true})
+                }}
+              >
+                เลือกตอบ
+              </button>
+            </span>
           </div>
-          
-          { this.state.answerTypeChoices && 
+          { this.state.answerTypeChoices &&
             <FieldArray
               name={`${this.props.value}.choices`}
               component={this.renderChoiceField}
             />
           }
         </div>
-
-        <hr/>
-
       </li>
     )
   }
@@ -138,7 +142,7 @@ class EachQuestion extends Component {
 
 function mapStateToProps(state, ownProps) {
   // check whether this question is already in database, if so, initial state with current answerType in db
-  // if this question is not in db, 2 cases can be implied : 
+  // if this question is not in db, 2 cases can be implied :
   // case 1 : roomId = '' and survey is empty because this is a new room (create room mode)
   // case 2 : this is the old room's new added question which is not POSTed to db yet (edit room mode)
   let survey = []
@@ -146,7 +150,7 @@ function mapStateToProps(state, ownProps) {
     survey = _.find(state.ownRooms, ['id', +ownProps.roomId]).survey || []
     // can be [] or [{answerType:'text', ...}, {answerType:'choices', ...}]
   }
-  const result = ownProps.roomId 
+  const result = ownProps.roomId
     && survey[ownProps.index]
     && survey[ownProps.index].answerType
   return {

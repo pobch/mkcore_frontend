@@ -50,9 +50,13 @@ class CreateRoom extends Component {
               <SurveyEdit room={''}/>
             </div>
           </div>
-          <div className="tab-footer">
-            <button type="submit">บันทึก</button>
-            <Link to="/owner/rooms" className="btn">ย้อนกลับ</Link>
+          <div className="tab-footer clearfix spacing-side">
+            <Link to="/owner/rooms" className="float-left">
+              <i className="twf twf-arrow-bold-left" />
+            </Link>
+            <button type="submit" className="float-right">
+              บันทึก
+            </button>
           </div>
         </form>
 

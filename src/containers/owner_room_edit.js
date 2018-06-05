@@ -72,7 +72,7 @@ class EditRoom extends Component {
               <SurveyEdit roomId={id}/>
             </div>
           </div>
-          <div className="tab-footer clearfix">
+          <div className="tab-footer clearfix spacing-side">
             <Link to="/owner/rooms" className="float-left">
               <i className="twf twf-arrow-bold-left" />
             </Link>

@@ -16,13 +16,6 @@
   width: 100%;
   min-height: 100%;
 }
-.header,
-.body-header,
-.list-title,
-.list-item {
-  padding-left: 5%;
-  padding-right: 5%;
-}
 .header {
   height: 4.25rem;
   line-height: 4.25rem;
@@ -63,13 +56,14 @@
   color: var(--secondary-text-color);
   background-color: var(--secondary-background-color);
 }
-.list-item {
-  line-height: 1;
+.list-body .list-item {
   padding-top: 1em;
   padding-bottom: 1em;
+}
+.list-item {
+  line-height: 1;
   font-size: 1.25em;
   border-bottom: 1px solid var(--border-color);
-  cursor: pointer;
 }
 .list-item.empty {
   padding-top: 1.6em;

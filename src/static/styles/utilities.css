@@ -3,14 +3,23 @@
   content: "";
   display: table;
 }
+.col-3 {
+  width: 30%;
+}
+.col-7 {
+  width: 70%;
+}
 .float-left {
   float: left;
 }
 .float-right {
   float: right;
 }
+.align-right {
+  text-align: right;
+}
 .inline-child > * {
-  margin-right: 0.8em;
+  margin-right: 0.5em;
 }
 .inline-child > *:last-child {
   margin-right: 0;
@@ -27,4 +36,11 @@
 }
 .feedback.invalid {
   color: var(--fail-color);
+}
+.spacing-side {
+  padding-right: 4%;
+  padding-left: 4%;
+}
+.pointer {
+  cursor: pointer;
 }

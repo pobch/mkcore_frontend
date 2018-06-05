@@ -14,15 +14,13 @@ export default class SurveyEdit extends Component {
 
   render() {
     return (
-      <div>
-        <FieldArray
-          name="survey"
-          component={RenderSurvey}
-          props={{
-            roomId: this.props.roomId
-          }}
-        />
-      </div>
+      <FieldArray
+        name="survey"
+        component={RenderSurvey}
+        props={{
+          roomId: this.props.roomId
+        }}
+      />
     )
   }
 }

@@ -13,10 +13,8 @@ export default class RoomInfoEdit extends Component {
   renderField = (field) => {
     return (
       <div className={ field.type === 'disabled' ? "form-group disabled" : "form-group" }>
-        <label htmlFor={field.input.name}>
-          {field.label}
-          { field.meta.touched && field.meta.error ? <span className="feedback invalid anmt-fadein">*{field.meta.error}</span> : '' }
-        </label>
+        { field.meta.touched && field.meta.error ? <span className="feedback invalid anmt-fadein">*{field.meta.error}</span> : '' }
+        <label htmlFor={field.input.name}>{field.label}</label>
         { field.type === 'disabled'
           ? <input id={field.input.name} className="form-control" type='text' {...field.input} disabled/>
           : field.type === 'textarea'
@@ -39,7 +37,7 @@ export default class RoomInfoEdit extends Component {
   render() {
 
     return (
-      <div className="form-minimal">
+      <div className="form-minimal spacing-side">
         <Field
           name="room_code"
           component={this.renderField}

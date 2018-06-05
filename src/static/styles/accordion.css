@@ -1,0 +1,39 @@
+.accordion.form-minimal.number .accordion-header label + * {
+  width: calc(100% - 6em);
+  padding-right: 0;
+}
+.accordion-toggle {
+  width: 3em;
+  padding: 1.5em 0;
+  text-align: right;
+}
+.accordion-toggle button {
+  margin-right: 1em;
+}
+.accordion-toggle button:last-child {
+  margin-right: 0;
+}
+.accordion-body,
+.accordion-toggle .twf-chevron-right {
+  -webkit-transition: max-height 0.2s ease, transform 0.2s ease, padding 0.3s ease;
+  -moz-transition: max-height 0.2s ease, transform 0.2s ease, padding 0.3s ease;
+  -o-transition: max-height 0.2s ease, transform 0.2s ease, padding 0.3s ease;
+  transition: max-height 0.2s ease, transform 0.2s ease, padding 0.3s ease;
+}
+.accordion-body {
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  overflow: hidden;
+  background-color: var(--primary-background-color);
+}
+.accordion.show .twf-chevron-right {
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+.accordion.show .accordion-body {
+  max-height: 500px;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  overflow: auto;
+}

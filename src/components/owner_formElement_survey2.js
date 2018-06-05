@@ -19,42 +19,42 @@ export default class RenderSurvey extends Component {
     }
 
     return (
-      <ul>
-        {
-          fields.map((value,index) => {
-            return (
-              <EachQuestion
-                key={index}
-                roomId={this.props.roomId}
-                onClickDelete={() => {fields.remove(index)}}
-                index={index}
-                value={value}
-                onClickText={() => {
-                  const wantedValue = {...fields.get(index), answerType:'text', choices:null}
-                  fields.remove(index)
-                  fields.insert(index, wantedValue)
-                }}
-                onClickChoices={() => {
-                  const wantedValue = {...fields.get(index), answerType: 'choices'}
-                  fields.remove(index)
-                  fields.insert(index, wantedValue)
-                }}
-              />
-            )
-          })
-        }
-
-        <button type="button" 
+      <div className="survey-edit">
+        <ul className="survey-list">
+          {
+            fields.map((value,index) => {
+              return (
+                <EachQuestion
+                  key={index}
+                  roomId={this.props.roomId}
+                  onClickDelete={() => {fields.remove(index)}}
+                  index={index}
+                  value={value}
+                  onClickText={() => {
+                    const wantedValue = {...fields.get(index), answerType:'text', choices:null}
+                    fields.remove(index)
+                    fields.insert(index, wantedValue)
+                  }}
+                  onClickChoices={() => {
+                    const wantedValue = {...fields.get(index), answerType: 'choices'}
+                    fields.remove(index)
+                    fields.insert(index, wantedValue)
+                  }}
+                />
+              )
+            })
+          }
+        </ul>
+        <button type="button"
           onClick={() => {
             fields.push(defaultNewQuestion)
-          }} 
-          className="btn btn-primary"
-        >+Question
+          }}
+          className="full large brand-basic"
+        >
+          <i className="twf twf-minimal-plus before" />
+          เพิ่มคำถาม
         </button>
-        
-        <hr/>
-
-      </ul>
+      </div>
     )
   }
 }
