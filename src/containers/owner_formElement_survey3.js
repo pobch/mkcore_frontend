@@ -61,6 +61,7 @@ class EachQuestion extends Component {
                     component="input"
                     type="text"
                     id={`survey-choice-${index + 1}`}
+                    placeholder={`ใส่ตัวเลือกที่ ${index + 1}`}
                     className="form-control"
                   />
                   <button
