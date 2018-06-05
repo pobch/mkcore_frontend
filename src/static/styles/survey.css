@@ -7,3 +7,17 @@
 .survey-type label {
   margin-right: 0.8em;
 }
+.choice-add {
+  position: absolute;
+  top: 1.25rem;
+  right: 4%;
+}
+.choice-list {
+  margin-top: 1.25rem;
+}
+.choice-list:empty {
+  margin-top: 0;
+}
+.choice-item {
+  background-color: var(--secondary-background-color);
+}

@@ -19,7 +19,7 @@
   text-align: right;
 }
 .inline-child > * {
-  margin-right: 0.5em;
+  margin-right: 0.8em;
 }
 .inline-child > *:last-child {
   margin-right: 0;

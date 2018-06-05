@@ -41,50 +41,55 @@ class EachQuestion extends Component {
 
   renderChoiceField = ({fields}) => {
     return (
-      <ul>
-        {
-          fields.map((value, index) => {
-            return (
-              <li key={index} className="list-item form-inline">
-                <button type="button"
-                  onClick={() => fields.remove(index)}
-                  className="btn btn-outline-danger mb-1 btn-sm">
-                  -
-                </button>
-                <label>{`Choice #${index + 1} : `}</label>
-                <Field
-                  name={`${value}.choiceText`}
-                  component="input"
-                  type="text"
-                  className="form-control"
-                />
-              </li>
-            )
-          })
-        }
+      <div className="surver-choice">
         <button
           type="button"
+          className="choice-add iconize anmt-fadein"
           onClick={() => {
             fields.push({})
           }}>
-          <i className="twf twf-minimal-plus before" />
-          เพิ่มตัวเลือก
+          <i className="twf twf-minimal-plus" />
         </button>
-      </ul>
+        <ul className="choice-list">
+          {
+            fields.map((value, index) => {
+              return (
+                <li key={index} className="form-group children-3 secondary spacing-side anmt-fadein">
+                  <label htmlFor={`survey-choice-${index + 1}`}>{index + 1}</label>
+                  <Field
+                    name={`${value}.choiceText`}
+                    component="input"
+                    type="text"
+                    id={`survey-choice-${index + 1}`}
+                    className="form-control"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => fields.remove(index)}
+                    className="delete plain"
+                  >
+                    <i className="twf twf-trash-o" />
+                  </button>
+                </li>
+              )
+            })
+          }
+        </ul>
+      </div>
     )
   }
 
   render() {
     return (
       <li className={`list-item accordion form-minimal number ${this.state.accordionClass}`}>
-        <div className="form-group accordion-header spacing-side">
-          <label htmlFor={`survey-item-${this.props.index + 1}`}>{`${this.props.index + 1}`}</label>
+        <div className="accordion-header form-group children-3 spacing-side">
+          <label htmlFor={`survey-item-${this.props.index + 1}`}>{this.props.index + 1}</label>
           <Field
             id={`survey-item-${this.props.index + 1}`}
             name={`${this.props.value}.question`}
             component={this.renderQuestionField}
           />
-          <div className="accordion-toggle">
+          <div className="inline-child">
             <button
               type="button"
               onClick={this.props.onClickDelete}
@@ -105,7 +110,7 @@ class EachQuestion extends Component {
         <div className="accordion-body spacing-side">
           <div className="survey-type">
             <label>ชนิด :</label>
-            <span className="button-group">
+            <div className="button-group">
               <button
                 type="button"
                 className={ this.state.answerTypeText ? 'active' : null }
@@ -126,7 +131,7 @@ class EachQuestion extends Component {
               >
                 เลือกตอบ
               </button>
-            </span>
+            </div>
           </div>
           { this.state.answerTypeChoices &&
             <FieldArray
