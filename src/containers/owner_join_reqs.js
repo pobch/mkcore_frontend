@@ -18,38 +18,53 @@ class ViewJoinReqs extends Component {
 
   render() {
     return (
-      <div>
-        <h5>Join Requests</h5>
-        {`Room Title : ${this.props.location.state.room_title} (id : ${this.props.location.state.room_id})`}
-        
+      <div className="wrapper">
+        <div className="header spacing-side">
+          <Link to="/owner/rooms" className="float-left">
+            <i className="twf twf-arrow-bold-left" />
+          </Link>
+          {`ผู้ขอเข้าร่วม "${this.props.location.state.room_title}"`}
+        </div>
+        <div className="body">
+          <div className="list-title spacing-side">รอยืนยัน</div>
+          <ul className="list-body">
+            { _.isEmpty(this.props.joinReqsInfo) ?
+              <li className="list-item empty">ไม่มีผู้ขอเข้าร่วม</li> :
+              _.map(this.props.joinReqsInfo, (req) => {
+              return (
+                <li key={req.id} className="list-item">
+                  <div className="float-left">
+                    <h3>{req.user_first_name} {req.user_last_name}</h3>
+                    <div className="list-item-meta">
+                      {req.user_email}
+                    </div>
+                  </div>
+
+                  <div className="float-right inline-child">
+                    <button
+                      type="button"
+                      onClick={() => {this.props.acceptJoinReq(req.id)}}
+                      className="iconize"
+                    >
+                      <i className="twf twf-check" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {this.props.denyJoinReq(req.id)}}
+                      className="iconize"
+                    >
+                      <i className="twf twf-times" />
+                    </button>
+                  </div>
+                </li>
+              )
+            }) }
+          </ul>
+          <div className="list-title spacing-side">เข้าร่วมแล้ว</div>
+        </div>
         <ul style={{color: 'grey'}} className="list-group list-group-flush">
-          { _.isEmpty(this.props.joinReqsInfo) ? 
-            <i>There is no join request.</i> :
-            _.map(this.props.joinReqsInfo, (req) => {
-            return (
-              <li key={req.id} className="list-group-item">
-                <div>
-                  E-mail : <span style={{color: 'black'}}>{req.user_email}</span>
-                  <br/>
-                  Name : <span style={{color: 'black'}}>{req.user_first_name} {req.user_last_name}</span>
-                </div>
-                <button type="button" 
-                  onClick={() => {this.props.acceptJoinReq(req.id)}}
-                  className="btn btn-primary btn-sm">
-                Accept
-                </button>
-                <button type="button" 
-                  onClick={() => {this.props.denyJoinReq(req.id)}}
-                  className="btn btn-danger btn-sm">
-                Deny
-                </button>
-              </li>
-            )
-          }) }
+
         </ul>
-        
-        <Link to="/owner/rooms">Cancel</Link>
-        
       </div>
     )
   }
@@ -62,10 +77,10 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, 
+export default connect(mapStateToProps,
   {
-    fetchJoinReqsOfOwnRoom, 
-    acceptJoinReq, 
+    fetchJoinReqsOfOwnRoom,
+    acceptJoinReq,
     denyJoinReq,
     resetJoinReqsList: () => ({type: RESET_JOINREQS_LIST})
   }
