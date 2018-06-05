@@ -55,7 +55,8 @@ class EditRoom extends Component {
 
     return (
       <div className="wrapper">
-        <div className="header">แก้ไขห้อง</div>
+        <div className="wrapper-background fixed secondary-bg" />
+        <div className="header fixed">แก้ไขห้อง</div>
         <TopTabBar
           titleTab1="ข้อมูล"
           titleTab2="แบบสอบถาม"
@@ -72,7 +73,7 @@ class EditRoom extends Component {
               <SurveyEdit roomId={id}/>
             </div>
           </div>
-          <div className="tab-footer clearfix spacing-side">
+          <div className="tab-footer fixed clearfix spacing-side">
             <Link to="/owner/rooms" className="float-left">
               <i className="twf twf-arrow-bold-left" />
             </Link>

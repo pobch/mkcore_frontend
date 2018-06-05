@@ -10,9 +10,7 @@
   margin-bottom: 2px;
   background-color: var(--primary-background-color);
 }
-.form-group.secondary,
-.form-group.secondary > input,
-.form-group.secondary > textarea {
+.form-minimal .form-group.secondary {
   background-color: var(--secondary-background-color);
 }
 .form-minimal .form-group .feedback {
@@ -33,7 +31,7 @@
   float: left;
 }
 .form-minimal .form-group label {
-  width: 7em;
+  width: 8em;
   line-height: 1;
   padding: 1.5em 0.6em 1.5em 1.5em;
   margin-bottom: 0;
@@ -41,7 +39,7 @@
   border-bottom: 1px solid transparent;
 }
 .form-minimal .form-group label + * {
-  width: calc(100% - 7em);
+  width: calc(100% - 8em);
   padding-left: 0;
   border: none;
 }

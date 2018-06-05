@@ -47,31 +47,36 @@ class Profile extends Component {
 
     const {handleSubmit} = this.props
     return (
-      <div>
-        <form onSubmit={handleSubmit(this.onSubmit)}>
-          <Field
-            name='email'
-            component={this.renderField}
-            label="E-mail"
-            type="disabled"
-          />
-          <Field
-            name='first_name'
-            component={this.renderField}
-            label="ชื่อ"
-            type="text"
-          />
-          <Field
-            name='last_name'
-            component={this.renderField}
-            label="นามสกุล"
-            type="text"
-          />
-          <div>
-            <button type="submit" className="btn">Save Profile</button>
-          </div>
-        </form>
-        <Link className="btn btn-danger" to="/logout">Log Out</Link>
+      <div className="wrapper">
+        <div className="wrapper-background fixed" />
+        <div className="header fixed">บัญชีของฉัน</div>
+        <div className="spacing-side">
+          <form
+            className="form-minimal spacing-cover"
+            onSubmit={handleSubmit(this.onSubmit)}
+          >
+            <Field
+              name='email'
+              component={this.renderField}
+              label="อีเมล"
+              type="disabled"
+            />
+            <Field
+              name='first_name'
+              component={this.renderField}
+              label="ชื่อ"
+              type="text"
+            />
+            <Field
+              name='last_name'
+              component={this.renderField}
+              label="นามสกุล"
+              type="text"
+            />
+            <button type="submit" className="btn">บันทึก</button>
+          </form>
+        </div>
+        <Link className="btn btn-danger" to="/logout">ออกจากระบบ</Link>
         <BotNavbar/>
 
         <Portal>

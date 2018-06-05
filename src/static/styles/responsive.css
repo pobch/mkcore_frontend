@@ -6,6 +6,11 @@
     font-size: 16px;
   }
 }
+@media only screen and (max-width: 720px) {
+  .fixed {
+    left: 0;
+  }
+}
 @media only screen and (max-width: 480px) {
   .rw-datetime-picker .rw-select {
     display: block;
