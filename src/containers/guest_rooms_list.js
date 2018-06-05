@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { 
-  fetchGuestRooms, fetchPendingRooms, denyJoinReq, resetError, leaveRoom
+  fetchGuestRooms, fetchPendingRooms, denyJoinReq, resetError, leaveRoom,
+  fetchAnswersOfMe
 } from '../actions'
 
 import Portal from '../components/portal'
@@ -23,6 +24,7 @@ class GuestRoomsList extends Component {
     window.scrollTo(0,0)
     this.props.fetchGuestRooms()
     this.props.fetchPendingRooms()
+    this.props.fetchAnswersOfMe()
   }
 
   componentWillUnmount() {
@@ -43,7 +45,7 @@ class GuestRoomsList extends Component {
     this.closeModal()
   }
       
-  renderGuestRooms = (guestRooms) => {
+  renderGuestRoomsEditable = (guestRooms) => {
     return _.map(guestRooms, (room) => {
       return (
         <li style={{marginBottom: '5px'}} key={room.id}>
@@ -54,6 +56,25 @@ class GuestRoomsList extends Component {
           </button>
           <div style={{color: 'grey'}}
             onClick={() => {this.props.history.push(`/guest/rooms/${room.id}`)}}
+          >Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
+          </div>
+          <hr/>
+        </li>
+      )
+    })
+  }
+
+  renderGuestRoomsViewOnly = (guestRooms) => {
+    return _.map(guestRooms, (room) => {
+      return (
+        <li style={{marginBottom: '5px'}} key={room.id}>
+          <button type="button" 
+            onClick={() => {this.openConfirmLeaveRoomModal(room.id)}}
+            className="btn btn-danger btn-sm"
+          >Leave
+          </button>
+          <div style={{color: 'grey'}}
+            onClick={() => {this.props.history.push(`/guest/rooms/${room.id}/view`)}}
           >Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
           </div>
           <hr/>
@@ -80,11 +101,11 @@ class GuestRoomsList extends Component {
   }
 
   render() {
-    // No need to check empty state bcoz lodash _.map() when the first argument is empty object will return empty array
+    // No need to check empty state bcoz lodash _.map() will return [] when the first argument is {}, []
     // if(_.isEmpty(this.props.ownRooms)) {
     //   return <div>Loading...</div>
     // }
-
+    
     return (
       <div>
         <h5>Guest Rooms Page</h5>
@@ -97,18 +118,18 @@ class GuestRoomsList extends Component {
 
             <h5 className="breadcrumb my-3">Joined Room (Not Answered)</h5>
             <ul>
-              { _.isEmpty(this.props.guestRooms) ?
+              { _.isEmpty(this.props.roomsNotYetSubmitAns) ?
                 <i style={{color: 'grey'}}>[ Empty ]</i> :
-                this.renderGuestRooms(this.props.guestRooms)
+                this.renderGuestRoomsEditable(this.props.roomsNotYetSubmitAns)
               }
             </ul>
 
             <h5 className="breadcrumb my-3">Joined Room (Answered or No Survey)</h5>
             <ul>
-              {/* { _.isEmpty(this.props.guestRooms) ?
+              { _.isEmpty(this.props.roomsSubmittedAnsOrWithoutSurvey) ?
                 <i style={{color: 'grey'}}>[ Empty ]</i> :
-                this.renderGuestRooms(this.props.guestRooms) 
-              } */}
+                this.renderGuestRoomsViewOnly(this.props.roomsSubmittedAnsOrWithoutSurvey) 
+              }
             </ul>
 
             <h5 className="breadcrumb my-3">Pending Rooms</h5>
@@ -164,8 +185,46 @@ class GuestRoomsList extends Component {
 }
 
 function mapStateToProps(state) {
+  
+  let roomIdsOfNotYetSubmitAns = []
+  let roomIdsOfSubmittedAns = []
+  
+  // state.answers is object type
+  _.forEach(state.answers, (value) => {
+    if(value.submitted) {
+      roomIdsOfSubmittedAns.push({roomId: +value.room, submitDate: new Date(value.submitted_at)})
+    } else {
+      roomIdsOfNotYetSubmitAns.push(+value.room)
+    }
+  })
+
+  // sort submitted answers by submitted date
+  const sorted = roomIdsOfSubmittedAns
+    .sort((a,b) => b.submitDate - a.submitDate)
+    .map((value) => value.roomId)
+  
+  // construct 3 main arrays
+  let guestRoomsNotYetSubmitAns = []
+  let guestRoomsSubmittedAns = []
+  let guestRoomsWithoutSurvey = []
+  
+  // state.guestRooms is array type which is already sorted by accept_date
+  state.guestRooms.forEach((room) => {
+    if(!room.have_survey_when_published) {
+      guestRoomsWithoutSurvey.push(room)
+    } else if(_.includes(sorted, +room.id)) {
+      guestRoomsSubmittedAns.push(room)
+    } else if(_.includes(roomIdsOfNotYetSubmitAns, +room.id)) {
+      guestRoomsNotYetSubmitAns.push(room)
+    }
+  })
+  
+  // sort rooms which have a submitted ans according to 'roomIdsOfSubmittedAns'
+  guestRoomsSubmittedAns.sort((a,b) => sorted.indexOf(+a.id) - sorted.indexOf(+b.id))
+  
   return {
-    guestRooms: state.guestRooms,
+    roomsNotYetSubmitAns: guestRoomsNotYetSubmitAns,
+    roomsSubmittedAnsOrWithoutSurvey: guestRoomsSubmittedAns.concat(guestRoomsWithoutSurvey),
     pendingRoomsInfo: state.pendingRoomsInfo,
     errors: state.errors
   }
@@ -176,6 +235,7 @@ export default connect(mapStateToProps, {
     leaveRoom,
     fetchPendingRooms,
     denyJoinReq,
-    resetError
+    resetError,
+    fetchAnswersOfMe
   }
 )(GuestRoomsList)
