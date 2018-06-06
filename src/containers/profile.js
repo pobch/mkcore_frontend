@@ -1,18 +1,19 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {reduxForm, Field} from 'redux-form'
 
 import BotNavbar from '../components/botNavbar'
 import Portal from '../components/portal'
 import SaveCompleteModal from '../components/modal_save_complete'
+import ConfirmModal from '../components/modal_confirm'
 
-import {fetchProfile, updateProfile} from '../actions'
+import {fetchProfile, updateProfile, logOutAction} from '../actions'
 
 class Profile extends Component {
 
   state = {
-    openSaveCompleteModal: false
+    openSaveCompleteModal: false,
+    openConfirmLogOutModal: false
   }
 
   componentDidMount() {
@@ -76,7 +77,11 @@ class Profile extends Component {
             <button type="submit" className="btn">บันทึก</button>
           </form>
         </div>
-        <Link className="btn btn-danger" to="/logout">ออกจากระบบ</Link>
+        <button type="button" 
+          className="btn"
+          onClick={() => this.setState({openConfirmLogOutModal: true})}
+        >ออกจากระบบ
+        </button>
         <BotNavbar/>
 
         <Portal>
@@ -84,6 +89,17 @@ class Profile extends Component {
             className={this.state.openSaveCompleteModal ? 'show' : 'hide'}
             onConfirm={(event) => {
               this.setState({openSaveCompleteModal: false})
+            }}
+          />
+        </Portal>
+
+        <Portal>
+          <ConfirmModal
+            className={this.state.openConfirmLogOutModal ? 'show' : 'hide'}
+            modalBody="คุณต้องการออกจากระบบ?"
+            onCancel={ () => this.setState({openConfirmLogOutModal: false})}
+            onConfirm={ () => {
+              this.props.logOutAction(() => {this.props.history.push('/')})
             }}
           />
         </Portal>
@@ -100,7 +116,7 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {fetchProfile, updateProfile})(
+export default connect(mapStateToProps, {fetchProfile, updateProfile, logOutAction})(
   reduxForm({
     form: 'editProfileForm',
     enableReinitialize: true
