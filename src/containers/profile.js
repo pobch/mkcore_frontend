@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {reduxForm, Field} from 'redux-form'
 
+import TopTabBar from '../components/topTabBar'
 import BotNavbar from '../components/botNavbar'
 import Portal from '../components/portal'
 import SaveCompleteModal from '../components/modal_save_complete'
@@ -48,35 +49,48 @@ class Profile extends Component {
     const {handleSubmit} = this.props
     return (
       <div className="wrapper">
-        <div className="wrapper-background fixed" />
+        <div className="wrapper-background fixed custom-bg" />
         <div className="header fixed">บัญชีของฉัน</div>
-        <div className="spacing-side">
-          <form
-            className="form-minimal spacing-cover"
-            onSubmit={handleSubmit(this.onSubmit)}
-          >
-            <Field
-              name='email'
-              component={this.renderField}
-              label="อีเมล"
-              type="disabled"
-            />
-            <Field
-              name='first_name'
-              component={this.renderField}
-              label="ชื่อ"
-              type="text"
-            />
-            <Field
-              name='last_name'
-              component={this.renderField}
-              label="นามสกุล"
-              type="text"
-            />
-            <button type="submit" className="btn">บันทึก</button>
-          </form>
+        <TopTabBar
+          titleTab1="ทั่วไป"
+          titleTab2="รหัสผ่าน"
+        />
+        <div className="tab-content form-minimal">
+          <div className="tab-body">
+            <form
+              className='tab-item spacing-side'
+              onSubmit={handleSubmit(this.onSubmit)}
+            >
+              <Field
+                name='email'
+                component={this.renderField}
+                label="อีเมล"
+                type="disabled"
+              />
+              <Field
+                name='first_name'
+                component={this.renderField}
+                label="ชื่อ"
+                type="text"
+              />
+              <Field
+                name='last_name'
+                component={this.renderField}
+                label="นามสกุล"
+                type="text"
+              />
+              <button type="submit" className="spacing-top">บันทึก</button>
+            </form>
+            <div className='tab-item spacing-side'>
+              This is going to be a password change
+            </div>
+          </div>
         </div>
-        <Link className="btn btn-danger" to="/logout">ออกจากระบบ</Link>
+        <div className="tab-footer fixed clearfix spacing-side">
+          <Link to="/logout" className="float-right">
+            <i className="twf twf-sign-out" />
+          </Link>
+        </div>
         <BotNavbar/>
 
         <Portal>

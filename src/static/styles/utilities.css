@@ -15,6 +15,9 @@
 .float-right {
   float: right;
 }
+.align-center {
+  text-align: center;
+}
 .align-right {
   text-align: right;
 }
@@ -44,9 +47,18 @@
   padding-right: 1.5rem;
   padding-left: 1.5rem;
 }
+.spacing-top {
+  margin-top: 1.5rem;
+}
 .pointer {
   cursor: pointer;
 }
 .secondary-bg {
   background-color: var(--secondary-background-color);
+}
+.custom-bg {
+  background-color: var(--custom-background-color);
+}
+.brand-bg {
+  background-color: var(--primary-brand-color);
 }

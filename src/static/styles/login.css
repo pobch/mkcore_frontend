@@ -1,22 +1,11 @@
 .login {
-  position: absolute;
-  width: 100%;
-  min-height: 100%;
   padding-right: 10%;
   padding-left: 10%;
-  background-color: var(--primary-brand-color);
-}
-.login-header {
-  margin-top: 4rem;
-  margin-bottom: 3rem;
-  text-align: center;
-}
-.login-form {
-  text-align: center;
 }
 .login-form input[type=text],
 .login-form input[type=email],
 .login-form input[type=password] {
+  background-color: var(--primary-background-color);
   box-shadow: var(--box-shadow);
 }
 .login-button {

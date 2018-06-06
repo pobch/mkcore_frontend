@@ -34,11 +34,12 @@ class SignUp extends Component {
 
     return (
       <div className="login">
-        <div className="login-header">
+        <div className="wrapper-background fixed brand-bg" />
+        <div className="login-header align-center">
           <img src={icon} width="150" height="150" alt="Icon"/>
         </div>
         <form
-          className="login-form"
+          className="login-form align-center"
           onSubmit={handleSubmit(this.onSubmit)}
         >
           <Field
