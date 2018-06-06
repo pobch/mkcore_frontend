@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 import LogIn from '../containers/login'
-import LogOut from '../containers/logout'
 import GuestRoomsList from '../containers/guest_rooms_list'
 import OwnerRoomsList from '../containers/owner_rooms_list'
 import EditRoom from '../containers/owner_room_edit'
@@ -33,7 +32,6 @@ class App extends Component {
           <Switch>
             <Route exact path="/" render={() => <Redirect to="/guest/rooms"/>} />
             <Route exact path="/login" component={onlyAnonCanAccess(LogIn)} />
-            <Route exact path="/logout" component={onlyUserCanAccess(LogOut)} />
             <Route exact path="/signup" component={onlyAnonCanAccess(SignUp)}/>
             <Route exact path="/guest/rooms" component={onlyUserCanAccess(GuestRoomsList)} />
             <Route exact path="/guest/rooms/:id(\d+)" component={GuestEditRoom}/>
