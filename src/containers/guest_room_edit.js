@@ -5,7 +5,10 @@ import {reduxForm} from 'redux-form'
 
 import GuestAnswer from '../components/guest_formElement_answer'
 
-import {fetchGuestRoom, saveNewAnswer, updateAnswer, fetchAnswer, resetError} from '../actions'
+import {
+  fetchGuestRoom, saveNewAnswer, updateAnswer, 
+  fetchAnswerFromRoomId, resetError
+} from '../actions'
 
 
 class GuestEditRoom extends Component {
@@ -13,7 +16,7 @@ class GuestEditRoom extends Component {
   componentDidMount() {
     window.scrollTo(0,0)
     const roomId = this.props.match.params.id
-    this.props.fetchAnswer(roomId)
+    this.props.fetchAnswerFromRoomId(roomId)
     this.props.fetchGuestRoom(roomId)
   }
 
@@ -29,6 +32,7 @@ class GuestEditRoom extends Component {
         this.props.saveNewAnswer(roomId, values) // POST method
       } else { // click 'Submit' button
         values.submitted_at = new Date()
+        values.submitted = true
         this.props.saveNewAnswer(roomId, values)
         this.props.history.push('/guest/rooms')
       }  
@@ -38,6 +42,7 @@ class GuestEditRoom extends Component {
         this.props.updateAnswer(this.props.rowId, values) // PATCH method
       } else { // click 'Submit' button
         values.submitted_at = new Date()
+        values.submitted = true
         this.props.updateAnswer(this.props.rowId, values)
         this.props.history.push('/guest/rooms')
       }
@@ -85,14 +90,14 @@ function mapStateToProps(state, ownProps) {
   
   // build initialValues
   const {survey} = room
-  const existAnswer = _.find(state.answers, ['room', +ownProps.match.params.id])
-  let answer = []
+  const existAnswerRow = _.find(state.answers, ['room', +ownProps.match.params.id])
+  let answerField = []
   let answerExist = false
   let rowId = null
-  if(existAnswer) { // case: the guest has already answered the survey before.
-    answer = existAnswer.answer
+  if(existAnswerRow) { // case: the guest has already answered the survey before.
+    answerField = existAnswerRow.answer
     answerExist = true
-    rowId = existAnswer.id
+    rowId = existAnswerRow.id
   } else { // case: there is the room's survey and the guest has never answered the survey yet
     survey.forEach((eachQuestion, indx) => {
       const eachAnswer = {
@@ -102,12 +107,12 @@ function mapStateToProps(state, ownProps) {
         answerType: eachQuestion.answerType
       }
       // no initialValues for 'answerText' and 'answerChoice'
-      answer.push(eachAnswer)
+      answerField.push(eachAnswer)
     })
   }
   return {
     survey,
-    initialValues: {answer},
+    initialValues: {answer: answerField},
     answerExist,
     rowId
   }
@@ -115,7 +120,7 @@ function mapStateToProps(state, ownProps) {
 
 export default connect(mapStateToProps, 
   { 
-    fetchGuestRoom, saveNewAnswer, updateAnswer, fetchAnswer, resetError 
+    fetchGuestRoom, saveNewAnswer, updateAnswer, fetchAnswerFromRoomId, resetError 
   })(
     reduxForm({
       form: 'answerForm',

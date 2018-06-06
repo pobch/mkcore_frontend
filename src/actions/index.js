@@ -1,4 +1,5 @@
 import axios from 'axios'
+import _ from 'lodash'
 
 export const SIGN_UP = 'sign_up'
 export const AUTHENTICATED = 'authenticated'
@@ -29,6 +30,7 @@ export const ERROR_IN_GUESTROOMS = 'guestrooms_error_from_api'
 
 export const SUBMIT_ANSWER = 'submit_a_survey_answer'
 export const FETCH_ANSWER = 'fetch_an_existing_answer'
+export const FETCH_MY_ANSWERS = 'fetch_all_answers_of_me'
 export const ERROR_IN_ANSWERS = 'answers_error_from_api'
 
 export const HIDE_COMPONENT = 'hide_this_component'
@@ -216,12 +218,22 @@ export function updateRoom(id, values) {
 
 export function publishRoom(id) {
   return async (dispatch) => {
-    const response = await axios.patch(`${URL_RETRIEVE_UPDATE_OWNROOM}${id}/`, 
-      {
+    const room = await axios.get(`${URL_RETRIEVE_UPDATE_OWNROOM}${id}/`)
+    let response
+    // field 'have_survey_when_published' has a default value == True
+    if( _.isEmpty(room.survey) ) { // {}, [], undefined, null
+      response = await axios.patch(`${URL_RETRIEVE_UPDATE_OWNROOM}${id}/`, {
+          status: 'active', 
+          published_at: new Date(),
+          have_survey_when_published: false 
+      })
+    } else {
+      response = await axios.patch(`${URL_RETRIEVE_UPDATE_OWNROOM}${id}/`, {
         status: 'active', 
-        published_at: new Date()
-      }
-    )
+        published_at: new Date(),
+        have_survey_when_published: true
+      })
+    }
     dispatch({
       type: PUBLISH_OWN_ROOM,
       payload: response
@@ -337,7 +349,7 @@ export function updateAnswer(rowId, values) {
   }
 }
 
-export function fetchAnswer(roomId) {
+export function fetchAnswerFromRoomId(roomId) {
   return async (dispatch) => {
     try {
       const response = await axios.get(`${URL_CREATE_ANSWER}byroomid/${roomId}/`)
@@ -350,6 +362,20 @@ export function fetchAnswer(roomId) {
         type: ERROR_IN_ANSWERS,
         payload: error.response
       })
+    }
+  }
+}
+
+export function fetchAnswersOfMe() {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${URL_CREATE_ANSWER}me/`)
+      dispatch({
+        type: FETCH_MY_ANSWERS,
+        payload: response
+      })
+    } catch (error) {
+      console.log(error)
     }
   }
 }
