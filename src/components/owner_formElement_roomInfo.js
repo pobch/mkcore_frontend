@@ -18,7 +18,7 @@ export default class RoomInfoEdit extends Component {
           ? <input id={field.input.name} className="form-control" type='text' {...field.input} disabled/>
           : field.type === 'textarea'
           ? <textarea id={field.input.name} className="form-control" {...field.input} rows="5" cols="25"/>
-          : <input id={field.input.name} className="form-control" type={field.type} {...field.input}/>
+          : <input id={field.input.name} className="form-control" type={field.type} {...field.input} autocomplete="new-username"/>
         }
       </div>
     )

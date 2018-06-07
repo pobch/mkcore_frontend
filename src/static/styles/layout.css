@@ -29,6 +29,10 @@
 .header + * {
   padding-top: 4.25rem;
 }
+.header button {
+  line-height: inherit;
+  float: right;
+}
 .body {
   padding-bottom: 5.75rem;
 }

@@ -25,6 +25,7 @@ class LogIn extends Component {
           placeholder={ field.placeholder }
           type={ field.type }
           {...field.input}
+          autocomplete="new-username"
         />
       </div>
     )
@@ -48,14 +49,14 @@ class LogIn extends Component {
           { error ? error : (authenticated ? 'Log in successfully' : '') }
         </div>
         <form
-          className="login-form align-center"
+          className="login-form"
           onSubmit={ handleSubmit(this.onSubmit) }
         >
           <Field
             name="email"
             placeholder="อีเมล"
             component={ this.renderField }
-            type="text"
+            type="email"
           />
           <Field
             name="password"
@@ -63,12 +64,14 @@ class LogIn extends Component {
             component={ this.renderField }
             type="password"
           />
-          <button type="submit" className="login-button">
-            <i className="twf twf-arrow-bold-right" />
-          </button>
+          <Link className="brand-contrast" to="/signup">ลืมรหัสผ่าน?</Link>
+          <div className="align-center">
+            <button type="submit" className="login-button">
+              <i className="twf twf-arrow-bold-right" />
+            </button>
+          </div>
         </form>
         <div className="login-footer">
-          <span>ยังไม่มีบัญชี? </span>
           <Link className="brand-contrast" to="/signup">สร้างบัญชีใหม่</Link>
         </div>
       </div>

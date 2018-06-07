@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 import FormProfileInfo from './profile_form_info'
 import FormProfilePassword from './profile_form_password'
 
-import TopTabBar from '../components/topTabBar'
 import BotNavbar from '../components/botNavbar'
 import Portal from '../components/portal'
 import ConfirmModal from '../components/modal_confirm'
@@ -25,28 +24,20 @@ class Profile extends Component {
   render() {
     return (
       <div className="wrapper">
-        <div className="wrapper-background fixed custom-bg" />
-        <div className="header fixed">บัญชีของฉัน</div>
-        <TopTabBar
-          titleTab1="ทั่วไป"
-          titleTab2="รหัสผ่าน"
-        />
-        <div className="tab-content form-minimal">
-          <div className="tab-body">
-            <div className='tab-item spacing-side'>
-              <FormProfileInfo/>
-            </div>
-            <div className='tab-item spacing-side'>
-              <FormProfilePassword/>
-            </div>
-          </div>
-        </div>
-        <div className="tab-footer fixed clearfix spacing-side">
-          <button type="button" 
-            className="float-right"
+        <div className="wrapper-background fixed secondary-bg" />
+        <div className="header fixed spacing-side">
+          บัญชีของฉัน
+          <button
+            type="button"
+            className="float-right plain"
             onClick={() => this.setState({openConfirmLogOutModal: true})}
-          ><i className="twf twf-sign-out" />
+          >
+            <i className="twf twf-sign-out" />
           </button>
+        </div>
+        <div className="body">
+          <FormProfileInfo/>
+          <FormProfilePassword/>
         </div>
         <BotNavbar/>
 

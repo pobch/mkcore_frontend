@@ -6,6 +6,7 @@ import Portal from '../components/portal'
 import SaveCompleteModal from '../components/modal_save_complete'
 
 import {updateProfile} from '../actions'
+import icon from '../static/hello-2.svg'
 
 
 class FormProfileInfo extends Component {
@@ -17,14 +18,14 @@ class FormProfileInfo extends Component {
   renderField = (field) => {
     return (
       <div className={ field.type === 'disabled' ? "form-group disabled" : "form-group" }>
-        { field.meta.touched && field.meta.error ? <span className="feedback invalid anmt-fadein">*{field.meta.error}</span> : '' }
         <label htmlFor={field.input.name}>{field.label}</label>
         { field.type === 'disabled'
           ? <input id={field.input.name} className="form-control" type='text' {...field.input} disabled/>
           : field.type === 'textarea'
           ? <textarea id={field.input.name} className="form-control" {...field.input} rows="5" cols="25"/>
-          : <input id={field.input.name} className="form-control" type={field.type} {...field.input}/>
+          : <input id={field.input.name} className="form-control" type={field.type} {...field.input} autocomplete="new-username"/>
         }
+        { field.meta.touched && field.meta.error ? <span className="feedback invalid anmt-fadein">*{field.meta.error}</span> : '' }
       </div>
     )
   }
@@ -33,36 +34,50 @@ class FormProfileInfo extends Component {
     await this.props.updateProfile(values)
     this.setState({openSaveCompleteModal: true})
   }
-  
+
+  imageUploadClick = () => {
+    console.log('ihar');
+  }
+
   render() {
-    
+
     if(!this.props.profile) {
       return <div>Loading...</div>
     }
 
     const {handleSubmit} = this.props
+    const {imageUploadClick} = this.props
     return (
-      <div>
+      <div className="form-minimal">
         <form onSubmit={handleSubmit(this.onSubmit)}>
-          <Field
-            name='email'
-            component={this.renderField}
-            label="อีเมล"
-            type="disabled"
-          />
-          <Field
-            name='first_name'
-            component={this.renderField}
-            label="ชื่อ"
-            type="text"
-          />
-          <Field
-            name='last_name'
-            component={this.renderField}
-            label="นามสกุล"
-            type="text"
-          />
-          <button type="submit" className="spacing-top">บันทึก</button>
+          <div
+            className="image-upload"
+            onClick={() => {this.imageUploadClick()}}
+          >
+            <img src={icon} width="150" height="150" alt="Icon"/>
+          </div>
+          <div className="spacing-cover">
+            <h3>ข้อมูลส่วนตัว</h3>
+            <Field
+              name='email'
+              component={this.renderField}
+              label="อีเมล"
+              type="disabled"
+            />
+            <Field
+              name='first_name'
+              component={this.renderField}
+              label="ชื่อ"
+              type="text"
+            />
+            <Field
+              name='last_name'
+              component={this.renderField}
+              label="นามสกุล"
+              type="text"
+            />
+            <button type="submit" className="spacing-top">บันทึก</button>
+          </div>
         </form>
 
         <Portal>

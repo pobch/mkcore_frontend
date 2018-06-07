@@ -1,6 +1,7 @@
 .navbar {
   bottom: 0;
-  background-color: var(--secondary-background-color);
+  border-top: 1px solid var(--border-color);
+  background-color: var(--primary-background-color);
 }
 .navbar-item {
   display: table;

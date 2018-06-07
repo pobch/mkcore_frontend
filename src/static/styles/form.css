@@ -15,6 +15,8 @@
 }
 .form-minimal .form-group .feedback {
   display: block;
+  position: relative;
+  left: 8.5em;
   width: 100%;
   margin: 0;
   padding: 0 1.5em;
@@ -64,4 +66,15 @@
   width: 3em;
   padding: 1.5em 0;
   text-align: right;
+}
+.image-upload {
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: var(--primary-background-color);
+}
+.image-upload img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
 }

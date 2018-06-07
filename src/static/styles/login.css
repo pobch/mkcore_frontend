@@ -8,6 +8,10 @@
   background-color: var(--primary-background-color);
   box-shadow: var(--box-shadow);
 }
+.login-header {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
 .login-button {
   width: 2.8em;
   height: 2.8em;

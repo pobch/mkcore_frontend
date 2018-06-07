@@ -27,14 +27,14 @@ class FormProfilePassword extends Component {
     }
     return (
       <div className={ field.type === 'disabled' ? "form-group disabled" : "form-group" }>
-        { field.meta.touched && error ? <span className="feedback invalid anmt-fadein">*{error}</span> : '' }
         <label htmlFor={field.input.name}>{field.label}</label>
         { field.type === 'disabled'
           ? <input id={field.input.name} className="form-control" type='text' {...field.input} disabled/>
           : field.type === 'textarea'
           ? <textarea id={field.input.name} className="form-control" {...field.input} rows="5" cols="25"/>
-          : <input id={field.input.name} className="form-control" type={field.type} {...field.input}/>
+          : <input id={field.input.name} className="form-control" type={field.type} {...field.input} autocomplete="new-username"/>
         }
+        { field.meta.touched && error ? <span className="feedback invalid anmt-fadein">*{error}</span> : '' }
       </div>
     )
   }
@@ -49,22 +49,23 @@ class FormProfilePassword extends Component {
     }
     
   }
-  
+
   render() {
     const {handleSubmit} = this.props
     return (
-      <div>
-        <form onSubmit={handleSubmit(this.onSubmit)}>
+      <div className="form-minimal">
+        <form className="spacing-cover" onSubmit={handleSubmit(this.onSubmit)}>
+          <h3>แก้ไขรหัสผ่าน</h3>
           <Field
             name='password'
             component={this.renderField}
-            label="New Password"
+            label="รหัสผ่านใหม่"
             type="password"
           />
           <Field
             name='password2'
             component={this.renderField}
-            label="Re-enter New Password"
+            label="ยืนยันรหัสผ่าน"
             type="password"
           />
           <button type="submit" className="spacing-top">บันทึก</button>
@@ -86,7 +87,7 @@ class FormProfilePassword extends Component {
 function validate(values) {
   const errors = {}
   if(!values['password']) {
-    errors.password = 'New Password cannot be blank'
+    errors.password = 'กรุณากรอกรหัสผ่านใหม่'
   }
   if(values['password'] !== values['password2']) {
     errors.password2 = 'รหัสผ่านไม่ตรงกัน'
