@@ -15,9 +15,19 @@ class FormProfilePassword extends Component {
   }
 
   renderField = (field) => {
+    let { error } = field.meta
+    if(Array.isArray(error)) {
+      error = (
+        <ul>
+          { error.map((v,i) => 
+            <li key={i}>{v}</li>
+          )}
+        </ul>
+      )
+    }
     return (
       <div className={ field.type === 'disabled' ? "form-group disabled" : "form-group" }>
-        { field.meta.touched && field.meta.error ? <span className="feedback invalid anmt-fadein">*{field.meta.error}</span> : '' }
+        { field.meta.touched && error ? <span className="feedback invalid anmt-fadein">*{error}</span> : '' }
         <label htmlFor={field.input.name}>{field.label}</label>
         { field.type === 'disabled'
           ? <input id={field.input.name} className="form-control" type='text' {...field.input} disabled/>
@@ -30,8 +40,14 @@ class FormProfilePassword extends Component {
   }
 
   onSubmit = async (values) => {
-    await this.props.updateProfile(values)
-    this.setState({openSaveCompleteModal: true})
+    try {
+      await this.props.updateProfile(values)
+      this.setState({openSaveCompleteModal: true})
+      this.props.reset()  
+    } catch(error) {
+
+    }
+    
   }
   
   render() {
