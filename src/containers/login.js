@@ -25,7 +25,7 @@ class LogIn extends Component {
           placeholder={ field.placeholder }
           type={ field.type }
           {...field.input}
-          autocomplete="new-username"
+          autoComplete="new-username"
         />
       </div>
     )

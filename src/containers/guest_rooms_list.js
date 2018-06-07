@@ -186,15 +186,12 @@ class GuestRoomsList extends Component {
 
 function mapStateToProps(state) {
   
-  let roomIdsOfNotYetSubmitAns = []
   let roomIdsOfSubmittedAns = []
   
   // state.answers is object type
   _.forEach(state.answers, (value) => {
     if(value.submitted) {
       roomIdsOfSubmittedAns.push({roomId: +value.room, submitDate: new Date(value.submitted_at)})
-    } else {
-      roomIdsOfNotYetSubmitAns.push(+value.room)
     }
   })
 
@@ -214,7 +211,7 @@ function mapStateToProps(state) {
       guestRoomsWithoutSurvey.push(room)
     } else if(_.includes(sorted, +room.id)) {
       guestRoomsSubmittedAns.push(room)
-    } else if(_.includes(roomIdsOfNotYetSubmitAns, +room.id)) {
+    } else { // rooms that no relation with answer (just joined) + rooms that have saved answer but not submitted
       guestRoomsNotYetSubmitAns.push(room)
     }
   })

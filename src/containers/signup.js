@@ -19,7 +19,7 @@ class SignUp extends Component {
         await this.props.signUpAction(values, () => { this.props.history.push('/') })
       } catch(error) {
         this.setState({sendingRegisterForm: false})
-        return Promise.reject(new SubmissionError(error.response.data))
+        throw new SubmissionError(error.response.data)
       }
   }
 

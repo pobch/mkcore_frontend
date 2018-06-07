@@ -398,15 +398,18 @@ export function fetchProfile() {
 export function updateProfile(values) {
   return async (dispatch) => {
     const user_id = localStorage.getItem('user_id')
-    try {
+    // try {
       const response = await axios.patch(`${URL_RETRIEVE_UPDATE_PROFILE}${user_id}/`, values)
       dispatch({
         type: UPDATE_PROFILE,
         payload: response
       })
 
-    } catch(error) {
-      console.log(error)
-    }
+    // } catch(error) {
+    //   // dispatch({
+    //   //   ...
+    //   // })
+    //   throw error // to a parent async func in a container who calls this func
+    // }
   }
 }

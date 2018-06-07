@@ -23,7 +23,7 @@ class FormProfileInfo extends Component {
           ? <input id={field.input.name} className="form-control" type='text' {...field.input} disabled/>
           : field.type === 'textarea'
           ? <textarea id={field.input.name} className="form-control" {...field.input} rows="5" cols="25"/>
-          : <input id={field.input.name} className="form-control" type={field.type} {...field.input} autocomplete="new-username"/>
+          : <input id={field.input.name} className="form-control" type={field.type} {...field.input} autoComplete="new-username"/>
         }
         { field.meta.touched && field.meta.error ? <span className="feedback invalid anmt-fadein">*{field.meta.error}</span> : '' }
       </div>

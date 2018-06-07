@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {reduxForm, Field} from 'redux-form'
+import {reduxForm, Field, SubmissionError} from 'redux-form'
 
 import Portal from '../components/portal'
 import SaveCompleteModal from '../components/modal_save_complete'
@@ -32,9 +32,9 @@ class FormProfilePassword extends Component {
           ? <input id={field.input.name} className="form-control" type='text' {...field.input} disabled/>
           : field.type === 'textarea'
           ? <textarea id={field.input.name} className="form-control" {...field.input} rows="5" cols="25"/>
-          : <input id={field.input.name} className="form-control" type={field.type} {...field.input} autocomplete="new-username"/>
+          : <input id={field.input.name} className="form-control" type={field.type} {...field.input} autoComplete="new-username"/>
         }
-        { field.meta.touched && error ? <span className="feedback invalid anmt-fadein">*{error}</span> : '' }
+        { field.meta.touched && error ? <span className="feedback invalid anmt-fadein">{error}</span> : '' }
       </div>
     )
   }
@@ -45,7 +45,7 @@ class FormProfilePassword extends Component {
       this.setState({openSaveCompleteModal: true})
       this.props.reset()  
     } catch(error) {
-
+      throw new SubmissionError(error.response.data)
     }
     
   }
