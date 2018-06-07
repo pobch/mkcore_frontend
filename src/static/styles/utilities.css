@@ -56,9 +56,6 @@
 .secondary-bg {
   background-color: var(--secondary-background-color);
 }
-.custom-bg {
-  background-color: var(--custom-background-color);
-}
 .brand-bg {
   background-color: var(--primary-brand-color);
 }

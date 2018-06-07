@@ -16,15 +16,15 @@ class SignUp extends Component {
     const { touched, error } = props.meta
     return (
       <div className="form-group">
-        <div className="feedback invalid">
-          { touched && error ? error : null}
-        </div>
         <input
           className={touched && error ? 'form-control invalid' : 'form-control'}
           placeholder={ props.placeholder }
           type={ props.type }
           {...props.input}
         />
+        <div className="feedback invalid">
+          { touched && error ? error : null}
+        </div>
       </div>
     )
   }
@@ -81,7 +81,8 @@ class SignUp extends Component {
             <i className="twf twf-arrow-bold-right" />
           </button>
           <div className="login-footer">
-            <Link to="/" className="brand-contrast">ย้อนกลับ</Link>
+            <span>เป็นสมาชิกแล้ว? </span>
+            <Link to="/" className="brand-contrast">เข้าสู่ระบบ</Link>
           </div>
         </form>
       </div>
