@@ -8,6 +8,7 @@ import { fetchJoinReqsOfOwnRoom, acceptJoinReq, denyJoinReq, RESET_JOINREQS_LIST
 
 class ViewJoinReqs extends Component {
   componentDidMount() {
+    window.scrollTo(0,0)
     const {id} = this.props.match.params
     this.props.fetchJoinReqsOfOwnRoom(id)
   }

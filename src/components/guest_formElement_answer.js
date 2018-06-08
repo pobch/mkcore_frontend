@@ -65,11 +65,11 @@ export default class GuestAnswer extends Component {
         />
 
         <div style={{color:'red'}}>
-          <i>You can submit the answers only once</i>
+          <i>When you answered all questions, click 'Finish'</i>
         </div>
         
         <button type="button" onClick={this.props.onClickSave}>Save</button>
-        <button type="submit" className="btn btn-primary">Submit</button>
+        <button type="submit" className="btn btn-primary">Finish</button>
         <Link to="/guest/rooms" className="btn btn-danger">Cancel</Link>
 
       </div>
