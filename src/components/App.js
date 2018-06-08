@@ -16,14 +16,8 @@ import OwnerViewRoom from '../containers/owner_room_view'
 import onlyUserCanAccess from '../hoc/only_user_can_access'
 import onlyAnonCanAccess from '../hoc/only_anon_can_access'
 
+import NotFound from '../components/notfound'
 
-function NotFound(props) {
-  return (
-    <div>
-      <h5>Not Found Page</h5>
-    </div>
-  )
-}
 
 class App extends Component {
   render() {
