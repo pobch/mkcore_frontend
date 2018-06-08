@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 
 import TopTabBar from '../components/topTabBar'
 import ViewRoomInfo from '../components/room_view_info'
-import ViewRoomSurvey from '../components/room_view_survey'
+import ViewRoomSurvey from '../components/room_view_survey1'
 import Loading from '../components/loading'
 
 import {fetchOwnRoom} from '../actions'

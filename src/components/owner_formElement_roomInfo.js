@@ -32,7 +32,7 @@ export default class RoomInfoEdit extends Component {
           onChange={onChange} 
           value={value ? new Date(value) : null} 
           inputProps={{
-            component: props => <input {...props} readOnly />
+            component: props => <input {...props} readOnly /> // To disable mobile keyboard
           }}/>
       </div>
     )
