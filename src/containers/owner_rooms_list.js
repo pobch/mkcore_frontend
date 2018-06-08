@@ -2,6 +2,7 @@ import _ from 'lodash'
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
+import dateFormat from 'dateformat'
 
 import Portal from '../components/portal'
 import ConfirmModal from '../components/modal_confirm'
@@ -62,12 +63,15 @@ class OwnerRoomsList extends Component {
   renderDraftRooms = (draftRooms) => {
     return _.map(draftRooms, (room) => {
       return (
-        <li className="list-item clearfix spacing-side anmt-fadein pointer" key={room.id} onClick={() => this.props.history.push(`/owner/rooms/${room.id}`)}>
+        <li className="list-item clearfix spacing-side anmt-fadein pointer" 
+          key={room.id} 
+          onClick={() => this.props.history.push(`/owner/rooms/${room.id}`)}
+        >
           <div className="float-left col-7">
             <h3>{room.title}</h3>
             <div className="list-item-meta">
               {room.room_code}
-              {room.start_at ? ` -- ${room.start_at}` : null}
+              {room.start_at ? ` -- ${dateFormat(new Date(room.start_at), 'dd/mm/yy, h:MMTT')}` : null}
             </div>
           </div>
           <div className="float-right align-right col-3 inline-child">
@@ -94,12 +98,15 @@ class OwnerRoomsList extends Component {
   renderPublishedRooms = (publishedRooms) => {
     return _.map(publishedRooms, (room) => {
       return (
-        <li className="list-item clearfix spacing-side pointer" key={room.id} onClick={() => this.props.history.push(`/owner/rooms/${room.id}/view`)}>
+        <li className="list-item clearfix spacing-side pointer" 
+          key={room.id} 
+          onClick={() => this.props.history.push(`/owner/rooms/${room.id}/view`)}
+        >
           <div className="float-left">
             <h3>{room.title}</h3>
             <div className="list-item-meta">
               {room.room_code}
-              {room.start_at ? ` -- ${room.start_at}` : null}
+              {room.start_at ? ` -- ${dateFormat(new Date(room.start_at), 'dd/mm/yy, h:MMTT')}` : null}
             </div>
           </div>
 

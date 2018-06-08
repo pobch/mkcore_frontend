@@ -11,6 +11,7 @@ import GuestViewRoom from '../containers/guest_room_view'
 import ViewJoinReqs from '../containers/owner_join_reqs'
 import Profile from '../containers/profile'
 import CreateRoom from '../containers/owner_room_create'
+import OwnerViewRoom from '../containers/owner_room_view'
 
 import onlyUserCanAccess from '../hoc/only_user_can_access'
 import onlyAnonCanAccess from '../hoc/only_anon_can_access'
@@ -40,6 +41,7 @@ class App extends Component {
             <Route exact path="/owner/rooms" component={onlyUserCanAccess(OwnerRoomsList)}/>
             <Route exact path="/owner/rooms/create" component={CreateRoom}/>
             <Route exact path="/owner/rooms/:id(\d+)" component={EditRoom} />
+            <Route exact path="/owner/rooms/:id(\d+)/view" component={OwnerViewRoom}/>
             <Route exact path="/owner/rooms/:id(\d+)/joinreqs" component={ViewJoinReqs}/>
             <Route exact path="/profile" component={onlyUserCanAccess(Profile)}/>
             <Route component={NotFound} />

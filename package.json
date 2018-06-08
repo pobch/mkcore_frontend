@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "dateformat": "^3.0.3",
     "env-cmd": "^8.0.2",
     "lodash": "^4.17.5",
     "moment": "^2.22.1",
