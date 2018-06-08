@@ -4,9 +4,10 @@ import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
 
 import GuestAnswer from '../components/guest_formElement_answer'
+import Loading from '../components/loading'
 
 import {
-  fetchGuestRoom, saveNewAnswer, updateAnswer, 
+  fetchGuestRoom, saveNewAnswer, updateAnswer,
   fetchAnswerFromRoomId, resetError
 } from '../actions'
 
@@ -23,7 +24,7 @@ class GuestEditRoom extends Component {
   componentWillUnmount() {
     this.props.resetError()
   }
-  
+
   onSubmit = (values) => {
     const roomId = this.props.match.params.id
     if(!this.props.answerExist) { // use POST method to create new row
@@ -35,7 +36,7 @@ class GuestEditRoom extends Component {
         values.submitted = true
         this.props.saveNewAnswer(roomId, values)
         this.props.history.push('/guest/rooms')
-      }  
+      }
     } else { // use PATCH method to update existing row
       if(values.fromSaveButton) { // click 'Save' button
         delete values.fromSaveButton
@@ -51,7 +52,7 @@ class GuestEditRoom extends Component {
 
   render() {
     if(!this.props.survey) {
-      return <div>Loading...</div>
+      return <Loading />
     }
 
     const { handleSubmit } = this.props
@@ -66,7 +67,7 @@ class GuestEditRoom extends Component {
             survey={this.props.survey}
             onClickSave={
               handleSubmit(values => {
-                this.onSubmit({ 
+                this.onSubmit({
                   ...values,
                   fromSaveButton: true
                 })
@@ -87,7 +88,7 @@ function mapStateToProps(state, ownProps) {
       survey: null
     }
   }
-  
+
   // build initialValues
   const {survey} = room
   const existAnswerRow = _.find(state.answers, ['room', +ownProps.match.params.id])
@@ -118,9 +119,9 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-export default connect(mapStateToProps, 
-  { 
-    fetchGuestRoom, saveNewAnswer, updateAnswer, fetchAnswerFromRoomId, resetError 
+export default connect(mapStateToProps,
+  {
+    fetchGuestRoom, saveNewAnswer, updateAnswer, fetchAnswerFromRoomId, resetError
   })(
     reduxForm({
       form: 'answerForm',

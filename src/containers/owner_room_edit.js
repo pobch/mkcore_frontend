@@ -9,6 +9,7 @@ import RoomInfoEdit from '../components/owner_formElement_roomInfo'
 import SurveyEdit from '../components/owner_formElement_survey1'
 import Portal from '../components/portal'
 import SaveCompleteModal from '../components/modal_save_complete'
+import Loading from '../components/loading'
 
 import {fetchOwnRoom, updateRoom} from '../actions'
 
@@ -43,7 +44,7 @@ class EditRoom extends Component {
 
   render() {
     if(!this.props.room) { // initial state
-      return <div>Loading...</div>
+      return <Loading />
     }
 
     if(this.props.room.detail) { // there is an error msg
@@ -104,8 +105,8 @@ function mapStateToProps(state, ownProps) {
   }
   return {
     room: roomData,
-    initialValues: _.pick(roomData, ['title', 'description', 'room_code', 
-      'room_password', 'instructor_name', 'survey', 'start_at', 'end_at', 'image_url' 
+    initialValues: _.pick(roomData, ['title', 'description', 'room_code',
+      'room_password', 'instructor_name', 'survey', 'start_at', 'end_at', 'image_url'
     ])
   }
 }

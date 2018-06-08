@@ -4,6 +4,7 @@ import {reduxForm, Field} from 'redux-form'
 
 import Portal from '../components/portal'
 import SaveCompleteModal from '../components/modal_save_complete'
+import Loading from '../components/loading'
 
 import {updateProfile} from '../actions'
 import icon from '../static/hello-2.svg'
@@ -23,7 +24,7 @@ class FormProfileInfo extends Component {
           ? <input id={field.input.name} className="form-control" type='text' {...field.input} disabled/>
           : field.type === 'textarea'
           ? <textarea id={field.input.name} className="form-control" {...field.input} rows="5" cols="25"/>
-          : <input id={field.input.name} className="form-control" type={field.type} {...field.input} autoComplete="new-username"/>
+          : <input id={field.input.name} className="form-control" type={field.type} {...field.input} autoComplete="off"/>
         }
         { field.meta.touched && field.meta.error ? <span className="feedback invalid anmt-fadein">*{field.meta.error}</span> : '' }
       </div>
@@ -42,7 +43,7 @@ class FormProfileInfo extends Component {
   render() {
 
     if(!this.props.profile) {
-      return <div>Loading...</div>
+      return <Loading />
     }
 
     const {handleSubmit} = this.props

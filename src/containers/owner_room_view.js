@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import TopTabBar from '../components/topTabBar'
 import ViewRoomInfo from '../components/room_view_info'
 import ViewRoomSurvey from '../components/room_view_survey'
+import Loading from '../components/loading'
 
 import {fetchOwnRoom} from '../actions'
 
@@ -18,9 +19,9 @@ class OwnerViewRoom extends Component {
   }
 
   render() {
-    
+
     if(!this.props.room) {
-      return <div>Loading...</div>
+      return <Loading />
     }
 
     return (

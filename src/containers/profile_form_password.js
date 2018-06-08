@@ -19,7 +19,7 @@ class FormProfilePassword extends Component {
     if(Array.isArray(error)) {
       error = (
         <ul>
-          { error.map((v,i) => 
+          { error.map((v,i) =>
             <li key={i}>{v}</li>
           )}
         </ul>
@@ -32,7 +32,7 @@ class FormProfilePassword extends Component {
           ? <input id={field.input.name} className="form-control" type='text' {...field.input} disabled/>
           : field.type === 'textarea'
           ? <textarea id={field.input.name} className="form-control" {...field.input} rows="5" cols="25"/>
-          : <input id={field.input.name} className="form-control" type={field.type} {...field.input} autoComplete="new-username"/>
+          : <input id={field.input.name} className="form-control" type={field.type} {...field.input} autoComplete="off"/>
         }
         { field.meta.touched && error ? <span className="feedback invalid anmt-fadein">{error}</span> : '' }
       </div>
@@ -43,11 +43,11 @@ class FormProfilePassword extends Component {
     try {
       await this.props.updateProfile(values)
       this.setState({openSaveCompleteModal: true})
-      this.props.reset()  
+      this.props.reset()
     } catch(error) {
       throw new SubmissionError(error.response.data)
     }
-    
+
   }
 
   render() {

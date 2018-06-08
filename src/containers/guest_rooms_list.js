@@ -2,7 +2,7 @@ import _ from 'lodash'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { 
+import {
   fetchGuestRooms, fetchPendingRooms, denyJoinReq, resetError, leaveRoom,
   fetchAnswersOfMe
 } from '../actions'
@@ -14,8 +14,8 @@ import BotNavbar from '../components/botNavbar'
 import JoinRoom from '../containers/guest_join_room'
 
 
-class GuestRoomsList extends Component {  
-  state = { 
+class GuestRoomsList extends Component {
+  state = {
     leaveRoomConfirmPopup: false,
     leaveRoomId: null
   }
@@ -44,12 +44,12 @@ class GuestRoomsList extends Component {
     this.props.leaveRoom(id)
     this.closeModal()
   }
-      
+
   renderGuestRoomsEditable = (guestRooms) => {
     return _.map(guestRooms, (room) => {
       return (
         <li style={{marginBottom: '5px'}} key={room.id}>
-          <button type="button" 
+          <button type="button"
             onClick={() => {this.openConfirmLeaveRoomModal(room.id)}}
             className="btn btn-danger btn-sm"
           >Leave
@@ -68,7 +68,7 @@ class GuestRoomsList extends Component {
     return _.map(guestRooms, (room) => {
       return (
         <li style={{marginBottom: '5px'}} key={room.id}>
-          <button type="button" 
+          <button type="button"
             onClick={() => {this.openConfirmLeaveRoomModal(room.id)}}
             className="btn btn-danger btn-sm"
           >Leave
@@ -105,12 +105,10 @@ class GuestRoomsList extends Component {
     // if(_.isEmpty(this.props.ownRooms)) {
     //   return <div>Loading...</div>
     // }
-    
+
     return (
       <div>
         <h5>Guest Rooms Page</h5>
-        (Please wait about 5 sec for Heroku's services starting from sleep mode)
-
         <div className="card bg-light">
           <div className="card-body">
 
@@ -128,7 +126,7 @@ class GuestRoomsList extends Component {
             <ul>
               { _.isEmpty(this.props.roomsSubmittedAnsOrWithoutSurvey) ?
                 <i style={{color: 'grey'}}>[ Empty ]</i> :
-                this.renderGuestRoomsViewOnly(this.props.roomsSubmittedAnsOrWithoutSurvey) 
+                this.renderGuestRoomsViewOnly(this.props.roomsSubmittedAnsOrWithoutSurvey)
               }
             </ul>
 
@@ -143,7 +141,7 @@ class GuestRoomsList extends Component {
         </div>
 
         <ul>
-          { typeof this.props.errors === 'string' 
+          { typeof this.props.errors === 'string'
             ? <li>{this.props.errors}</li>
             : _.map(this.props.errors, (value,key) => {
               if(key === 'detail') {
@@ -166,7 +164,7 @@ class GuestRoomsList extends Component {
         </ul>
 
         <BotNavbar/>
-          
+
         <Portal>
           {/* Confirm Leave Room Modal */}
           <ConfirmModal
@@ -185,9 +183,9 @@ class GuestRoomsList extends Component {
 }
 
 function mapStateToProps(state) {
-  
+
   let roomIdsOfSubmittedAns = []
-  
+
   // state.answers is object type
   _.forEach(state.answers, (value) => {
     if(value.submitted) {
@@ -199,12 +197,12 @@ function mapStateToProps(state) {
   const sorted = roomIdsOfSubmittedAns
     .sort((a,b) => b.submitDate - a.submitDate)
     .map((value) => value.roomId)
-  
+
   // construct 3 main arrays
   let guestRoomsNotYetSubmitAns = []
   let guestRoomsSubmittedAns = []
   let guestRoomsWithoutSurvey = []
-  
+
   // state.guestRooms is array type which is already sorted by accept_date
   state.guestRooms.forEach((room) => {
     if(!room.have_survey_when_published) {
@@ -215,10 +213,10 @@ function mapStateToProps(state) {
       guestRoomsNotYetSubmitAns.push(room)
     }
   })
-  
+
   // sort rooms which have a submitted ans according to 'roomIdsOfSubmittedAns'
   guestRoomsSubmittedAns.sort((a,b) => sorted.indexOf(+a.id) - sorted.indexOf(+b.id))
-  
+
   return {
     roomsNotYetSubmitAns: guestRoomsNotYetSubmitAns,
     roomsSubmittedAnsOrWithoutSurvey: guestRoomsSubmittedAns.concat(guestRoomsWithoutSurvey),

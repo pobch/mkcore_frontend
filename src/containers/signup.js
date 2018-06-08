@@ -3,6 +3,8 @@ import { reduxForm, Field, SubmissionError } from 'redux-form'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
+import Loading from '../components/loading'
+
 import { signUpAction } from '../actions'
 import icon from '../static/hello-2.svg'
 
@@ -29,7 +31,7 @@ class SignUp extends Component {
     if(Array.isArray(error)) {
       error = (
         <ul>
-          { error.map((v,i) => 
+          { error.map((v,i) =>
             <li key={i}>{v}</li>
           )}
         </ul>
@@ -52,7 +54,7 @@ class SignUp extends Component {
 
   render() {
     if(this.state.sendingRegisterForm) {
-      return <div>Loading...</div>
+      return <Loading />
     }
 
     const { handleSubmit, error } = this.props
