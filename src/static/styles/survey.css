@@ -19,5 +19,9 @@
   margin-top: 0;
 }
 .choice-item {
+  border-bottom: 1px solid var(--border-color);
   background-color: var(--secondary-background-color);
+}
+.choice-item:last-child {
+  border-bottom: none;
 }

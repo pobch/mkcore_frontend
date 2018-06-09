@@ -6,6 +6,10 @@
   display: block;
   margin-bottom: 0.25em;
 }
+.form-group-spacing {
+  width: 100%;
+  padding: 1.5em;
+}
 .form-minimal .form-group {
   margin-bottom: 2px;
   background-color: var(--primary-background-color);

@@ -41,7 +41,7 @@ class EachQuestion extends Component {
 
   renderChoiceField = ({fields}) => {
     return (
-      <div className="surver-choice">
+      <div className="survey-choice">
         <button
           type="button"
           className="choice-add iconize anmt-fadein"
