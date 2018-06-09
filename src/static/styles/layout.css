@@ -76,6 +76,9 @@
   text-align: center;
   color: var(--secondary-text-color);
 }
+.list-item.error {
+  color: var(--fail-color);
+}
 .list-item-meta {
   font-size: 0.9em;
   color: var(--secondary-text-color);

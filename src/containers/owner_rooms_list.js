@@ -63,8 +63,8 @@ class OwnerRoomsList extends Component {
   renderDraftRooms = (draftRooms) => {
     return _.map(draftRooms, (room) => {
       return (
-        <li className="list-item clearfix spacing-side anmt-fadein pointer" 
-          key={room.id} 
+        <li className="list-item clearfix spacing-side anmt-fadein pointer"
+          key={room.id}
           onClick={() => this.props.history.push(`/owner/rooms/${room.id}`)}
         >
           <div className="float-left col-7">
@@ -98,8 +98,8 @@ class OwnerRoomsList extends Component {
   renderPublishedRooms = (publishedRooms) => {
     return _.map(publishedRooms, (room) => {
       return (
-        <li className="list-item clearfix spacing-side pointer" 
-          key={room.id} 
+        <li className="list-item clearfix spacing-side pointer"
+          key={room.id}
           onClick={() => this.props.history.push(`/owner/rooms/${room.id}/view`)}
         >
           <div className="float-left">

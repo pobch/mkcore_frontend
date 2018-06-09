@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import dateFormat from 'dateformat'
 
 import {
   fetchGuestRooms, fetchPendingRooms, denyJoinReq, resetError, leaveRoom,
@@ -36,7 +37,9 @@ class GuestRoomsList extends Component {
     this.setState({ leaveRoomConfirmPopup: false, leaveRoomId: null})
   }
 
-  openConfirmLeaveRoomModal = (id) => {
+  openConfirmLeaveRoomModal = (e, id) => {
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
     this.setState({leaveRoomConfirmPopup: true, leaveRoomId: id})
   }
 
@@ -48,17 +51,26 @@ class GuestRoomsList extends Component {
   renderGuestRoomsEditable = (guestRooms) => {
     return _.map(guestRooms, (room) => {
       return (
-        <li style={{marginBottom: '5px'}} key={room.id}>
-          <button type="button"
-            onClick={() => {this.openConfirmLeaveRoomModal(room.id)}}
-            className="btn btn-danger btn-sm"
-          >Leave
-          </button>
-          <div style={{color: 'grey'}}
-            onClick={() => {this.props.history.push(`/guest/rooms/${room.id}`)}}
-          >Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
+        <li
+          className="list-item clearfix spacing-side anmt-fadein pointer"
+          key={room.id}
+          onClick={() => {this.props.history.push(`/guest/rooms/${room.id}`)}}
+        >
+          <div className="float-left col-7">
+            <h3>{room.title}</h3>
+            <div className="list-item-meta">
+              {room.room_code}
+              {room.start_at ? ` -- ${dateFormat(new Date(room.start_at), 'dd/mm/yy, h:MMTT')}` : null}
+            </div>
           </div>
-          <hr/>
+          <div className="float-right align-right col-3">
+            <button type="button"
+              onClick={(e) => {this.openConfirmLeaveRoomModal(e, room.id)}}
+              className="iconize delete"
+            >
+              <i className="twf twf-sign-out" />
+            </button>
+          </div>
         </li>
       )
     })
@@ -67,17 +79,26 @@ class GuestRoomsList extends Component {
   renderGuestRoomsViewOnly = (guestRooms) => {
     return _.map(guestRooms, (room) => {
       return (
-        <li style={{marginBottom: '5px'}} key={room.id}>
-          <button type="button"
-            onClick={() => {this.openConfirmLeaveRoomModal(room.id)}}
-            className="btn btn-danger btn-sm"
-          >Leave
-          </button>
-          <div style={{color: 'grey'}}
-            onClick={() => {this.props.history.push(`/guest/rooms/${room.id}/view`)}}
-          >Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{room.title}</b> (id : {room.id})
+        <li
+          className="list-item clearfix spacing-side anmt-fadein pointer"
+          key={room.id}
+          onClick={() => {this.props.history.push(`/guest/rooms/${room.id}/view`)}}
+        >
+          <div className="float-left col-7">
+            <h3>{room.title}</h3>
+            <div className="list-item-meta">
+              {room.room_code}
+              {room.start_at ? ` -- ${dateFormat(new Date(room.start_at), 'dd/mm/yy, h:MMTT')}` : null}
+            </div>
           </div>
-          <hr/>
+          <div className="float-right align-right col-3">
+            <button type="button"
+              onClick={(e) => {this.openConfirmLeaveRoomModal(e, room.id)}}
+              className="iconize delete"
+            >
+              <i className="twf twf-sign-out" />
+            </button>
+          </div>
         </li>
       )
     })
@@ -86,74 +107,84 @@ class GuestRoomsList extends Component {
   renderPendingRooms = (pendingInfo) => {
     return _.map(pendingInfo, (info) => {
       return (
-        <li key={info.id}>
-          <div style={{color: 'grey'}}>
-            Title : <b style={{color: 'black', fontSize: '1.2rem'}}>{info.room_title}</b> (id : {info.room})
-            <button type="button" className="btn btn-secondary btn-sm mx-2"
+        <li
+          className="list-item clearfix spacing-side anmt-fadein pointer"
+          key={info.id}
+        >
+          <div className="float-left col-7">
+            <h3>{info.room_title}</h3>
+            <div className="list-item-meta">
+              {info.room}
+            </div>
+          </div>
+          <div className="float-right align-right col-3">
+            <button type="button"
               onClick={() => {this.props.denyJoinReq(info.id)}}>
-            Cancel Request
+              className="iconize delete"
+            >
+              <i className="twf twf-times" />
             </button>
           </div>
-          <hr/>
         </li>
       )
     })
   }
 
   render() {
-    // No need to check empty state bcoz lodash _.map() will return [] when the first argument is {}, []
-    // if(_.isEmpty(this.props.ownRooms)) {
-    //   return <div>Loading...</div>
-    // }
-
     return (
-      <div>
-        <h5>Guest Rooms Page</h5>
-        <div className="card bg-light">
-          <div className="card-body">
-
+      <div className="wrapper">
+        <div className="wrapper-background fixed" />
+        <div className="header fixed">หน้าแรก</div>
+        <div className="body">
+          <div className="body-header spacing-side">
             <JoinRoom/>
-
-            <h5 className="breadcrumb my-3">Joined Room (Not Answered)</h5>
-            <ul>
+          </div>
+          <div className="body-content">
+            <div className="list-title spacing-side">รอการยืนยัน</div>
+            <ul className="list-body">
+              { _.isEmpty(this.props.pendingRoomsInfo) ?
+                <li className="list-item empty">ไม่มีห้องที่รอยืนยัน</li> :
+                this.renderPendingRooms(this.props.pendingRoomsInfo)
+              }
+            </ul>
+            <div className="list-title spacing-side">ยังไม่ตอบแบบสอบถาม</div>
+            <ul className="list-body">
               { _.isEmpty(this.props.roomsNotYetSubmitAns) ?
-                <i style={{color: 'grey'}}>[ Empty ]</i> :
+                <li className="list-item empty">ไม่มีห้องที่ยังไม่ตอบแบบสอบถาม</li> :
                 this.renderGuestRoomsEditable(this.props.roomsNotYetSubmitAns)
               }
             </ul>
-
-            <h5 className="breadcrumb my-3">Joined Room (Answered or No Survey)</h5>
-            <ul>
+            <div className="list-title spacing-side">ห้องที่เคยเข้าร่วม</div>
+            <ul className="list-body">
               { _.isEmpty(this.props.roomsSubmittedAnsOrWithoutSurvey) ?
-                <i style={{color: 'grey'}}>[ Empty ]</i> :
+                <li className="list-item empty">ไม่มีห้องที่เคยเข้าร่วม</li> :
                 this.renderGuestRoomsViewOnly(this.props.roomsSubmittedAnsOrWithoutSurvey)
-              }
-            </ul>
-
-            <h5 className="breadcrumb my-3">Pending Rooms</h5>
-            <ul>
-              { _.isEmpty(this.props.pendingRoomsInfo) ?
-                <i style={{color: 'grey'}}>[ Empty ]</i> :
-                this.renderPendingRooms(this.props.pendingRoomsInfo)
               }
             </ul>
           </div>
         </div>
 
-        <ul>
+        <ul className="list-body">
           { typeof this.props.errors === 'string'
-            ? <li>{this.props.errors}</li>
+            ? <li className="list-item empty error">{this.props.errors}</li>
             : _.map(this.props.errors, (value,key) => {
               if(key === 'detail') {
                 // if key = detail, value will be string (e.g., 'Not found')
-                return <li key={key} style={{color: 'red'}}>ERROR {value}</li>
+                return
+                  <li className="list-item empty error" key={key}>
+                    เกิดเหตุขัดข้อง {value}
+                  </li>
               } else {
                 // e.g., key = room_code, value = [ 'error msg1', 'error msg2' ]
                 return (
-                  <li key={key} style={{color: 'red'}}>
-                    <ul>
+                  <li key={key}>
+                    เกิดเหตุขัดข้อง {value}
+                    <ul className="list-body">
                       {_.map(value, (v,indx) => {
-                        return <li key={indx}>ERROR {v}</li>
+                        return
+                          <li className="list-item empty error" key={indx}>
+                            เกิดเหตุขัดข้อง {v}
+                          </li>
                       })}
                     </ul>
                   </li>
@@ -169,7 +200,7 @@ class GuestRoomsList extends Component {
           {/* Confirm Leave Room Modal */}
           <ConfirmModal
             className={this.state.leaveRoomConfirmPopup ? 'modal show' : 'modal hide'}
-            modalBody="Are you sure you want to leave this room?"
+            modalBody="คุณต้องการออกจากห้อง?"
             onCancel={ this.closeModal }
             onConfirm={ () => {
               this.onLeaveRoom(this.state.leaveRoomId)
