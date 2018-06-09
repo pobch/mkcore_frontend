@@ -9,6 +9,9 @@
 .col-7 {
   width: 70%;
 }
+.col-5 {
+  width: 50%;
+}
 .float-left {
   float: left;
 }
@@ -21,9 +24,17 @@
 .align-right {
   text-align: right;
 }
+.stacked-child > * {
+  margin-bottom: 0.8em;
+}
+.stacked-child > *:empty,
+.stacked-child > *:last-child {
+  margin-bottom: 0;
+}
 .inline-child > * {
   margin-right: 0.8em;
 }
+.inline-child > *:empty,
 .inline-child > *:last-child {
   margin-right: 0;
 }
@@ -50,8 +61,14 @@
 .spacing-top {
   margin-top: 1.5rem;
 }
+.spacing-top:empty {
+  margin-top: 0;
+}
 .pointer {
   cursor: pointer;
+}
+.primary-bg {
+  background-color: var(--primary-background-color);
 }
 .secondary-bg {
   background-color: var(--secondary-background-color);

@@ -13,30 +13,20 @@ export default class ViewRoomInfo extends Component {
     const datetimeStart = this.props.room.start_at ? new Date(this.props.room.start_at) : null
     const datetimeEnd = this.props.room.end_at ? new Date(this.props.room.end_at) : null
     return (
-      <div className="form-minimal spacing-side">
-        <div className="form-group">
-          <label>รหัสห้อง:</label>
-          <div className="form-group-spacing">{this.props.room.room_code}</div>
-        </div>
-        <div className="form-group">
-          <label>ชื่อห้อง:</label>
-          <div className="form-group-spacing">{this.props.room.title}</div>
-        </div>
-        <div className="form-group">
-          <label>เจ้าของห้อง:</label>
-          <div className="form-group-spacing">{this.props.room.instructor_name}</div>
-        </div>
-        <div className="form-group">
-          <label>รายละเอียด:</label>
-          <div className="form-group-spacing">{this.props.room.description}</div>
-        </div>
-        <div className="form-group">
-          <label>เริ่ม:</label>
-          <div className="form-group-spacing">{datetimeStart ? dateFormat(datetimeStart, 'dd/mm/yyyy, hh:MM TT') : '-'}</div>
-        </div>
-        <div className="form-group">
-          <label>จบ:</label>
-          <div className="form-group-spacing">{datetimeEnd ? dateFormat(datetimeEnd, 'dd/mm/yyyy, hh:MM TT') : '-'}</div>
+      <div className="spacing-side">
+        <div className="spacing-cover  primary-bg">
+          <h2>{this.props.room.title}</h2>
+          <div className="stacked-child">
+            <div className="clearfix">
+              <div className="float-left col-5">รหัส {this.props.room.room_code}</div>
+              <div className="float-left col-5">โดย {this.props.room.instructor_name}</div>
+            </div>
+            <div className="clearfix">
+              <div className="float-left col-5">{datetimeStart ? `ตั้งแต่ ${dateFormat(datetimeStart, 'dd/mm/yyyy, hh:MM TT')}` : ''}</div>
+              <div className="float-left col-5">{datetimeStart ? `ถึง ${dateFormat(datetimeEnd, 'dd/mm/yyyy, hh:MM TT')}` : ''}</div>
+            </div>
+            <div className="spacing-top">{this.props.room.description}</div>
+          </div>
         </div>
       </div>
     )
