@@ -15,6 +15,9 @@
   margin-bottom: 2px;
   background-color: var(--primary-background-color);
 }
+.form-minimal .form-group:last-child {
+  margin-bottom: 0;
+}
 .form-minimal .form-group.secondary {
   background-color: var(--secondary-background-color);
 }
@@ -71,6 +74,16 @@
   width: 3em;
   padding: 1.5em 0;
   text-align: right;
+}
+.form-inline {
+  background-color: var(--primary-background-color);
+}
+.form-inline input {
+  width: calc(100% - 4em);
+}
+.form-inline input + * {
+  width: 4em;
+  padding: 1.5em 0;
 }
 .image-upload {
   padding: 1.5rem;

@@ -21,17 +21,16 @@ class JoinRoom extends Component {
   render() {
     const { handleSubmit } = this.props
     return (
-      <form onSubmit={ handleSubmit(this.onSubmit) }>
-        
+      <form className="form-inline" onSubmit={ handleSubmit(this.onSubmit) }>
         <Field
           name="room_code"
           component={this.renderField}
           type="text"
-          placeholder="Enter Room Code"
+          placeholder="ใส่รหัสห้อง"
         />
-          
-        <button type="submit" className="btn btn-primary">Join</button>
-      
+        <button type="submit" className="plain">
+          <i className="twf twf-arrow-bold-right" />
+        </button>
       </form>
     )
   }
