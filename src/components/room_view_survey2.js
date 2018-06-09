@@ -5,8 +5,8 @@ import PropTypes from 'prop-types'
 export default class EachQuestionViewOnly extends Component {
 
   state = {
-    accordionOpen: true,
-    accordionClass: 'show'
+    accordionOpen: false,
+    accordionClass: 'hide'
   }
 
   static propTypes = {

@@ -8,6 +8,7 @@
 }
 .form-group-spacing {
   width: 100%;
+  line-height: 1;
   padding: 1.5em;
 }
 .form-minimal .form-group {

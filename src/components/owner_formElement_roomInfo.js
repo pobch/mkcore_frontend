@@ -28,9 +28,9 @@ export default class RoomInfoEdit extends Component {
     return (
       <div className="form-group">
         <label htmlFor={name}>{label}</label>
-        <DateTimePicker 
-          onChange={onChange} 
-          value={value ? new Date(value) : null} 
+        <DateTimePicker
+          onChange={onChange}
+          value={value ? new Date(value) : null}
           inputProps={{
             component: props => <input {...props} readOnly /> // To disable mobile keyboard
           }}/>
@@ -69,13 +69,13 @@ export default class RoomInfoEdit extends Component {
         <Field
           name="start_at"
           component={this.renderDateTime}
-          label="เริ่มเวลา"
+          label="เริ่ม"
           type=""
         />
         <Field
           name="end_at"
           component={this.renderDateTime}
-          label="จบเวลา"
+          label="จบ"
           type=""
         />
       </div>

@@ -4,33 +4,39 @@ import dateFormat from 'dateformat'
 
 
 export default class ViewRoomInfo extends Component {
-  
+
   static propTypes = {
     room: PropTypes.object.isRequired
   }
 
   render() {
     const datetimeStart = this.props.room.start_at ? new Date(this.props.room.start_at) : null
-    const datetimeEnd = this.props.room.end_at ? new Date(this.props.room.end_at) : null 
+    const datetimeEnd = this.props.room.end_at ? new Date(this.props.room.end_at) : null
     return (
-      <div>
-        <div>
-          Room's Code: {this.props.room.room_code}
+      <div className="form-minimal spacing-side">
+        <div className="form-group">
+          <label>รหัสห้อง:</label>
+          <div className="form-group-spacing">{this.props.room.room_code}</div>
         </div>
-        <div>
-          Title: {this.props.room.title}
+        <div className="form-group">
+          <label>ชื่อห้อง:</label>
+          <div className="form-group-spacing">{this.props.room.title}</div>
         </div>
-        <div>
-          Owner: {this.props.room.instructor_name}
+        <div className="form-group">
+          <label>เจ้าของห้อง:</label>
+          <div className="form-group-spacing">{this.props.room.instructor_name}</div>
         </div>
-        <div>
-          Description: {this.props.room.description}
+        <div className="form-group">
+          <label>รายละเอียด:</label>
+          <div className="form-group-spacing">{this.props.room.description}</div>
         </div>
-        <div>
-          เริ่มเวลา: {datetimeStart ? dateFormat(datetimeStart, 'dd/mm/yyyy, hh:MM TT') : 'ไม่มีข้อมูล'}
+        <div className="form-group">
+          <label>เริ่ม:</label>
+          <div className="form-group-spacing">{datetimeStart ? dateFormat(datetimeStart, 'dd/mm/yyyy, hh:MM TT') : '-'}</div>
         </div>
-        <div>
-          จบเวลา: {datetimeEnd ? dateFormat(datetimeEnd, 'dd/mm/yyyy, hh:MM TT') : 'ไม่มีข้อมูล'}
+        <div className="form-group">
+          <label>จบ:</label>
+          <div className="form-group-spacing">{datetimeEnd ? dateFormat(datetimeEnd, 'dd/mm/yyyy, hh:MM TT') : '-'}</div>
         </div>
       </div>
     )
