@@ -114,12 +114,12 @@ class GuestRoomsList extends Component {
           <div className="float-left col-7">
             <h3>{info.room_title}</h3>
             <div className="list-item-meta">
-              {info.room}
+              {info.room_room_code}
             </div>
           </div>
           <div className="float-right align-right col-3">
             <button type="button"
-              onClick={() => {this.props.denyJoinReq(info.id)}}>
+              onClick={() => {this.props.denyJoinReq(info.id)}}
               className="iconize delete"
             >
               <i className="twf twf-times" />
