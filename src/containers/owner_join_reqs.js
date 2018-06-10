@@ -34,7 +34,7 @@ class ViewJoinReqs extends Component {
               <li className="list-item empty">ไม่มีผู้ขอเข้าร่วม</li> :
               _.map(this.props.joinReqsInfoNotAccepted, (req) => {
               return (
-                <li key={req.id} className="list-item">
+                <li key={req.id} className="list-item clearfix spacing-side">
                   <div className="float-left">
                     <h3>{req.user_first_name} {req.user_last_name}</h3>
                     <div className="list-item-meta">
@@ -53,7 +53,7 @@ class ViewJoinReqs extends Component {
                     <button
                       type="button"
                       onClick={() => {this.props.denyJoinReq(req.id)}}
-                      className="iconize"
+                      className="iconize delete"
                     >
                       <i className="twf twf-times" />
                     </button>

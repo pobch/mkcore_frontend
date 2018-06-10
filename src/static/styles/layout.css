@@ -43,6 +43,9 @@
   text-align: center;
   background-color: var(--primary-brand-color);
 }
+.body-header .form-inline {
+  box-shadow: var(--box-shadow);
+}
 .body-header .btn {
   display: block;
   width: 100%;
