@@ -76,3 +76,6 @@
 .brand-bg {
   background-color: var(--primary-brand-color);
 }
+.large-size {
+  font-size: 3em;
+}
