@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import React, {Component} from 'react'
 import { Field, FieldArray } from 'redux-form'
 import { Link } from 'react-router-dom'
@@ -14,43 +13,48 @@ export default class GuestAnswer extends Component {
 
   renderAnswer = ({fields}) => {
     return (
-      fields.map((name, indx) => {
-        return (
-          <div key={indx}>
-            <h4><b>{`#${indx+1} ${fields.get(indx).question}`}</b></h4>
-            
-            {fields.get(indx).answerType === 'text' &&
-              <div className="form-group">
-                Your answer :
-                <Field
-                  name={`${name}.answerText`}
-                  component="textarea"
-                  className="form-control"
-                />
-              </div>
-            }
+      <ul>
+        { fields.map((name, indx) => {
+          return (
+            <li key={indx}>
+              
+              <h4><b>{`#${indx+1} ${fields.get(indx).question}`}</b></h4>
+              
+              { fields.get(indx).answerType === 'text' &&
+                <div className="form-group">
+                  Your answer :
+                  <Field
+                    name={`${name}.answerText`}
+                    component="textarea"
+                    className="form-control"
+                  />
+                </div>
+              }
 
-            {fields.get(indx).answerType === 'choices' && 
-              this.props.survey[indx].choices.map((question, i) => {
-                return (
-                  <div key={i} className="form-check form-group">
-                    <Field
-                      name={`${name}.answerChoice`}
-                      component="input"
-                      type="radio"
-                      value={question.choiceText}
-                      className="form-check-input"
-                    />{' '}
-                  {question.choiceText}
-                  </div>
-                )
-              })
-            }
-            
-            <hr/>
-          </div>
-        )
-      })
+              {fields.get(indx).answerType === 'choices' &&
+                <ul> 
+                  { this.props.survey[indx].choices.map((eachChoice, i) => {
+                    return (
+                      <li key={i} className="form-check form-group">
+                        <Field
+                          name={`${name}.answerChoice`}
+                          component="input"
+                          type="radio"
+                          value={eachChoice.choiceText}
+                          className="form-check-input"
+                        />{' '}
+                        {eachChoice.choiceText}
+                      </li>
+                    )
+                  })}
+                </ul>
+              }
+              
+              <hr/>
+            </li>
+          )
+        })}
+      </ul>
     )
   }
 

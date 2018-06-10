@@ -170,10 +170,11 @@ class GuestRoomsList extends Component {
             : _.map(this.props.errors, (value,key) => {
               if(key === 'detail') {
                 // if key = detail, value will be string (e.g., 'Not found')
-                return
+                return (
                   <li className="list-item empty error" key={key}>
                     เกิดเหตุขัดข้อง {value}
                   </li>
+                )
               } else {
                 // e.g., key = room_code, value = [ 'error msg1', 'error msg2' ]
                 return (
@@ -181,10 +182,11 @@ class GuestRoomsList extends Component {
                     เกิดเหตุขัดข้อง {value}
                     <ul className="list-body">
                       {_.map(value, (v,indx) => {
-                        return
+                        return (
                           <li className="list-item empty error" key={indx}>
                             เกิดเหตุขัดข้อง {v}
                           </li>
+                        )
                       })}
                     </ul>
                   </li>
