@@ -68,7 +68,7 @@ class ViewJoinReqs extends Component {
               <li className="list-item empty">ไม่มีผู้เข้าร่วม</li> :
               _.map(this.props.joinReqsInfoAccepted, (req) => {
               return (
-                <li key={req.id} className="list-item">
+                <li key={req.id} className="list-item clearfix spacing-side">
                   <div className="float-left">
                     <h3>{req.user_first_name} {req.user_last_name}</h3>
                     <div className="list-item-meta">
