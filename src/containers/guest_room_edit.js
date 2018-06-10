@@ -6,7 +6,7 @@ import {reduxForm} from 'redux-form'
 
 import TopTabBar from '../components/topTabBar'
 import ViewRoomInfo from '../components/room_view_info'
-import GuestAnswer from '../components/guest_formElement_answer'
+import GuestAnswer from '../components/guest_formElement_answer1'
 import Loading from '../components/loading'
 import Portal from '../components/portal'
 import ConfirmModal from '../components/modal_confirm'
