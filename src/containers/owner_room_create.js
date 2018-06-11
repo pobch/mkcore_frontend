@@ -64,8 +64,8 @@ class CreateRoom extends Component {
         <Portal>
           <SaveCompleteModal
             className={this.state.openSaveCompleteModal ? 'show' : 'hide'}
-            onConfirm={(event) => {
-              this.setState({openSaveCompleteModal: false})
+            onConfirm={() => {
+              this.props.history.push('/owner/rooms')
             }}
           />
         </Portal>

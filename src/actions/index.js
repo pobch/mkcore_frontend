@@ -221,7 +221,7 @@ export function publishRoom(id) {
     const room = await axios.get(`${URL_RETRIEVE_UPDATE_OWNROOM}${id}/`)
     let response
     // field 'have_survey_when_published' has a default value == True
-    if( _.isEmpty(room.survey) ) { // {}, [], undefined, null
+    if( _.isEmpty(room.data.survey) ) { // {}, [], undefined, null
       response = await axios.patch(`${URL_RETRIEVE_UPDATE_OWNROOM}${id}/`, {
           status: 'active', 
           published_at: new Date(),
