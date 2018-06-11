@@ -54,7 +54,7 @@ export default class EachAnswer extends Component {
           <div className="accordion-body no-spacing spacing-side">
             { this.props.survey[this.props.indx].choices.map((eachChoice, i) => {
               return (
-                <label htmlFor={`q${this.props.indx}a${i}`} className="radio-set">
+                <label key={i} htmlFor={`q${this.props.indx}a${i}`} className="radio-set">
                   <span className="radio-text">{eachChoice.choiceText}</span>
                   <Field
                     id={`q${this.props.indx}a${i}`}
