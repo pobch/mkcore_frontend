@@ -154,10 +154,10 @@ class GuestRoomsList extends Component {
                 this.renderGuestRoomsEditable(this.props.roomsNotYetSubmitAns)
               }
             </ul>
-            <div className="list-title spacing-side">ห้องที่เคยเข้าร่วม</div>
+            <div className="list-title spacing-side">เข้าร่วมแล้ว</div>
             <ul className="list-body">
               { _.isEmpty(this.props.roomsSubmittedAnsOrWithoutSurvey) ?
-                <li className="list-item empty">ไม่มีห้องที่เคยเข้าร่วม</li> :
+                <li className="list-item empty">ไม่มีห้องที่เข้าร่วมแล้ว</li> :
                 this.renderGuestRoomsViewOnly(this.props.roomsSubmittedAnsOrWithoutSurvey)
               }
             </ul>

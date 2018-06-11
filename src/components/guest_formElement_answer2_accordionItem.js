@@ -9,7 +9,7 @@ export default class EachAnswer extends Component {
     accordionOpen: true,
     accordionClass: 'show'
   }
-  
+
   static propTypes = {
     survey: PropTypes.arrayOf(PropTypes.object).isRequired,
     fields: PropTypes.object.isRequired,
@@ -24,51 +24,52 @@ export default class EachAnswer extends Component {
       this.setState({accordionOpen: true, accordionClass: 'show'})
     }
   }
-  
+
   render() {
     return (
-      <li className={`accordion ${this.state.accordionClass}`}>
-              
-        <h4><b>{`#${this.props.indx+1} ${this.props.fields.get(this.props.indx).question}`}</b></h4>
-        <button
-          type="button"
-          className="plain"
-          onClick={this.onClickToggle}
-        >
-          <i className="twf twf-chevron-right" />
-        </button>
+      <li className={`list-item accordion pointer ${this.state.accordionClass}`}>
+        <div className="accordion-header form-group children-3 spacing-side" onClick={this.onClickToggle}>
+          <label>{this.props.indx+1}</label>
+          <div className="form-group-spacing">{this.props.fields.get(this.props.indx).question}</div>
+          <button
+            type="button"
+            className="plain"
+          >
+            <i className="twf twf-chevron-right" />
+          </button>
+        </div>
 
         { this.props.fields.get(this.props.indx).answerType === 'text' &&
-          <div className="form-group">
-            Your answer :
+          <div className="form-group accordion-body no-spacing">
             <Field
               name={`${this.props.name}.answerText`}
               component="textarea"
               className="form-control"
+              placeholder="ใส่คำตอบที่นี่"
             />
           </div>
         }
 
         {this.props.fields.get(this.props.indx).answerType === 'choices' &&
-          <ul> 
+          <div className="accordion-body no-spacing spacing-side">
             { this.props.survey[this.props.indx].choices.map((eachChoice, i) => {
               return (
-                <li key={i} className="form-check form-group">
+                <label htmlFor={`q${this.props.indx}a${i}`} className="radio-set">
+                  <span className="radio-text">{eachChoice.choiceText}</span>
                   <Field
+                    id={`q${this.props.indx}a${i}`}
                     name={`${this.props.name}.answerChoice`}
                     component="input"
                     type="radio"
                     value={eachChoice.choiceText}
                     className="form-check-input"
-                  />{' '}
-                  {eachChoice.choiceText}
-                </li>
+                  />
+                  <span className="radio-check"></span>
+                </label>
               )
             })}
-          </ul>
+          </div>
         }
-        
-        <hr/>
       </li>
     )
   }

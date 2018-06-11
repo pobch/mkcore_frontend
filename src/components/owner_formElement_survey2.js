@@ -19,7 +19,7 @@ export default class RenderSurvey extends Component {
     }
 
     return (
-      <div className="survey-edit">
+      <div className="survey-edit spacing-side">
         <ul className="survey-list">
           {
             fields.map((value,index) => {

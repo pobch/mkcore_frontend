@@ -1,6 +1,7 @@
 .form-group {
   margin-bottom: 1em;
   text-align: left;
+  word-break: break-word
 }
 .form-group label {
   display: block;
@@ -95,4 +96,63 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
+}
+.radio-set {
+  display: block;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  cursor: pointer;
+}
+.radio-set:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+.radio-set:last-child {
+  border-bottom: 0;
+}
+.radio-set input {
+  display: none;
+}
+.radio-check {
+  display: block;
+  width: 1em;
+  height: 1em;
+  margin-right: 1em;
+  border: 2px solid #cdcdcd;
+  border-radius: 50%;
+  float: left;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+.radio-text {
+  display: block;
+  width: calc(100% - 2em);
+  float: right;
+  word-break: break-word;
+}
+.radio-check:before {
+  display: block;
+  content: "\e9b0";
+  color: var(--brand-contrast-color);
+  font: normal normal normal 0.8em/1 'kyoto';
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+.radio-set:hover .radio-check {
+  background-color: var(--secondary-background-color);
+}
+.radio-set input:checked + .radio-check {
+  background-color: var(--primary-brand-color);
+  border-color: var(--primary-brand-color);
+}
+.radio-set input:checked + .radio-check:before {
+  opacity: 1;
+  visibility: visible;
 }
