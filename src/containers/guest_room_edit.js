@@ -39,15 +39,15 @@ class GuestEditRoom extends Component {
   onSubmit = async (values) => {
     const roomId = this.props.match.params.id
     if(!this.props.answerExist) { // use POST method to create new row (new relation between guest-answer-room)
-      
+
       if(values.fromSaveButton) { // click 'Save' button
-        
+
         delete values.fromSaveButton
         await this.props.saveNewAnswer(roomId, values) // POST method
         this.setState({openSaveCompleteModal: true})
-      
+
       } else { // click 'Submit' button
-        
+
         values.submitted_at = new Date()
         values.submitted = true
         // save new instance variables to use at <ConfirmModal/>
@@ -58,21 +58,21 @@ class GuestEditRoom extends Component {
       }
 
     } else { // use PATCH method to update existing row
-      
+
       if(values.fromSaveButton) { // click 'Save' button
-        
+
         delete values.fromSaveButton
         await this.props.updateAnswer(this.props.rowId, values) // PATCH method
         this.setState({openSaveCompleteModal: true})
-      
+
       } else { // click 'Submit' button
-        
+
         values.submitted_at = new Date()
         values.submitted = true
         // save new instance variables to use at <ConfirmModal/>
         this.finishedAnsValues = values
         this.updateFinishedAnsToRowId = this.props.rowId
-        
+
         this.setState({FinishAnswerConfirmPopup: true})
       }
     }
@@ -95,7 +95,7 @@ class GuestEditRoom extends Component {
         <div className="header fixed">{`ห้อง "${this.props.room.title}"`}</div>
         <TopTabBar
           titleTab1="ข้อมูล"
-          titleTab2="ตอบแบบสอบถาม"
+          titleTab2="แบบสอบถาม"
         />
         <div className="tab-content">
           <div className="tab-body">
@@ -103,7 +103,7 @@ class GuestEditRoom extends Component {
               <ViewRoomInfo room={this.props.room}/>
             </div>
             <div className='tab-item'>
-              <form onSubmit={handleSubmit(this.onSubmit)}>
+              <form className="form-minimal number" onSubmit={handleSubmit(this.onSubmit)}>
                 <GuestAnswer
                   survey={this.props.survey}
                   onClickSave={
@@ -129,8 +129,7 @@ class GuestEditRoom extends Component {
         <Portal>
           <ConfirmModal
             className={this.state.FinishAnswerConfirmPopup ? 'modal show' : 'modal hide'}
-            modalBody="After finishing, you will not be able to edit your answers anymore. 
-              Are you sure you already answered all questions?"
+            modalBody="หลังจากส่งคำตอบแล้ว คุณจะไม่สามารถกลับมาแก้ไขได้อีก ยืนยันที่จะส่งคำตอบ?"
             onCancel={ this.closeModal }
             onConfirm={ () => {
               if(this.saveFinishedAnsToRoomId) { // use POST method
@@ -142,7 +141,7 @@ class GuestEditRoom extends Component {
             }}
           />
         </Portal>
-        
+
         {/* Answer Saved */}
         <Portal>
           <SaveCompleteModal

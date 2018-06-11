@@ -15,7 +15,7 @@ export default class GuestAnswer extends Component {
 
   renderAnswer = ({fields}) => {
     return (
-      <ul>
+      <ul className="survey-list spacing-side">
         { fields.map((name, indx) => {
           return (
             <EachAnswer key={indx}
@@ -34,21 +34,15 @@ export default class GuestAnswer extends Component {
 
     return (
       <div>
-
         <FieldArray
           name="answer"
           component={this.renderAnswer}
         />
-
-        <div style={{color:'red'}}>
-          <i>When you answered all questions, click 'Finish'</i>
+        <div className="navbar fixed clearfix spacing-cover primary-bg">
+          <button type="button" className="float-left" onClick={this.props.onClickSave}>บันทึก</button>
+          <button type="submit" className="float-right">ส่งคำตอบ</button>
         </div>
-        
-        <button type="button" onClick={this.props.onClickSave}>Save</button>
-        <button type="submit" className="btn btn-primary">Finish</button>
-        <Link to="/guest/rooms" className="btn btn-danger">Cancel</Link>
-
       </div>
-    )    
+    )
   }
 }
