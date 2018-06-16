@@ -6,7 +6,7 @@ export default function SaveCompleteModal(props) {
     <div className={`modal ${props.className}`}>
       <div className="modal-wrapper">
         <div className="modal-content">
-          <div className="modal-body">บันทึกเรียบร้อย</div>
+          <div className="modal-body">{props.textBody ? props.textBody : 'บันทึกเรียบร้อย'}</div>
           <div className="inline-child">
             <button type="button" className="btn" onClick={props.onConfirm}>ตกลง</button>
           </div>

@@ -64,7 +64,7 @@ class LogIn extends Component {
             component={ this.renderField }
             type="password"
           />
-          <Link className="brand-contrast" to="/signup">ลืมรหัสผ่าน?</Link>
+          <Link className="brand-contrast" to="/password/forgot">ลืมรหัสผ่าน?</Link>
           <div className="align-center">
             <button type="submit" className="login-button">
               <i className="twf twf-arrow-bold-right" />

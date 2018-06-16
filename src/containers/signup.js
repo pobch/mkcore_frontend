@@ -108,11 +108,11 @@ class SignUp extends Component {
           <button type="submit" className="login-button">
             <i className="twf twf-arrow-bold-right" />
           </button>
-          <div className="login-footer">
-            <span>เป็นสมาชิกแล้ว? </span>
-            <Link to="/" className="brand-contrast">เข้าสู่ระบบ</Link>
-          </div>
         </form>
+        <div className="login-footer">
+          <span>เป็นสมาชิกแล้ว? </span>
+          <Link to="/" className="brand-contrast">เข้าสู่ระบบ</Link>
+        </div>
       </div>
     )
   }

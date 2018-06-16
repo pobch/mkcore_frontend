@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 import LogIn from '../containers/login'
+import SignUp from '../containers/signup'
+import PasswordForgot from '../containers/password_forgot'
+import PasswordForgotConfirm from '../containers/password_forgot_confirm'
 import GuestRoomsList from '../containers/guest_rooms_list'
 import OwnerRoomsList from '../containers/owner_rooms_list'
 import EditRoom from '../containers/owner_room_edit'
-import SignUp from '../containers/signup'
 import GuestEditRoom from '../containers/guest_room_edit'
 import GuestViewRoom from '../containers/guest_room_view'
 import ViewJoinReqs from '../containers/owner_join_reqs'
@@ -28,6 +30,8 @@ class App extends Component {
             <Route exact path="/" render={() => <Redirect to="/guest/rooms"/>} />
             <Route exact path="/login" component={onlyAnonCanAccess(LogIn)} />
             <Route exact path="/signup" component={onlyAnonCanAccess(SignUp)}/>
+            <Route exact path="/password/forgot" component={PasswordForgot}/>
+            <Route exact path="/password/forgot/confirm/:uid/:token" component={PasswordForgotConfirm}/>
             <Route exact path="/guest/rooms" component={onlyUserCanAccess(GuestRoomsList)} />
             <Route exact path="/guest/rooms/:id(\d+)" component={GuestEditRoom}/>
             <Route exact path="/guest/rooms/:id(\d+)/view" component={GuestViewRoom}/>

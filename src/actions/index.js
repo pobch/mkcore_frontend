@@ -6,6 +6,8 @@ export const AUTHENTICATED = 'authenticated'
 export const UNAUTHENTICATED = 'unauthenticated'
 export const AUTHEN_ERROR = 'authentication_error'
 export const CLEAR_AUTH_ERROR_MSG = 'clear_authen_error_msg'
+export const PASSWORD_FORGOT = 'forgot_password'
+export const PASSWORD_FORGOT_CONFIRM = 'forgot_password_confirm_with_uid_token'
 
 export const FETCH_OWNROOMS = 'fetch_rooms_the_user_owns'
 export const FETCH_OWN_ROOM = 'fetch_specific_room_the_user_owns'
@@ -41,17 +43,20 @@ export const UPDATE_PROFILE = 'update_user_profile'
 
 const BASE_API_URL = process.env.REACT_APP_API_URL // environment variable
 
+const URL_SIGNUP = `${BASE_API_URL}auth/register/`
 const URL_LOGIN = `${BASE_API_URL}auth/login/`
+const URL_PASSWORD_FORGOT = `${BASE_API_URL}djoser/password/reset/`
+const URL_PASSWORD_FORGOT_CONFIRM = `${BASE_API_URL}djoser/password/reset/confirm/`
 const URL_FETCH_OWNROOMS = `${BASE_API_URL}rooms/?query=owner`
 const URL_FETCH_GUESTROOMS = `${BASE_API_URL}rooms/?query=guest`
 const URL_FETCH_PENDINGROOMS_INFO = `${BASE_API_URL}rooms/pending/`
 const URL_RETRIEVE_UPDATE_OWNROOM = `${BASE_API_URL}rooms/` // + id
-const URL_SIGNUP = `${BASE_API_URL}auth/register/`
 const URL_JOIN_ROOM = URL_RETRIEVE_UPDATE_OWNROOM + 'join/'
 const URL_LEAVE_ROOM = URL_RETRIEVE_UPDATE_OWNROOM + 'unjoin/'
 const URL_CREATE_ANSWER = BASE_API_URL + 'answers/'
 const URL_RETRIEVE_UPDATE_DEL_JOINREQ = `${BASE_API_URL}rooms/joinreqs/` // + joinReq's id
 const URL_RETRIEVE_UPDATE_PROFILE = `${BASE_API_URL}users/` // + user_id from localStorage
+
 
 export function logInAction(values, callback) {
   const { email, password } = values
@@ -76,6 +81,28 @@ export function logInAction(values, callback) {
         payload: 'Invalid email or password'
       })
     }
+  }
+}
+
+export function passwordForgotAction(values) {
+  const { email } = values
+
+  return async (dispatch) => {
+    await axios.post(URL_PASSWORD_FORGOT, { email }) // the response's body will be blank
+    dispatch({
+      type: PASSWORD_FORGOT
+    })
+  }
+}
+
+export function passwordForgotConfirmAction(values) {
+  const { uid, token, new_password } = values
+
+  return async (dispatch) => {
+    await axios.post(URL_PASSWORD_FORGOT_CONFIRM, { uid, token, new_password })
+    dispatch({
+      type: PASSWORD_FORGOT_CONFIRM
+    })
   }
 }
 
