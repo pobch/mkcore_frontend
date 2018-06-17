@@ -43,7 +43,11 @@ class EditRoom extends Component {
   }
 
   render() {
-    if(!this.props.room) { // initial state
+
+    // We have to make sure that this.props.currentMaxQuestionId has value at first render because
+    //    later, we will initial state from this props in constructor(), so the state can be initialed 
+    //    only once and it will not be re-initialed even that component is re-rendered because of props changed
+    if(!this.props.room || (!this.props.currentMaxQuestionId && this.props.currentMaxQuestionId !== 0)) {
       return <Loading />
     }
 
@@ -52,7 +56,6 @@ class EditRoom extends Component {
     }
 
     const { handleSubmit } = this.props
-    const { id } = this.props.match.params
 
     return (
       <div className="wrapper">
@@ -71,7 +74,7 @@ class EditRoom extends Component {
               <RoomInfoEdit roomCodeDisabled={true}/>
             </div>
             <div className='tab-item'>
-              <SurveyEdit roomId={id}/>
+              <SurveyEdit currentMaxQuestionId={this.props.currentMaxQuestionId}/>
             </div>
           </div>
           <div className="tab-footer fixed clearfix spacing-side">
@@ -100,11 +103,20 @@ class EditRoom extends Component {
 
 function mapStateToProps(state, ownProps) {
   const roomData = _.keyBy(state.ownRooms, 'id')[ownProps.match.params.id]
+  let currentMaxQuestionId = 0
   if(roomData) {
     roomData.survey = roomData.survey || [] // We'll use .forEach in <SurveyEdit/>
+    // find max question's id:
+    roomData.survey.forEach(eachQuestion => {
+      if(+eachQuestion.id > currentMaxQuestionId) {
+        currentMaxQuestionId = +eachQuestion.id
+      }
+    })
   }
+
   return {
     room: roomData,
+    currentMaxQuestionId,
     initialValues: _.pick(roomData, ['title', 'description', 'room_code',
       'room_password', 'instructor_name', 'survey', 'start_at', 'end_at', 'image_url'
     ])

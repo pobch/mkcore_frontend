@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import { FieldArray } from 'redux-form'
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import EachAnswer from '../components/guest_formElement_answer2_accordionItem'

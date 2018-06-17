@@ -6,19 +6,20 @@ import { connect } from 'react-redux'
 export default function(NestedComponent){
   class PrivateComponent extends Component {
     
-    componentWillMount(){
-      if(!this.props.auth.authenticated) {
-        this.props.history.push('/login')
-      }
-    }
+    state = {stopRender: false}
 
-    componentWillUpdate(nextProps) {
-      if(!this.props.auth.authenticated) {
-        this.props.history.push('/login')
+    static getDerivedStateFromProps(props, state) {
+      if(!props.auth.authenticated) {
+        props.history.push('/login')
+        return {stopRender: true}
       }
+      return null
     }
 
     render() {
+      if(this.state.stopRender) {
+        return null
+      }
       return <NestedComponent {...this.props} />
     }
   }

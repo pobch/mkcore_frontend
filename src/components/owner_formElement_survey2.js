@@ -1,19 +1,29 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
-import EachQuestion from '../containers/owner_formElement_survey3'
+import EachQuestion from '../components/owner_formElement_survey3'
 
 
 export default class RenderSurvey extends Component {
 
+  // Warning !!!! Initializing state from props will use props when first rendering only. 
+  //    When re-rendering, nextProps will not change this state.
+  //    Therefore we have to make sure that this.props.currentMaxQuestionId has value at first render !!
+  state = {
+    newMaxQuestionId: this.props.currentMaxQuestionId + 1
+  }
+
   static propTypes = {
-    roomId: PropTypes.string,
+    currentMaxQuestionId: PropTypes.number.isRequired,
     fields: PropTypes.object.isRequired
   }
 
   render () {
     const {fields} = this.props
+
+    // Important !! this is the initial structor of every question
     const defaultNewQuestion = {
+      id: this.state.newMaxQuestionId,
       answerType: 'text',
       choices: null
     }
@@ -25,18 +35,22 @@ export default class RenderSurvey extends Component {
             fields.map((value,index) => {
               return (
                 <EachQuestion
-                  key={index}
-                  roomId={this.props.roomId}
-                  onClickDelete={() => {fields.remove(index)}}
+                  key={fields.get(index).id}
+
                   index={index}
-                  value={value}
+                  value={value} 
+                  answerType={fields.get(index).answerType}
+                  onClickDelete={() => {fields.remove(index)}}
+
                   onClickText={() => {
                     const wantedValue = {...fields.get(index), answerType:'text', choices:null}
                     fields.remove(index)
                     fields.insert(index, wantedValue)
                   }}
+
                   onClickChoices={() => {
-                    const wantedValue = {...fields.get(index), answerType: 'choices'}
+                    // initial with 1 choice:
+                    const wantedValue = {...fields.get(index), answerType: 'choices', choices:[{}]}
                     fields.remove(index)
                     fields.insert(index, wantedValue)
                   }}
@@ -48,6 +62,9 @@ export default class RenderSurvey extends Component {
         <button type="button"
           onClick={() => {
             fields.push(defaultNewQuestion)
+            this.setState(prevState => {
+              return { newMaxQuestionId: prevState.newMaxQuestionId + 1 }
+            })
           }}
           className="full large brand-basic"
         >

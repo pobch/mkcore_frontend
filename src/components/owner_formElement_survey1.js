@@ -8,7 +8,7 @@ import RenderSurvey from '../components/owner_formElement_survey2'
 export default class SurveyEdit extends Component {
 
   static propTypes = {
-    roomId: PropTypes.string
+    currentMaxQuestionId: PropTypes.number.isRequired
   }
 
   render() {
@@ -17,7 +17,7 @@ export default class SurveyEdit extends Component {
         name="survey"
         component={RenderSurvey}
         props={{
-          roomId: this.props.roomId
+          currentMaxQuestionId: this.props.currentMaxQuestionId
         }}
       />
     )

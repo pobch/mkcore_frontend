@@ -48,7 +48,7 @@ class CreateRoom extends Component {
               <RoomInfoEdit roomCodeDisabled={false}/>
             </div>
             <div className='tab-item'>
-              <SurveyEdit room={''}/>
+              <SurveyEdit currentMaxQuestionId={0}/>
             </div>
           </div>
           <div className="tab-footer fixed clearfix spacing-side">
