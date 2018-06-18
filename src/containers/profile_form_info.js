@@ -57,7 +57,7 @@ class FormProfileInfo extends Component {
           >
             <img src={icon} width="150" height="150" alt="Icon"/>
           </div>
-          <div className="spacing-cover">
+          <div className="spacing-cover secondary-bg">
             <h3>ข้อมูลส่วนตัว</h3>
             <Field
               name='email'

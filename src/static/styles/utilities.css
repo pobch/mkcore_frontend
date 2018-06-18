@@ -67,6 +67,9 @@
 .pointer {
   cursor: pointer;
 }
+.pending-opacity {
+  opacity: 0.4;
+}
 .primary-bg {
   background-color: var(--primary-background-color);
 }

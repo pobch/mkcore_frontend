@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {reduxForm, Field} from 'redux-form'
 
 import {passwordForgotAction} from '../actions'
+import icon from '../static/hello-2.svg'
 
 import Portal from '../components/portal'
 import SaveCompleteModal from '../components/modal_save_complete'
@@ -22,24 +23,29 @@ class PasswordForgot extends Component {
   render() {
     const {handleSubmit} = this.props
     return (
-      <div>
-        <form onSubmit={handleSubmit(this.onSubmit)}>
-          <div>
-            Enter your e-mail address :
-          </div>
+      <div className="login">
+        <div className="wrapper-background fixed brand-bg" />
+        <div className="login-header align-center">
+          <img src={icon} width="150" height="150" alt="Icon"/>
+        </div>
+        <form className="login-form align-center" onSubmit={handleSubmit(this.onSubmit)}>
+          <h3 className="brand-contrast">กรอกที่อยู่อีเมลของคุณที่ใช้ในการสมัคร</h3>
           <Field
-            className=""
+            className="form-control"
             name="email"
             component="input"
+            placeholder="myemail@makrub.com"
             type="text"
           />
-          <button type="submit" className="">Reset Password</button>
+          <button type="submit" className="login-button">
+            <i className="twf twf-arrow-bold-right" />
+          </button>
         </form>
 
         <Portal>
           <SaveCompleteModal
             className={this.state.openSaveCompleteModal ? 'show' : 'hide'}
-            textBody="การตั้งรหัสผ่านใหม่ ได้ถูกส่งไปยัง E-mail ของคุณเรียบร้อยแล้ว"
+            textBody="รหัสผ่านใหม่ ได้ถูกส่งไปยังอีเมลของคุณแล้ว"
             onConfirm={() => {
               this.props.history.push('/login')
             }}

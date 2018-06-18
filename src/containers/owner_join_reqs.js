@@ -80,7 +80,7 @@ class ViewJoinReqs extends Component {
                     <button
                       type="button"
                       onClick={() => {this.props.denyJoinReq(req.id)}}
-                      className="iconize"
+                      className="iconize delete"
                     >
                       <i className="twf twf-times" />
                     </button>

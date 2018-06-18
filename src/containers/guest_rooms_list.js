@@ -108,10 +108,10 @@ class GuestRoomsList extends Component {
     return _.map(pendingInfo, (info) => {
       return (
         <li
-          className="list-item clearfix spacing-side anmt-fadein pointer"
+          className="list-item clearfix spacing-side anmt-fadein"
           key={info.id}
         >
-          <div className="float-left col-7">
+          <div className="float-left col-7 pending-opacity">
             <h3>{info.room_title}</h3>
             <div className="list-item-meta">
               {info.room_room_code}

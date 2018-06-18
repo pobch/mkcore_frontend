@@ -54,7 +54,7 @@ class FormProfilePassword extends Component {
     const {handleSubmit} = this.props
     return (
       <div className="form-minimal">
-        <form className="spacing-cover" onSubmit={handleSubmit(this.onSubmit)}>
+        <form className="spacing-cover secondary-bg" onSubmit={handleSubmit(this.onSubmit)}>
           <h3>แก้ไขรหัสผ่าน</h3>
           <Field
             name='password'

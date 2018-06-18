@@ -2,6 +2,10 @@
   padding-right: 10%;
   padding-left: 10%;
 }
+.login-form label {
+  display: block;
+  margin-bottom: 0.6rem;
+}
 .login-form input[type=text],
 .login-form input[type=email],
 .login-form input[type=password] {
@@ -33,7 +37,7 @@
   background-color: var(--secondary-background-color);
 }
 .login-footer {
-  margin-top: 3em;
+  margin: 3em 0;
   font-weight: 300;
   text-align: center;
 }
