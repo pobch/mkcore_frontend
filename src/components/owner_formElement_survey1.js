@@ -16,6 +16,12 @@ export default class SurveyEdit extends Component {
       <FieldArray
         name="survey"
         component={RenderSurvey}
+        rerenderOnEveryChange={true} // Warning !!! Performance will be reduced by setting this props to true 
+                                      // because the component will re-render after every change of 'Field' 
+                                      // inside this 'FieldArray'. 
+                                      // By the way, I need to set this props to FORCE this component to be 
+                                      // re-rendered whenever using 'fields.remove()' - 'fields.insert()' sequence 
+                                      // inside this component.
         props={{
           currentMaxQuestionId: this.props.currentMaxQuestionId
         }}
