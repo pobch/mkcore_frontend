@@ -25,7 +25,7 @@ export default class EachAnswerViewOnly extends Component {
   render() {
     return (
       <li className={`list-item accordion form-minimal number ${this.state.accordionClass}`}>
-        
+
         <div className="accordion-header form-group children-3 spacing-side" onClick={this.onClickToggle}>
           <label htmlFor={`survey-item-${this.props.index + 1}`}>{this.props.index + 1}</label>
           <div className="form-group-spacing">{this.props.eachAnswer.question}</div>
@@ -36,25 +36,27 @@ export default class EachAnswerViewOnly extends Component {
             <i className="twf twf-chevron-right" />
           </button>
         </div>
-        
+
         <div className="accordion-body spacing-side">
           { this.props.eachAnswer.answerType === 'text'
-            ? <div><i>Your Answer:</i> <b>{this.props.eachAnswer.answerText}</b></div>
+            ? <div className="spacing-vertical">{this.props.eachAnswer.answerText}</div>
             : null
           }
 
           { this.props.eachAnswer.answerType === 'choices'
-            ? <ul>
+            ? <ul className="spacing-vertical stacked-child">
                 { this.props.eachAnswer.choices.map((eachChoice, i) => {
                   return (
-                    <li key={i}>
-                      <span>{eachChoice.isAnswer ? '/' : 'X'}</span>
-                      <span>{eachChoice.choiceText}</span>
+                    <li
+                      className={eachChoice.isAnswer ? 'answer-item active' : 'answer-item'}
+                      key={i}
+                    >
+                      {eachChoice.choiceText}
                     </li>
                   )
                 })}
               </ul>
-            : null 
+            : null
           }
         </div>
       </li>
