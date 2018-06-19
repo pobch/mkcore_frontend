@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 import LogIn from '../containers/login'
 import SignUp from '../containers/signup'
+import SignUpConfirm from '../containers/signup_confirm'
 import PasswordForgot from '../containers/password_forgot'
 import PasswordForgotConfirm from '../containers/password_forgot_confirm'
 import GuestRoomsList from '../containers/guest_rooms_list'
@@ -30,6 +31,7 @@ class App extends Component {
             <Route exact path="/" render={() => <Redirect to="/guest/rooms"/>} />
             <Route exact path="/login" component={onlyAnonCanAccess(LogIn)} />
             <Route exact path="/signup" component={onlyAnonCanAccess(SignUp)}/>
+            <Route exact path="/signup/activate/confirm/:uid/:token" component={SignUpConfirm}/>
             <Route exact path="/password/forgot" component={PasswordForgot}/>
             <Route exact path="/password/forgot/confirm/:uid/:token" component={PasswordForgotConfirm}/>
             <Route exact path="/guest/rooms" component={onlyUserCanAccess(GuestRoomsList)} />

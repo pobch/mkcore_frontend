@@ -1,7 +1,9 @@
 import axios from 'axios'
 import _ from 'lodash'
+import { createSocket } from 'dgram';
 
 export const SIGN_UP = 'sign_up'
+export const SIGN_UP_CONFIRM = 'sign_up_activate_confirm'
 export const AUTHENTICATED = 'authenticated'
 export const UNAUTHENTICATED = 'unauthenticated'
 export const AUTHEN_ERROR = 'authentication_error'
@@ -44,6 +46,7 @@ export const UPDATE_PROFILE = 'update_user_profile'
 const BASE_API_URL = process.env.REACT_APP_API_URL // environment variable
 
 const URL_SIGNUP = `${BASE_API_URL}auth/register/`
+const URL_SIGNUP_CONFIRM = `${BASE_API_URL}auth/confirmation/` // + ?uid=xxx&token=yyy
 const URL_LOGIN = `${BASE_API_URL}auth/login/`
 const URL_PASSWORD_FORGOT = `${BASE_API_URL}djoser/password/reset/`
 const URL_PASSWORD_FORGOT_CONFIRM = `${BASE_API_URL}djoser/password/reset/confirm/`
@@ -294,6 +297,16 @@ export function signUpAction(values, callback) {
       payload: response
     })
     callback()
+  }
+}
+
+export function signUpConfirmAction(uid, token) {
+  return async (dispatch) => {
+    await axios.get(`${URL_SIGNUP_CONFIRM}?uid=${uid}&token=${token}`)
+    dispatch({
+      type: SIGN_UP_CONFIRM
+    })
+    // handle error in componentDidMount()
   }
 }
 

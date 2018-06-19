@@ -25,7 +25,6 @@ class PasswordForgotConfirm extends Component {
   }
 
   renderPasswordInput = (field) => {
-    console.log(field);
     return (
       <div className="form-group">
         <label className="brand-contrast" htmlFor={field.input.name}>
