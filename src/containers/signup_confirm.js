@@ -3,12 +3,13 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
 import Loading from '../components/loading'
+import icon from '../static/hello-2.svg'
 
 import {signUpConfirmAction} from '../actions'
 
 
 class SignUpConfirm extends Component {
-  
+
   state = {
     isLoading: true,
     error: false
@@ -31,12 +32,16 @@ class SignUpConfirm extends Component {
 
     if(this.state.error){
       return (
-        <div>
-          <div>
-            Error or Invalid confirmation link
+        <div className="login">
+          <div className="wrapper-background fixed brand-bg" />
+          <div className="login-header align-center">
+            <img src={icon} width="150" height="150" alt="Icon"/>
           </div>
-          <div>
-            <Link to="/">Home</Link>
+          <div className="spacing-top spacing-cover align-center fail-bg brand-contrast">
+            มีข้อผิดพลาดกับลิงค์ยืนยันบัญชีของคุณ
+          </div>
+          <div className="login-footer">
+            <Link className="brand-contrast" to="/">กลับสู่หน้าหลัก</Link>
           </div>
         </div>
       )
@@ -44,12 +49,16 @@ class SignUpConfirm extends Component {
 
     // no error & complete loading:
     return (
-      <div>
-        <div>
-          Thank you for registration
+      <div className="login">
+        <div className="wrapper-background fixed brand-bg" />
+        <div className="login-header align-center">
+          <img src={icon} width="150" height="150" alt="Icon"/>
         </div>
-        <div>
-          <Link to="/login">Log in</Link>
+        <div className="spacing-top spacing-cover align-center primary-bg">
+          ยืนยันเสร็จสมบูรณ์ ยินดีต้อนรับ
+        </div>
+        <div className="login-footer">
+          <Link className="brand-contrast" to="/">เข้าสู่ระบบ</Link>
         </div>
       </div>
     )
