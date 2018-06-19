@@ -18,7 +18,7 @@ class SignUp extends Component {
   onSubmit = async (values) => {
       try {
         this.setState({sendingRegisterForm: true})
-        await this.props.signUpAction(values, () => { this.props.history.push('/') })
+        await this.props.signUpAction(values, () => { this.props.history.push('/signup/after-submit') })
       } catch(error) {
         this.setState({sendingRegisterForm: false})
         throw new SubmissionError(error.response.data)
