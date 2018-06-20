@@ -3,7 +3,10 @@ import {connect} from 'react-redux'
 import _ from 'lodash'
 import {Link} from 'react-router-dom'
 
-import { fetchJoinReqsOfOwnRoom, acceptJoinReq, denyJoinReq, RESET_JOINREQS_LIST } from '../actions'
+import { 
+  fetchJoinReqsOfOwnRoom, acceptJoinReq, acceptAllJoinReqs, denyJoinReq, 
+  RESET_JOINREQS_LIST 
+} from '../actions'
 
 
 class ViewJoinReqs extends Component {
@@ -28,7 +31,13 @@ class ViewJoinReqs extends Component {
           {`ผู้ขอเข้าร่วม "${this.props.location.state.room_title}"`}
         </div>
         <div className="body">
-          <div className="list-title spacing-side">รอยืนยัน</div>
+          <div className="list-title spacing-side">รอยืนยัน (เรียงลำดับตาม E-mail)</div>
+          <button type="button"
+            className=""
+            onClick={() => {this.props.acceptAllJoinReqs(this.props.joinReqsInfoNotAcceptedIds)}}
+          >
+            Accept All
+          </button>
           <ul className="list-body">
             { _.isEmpty(this.props.joinReqsInfoNotAccepted) ?
               <li className="list-item empty">ไม่มีผู้ขอเข้าร่วม</li> :
@@ -36,9 +45,9 @@ class ViewJoinReqs extends Component {
               return (
                 <li key={req.id} className="list-item clearfix spacing-side">
                   <div className="float-left">
-                    <h3>{req.user_first_name} {req.user_last_name}</h3>
+                    <h3>{req.user_email}</h3>
                     <div className="list-item-meta">
-                      {req.user_email}
+                      ชื่อ-สกุล: {req.user_first_name} {req.user_last_name}
                     </div>
                   </div>
 
@@ -62,7 +71,7 @@ class ViewJoinReqs extends Component {
               )
             }) }
           </ul>
-          <div className="list-title spacing-side">เข้าร่วมแล้ว</div>
+          <div className="list-title spacing-side">เข้าร่วมแล้ว (เรียงลำดับตาม E-mail)</div>
           <ul className="list-body">
             { _.isEmpty(this.props.joinReqsInfoAccepted) ?
               <li className="list-item empty">ไม่มีผู้เข้าร่วม</li> :
@@ -70,9 +79,9 @@ class ViewJoinReqs extends Component {
               return (
                 <li key={req.id} className="list-item clearfix spacing-side">
                   <div className="float-left">
-                    <h3>{req.user_first_name} {req.user_last_name}</h3>
+                    <h3>{req.user_email}</h3>
                     <div className="list-item-meta">
-                      {req.user_email}
+                      ชื่อ-สกุล: {req.user_first_name} {req.user_last_name}
                     </div>
                   </div>
 
@@ -97,17 +106,29 @@ class ViewJoinReqs extends Component {
 
 function mapStateToProps(state) {
   const joinReqsInfoNotAccepted = []
+  const joinReqsInfoNotAcceptedIds = []
   const joinReqsInfoAccepted = []
   _.forEach(state.joinReqsInfo, (value) => {
     if(value.accepted) {
       joinReqsInfoAccepted.push(value)
     } else {
       joinReqsInfoNotAccepted.push(value)
+      joinReqsInfoNotAcceptedIds.push(value.id)
     }
+  })
+  // Sort by e-mail:
+  joinReqsInfoAccepted.sort((a,b) => {
+    // Natural sort (sort strings which include number):
+    return a.user_email.localeCompare(b.user_email, undefined, {numeric: true, sensitivity: 'base'})
+  })
+  joinReqsInfoNotAccepted.sort((a,b) => {
+    // Natural sort (sort strings which include number):
+    return a.user_email.localeCompare(b.user_email, undefined, {numeric: true, sensitivity: 'base'})
   })
   return {
     joinReqsInfoNotAccepted,
     joinReqsInfoAccepted,
+    joinReqsInfoNotAcceptedIds,
     ownRooms: state.ownRooms
   }
 }
@@ -116,6 +137,7 @@ export default connect(mapStateToProps,
   {
     fetchJoinReqsOfOwnRoom,
     acceptJoinReq,
+    acceptAllJoinReqs,
     denyJoinReq,
     resetJoinReqsList: () => ({type: RESET_JOINREQS_LIST})
   }

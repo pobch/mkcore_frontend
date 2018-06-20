@@ -21,6 +21,7 @@ export const FETCH_JOIN_REQS_OF_OWN_ROOM = 'fetch_join_requests_of_one_own_room'
 export const ERROR_IN_OWNROOMS = 'ownrooms_error_from_api'
 
 export const ACCEPT_JOINREQ = 'accept_one_join_request'
+export const ACCEPT_ALL_JOINREQS = 'accept_all_pending_join_reqs'
 export const DENY_JOINREQ = 'deny_one_join_request'
 export const RESET_JOINREQS_LIST = 'clear_joinreqs_in_store'
 
@@ -58,6 +59,7 @@ const URL_JOIN_ROOM = URL_RETRIEVE_UPDATE_OWNROOM + 'join/'
 const URL_LEAVE_ROOM = URL_RETRIEVE_UPDATE_OWNROOM + 'unjoin/'
 const URL_CREATE_ANSWER = BASE_API_URL + 'answers/'
 const URL_RETRIEVE_UPDATE_DEL_JOINREQ = `${BASE_API_URL}rooms/joinreqs/` // + joinReq's id
+const URL_BULK_UPDATE_JOINREQS = `${BASE_API_URL}rooms/joinreqs/accept-all/` // POST {"ids": [2,3,4]}
 const URL_RETRIEVE_UPDATE_PROFILE = `${BASE_API_URL}users/` // + user_id from localStorage
 
 
@@ -214,14 +216,25 @@ export function fetchJoinReqsOfOwnRoom(room_id) {
 
 export function acceptJoinReq(guestRoomRelationId) {
   return async (dispatch) => {
-    await axios.patch(`${URL_RETRIEVE_UPDATE_DEL_JOINREQ}${guestRoomRelationId}/`,
+    const response = await axios.patch(`${URL_RETRIEVE_UPDATE_DEL_JOINREQ}${guestRoomRelationId}/`,
       { accepted: true, 
         accept_date: new Date() 
       }
     )
     dispatch({
       type: ACCEPT_JOINREQ,
-      payload: guestRoomRelationId
+      payload: response // obj type
+    })
+  }
+}
+
+export function acceptAllJoinReqs(ids) {
+  // 'ids' is array of not-yet-accepted-join-reqs id
+  return async (dispatch) => {
+    const response = await axios.post(URL_BULK_UPDATE_JOINREQS, {ids})
+    dispatch({
+      type: ACCEPT_ALL_JOINREQS,
+      payload: response // array type
     })
   }
 }
