@@ -20,8 +20,7 @@ export default class SurveyEdit extends Component {
                                       // because the component will re-render after every change of 'Field' 
                                       // inside this 'FieldArray'. 
                                       // By the way, I need to set this props to FORCE this component to be 
-                                      // re-rendered whenever using 'fields.remove()' - 'fields.insert()' sequence 
-                                      // inside this component.
+                                      // re-rendered when using 'fields.insert()' inside this component.
         props={{
           currentMaxQuestionId: this.props.currentMaxQuestionId
         }}

@@ -13,6 +13,9 @@ export default class RenderSurvey extends Component {
     newMaxQuestionId: this.props.currentMaxQuestionId + 1
   }
 
+  // Use ref to set scroll position after move element in FieldArray which is in <EachQuestion/>
+  liRef = []
+
   static propTypes = {
     currentMaxQuestionId: PropTypes.number.isRequired,
     fields: PropTypes.object.isRequired
@@ -37,10 +40,32 @@ export default class RenderSurvey extends Component {
                 <EachQuestion
                   key={fields.get(index).id}
 
+                  liRef={(node) => this.liRef[index] = node}
                   index={index}
+                  arrayLength={fields.length}
                   value={value} 
                   answerType={fields.get(index).answerType}
+
                   onClickDelete={() => {fields.remove(index)}}
+
+                  onClickAddNewQuestionWithCloneChoices={() => {
+                    fields.push({ 
+                      ...defaultNewQuestion, 
+                      answerType: fields.get(index).answerType, 
+                      choices: fields.get(index).choices
+                    })
+                    this.setState(prevState => {
+                      return { newMaxQuestionId: prevState.newMaxQuestionId + 1 }
+                    })
+                    // Move to last
+                    this.liRef[fields.length-1].scrollIntoView()
+                  }}
+
+                  moveToNewIndex={(newIndex) => {
+                    fields.move(index, newIndex)
+                    // Move to new position
+                    this.liRef[newIndex].scrollIntoView()
+                  }}
 
                   onClickText={() => {
                     const wantedValue = {...fields.get(index), answerType:'text', choices:null}

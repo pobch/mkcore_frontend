@@ -21,6 +21,9 @@ class CreateRoom extends Component {
   }
 
   onSubmit = async (values) => {
+    if(!values.survey) {
+      values.survey = []
+    }
     try {
       await this.props.createRoom(values)
       this.setState({openSaveCompleteModal: true})

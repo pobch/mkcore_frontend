@@ -2,21 +2,41 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Field, FieldArray} from 'redux-form'
 
+import Portal from '../components/portal'
+import SaveCompleteModal from '../components/modal_save_complete'
+
 
 export default class EachQuestion extends Component {
 
   state = {
     accordionOpen: true,
-    accordionClass: 'show'
+    accordionClass: 'show',
+    inputValueOfMoveTo: '',
+    wrongMoveToQuestionNumPopup: false
   }
 
   static propTypes = {
+    liRef: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired,
+    arrayLength: PropTypes.number.isRequired,
     value: PropTypes.string.isRequired,
     answerType: PropTypes.string.isRequired,
     onClickDelete: PropTypes.func.isRequired,
+    onClickAddNewQuestionWithCloneChoices: PropTypes.func.isRequired,
+    moveToNewIndex: PropTypes.func.isRequired,
     onClickText: PropTypes.func.isRequired,
     onClickChoices: PropTypes.func.isRequired
+  }
+
+  onClickMoveTo = () => {
+    const { inputValueOfMoveTo } = this.state
+    if(inputValueOfMoveTo && inputValueOfMoveTo > 0 && inputValueOfMoveTo <= this.props.arrayLength) {
+      let newIndex = inputValueOfMoveTo - 1
+      this.props.moveToNewIndex(newIndex)
+      this.setState({inputValueOfMoveTo: ''})
+    } else {
+      this.setState({wrongMoveToQuestionNumPopup: true})
+    }
   }
 
   onClickToggle = () => {
@@ -74,7 +94,7 @@ export default class EachQuestion extends Component {
 
   render() {
     return (
-      <li className={`list-item accordion form-minimal number ${this.state.accordionClass}`}>
+      <li ref={this.props.liRef} className={`list-item accordion form-minimal number ${this.state.accordionClass}`}>
         <div className="accordion-header form-group children-3 spacing-side">
           <label htmlFor={`survey-item-${this.props.index + 1}`}>{this.props.index + 1}</label>
           <Field
@@ -82,6 +102,17 @@ export default class EachQuestion extends Component {
             name={`${this.props.value}.question`}
             component={this.renderQuestionField}
           />
+          <button type="button" onClick={this.props.onClickAddNewQuestionWithCloneChoices}>
+            Clone
+          </button>
+          <span>
+            <button type="button" onClick={this.onClickMoveTo}>Move</button>
+            <span>to:</span>
+            <input 
+              onChange={(e) => {this.setState({inputValueOfMoveTo: e.target.value})}} 
+              value={this.state.inputValueOfMoveTo}
+            />
+          </span>
           <div className="inline-child">
             <button
               type="button"
@@ -127,6 +158,18 @@ export default class EachQuestion extends Component {
             />
           }
         </div>
+
+        <Portal>
+          {/* Wrong move-to question number modal */}
+          <SaveCompleteModal
+            className={this.state.wrongMoveToQuestionNumPopup ? 'show' : 'hide'}
+            textBody="ตำแหน่งที่ต้องการย้าย ไม่ถูกต้อง"
+            onConfirm={(event) => {
+              this.setState({wrongMoveToQuestionNumPopup: false})
+            }}
+          />
+        </Portal>
+
       </li>
     )
   }
