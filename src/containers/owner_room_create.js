@@ -20,6 +20,10 @@ class CreateRoom extends Component {
     openSaveCompleteModal: false
   }
 
+  componentDidMount() {
+    window.scrollTo(0,0)
+  }
+
   onSubmit = async (values) => {
     if(!values.survey) {
       values.survey = []

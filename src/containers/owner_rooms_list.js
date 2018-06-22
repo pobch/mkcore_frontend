@@ -128,6 +128,15 @@ class OwnerRoomsList extends Component {
             >
               <i className="twf twf-trash-o" />
             </button>
+            <Link
+              to={{
+                pathname: '/owner/rooms/create/noGuests',
+                state: { oldRoom: room }
+              }}
+              onClick={ (e) => {this.handleRequestLink(e)} }
+            >
+              CnoG
+            </Link>
           </div>
         </li>
       )

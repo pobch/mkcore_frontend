@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 import LogIn from '../containers/login'
 import SignUp from '../containers/signup'
-import SignUpAfterSubmit from '../components/signup_after_submit'
 import SignUpConfirm from '../containers/signup_confirm'
 import PasswordForgot from '../containers/password_forgot'
 import PasswordForgotConfirm from '../containers/password_forgot_confirm'
@@ -20,6 +19,8 @@ import OwnerViewRoom from '../containers/owner_room_viewOnly'
 import onlyUserCanAccess from '../hoc/only_user_can_access'
 import onlyAnonCanAccess from '../hoc/only_anon_can_access'
 
+import SignUpAfterSubmit from '../components/signup_after_submit'
+import CreateRoomCloneWithoutGuests from '../components/owner_room_create_clone_withoutGuests'
 import NotFound from '../components/notfound'
 
 
@@ -42,6 +43,7 @@ class App extends Component {
             {/* <Route exact path="/user/rooms" component={GuestRoomsList} /> */}
             <Route exact path="/owner/rooms" component={onlyUserCanAccess(OwnerRoomsList)}/>
             <Route exact path="/owner/rooms/create" component={CreateRoom}/>
+            <Route exact path="/owner/rooms/create/noGuests" component={CreateRoomCloneWithoutGuests}/>
             <Route exact path="/owner/rooms/:id(\d+)" component={EditRoom} />
             <Route exact path="/owner/rooms/:id(\d+)/view" component={OwnerViewRoom}/>
             <Route exact path="/owner/rooms/:id(\d+)/joinreqs" component={ViewJoinReqs}/>
