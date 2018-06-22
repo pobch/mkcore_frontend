@@ -17,11 +17,12 @@ export const CREATE_OWN_ROOM = 'create_own_room'
 export const UPDATE_OWN_ROOM = 'update_own_room'
 export const PUBLISH_OWN_ROOM = 'publish_own_room'
 export const DELETE_OWN_ROOM = 'delete_own_room'
-export const FETCH_JOIN_REQS_OF_OWN_ROOM = 'fetch_join_requests_of_one_own_room'
 export const ERROR_IN_OWNROOMS = 'ownrooms_error_from_api'
 
+export const FETCH_JOINREQS_OF_OWN_ROOM = 'fetch_join_requests_of_one_own_room'
 export const ACCEPT_JOINREQ = 'accept_one_join_request'
 export const ACCEPT_ALL_JOINREQS = 'accept_all_pending_join_reqs'
+export const BULK_CREATE_JOINREQS = 'bulk_create_join_reqs'
 export const DENY_JOINREQ = 'deny_one_join_request'
 export const RESET_JOINREQS_LIST = 'clear_joinreqs_in_store'
 
@@ -51,16 +52,21 @@ const URL_SIGNUP_CONFIRM = `${BASE_API_URL}auth/confirmation/` // + ?uid=xxx&tok
 const URL_LOGIN = `${BASE_API_URL}auth/login/`
 const URL_PASSWORD_FORGOT = `${BASE_API_URL}djoser/password/reset/`
 const URL_PASSWORD_FORGOT_CONFIRM = `${BASE_API_URL}djoser/password/reset/confirm/`
-const URL_FETCH_OWNROOMS = `${BASE_API_URL}rooms/?query=owner`
-const URL_FETCH_GUESTROOMS = `${BASE_API_URL}rooms/?query=guest`
-const URL_FETCH_PENDINGROOMS_INFO = `${BASE_API_URL}rooms/pending/`
-const URL_RETRIEVE_UPDATE_OWNROOM = `${BASE_API_URL}rooms/` // + id
-const URL_JOIN_ROOM = URL_RETRIEVE_UPDATE_OWNROOM + 'join/'
-const URL_LEAVE_ROOM = URL_RETRIEVE_UPDATE_OWNROOM + 'unjoin/'
-const URL_CREATE_ANSWER = BASE_API_URL + 'answers/'
-const URL_RETRIEVE_UPDATE_DEL_JOINREQ = `${BASE_API_URL}rooms/joinreqs/` // + joinReq's id
-const URL_BULK_UPDATE_JOINREQS = `${BASE_API_URL}rooms/joinreqs/accept-all/` // POST {"ids": [2,3,4]}
 const URL_RETRIEVE_UPDATE_PROFILE = `${BASE_API_URL}users/` // + user_id from localStorage
+const URL_FETCH_GUESTROOMS = `${BASE_API_URL}rooms/?query=guest`
+const URL_FETCH_OWNROOMS = `${BASE_API_URL}rooms/?query=owner`
+const URL_FETCH_OWNROOM_BY_ROOM_CODE = `${BASE_API_URL}rooms/search/?room_code=` // + room_code to search
+const URL_RETRIEVE_UPDATE_OWNROOM = `${BASE_API_URL}rooms/` // + id
+const URL_FETCH_JOINREQS_BY_ROOM_ID = `${BASE_API_URL}joinreqs/byroomid/` // + room_id to search
+const URL_RETRIEVE_UPDATE_DEL_JOINREQ = `${BASE_API_URL}joinreqs/` // +  a joinReq's id
+const URL_BULK_UPDATE_JOINREQS = `${BASE_API_URL}joinreqs/accept-all/` // POST {"ids": [2,3,4]}
+const URL_BULK_CREATE_JOINREQS = `${BASE_API_URL}joinreqs/bulkcreate/` // POST [{<row to create>}, {...}]
+const URL_FETCH_PENDINGROOMS_INFO = `${BASE_API_URL}joinreqs/pending/`
+const URL_JOIN_ROOM = `${BASE_API_URL}join/`
+const URL_LEAVE_ROOM = `${BASE_API_URL}unjoin/`
+const URL_CREATE_ANSWER = `${BASE_API_URL}answers/`
+const URL_FETCH_ANSWER_BY_ROOM_ID = `${BASE_API_URL}answers/byroomid/` // + room_id to search
+const URL_FETCH_MY_ANSWER = `${BASE_API_URL}answers/me/`
 
 
 export function logInAction(values, callback) {
@@ -134,7 +140,6 @@ export function fetchOwnRooms() {
         payload: response
       })
     } catch(error) {
-      console.log(error)
       dispatch({
         type: ERROR_IN_OWNROOMS,
         payload: error.response
@@ -206,10 +211,40 @@ export function fetchPendingRooms() {
 
 export function fetchJoinReqsOfOwnRoom(room_id) {
   return async (dispatch) => {
-    const response = await axios.get(`${URL_RETRIEVE_UPDATE_OWNROOM}${room_id}/joinreqs/`)
+    const response = await axios.get(`${URL_FETCH_JOINREQS_BY_ROOM_ID}${room_id}/`)
     dispatch({
-      type: FETCH_JOIN_REQS_OF_OWN_ROOM,
+      type: FETCH_JOINREQS_OF_OWN_ROOM,
       payload: response
+    })
+  }
+}
+
+export function bulkCloneJoinReqsFromRoomCode(fromRoomCode, targetRoomId) {
+  return async (dispatch) => {
+    const room = await axios.get(`${URL_FETCH_OWNROOM_BY_ROOM_CODE}${fromRoomCode}`)
+    const fromRoomId = +room.data.id
+    dispatch(bulkCloneJoinReqsFromRoomId(fromRoomId, targetRoomId))
+  }
+}
+
+export function bulkCloneJoinReqsFromRoomId(fromRoomId, targetRoomId) {
+  return async (dispatch) => {
+    // build each row to create:
+    const oldRows = await axios.get(`${URL_FETCH_JOINREQS_BY_ROOM_ID}${fromRoomId}/`)
+    const newRows = oldRows.data.map(row => {
+      return {
+        created_by_room_owner: true,
+        user: row.user,
+        room: targetRoomId,
+        accepted: row.accepted,
+        accept_date: row.accepted ? new Date() : null
+      }
+    })
+    // bulk create new join reqs
+    const response = await axios.post(URL_BULK_CREATE_JOINREQS, newRows)
+    dispatch({
+      type: BULK_CREATE_JOINREQS,
+      payload: response // if not error, response.data is array of new created rows
     })
   }
 }
@@ -405,7 +440,7 @@ export function updateAnswer(rowId, values) {
 export function fetchAnswerFromRoomId(roomId) {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${URL_CREATE_ANSWER}byroomid/${roomId}/`)
+      const response = await axios.get(`${URL_FETCH_ANSWER_BY_ROOM_ID}${roomId}/`)
       dispatch({
         type: FETCH_ANSWER,
         payload: response
@@ -422,7 +457,7 @@ export function fetchAnswerFromRoomId(roomId) {
 export function fetchAnswersOfMe() {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${URL_CREATE_ANSWER}me/`)
+      const response = await axios.get(URL_FETCH_MY_ANSWER)
       dispatch({
         type: FETCH_MY_ANSWERS,
         payload: response

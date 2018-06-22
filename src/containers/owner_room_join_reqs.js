@@ -3,13 +3,22 @@ import {connect} from 'react-redux'
 import _ from 'lodash'
 import {Link} from 'react-router-dom'
 
+import Portal from '../components/portal'
+import ConfirmModal from '../components/modal_confirm'
+
 import { 
   fetchJoinReqsOfOwnRoom, acceptJoinReq, acceptAllJoinReqs, denyJoinReq, 
-  RESET_JOINREQS_LIST 
+  bulkCloneJoinReqsFromRoomCode, bulkCloneJoinReqsFromRoomId, RESET_JOINREQS_LIST 
 } from '../actions'
 
 
 class ViewJoinReqs extends Component {
+
+  state = {
+    cloneFromRoomCodeInput: '',
+    cloneJoinReqsConfirmPopup: false,
+  }
+
   componentDidMount() {
     window.scrollTo(0,0)
     const {id} = this.props.match.params
@@ -18,6 +27,43 @@ class ViewJoinReqs extends Component {
 
   componentWillUnmount() {
     this.props.resetJoinReqsList()
+  }
+
+  /* --------------------------- Clone Join Reqs section: -----------------------------*/
+  // Open Modal:
+  onClickCloneJoinReqs = () => {
+    this.setState({cloneJoinReqsConfirmPopup: true})
+  }
+
+  // Click confirm on modal:
+  onCloneJoinReqsConfirmed = () => {
+    const targetRoomId = +this.props.match.params.id
+    const frontendOwnRooms = _.keyBy(this.props.ownRooms, 'room_code')
+    if(frontendOwnRooms[this.state.cloneFromRoomCodeInput]) {
+      // case: frontend already fetched full ownRooms list:
+      const fromRoomId = +frontendOwnRooms[this.state.cloneFromRoomCodeInput].id
+      this.props.bulkCloneJoinReqsFromRoomId(fromRoomId, targetRoomId)
+    } else { 
+      // case: 
+      //  1. frontend already fetched only 1 ownRoom, so we have to search the full list in backend 
+      //  2. frontend already fetched full ownRooms list but not found the room with matching room_code,
+      //     this code block still force to search the full list again in backend (this case may cause
+      //     performance issue)
+      const fromRoomCode = this.state.cloneFromRoomCodeInput
+      this.props.bulkCloneJoinReqsFromRoomCode(fromRoomCode, targetRoomId)
+    }
+    this.setState({cloneFromRoomCodeInput: ''})
+    this.setState({cloneJoinReqsConfirmPopup: false})
+  }
+
+  // Click cancel on modal:
+  closeModal = () => {
+    this.setState({ cloneJoinReqsConfirmPopup: false})
+  }
+  /* ----------------------------- End section ----------------------------------- */
+
+  onClickAcceptAll = () => {
+    this.props.acceptAllJoinReqs(this.props.joinReqsInfoNotAcceptedIds)
   }
 
   render() {
@@ -31,10 +77,35 @@ class ViewJoinReqs extends Component {
           {`ผู้ขอเข้าร่วม "${this.props.location.state.room_title}"`}
         </div>
         <div className="body">
+          
+          { _.isEmpty(this.props.joinReqsInfoNotAccepted) 
+            && _.isEmpty(this.props.joinReqsInfoAccepted) 
+            && (
+            <div>
+              <button type="button"
+                onClick={this.onClickCloneJoinReqs}
+              >
+                Clone Join Reqs
+              </button>
+              <span>
+                from : 
+                <input 
+                  value={this.state.cloneFromRoomCodeInput} 
+                  onChange={(e) => this.setState({cloneFromRoomCodeInput: e.target.value})}
+                /> 
+                (enter your room's code)
+              </span>
+              <div>
+                You can clone join requests only if there is not any join requests in this room.
+              </div>
+            </div>
+          )}
+
+
           <div className="list-title spacing-side">รอยืนยัน (เรียงลำดับตาม E-mail)</div>
           <button type="button"
             className=""
-            onClick={() => {this.props.acceptAllJoinReqs(this.props.joinReqsInfoNotAcceptedIds)}}
+            onClick={this.onClickAcceptAll}
           >
             Accept All
           </button>
@@ -99,6 +170,16 @@ class ViewJoinReqs extends Component {
             }) }
           </ul>
         </div>
+
+        <Portal>
+          {/* Confirm Clone Join Reqs Modal */}
+          <ConfirmModal
+            className={this.state.cloneJoinReqsConfirmPopup ? 'modal show' : 'modal hide'}
+            modalBody={`คุณต้องการนำเข้ารายการผู้ขอเข้าร่วม จากห้องรหัส ${this.state.cloneFromRoomCodeInput} ?`}
+            onCancel={ this.closeModal }
+            onConfirm={ () => { this.onCloneJoinReqsConfirmed() }}
+          />
+        </Portal>
       </div>
     )
   }
@@ -139,6 +220,8 @@ export default connect(mapStateToProps,
     acceptJoinReq,
     acceptAllJoinReqs,
     denyJoinReq,
+    bulkCloneJoinReqsFromRoomCode, 
+    bulkCloneJoinReqsFromRoomId,
     resetJoinReqsList: () => ({type: RESET_JOINREQS_LIST})
   }
 )(ViewJoinReqs)

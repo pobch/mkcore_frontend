@@ -20,7 +20,7 @@ import onlyUserCanAccess from '../hoc/only_user_can_access'
 import onlyAnonCanAccess from '../hoc/only_anon_can_access'
 
 import SignUpAfterSubmit from '../components/signup_after_submit'
-import CreateRoomCloneWithoutGuests from '../components/owner_room_create_clone_withoutGuests'
+import CreateRoomCloneWithoutGuests from '../components/owner_room_create_clone'
 import NotFound from '../components/notfound'
 
 

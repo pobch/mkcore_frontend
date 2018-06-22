@@ -135,7 +135,7 @@ class OwnerRoomsList extends Component {
               }}
               onClick={ (e) => {this.handleRequestLink(e)} }
             >
-              CnoG
+              Clone
             </Link>
           </div>
         </li>

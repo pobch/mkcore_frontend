@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import TopTabBar from '../components/topTabBar'
 import RoomInfoEdit from '../components/owner_formElement_roomInfo'
@@ -18,6 +19,11 @@ class CreateRoom extends Component {
 
   state = {
     openSaveCompleteModal: false
+  }
+
+  static propTypes = {
+    // receive from parent component (if any):
+    initialValues: PropTypes.object
   }
 
   componentDidMount() {
