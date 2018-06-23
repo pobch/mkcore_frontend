@@ -12,6 +12,12 @@
 .col-5 {
   width: 50%;
 }
+.col-6 {
+  width: 60%;
+}
+.col-4 {
+  width: 40%;
+}
 .float-left {
   float: left;
 }
@@ -32,7 +38,7 @@
   margin-bottom: 0;
 }
 .inline-child > * {
-  margin-right: 0.8em;
+  margin-right: 0.5em;
 }
 .inline-child > *:empty,
 .inline-child > *:last-child {
@@ -88,4 +94,7 @@
 }
 .large-size {
   font-size: 3em;
+}
+.absolute-left {
+  position: absolute;
 }

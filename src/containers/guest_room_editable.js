@@ -179,7 +179,7 @@ function mapStateToProps(state, ownProps) {
     rowId = existAnswerRow.id
   } else { // case: there is the room's survey and the guest has never answered the survey yet
     survey.forEach((eachQuestion, indx) => {
-      // Important !!! this is the initial structure of each answer: 
+      // Important !!! this is the initial structure of each answer:
       const eachAnswer = {
         id: indx + 1,
         questionId: eachQuestion.id,

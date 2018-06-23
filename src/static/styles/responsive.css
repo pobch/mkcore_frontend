@@ -12,6 +12,9 @@
   }
 }
 @media only screen and (max-width: 480px) {
+  .hidden-m {
+    display: none;
+  }
   .rw-datetime-picker .rw-select {
     display: block;
     position: relative;

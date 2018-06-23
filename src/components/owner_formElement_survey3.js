@@ -102,18 +102,22 @@ export default class EachQuestion extends Component {
             name={`${this.props.value}.question`}
             component={this.renderQuestionField}
           />
-          <button type="button" onClick={this.props.onClickAddNewQuestionWithCloneChoices}>
-            Clone
-          </button>
           <span>
             <button type="button" onClick={this.onClickMoveTo}>Move</button>
             <span>to:</span>
-            <input 
-              onChange={(e) => {this.setState({inputValueOfMoveTo: e.target.value})}} 
+            <input
+              onChange={(e) => {this.setState({inputValueOfMoveTo: e.target.value})}}
               value={this.state.inputValueOfMoveTo}
             />
           </span>
           <div className="inline-child">
+            <button
+              type="button"
+              onClick={this.props.onClickAddNewQuestionWithCloneChoices}
+              className="plain"
+            >
+              <i className="twf twf-et-documents" />
+            </button>
             <button
               type="button"
               onClick={this.props.onClickDelete}

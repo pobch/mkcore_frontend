@@ -6,9 +6,9 @@ import {Link} from 'react-router-dom'
 import Portal from '../components/portal'
 import ConfirmModal from '../components/modal_confirm'
 
-import { 
-  fetchJoinReqsOfOwnRoom, acceptJoinReq, acceptAllJoinReqs, denyJoinReq, 
-  bulkCloneJoinReqsFromRoomCode, bulkCloneJoinReqsFromRoomId, RESET_JOINREQS_LIST 
+import {
+  fetchJoinReqsOfOwnRoom, acceptJoinReq, acceptAllJoinReqs, denyJoinReq,
+  bulkCloneJoinReqsFromRoomCode, bulkCloneJoinReqsFromRoomId, RESET_JOINREQS_LIST
 } from '../actions'
 
 
@@ -43,9 +43,9 @@ class ViewJoinReqs extends Component {
       // case: frontend already fetched full ownRooms list:
       const fromRoomId = +frontendOwnRooms[this.state.cloneFromRoomCodeInput].id
       this.props.bulkCloneJoinReqsFromRoomId(fromRoomId, targetRoomId)
-    } else { 
-      // case: 
-      //  1. frontend already fetched only 1 ownRoom, so we have to search the full list in backend 
+    } else {
+      // case:
+      //  1. frontend already fetched only 1 ownRoom, so we have to search the full list in backend
       //  2. frontend already fetched full ownRooms list but not found the room with matching room_code,
       //     this code block still force to search the full list again in backend (this case may cause
       //     performance issue)
@@ -71,15 +71,22 @@ class ViewJoinReqs extends Component {
       <div className="wrapper">
         <div className="wrapper-background fixed" />
         <div className="header fixed spacing-side">
-          <Link to="/owner/rooms" className="float-left">
+          <Link to="/owner/rooms" className="absolute-left">
             <i className="twf twf-arrow-bold-left" />
           </Link>
-          {`ผู้ขอเข้าร่วม "${this.props.location.state.room_title}"`}
+          ผู้ขอเข้าร่วม
+          <span className="hidden-m">{` "${this.props.location.state.room_title}"`}</span>
+          <button type="button"
+            className="float-right plain"
+            onClick={this.onClickAcceptAll}
+          >
+            <i className="twf twf-check-square-o" /> All
+          </button>
         </div>
         <div className="body">
-          
-          { _.isEmpty(this.props.joinReqsInfoNotAccepted) 
-            && _.isEmpty(this.props.joinReqsInfoAccepted) 
+
+          { _.isEmpty(this.props.joinReqsInfoNotAccepted)
+            && _.isEmpty(this.props.joinReqsInfoAccepted)
             && (
             <div>
               <button type="button"
@@ -88,12 +95,12 @@ class ViewJoinReqs extends Component {
                 Clone Join Reqs
               </button>
               <span>
-                from : 
-                <input 
-                  value={this.state.cloneFromRoomCodeInput} 
+                from :
+                <input
+                  value={this.state.cloneFromRoomCodeInput}
                   onChange={(e) => this.setState({cloneFromRoomCodeInput: e.target.value})}
-                /> 
-                (enter your room's code)
+                />
+                (ใส่รหัสห้อง)
               </span>
               <div>
                 You can clone join requests only if there is not any join requests in this room.
@@ -102,13 +109,7 @@ class ViewJoinReqs extends Component {
           )}
 
 
-          <div className="list-title spacing-side">รอยืนยัน (เรียงลำดับตาม E-mail)</div>
-          <button type="button"
-            className=""
-            onClick={this.onClickAcceptAll}
-          >
-            Accept All
-          </button>
+          <div className="list-title spacing-side">รอยืนยัน (เรียงตามอีเมล)</div>
           <ul className="list-body">
             { _.isEmpty(this.props.joinReqsInfoNotAccepted) ?
               <li className="list-item empty">ไม่มีผู้ขอเข้าร่วม</li> :
@@ -142,7 +143,7 @@ class ViewJoinReqs extends Component {
               )
             }) }
           </ul>
-          <div className="list-title spacing-side">เข้าร่วมแล้ว (เรียงลำดับตาม E-mail)</div>
+          <div className="list-title spacing-side">เข้าร่วมแล้ว</div>
           <ul className="list-body">
             { _.isEmpty(this.props.joinReqsInfoAccepted) ?
               <li className="list-item empty">ไม่มีผู้เข้าร่วม</li> :
@@ -220,7 +221,7 @@ export default connect(mapStateToProps,
     acceptJoinReq,
     acceptAllJoinReqs,
     denyJoinReq,
-    bulkCloneJoinReqsFromRoomCode, 
+    bulkCloneJoinReqsFromRoomCode,
     bulkCloneJoinReqsFromRoomId,
     resetJoinReqsList: () => ({type: RESET_JOINREQS_LIST})
   }

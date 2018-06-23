@@ -63,24 +63,26 @@
   font-size: 1.25rem;
 }
 .tab-item {
-  position: absolute;
-  top: 0;
-  width: 100%;
+  display: none;
   padding-top: 5%;
   padding-bottom: 6.25rem;
-  opacity: 0;
-  visibility: hidden;
   z-index: -1;
-  -webkit-transition: all 0.25s ease;
-  -moz-transition: all 0.25s ease;
-  -o-transition: all 0.25s ease;
-  transition: all 0.25s ease;
+  opacity: 0;
+  -webkit-animation-name: fadeIn;
+  -moz-animation-name: fadeIn;
+  -o-animation-name: fadeIn;
+  animation-name: fadeIn;
+  -webkit-animation-duration: 0.3s;
+  -moz-animation-duration: 0.3s;
+  -o-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+  -webkit-animation-fill-mode: both;
+  -moz-animation-fill-mode: both;
+  -o-animation-fill-mode: both;
+  animation-fill-mode: both;
 }
 .tab-nav.first + .tab-content .tab-item:first-child,
 .tab-nav.second + .tab-content .tab-item:nth-child(2),
 .tab-nav.third + .tab-content .tab-item:nth-child(3) {
-  position: relative;
-  opacity: 1;
-  visibility: visible;
-  z-index: auto;
+  display: block;
 }
