@@ -82,7 +82,7 @@ class EditRoom extends Component {
             <Link to="/owner/rooms" className="float-left">
               <i className="twf twf-arrow-bold-left" />
             </Link>
-            <button type="submit" className="float-right">
+            <button type="submit" className="float-right plain">
               บันทึก
             </button>
           </div>

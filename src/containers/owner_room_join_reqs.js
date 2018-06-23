@@ -85,91 +85,93 @@ class ViewJoinReqs extends Component {
         </div>
         <div className="body">
 
+
           { _.isEmpty(this.props.joinReqsInfoNotAccepted)
             && _.isEmpty(this.props.joinReqsInfoAccepted)
             && (
-            <div>
-              <button type="button"
-                onClick={this.onClickCloneJoinReqs}
-              >
-                Clone Join Reqs
-              </button>
-              <span>
-                from :
+            <div className="body-header spacing-side">
+              <div className="form-inline">
                 <input
+                  type="text"
+                  placeholder="รหัสห้องที่ต้องการคัดเลือกสมาชิก"
                   value={this.state.cloneFromRoomCodeInput}
                   onChange={(e) => this.setState({cloneFromRoomCodeInput: e.target.value})}
                 />
-                (ใส่รหัสห้อง)
-              </span>
-              <div>
-                You can clone join requests only if there is not any join requests in this room.
+                <button
+                  type="button"
+                  className="plain"
+                  onClick={this.onClickCloneJoinReqs}
+                >
+                  <i className="twf twf-arrow-bold-right" />
+                </button>
               </div>
+              <div className="feedback bottom brand-contrast">คัดลอกสมาชิกจากห้องอื่นที่เผยแพร่แล้วมาได้ แต่จะใช้ได้ก็ต่อเมื่อยังไม่มีใครขอเข้าร่วมห้อง</div>
             </div>
           )}
 
-
-          <div className="list-title spacing-side">รอยืนยัน (เรียงตามอีเมล)</div>
-          <ul className="list-body">
-            { _.isEmpty(this.props.joinReqsInfoNotAccepted) ?
-              <li className="list-item empty">ไม่มีผู้ขอเข้าร่วม</li> :
-              _.map(this.props.joinReqsInfoNotAccepted, (req) => {
-              return (
-                <li key={req.id} className="list-item clearfix spacing-side">
-                  <div className="float-left">
-                    <h3>{req.user_email}</h3>
-                    <div className="list-item-meta">
-                      ชื่อ-สกุล: {req.user_first_name} {req.user_last_name}
+          <div className="body-content">
+            <div className="list-title spacing-side">รอยืนยัน (เรียงตามอีเมล)</div>
+            <ul className="list-body">
+              { _.isEmpty(this.props.joinReqsInfoNotAccepted) ?
+                <li className="list-item empty">ไม่มีผู้ขอเข้าร่วม</li> :
+                _.map(this.props.joinReqsInfoNotAccepted, (req) => {
+                return (
+                  <li key={req.id} className="list-item clearfix spacing-side">
+                    <div className="float-left">
+                      <h3>{req.user_email}</h3>
+                      <div className="list-item-meta">
+                        ชื่อ-สกุล: {req.user_first_name} {req.user_last_name}
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="float-right inline-child">
-                    <button
-                      type="button"
-                      onClick={() => {this.props.acceptJoinReq(req.id)}}
-                      className="iconize"
-                    >
-                      <i className="twf twf-check" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {this.props.denyJoinReq(req.id)}}
-                      className="iconize delete"
-                    >
-                      <i className="twf twf-times" />
-                    </button>
-                  </div>
-                </li>
-              )
-            }) }
-          </ul>
-          <div className="list-title spacing-side">เข้าร่วมแล้ว</div>
-          <ul className="list-body">
-            { _.isEmpty(this.props.joinReqsInfoAccepted) ?
-              <li className="list-item empty">ไม่มีผู้เข้าร่วม</li> :
-              _.map(this.props.joinReqsInfoAccepted, (req) => {
-              return (
-                <li key={req.id} className="list-item clearfix spacing-side">
-                  <div className="float-left">
-                    <h3>{req.user_email}</h3>
-                    <div className="list-item-meta">
-                      ชื่อ-สกุล: {req.user_first_name} {req.user_last_name}
+                    <div className="float-right inline-child">
+                      <button
+                        type="button"
+                        onClick={() => {this.props.acceptJoinReq(req.id)}}
+                        className="iconize"
+                      >
+                        <i className="twf twf-check" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {this.props.denyJoinReq(req.id)}}
+                        className="iconize delete"
+                      >
+                        <i className="twf twf-times" />
+                      </button>
                     </div>
-                  </div>
+                  </li>
+                )
+              }) }
+            </ul>
+            <div className="list-title spacing-side">เข้าร่วมแล้ว</div>
+            <ul className="list-body">
+              { _.isEmpty(this.props.joinReqsInfoAccepted) ?
+                <li className="list-item empty">ไม่มีผู้เข้าร่วม</li> :
+                _.map(this.props.joinReqsInfoAccepted, (req) => {
+                return (
+                  <li key={req.id} className="list-item clearfix spacing-side">
+                    <div className="float-left">
+                      <h3>{req.user_email}</h3>
+                      <div className="list-item-meta">
+                        ชื่อ-สกุล: {req.user_first_name} {req.user_last_name}
+                      </div>
+                    </div>
 
-                  <div className="float-right inline-child">
-                    <button
-                      type="button"
-                      onClick={() => {this.props.denyJoinReq(req.id)}}
-                      className="iconize delete"
-                    >
-                      <i className="twf twf-times" />
-                    </button>
-                  </div>
-                </li>
-              )
-            }) }
-          </ul>
+                    <div className="float-right inline-child">
+                      <button
+                        type="button"
+                        onClick={() => {this.props.denyJoinReq(req.id)}}
+                        className="iconize delete"
+                      >
+                        <i className="twf twf-times" />
+                      </button>
+                    </div>
+                  </li>
+                )
+              }) }
+            </ul>
+          </div>
         </div>
 
         <Portal>

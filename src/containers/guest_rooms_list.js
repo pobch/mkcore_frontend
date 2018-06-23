@@ -140,37 +140,37 @@ class GuestRoomsList extends Component {
             <JoinRoom/>
           </div>
           <div className="body-content">
-          <ul className="list-body">
-            { typeof this.props.errors === 'string'
-              ? <li className="list-item empty error">{this.props.errors}</li>
-              : _.map(this.props.errors, (value,key) => {
-                if(key === 'detail') {
-                  // if key = detail, value will be string (e.g., 'Not found')
-                  return (
-                    <li className="list-item empty error" key={key}>
-                      เกิดเหตุขัดข้อง {value}
-                    </li>
-                  )
-                } else {
-                  // e.g., key = room_code, value = [ 'error msg1', 'error msg2' ]
-                  return (
-                    <li key={key}>
-                      เกิดเหตุขัดข้อง {value}
-                      <ul className="list-body">
-                        {_.map(value, (v,indx) => {
-                          return (
-                            <li className="list-item empty error" key={indx}>
-                              เกิดเหตุขัดข้อง {v}
-                            </li>
-                          )
-                        })}
-                      </ul>
-                    </li>
-                  )
-                }
-              })
-            }
-          </ul>
+            <ul className="list-body">
+              { typeof this.props.errors === 'string'
+                ? <li className="list-item empty error">{this.props.errors}</li>
+                : _.map(this.props.errors, (value,key) => {
+                  if(key === 'detail') {
+                    // if key = detail, value will be string (e.g., 'Not found')
+                    return (
+                      <li className="list-item empty error" key={key}>
+                        เกิดเหตุขัดข้อง {value}
+                      </li>
+                    )
+                  } else {
+                    // e.g., key = room_code, value = [ 'error msg1', 'error msg2' ]
+                    return (
+                      <li key={key}>
+                        เกิดเหตุขัดข้อง {value}
+                        <ul className="list-body">
+                          {_.map(value, (v,indx) => {
+                            return (
+                              <li className="list-item empty error" key={indx}>
+                                เกิดเหตุขัดข้อง {v}
+                              </li>
+                            )
+                          })}
+                        </ul>
+                      </li>
+                    )
+                  }
+                })
+              }
+            </ul>
             <div className="list-title spacing-side">รอการยืนยัน</div>
             <ul className="list-body">
               { _.isEmpty(this.props.pendingRoomsInfo) ?

@@ -83,10 +83,10 @@
   background-color: var(--primary-background-color);
 }
 .form-inline input {
-  width: calc(100% - 4em);
+  width: calc(100% - 3em);
 }
 .form-inline input + * {
-  width: 4em;
+  width: 3em;
   padding: 1.5em 0;
 }
 .image-upload {
