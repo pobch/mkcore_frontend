@@ -1,15 +1,14 @@
 import React from 'react'
 
 
-export default function ConfirmModal(props) {
+export default function MoveQuestionInputModal(props) {
 
   return (
-    // // BootStrap 4
     <div className={`modal ${props.className}`}>
       <div className="modal-wrapper">
         <div className="modal-content">
           <div className="modal-body">
-            {props.modalBody}
+            {props.children}
           </div>
           <div className="inline-child">
             <button type="button" className="btn" onClick={props.onConfirm}>

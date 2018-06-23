@@ -4,6 +4,7 @@ import {Field, FieldArray} from 'redux-form'
 
 import Portal from '../components/portal'
 import SaveCompleteModal from '../components/modal_save_complete'
+import MoveQuestionInputModal from '../components/modal_move_question'
 
 
 export default class EachQuestion extends Component {
@@ -12,7 +13,8 @@ export default class EachQuestion extends Component {
     accordionOpen: true,
     accordionClass: 'show',
     inputValueOfMoveTo: '',
-    wrongMoveToQuestionNumPopup: false
+    invalidQuestionNumToMovePopup: false,
+    inputQuestionNumToMovePopup: false
   }
 
   static propTypes = {
@@ -28,16 +30,30 @@ export default class EachQuestion extends Component {
     onClickChoices: PropTypes.func.isRequired
   }
 
-  onClickMoveTo = () => {
+  // ----------------------------------- Move question section: --------------------------- //
+  // 1. click button to open modal:
+  onClickMoveQuestion = () => {
+    this.setState({inputQuestionNumToMovePopup:true})
+  }
+
+  // 2.1 click confirm on modal:
+  onConfirmedMoveQuestion = () => {
     const { inputValueOfMoveTo } = this.state
     if(inputValueOfMoveTo && inputValueOfMoveTo > 0 && inputValueOfMoveTo <= this.props.arrayLength) {
       let newIndex = inputValueOfMoveTo - 1
       this.props.moveToNewIndex(newIndex)
-      this.setState({inputValueOfMoveTo: ''})
     } else {
-      this.setState({wrongMoveToQuestionNumPopup: true})
+      // open another modal if receive invalid question order:
+      this.setState({invalidQuestionNumToMovePopup: true})
     }
+    this.setState({inputValueOfMoveTo: '', inputQuestionNumToMovePopup: false})
   }
+
+  // 2.2 click cancel on modal:
+  closeModal = () => {
+    this.setState({inputQuestionNumToMovePopup: false})
+  }
+  // ----------------------------------- End section ---------------------------------------//
 
   onClickToggle = () => {
     if(this.state.accordionOpen) {
@@ -102,14 +118,7 @@ export default class EachQuestion extends Component {
             name={`${this.props.value}.question`}
             component={this.renderQuestionField}
           />
-          <span>
-            <button type="button" onClick={this.onClickMoveTo}>Move</button>
-            <span>to:</span>
-            <input
-              onChange={(e) => {this.setState({inputValueOfMoveTo: e.target.value})}}
-              value={this.state.inputValueOfMoveTo}
-            />
-          </span>
+          <button type="button" onClick={this.onClickMoveQuestion}>Move</button>
           <div className="inline-child">
             <button
               type="button"
@@ -164,12 +173,27 @@ export default class EachQuestion extends Component {
         </div>
 
         <Portal>
+          {/* Input target question number to move modal  */}
+          <MoveQuestionInputModal
+            className={this.state.inputQuestionNumToMovePopup ? 'modal show' : 'modal hide'}
+            onCancel={ this.closeModal }
+            onConfirm={ this.onConfirmedMoveQuestion }
+          >
+            Reorder this question to : # 
+            <input
+              onChange={(e) => {this.setState({inputValueOfMoveTo: e.target.value})}}
+              value={this.state.inputValueOfMoveTo}
+            />
+          </MoveQuestionInputModal>
+        </Portal>
+        
+        <Portal>
           {/* Wrong move-to question number modal */}
           <SaveCompleteModal
-            className={this.state.wrongMoveToQuestionNumPopup ? 'show' : 'hide'}
+            className={this.state.invalidQuestionNumToMovePopup ? 'show' : 'hide'}
             textBody="ตำแหน่งที่ต้องการย้าย ไม่ถูกต้อง"
             onConfirm={(event) => {
-              this.setState({wrongMoveToQuestionNumPopup: false})
+              this.setState({invalidQuestionNumToMovePopup: false})
             }}
           />
         </Portal>
@@ -178,23 +202,3 @@ export default class EachQuestion extends Component {
     )
   }
 }
-
-// function mapStateToProps(state, ownProps) {
-//   // check whether this question is already in database, if so, initial state with current answerType in db
-//   // if this question is not in db, 2 cases can be implied :
-//   // case 1 : roomId = '' and survey is empty because this is a new room (create room mode)
-//   // case 2 : this is the old room's new added question which is not POSTed to db yet (edit room mode)
-//   let survey = []
-//   if(ownProps.roomId) {
-//     survey = _.find(state.ownRooms, ['id', +ownProps.roomId]).survey || []
-//     // can be [] or [{answerType:'text', ...}, {answerType:'choices', ...}]
-//   }
-//   const result = ownProps.roomId
-//     && survey[ownProps.index]
-//     && survey[ownProps.index].answerType
-//   return {
-//     answerType: result
-//   }
-// }
-
-// export default connect(mapStateToProps)(EachQuestion)

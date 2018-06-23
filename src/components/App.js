@@ -40,7 +40,6 @@ class App extends Component {
             <Route exact path="/guest/rooms" component={onlyUserCanAccess(GuestRoomsList)} />
             <Route exact path="/guest/rooms/:id(\d+)" component={GuestEditRoom}/>
             <Route exact path="/guest/rooms/:id(\d+)/view" component={GuestViewRoom}/>
-            {/* <Route exact path="/user/rooms" component={GuestRoomsList} /> */}
             <Route exact path="/owner/rooms" component={onlyUserCanAccess(OwnerRoomsList)}/>
             <Route exact path="/owner/rooms/create" component={CreateRoom}/>
             <Route exact path="/owner/rooms/create/noGuests" component={CreateRoomCloneWithoutGuests}/>
