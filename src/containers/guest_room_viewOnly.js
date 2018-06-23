@@ -73,10 +73,10 @@ function mapStateToProps(state, ownProps) {
   } else {
   // case: have survey >> guest already answered >> there is answer row in RoomAnswer table in db
     const existAnswerRow = _.find(state.answers, ['room', +ownProps.match.params.id])
-    answer = existAnswerRow.answer  
+    answer = existAnswerRow.answer
   }
-  
-  
+
+
   return {
     room,
     survey, // can be []

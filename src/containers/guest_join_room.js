@@ -26,7 +26,7 @@ class JoinRoom extends Component {
           name="room_code"
           component={this.renderField}
           type="text"
-          placeholder="ใส่รหัสห้อง"
+          placeholder="รหัสห้อง"
         />
         <button type="submit" className="plain">
           <i className="twf twf-arrow-bold-right" />

@@ -15,6 +15,9 @@ button,input[type=submit],.btn {
   -o-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
+button i {
+  vertical-align: middle;
+}
 button.iconize,input[type=submit].iconize,.btn.iconize {
   padding: 0.8em;
   font-size: 0.8em;

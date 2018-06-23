@@ -41,7 +41,7 @@ export default class EachQuestionViewOnly extends Component {
 
   render() {
     return (
-      <li className={`list-item accordion form-minimal number ${this.state.accordionClass}`}>
+      <li className={`list-item accordion form-minimal pointer number ${this.state.accordionClass}`}>
         <div className="accordion-header form-group children-3 spacing-side" onClick={this.onClickToggle}>
           <label htmlFor={`survey-item-${this.props.index + 1}`}>{this.props.index + 1}</label>
           <div className="form-group-spacing">{this.props.eachQuestion.question}</div>

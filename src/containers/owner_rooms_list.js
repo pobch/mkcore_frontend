@@ -67,14 +67,14 @@ class OwnerRoomsList extends Component {
           key={room.id}
           onClick={() => this.props.history.push(`/owner/rooms/${room.id}`)}
         >
-          <div className="float-left col-7">
+          <div className="float-left col-5">
             <h3>{room.title}</h3>
             <div className="list-item-meta">
-              {room.room_code}
-              {room.start_at ? ` -- ${dateFormat(new Date(room.start_at), 'dd/mm/yy, h:MMTT')}` : null}
+              <div>{room.room_code}</div>
+              {room.start_at ? <div>{dateFormat(new Date(room.start_at), 'dd/mm/yy, h:MMTT')}</div> : null}
             </div>
           </div>
-          <div className="float-right align-right col-3 inline-child">
+          <div className="float-right align-right col-5 inline-child">
             <button
               type="button"
               className="iconize"
@@ -102,15 +102,15 @@ class OwnerRoomsList extends Component {
           key={room.id}
           onClick={() => this.props.history.push(`/owner/rooms/${room.id}/view`)}
         >
-          <div className="float-left">
+          <div className="float-left col-5">
             <h3>{room.title}</h3>
             <div className="list-item-meta">
-              {room.room_code}
-              {room.start_at ? ` -- ${dateFormat(new Date(room.start_at), 'dd/mm/yy, h:MMTT')}` : null}
+              <div>{room.room_code}</div>
+              {room.start_at ? <div>{dateFormat(new Date(room.start_at), 'dd/mm/yy, h:MMTT')}</div> : null}
             </div>
           </div>
 
-          <div className="float-right inline-child">
+          <div className="float-right align-right col-5 inline-child">
             <Link
               className="btn iconize"
               to={{
@@ -121,6 +121,16 @@ class OwnerRoomsList extends Component {
             >
               <i className="twf twf-ln-users" />
             </Link>
+            <Link
+              to={{
+                pathname: '/owner/rooms/create/noGuests',
+                state: { oldRoom: room }
+              }}
+              onClick={ (e) => {this.handleRequestLink(e)} }
+              className="btn iconize"
+            >
+              <i className="twf twf-docs" />
+            </Link>
             <button
               type="button"
               onClick={ (e) => {this.openConfirmDeleteModal(e, room.id)} }
@@ -128,15 +138,6 @@ class OwnerRoomsList extends Component {
             >
               <i className="twf twf-trash-o" />
             </button>
-            <Link
-              to={{
-                pathname: '/owner/rooms/create/noGuests',
-                state: { oldRoom: room }
-              }}
-              onClick={ (e) => {this.handleRequestLink(e)} }
-            >
-              Clone
-            </Link>
           </div>
         </li>
       )

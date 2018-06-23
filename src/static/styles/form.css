@@ -43,11 +43,9 @@
 }
 .form-minimal .form-group label {
   width: 8em;
-  line-height: 1;
-  padding: 1.75em 0.6em 1.7em 1.5em;
+  padding: 1.5em 0.6em 1.5em 1.5em;
   margin-bottom: 0;
   font-size: 1em;
-  border-bottom: 1px solid transparent;
 }
 .form-minimal .form-group label + * {
   width: calc(100% - 8em);
@@ -60,8 +58,13 @@
 }
 .form-minimal.number .form-group label {
   width: 2em;
+  line-height: 1.45em;
   padding-right: 0;
   padding-left: 0;
+}
+.form-minimal.number .form-group label + div,
+.form-minimal.number .form-group label + div + button {
+  line-height: 1.45em;
 }
 .form-minimal.number .form-group label + * {
   width: calc(100% - 2em);
@@ -80,10 +83,10 @@
   background-color: var(--primary-background-color);
 }
 .form-inline input {
-  width: calc(100% - 4em);
+  width: calc(100% - 3em);
 }
 .form-inline input + * {
-  width: 4em;
+  width: 3em;
   padding: 1.5em 0;
 }
 .image-upload {

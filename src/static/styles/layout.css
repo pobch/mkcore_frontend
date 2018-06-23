@@ -34,6 +34,9 @@
   right: 1.5rem;
   line-height: inherit;
 }
+.header .absolute-left {
+  left: 1.5rem;
+}
 .body {
   padding-bottom: 5.75rem;
 }
@@ -70,7 +73,7 @@
 }
 .list-item {
   line-height: 1;
-  font-size: 1.25em;
+  font-size: 1.2em;
   border-bottom: 1px solid var(--border-color);
 }
 .list-item.empty {
@@ -85,4 +88,10 @@
 .list-item-meta {
   font-size: 0.9em;
   color: var(--secondary-text-color);
+}
+.list-item-meta > * {
+  margin-bottom: 0.3em;
+}
+.list-item-meta > *:last-child {
+  margin-bottom: 0;
 }

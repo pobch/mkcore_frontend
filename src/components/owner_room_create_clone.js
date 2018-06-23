@@ -13,16 +13,16 @@ export default class CreateRoomCloneWithoutGuests extends Component {
       })
     }).isRequired
   }
-  
+
   createInitialValuesToPass = () => {
     // exclude "guests": [1,5,9,...]
     const { title, description, instructor_name, survey } = this.props.location.state.oldRoom
     return {
-      title: `[CLONED] ${title}`,
-      description: `[CLONED] ${description}`,
-      instructor_name: `[CLONED] ${instructor_name}`,
+      title: `${title}`,
+      description: `${description}`,
+      instructor_name: `${instructor_name}`,
       survey
-    } 
+    }
   }
 
   render() {

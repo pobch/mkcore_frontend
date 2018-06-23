@@ -31,7 +31,7 @@ class EditRoom extends Component {
   onSubmit = (values) => {
     if(!values.survey) {
       values.survey = []
-    } 
+    }
     // else {
     //   _.map(values.survey, (eachQuestion, indx) => {
     //     eachQuestion.id = indx + 1
@@ -46,7 +46,7 @@ class EditRoom extends Component {
   render() {
 
     // We have to make sure that this.props.currentMaxQuestionId has value at first render because
-    //    later, we will initial state from this props in constructor(), so the state can be initialed 
+    //    later, we will initial state from this props in constructor(), so the state can be initialed
     //    only once and it will not be re-initialed even that component is re-rendered because of props changed
     if(!this.props.room || (!this.props.currentMaxQuestionId && this.props.currentMaxQuestionId !== 0)) {
       return <Loading />
@@ -82,7 +82,7 @@ class EditRoom extends Component {
             <Link to="/owner/rooms" className="float-left">
               <i className="twf twf-arrow-bold-left" />
             </Link>
-            <button type="submit" className="float-right">
+            <button type="submit" className="float-right plain">
               บันทึก
             </button>
           </div>
