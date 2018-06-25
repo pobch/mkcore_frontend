@@ -42,7 +42,7 @@ class App extends Component {
             <Route exact path="/guest/rooms/:id(\d+)/view" component={GuestViewRoom}/>
             <Route exact path="/owner/rooms" component={onlyUserCanAccess(OwnerRoomsList)}/>
             <Route exact path="/owner/rooms/create" component={CreateRoom}/>
-            <Route exact path="/owner/rooms/create/noGuests" component={CreateRoomCloneWithoutGuests}/>
+            <Route exact path="/owner/rooms/create/clone" component={CreateRoomCloneWithoutGuests}/>
             <Route exact path="/owner/rooms/:id(\d+)" component={EditRoom} />
             <Route exact path="/owner/rooms/:id(\d+)/view" component={OwnerViewRoom}/>
             <Route exact path="/owner/rooms/:id(\d+)/joinreqs" component={ViewJoinReqs}/>

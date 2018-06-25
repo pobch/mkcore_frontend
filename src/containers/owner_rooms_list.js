@@ -4,21 +4,18 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import dateFormat from 'dateformat'
 
-import Portal from '../components/portal'
-import ConfirmModal from '../components/modal_confirm'
+import DropdownMenuDraftRoom from '../containers/ddMenu_owner_room_draft'
+import DropdownMenuPublishedRoom from '../containers/ddMenu_owner_room_published'
+
 import BotNavbar from '../components/botNavbar'
 
-import {
-  fetchOwnRooms, deleteRoom, publishRoom, resetError
-} from '../actions'
+import {fetchOwnRooms, resetError} from '../actions'
 
 
 class OwnerRoomsList extends Component {
   state = {
     confirmDeletePopup: false,
-    deleteRoomId: null,
-    confirmPublishPopup: false,
-    publishRoomId: null
+    deleteRoomId: null
   }
 
   componentDidMount() {
@@ -29,41 +26,6 @@ class OwnerRoomsList extends Component {
   componentWillUnmount() {
     // Reset Error msg when leaving the page
     this.props.resetError()
-  }
-
-  openConfirmDeleteModal = (e, id) => {
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
-    this.setState({ confirmDeletePopup: true, deleteRoomId: id })
-  }
-
-  onDeleteRoom = (id) => {
-    this.props.deleteRoom(id)
-  }
-
-  closeModal = () => {
-    this.setState({ confirmDeletePopup: false, confirmPublishPopup: false })
-  }
-
-  openConfirmPublishModal = (e, id) => {
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
-    this.setState({ confirmPublishPopup: true, publishRoomId: id })
-  }
-
-  onPublishRoom = (id) => {
-    this.props.publishRoom(id)
-  }
-
-  handleRequestLink = (e) => {
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
-  }
-
-  dropdownToggle = (e) => {
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
-    // ใส่ class active ที่ button ให้หน่อยครับ พอกดปุ่ม dropdownclick แล้วถ้าไปคลิกที่อื่น หรือที่ปุ่มเดิมเอา class active ออกครับ
   }
 
   renderDraftRooms = (draftRooms) => {
@@ -80,35 +42,10 @@ class OwnerRoomsList extends Component {
               {room.start_at ? <div>{dateFormat(new Date(room.start_at), 'dd/mm/yy, h:MMTT')}</div> : null}
             </div>
           </div>
-          <div className="float-right col-2 position-relative align-right">
-            <button
-              type="button"
-              onClick={ (e) => {this.dropdownToggle(e)} }
-              className="dropdown-toggle iconize"
-            >
-              <i className="twf twf-ellipsis" />
-            </button>
-            <ul className="dropdown-list">
-              <li>
-                <button
-                  type="button"
-                  onClick={ (e) => {this.openConfirmPublishModal(e, room.id)} }
-                  className="plain"
-                >
-                  เผยแพร่
-                </button>
-              </li>
-              <li>
-                <button
-                  type="button"
-                  onClick={ (e) => {this.openConfirmDeleteModal(e, room.id)} }
-                  className="plain delete"
-                >
-                  ลบ
-                </button>
-              </li>
-            </ul>
-          </div>
+
+          <DropdownMenuDraftRoom
+            room={room}
+          />
         </li>
       )
     })
@@ -129,48 +66,9 @@ class OwnerRoomsList extends Component {
             </div>
           </div>
 
-          <div className="float-right col-2 position-relative align-right">
-            <button
-              type="button"
-              onClick={ (e) => {this.dropdownToggle(e)} }
-              className="dropdown-toggle iconize"
-            >
-              <i className="twf twf-ellipsis" />
-            </button>
-            <ul className="dropdown-list">
-              <li>
-                <Link
-                  to={{
-                    pathname: `/owner/rooms/${room.id}/joinreqs`,
-                    state: {room_title: room.title, room_id: room.id}
-                  }}
-                  onClick={ (e) => {this.handleRequestLink(e)} }
-                >
-                  ผู้เข้าร่วม
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to={{
-                    pathname: '/owner/rooms/create/noGuests',
-                    state: { oldRoom: room }
-                  }}
-                  onClick={ (e) => {this.handleRequestLink(e)} }
-                >
-                  คัดลอก
-                </Link>
-              </li>
-              <li>
-                <button
-                  type="button"
-                  onClick={ (e) => {this.openConfirmDeleteModal(e, room.id)} }
-                  className="plain delete"
-                >
-                  ลบ
-                </button>
-              </li>
-            </ul>
-          </div>
+          <DropdownMenuPublishedRoom
+            room={room}
+          />  
         </li>
       )
     })
@@ -205,32 +103,6 @@ class OwnerRoomsList extends Component {
 
         <BotNavbar/>
 
-        {/* Confirm Delete Room Modal */}
-        <Portal>
-          <ConfirmModal
-            className={ this.state.confirmDeletePopup ? 'show' : 'hide' }
-            modalBody="ยืนยันว่าต้องการลบห้องนี้?"
-            onCancel={ () => {this.closeModal()} }
-            onConfirm={ () => {
-              this.closeModal()
-              this.onDeleteRoom(this.state.deleteRoomId)
-            }}
-          />
-        </Portal>
-
-        {/* Confirm Publish Room Modal */}
-        <Portal>
-          <ConfirmModal
-            className={ this.state.confirmPublishPopup ? 'show' : 'hide' }
-            modalBody="เมื่อเผยแพร่แล้วจะแก้ไขไม่ได้"
-            onCancel={ () => {this.closeModal()} }
-            onConfirm={ () => {
-              this.closeModal()
-              this.onPublishRoom(this.state.publishRoomId)
-            }}
-          />
-        </Portal>
-
       </div>
     )
   }
@@ -252,9 +124,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {
-  fetchOwnRooms,
-  publishRoom,
-  deleteRoom,
-  resetError
-})(OwnerRoomsList)
+export default connect(mapStateToProps, {fetchOwnRooms, resetError})(OwnerRoomsList)
