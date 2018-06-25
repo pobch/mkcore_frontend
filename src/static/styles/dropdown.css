@@ -1,4 +1,8 @@
-.dropdown-toggle.active + .dropdown-list {
+.dropdown-toggle {
+  width: 2.5em;
+  height: 2.5em;
+}
+.dropdown-list.show {
   opacity: 1;
   visibility: visible;
   z-index: 1;
@@ -9,6 +13,7 @@
   top: 100%;
   right: 0.4rem;
   width: 15rem;
+  margin-top: 0.5em;
   opacity: 0;
   visibility: hidden;
   z-index: -1;
