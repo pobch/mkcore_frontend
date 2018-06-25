@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import Portal from '../components/portal'
 import ConfirmModal from '../components/modal_confirm'
 
-import {deleteRoom} from '../actions'
+import {deleteRoom, exportAllAnswersByRoomId} from '../actions'
 
 
 class DropdownMenuPublishedRoom extends Component {
@@ -20,6 +20,14 @@ class DropdownMenuPublishedRoom extends Component {
 
   static propTypes = {
     room: PropTypes.object.isRequired
+  }
+
+  onClickExport = (roomId) => {
+    return (e) => {
+      e.stopPropagation()
+      e.nativeEvent.stopImmediatePropagation()
+      this.props.exportAllAnswersByRoomId(roomId)
+    }
   }
 
   onClickDeleteRoom = (e, id) => {
@@ -79,6 +87,13 @@ class DropdownMenuPublishedRoom extends Component {
           ref={(node) => this.dropdownMenuRef = node}
         >
           <li>
+            <button type="button"
+              onClick={this.onClickExport(room.id)}
+            >
+              Export Result
+            </button>
+          </li>
+          <li>
             <Link
               to={{
                 pathname: `/owner/rooms/${room.id}/joinreqs`,
@@ -129,4 +144,4 @@ class DropdownMenuPublishedRoom extends Component {
   }
 }
 
-export default connect(null, {deleteRoom})(DropdownMenuPublishedRoom)
+export default connect(null, {deleteRoom, exportAllAnswersByRoomId})(DropdownMenuPublishedRoom)

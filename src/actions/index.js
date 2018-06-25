@@ -1,5 +1,6 @@
 import axios from 'axios'
 import _ from 'lodash'
+import FileSaver from 'file-saver' // for export result
 import { createSocket } from 'dgram';
 
 export const SIGN_UP = 'sign_up'
@@ -45,6 +46,8 @@ export const SHOW_COMPONENT = 'show_this_component'
 export const FETCH_PROFILE = 'fetch_user_profile'
 export const UPDATE_PROFILE = 'update_user_profile'
 
+export const EXPORT_ANSWERS_RESULT = 'export_all_answers_result_of_an_own_room'
+
 const BASE_API_URL = process.env.REACT_APP_API_URL // environment variable
 
 const URL_SIGNUP = `${BASE_API_URL}auth/register/`
@@ -67,6 +70,7 @@ const URL_LEAVE_ROOM = `${BASE_API_URL}unjoin/`
 const URL_CREATE_ANSWER = `${BASE_API_URL}answers/`
 const URL_FETCH_ANSWER_BY_ROOM_ID = `${BASE_API_URL}answers/byroomid/` // + room_id to search
 const URL_FETCH_MY_ANSWER = `${BASE_API_URL}answers/me/`
+const URL_EXPORT_ANSWERS = `${BASE_API_URL}export/answers/?room_id=` // + room_id to be exported
 
 
 export function logInAction(values, callback) {
@@ -499,5 +503,15 @@ export function updateProfile(values) {
     //   // })
     //   throw error // to a parent async func in a container who calls this func
     // }
+  }
+}
+
+export function exportAllAnswersByRoomId(room_id) {
+  return async (dispatch) => {
+    const response = await axios.get(`${URL_EXPORT_ANSWERS}${room_id}`, {responseType: 'blob'})
+    FileSaver.saveAs(response.data, 'export.csv')
+    dispatch({
+      type: EXPORT_ANSWERS_RESULT
+    })
   }
 }
