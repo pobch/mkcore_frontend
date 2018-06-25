@@ -44,7 +44,7 @@ input::placeholder {
   color: var(--secondary-text-color);
   font-family: var(--primary-font);
 }
-input[type=text],input[type=email],input[type=password],textarea {
+input[type=text],input[type=number],input[type=email],input[type=password],textarea {
   width: 100%;
   padding: 1.5em;
   border: none;
@@ -52,6 +52,6 @@ input[type=text],input[type=email],input[type=password],textarea {
   font-family: inherit;
   background-color: transparent;
 }
-input[type=text]:disabled,input[type=email]:disabled,input[type=password]:disabled,textarea:disabled {
+input[type=text]:disabled,input[type=number]:disabled,input[type=email]:disabled,input[type=password]:disabled,textarea:disabled {
   background-color: var(--disabled-color);
 }

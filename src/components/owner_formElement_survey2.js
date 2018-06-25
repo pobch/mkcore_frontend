@@ -6,7 +6,7 @@ import EachQuestion from '../components/owner_formElement_survey3'
 
 export default class RenderSurvey extends Component {
 
-  // Warning !!!! Initializing state from props will use props when first rendering only. 
+  // Warning !!!! Initializing state from props will use props when first rendering only.
   //    When re-rendering, nextProps will not change this state.
   //    Therefore we have to make sure that this.props.currentMaxQuestionId has value at first render !!
   state = {
@@ -43,15 +43,15 @@ export default class RenderSurvey extends Component {
                   liRef={(node) => this.liRef[index] = node}
                   index={index}
                   arrayLength={fields.length}
-                  value={value} 
+                  value={value}
                   answerType={fields.get(index).answerType}
 
                   onClickDelete={() => {fields.remove(index)}}
 
                   onClickAddNewQuestionWithCloneChoices={() => {
-                    fields.push({ 
-                      ...defaultNewQuestion, 
-                      answerType: fields.get(index).answerType, 
+                    fields.push({
+                      ...defaultNewQuestion,
+                      answerType: fields.get(index).answerType,
                       choices: fields.get(index).choices
                     })
                     this.setState(prevState => {
@@ -84,7 +84,8 @@ export default class RenderSurvey extends Component {
             })
           }
         </ul>
-        <button type="button"
+        <button
+          type="button"
           onClick={() => {
             fields.push(defaultNewQuestion)
             this.setState(prevState => {

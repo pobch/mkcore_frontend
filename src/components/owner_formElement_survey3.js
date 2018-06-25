@@ -4,7 +4,6 @@ import {Field, FieldArray} from 'redux-form'
 
 import Portal from '../components/portal'
 import SaveCompleteModal from '../components/modal_save_complete'
-import MoveQuestionInputModal from '../components/modal_move_question'
 
 
 export default class EachQuestion extends Component {
@@ -14,7 +13,6 @@ export default class EachQuestion extends Component {
     accordionClass: 'show',
     inputValueOfMoveTo: '',
     invalidQuestionNumToMovePopup: false,
-    inputQuestionNumToMovePopup: false
   }
 
   static propTypes = {
@@ -31,12 +29,6 @@ export default class EachQuestion extends Component {
   }
 
   // ----------------------------------- Move question section: --------------------------- //
-  // 1. click button to open modal:
-  onClickMoveQuestion = () => {
-    this.setState({inputQuestionNumToMovePopup:true})
-  }
-
-  // 2.1 click confirm on modal:
   onConfirmedMoveQuestion = () => {
     const { inputValueOfMoveTo } = this.state
     if(inputValueOfMoveTo && inputValueOfMoveTo > 0 && inputValueOfMoveTo <= this.props.arrayLength) {
@@ -46,12 +38,6 @@ export default class EachQuestion extends Component {
       // open another modal if receive invalid question order:
       this.setState({invalidQuestionNumToMovePopup: true})
     }
-    this.setState({inputValueOfMoveTo: '', inputQuestionNumToMovePopup: false})
-  }
-
-  // 2.2 click cancel on modal:
-  closeModal = () => {
-    this.setState({inputQuestionNumToMovePopup: false})
   }
   // ----------------------------------- End section ---------------------------------------//
 
@@ -76,15 +62,7 @@ export default class EachQuestion extends Component {
   renderChoiceField = ({fields}) => {
     return (
       <div className="survey-choice">
-        <button
-          type="button"
-          className="choice-add iconize anmt-fadein"
-          onClick={() => {
-            fields.push({})
-          }}>
-          <i className="twf twf-minimal-plus" />
-        </button>
-        <ul className="choice-list">
+        <ul className="spacing-top">
           {
             fields.map((value, index) => {
               return (
@@ -110,6 +88,14 @@ export default class EachQuestion extends Component {
             })
           }
         </ul>
+        <button
+          type="button"
+          className="full spacing-top anmt-fadein"
+          onClick={() => {
+            fields.push({})
+          }}>
+          <i className="twf twf-minimal-plus" /> เพิ่มคำตอบ
+        </button>
       </div>
     )
   }
@@ -147,18 +133,23 @@ export default class EachQuestion extends Component {
                   <button
                     type="button"
                     onClick={this.props.onClickDelete}
-                    className="invalid"
+                    className="plain delete"
                   >
                     ลบ
                   </button>
                 </li>
-                <li>
+                <li className="form-inline">
+                  <input
+                    type="number"
+                    placeholder="เลขลำดับ"
+                    onChange={(e) => {this.setState({inputValueOfMoveTo: e.target.value})}}
+                    value={this.state.inputValueOfMoveTo}
+                  />
                   <button
                     type="button"
-                    onClick={this.onClickMoveQuestion}
-                    className="plain"
+                    onClick={this.onConfirmedMoveQuestion}
                   >
-                    Move
+                    ย้าย
                   </button>
                 </li>
               </ul>
@@ -174,22 +165,22 @@ export default class EachQuestion extends Component {
         </div>
 
         <div className="accordion-body spacing-side">
-          <div className="survey-type">
-            <label>ชนิด :</label>
+          <div className="survey-type inline-child">
+            <label>ชนิด:</label>
             <div className="button-group">
               <button
                 type="button"
                 className={ this.props.answerType === 'text' ? 'active' : null }
                 onClick={this.props.onClickText}
               >
-                พิมพ์ตอบ
+                พิมพ์
               </button>
               <button
                 type="button"
                 className={ this.props.answerType === 'choices' ? 'active' : null }
                 onClick={this.props.onClickChoices}
               >
-                เลือกตอบ
+                เลือก
               </button>
             </div>
           </div>
@@ -200,21 +191,6 @@ export default class EachQuestion extends Component {
             />
           }
         </div>
-
-        <Portal>
-          {/* Input target question number to move modal  */}
-          <MoveQuestionInputModal
-            className={this.state.inputQuestionNumToMovePopup ? 'modal show' : 'modal hide'}
-            onCancel={ this.closeModal }
-            onConfirm={ this.onConfirmedMoveQuestion }
-          >
-            Reorder this question to : #
-            <input
-              onChange={(e) => {this.setState({inputValueOfMoveTo: e.target.value})}}
-              value={this.state.inputValueOfMoveTo}
-            />
-          </MoveQuestionInputModal>
-        </Portal>
 
         <Portal>
           {/* Wrong move-to question number modal */}

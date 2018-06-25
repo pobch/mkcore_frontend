@@ -102,7 +102,7 @@ class OwnerRoomsList extends Component {
                 <button
                   type="button"
                   onClick={ (e) => {this.openConfirmDeleteModal(e, room.id)} }
-                  className="invalid"
+                  className="plain delete"
                 >
                   ลบ
                 </button>
@@ -164,7 +164,7 @@ class OwnerRoomsList extends Component {
                 <button
                   type="button"
                   onClick={ (e) => {this.openConfirmDeleteModal(e, room.id)} }
-                  className="invalid"
+                  className="plain delete"
                 >
                   ลบ
                 </button>
