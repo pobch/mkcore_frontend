@@ -13,6 +13,8 @@ export default class EachQuestion extends Component {
     accordionClass: 'show',
     inputValueOfMoveTo: '',
     invalidQuestionNumToMovePopup: false,
+    showDropdownMenu: false,
+    showDropdownMenuClass: 'show'
   }
 
   static propTypes = {
@@ -28,7 +30,7 @@ export default class EachQuestion extends Component {
     onClickChoices: PropTypes.func.isRequired
   }
 
-  // ----------------------------------- Move question section: --------------------------- //
+  // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv Move question section: vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv //
   onConfirmedMoveQuestion = () => {
     const { inputValueOfMoveTo } = this.state
     if(inputValueOfMoveTo && inputValueOfMoveTo > 0 && inputValueOfMoveTo <= this.props.arrayLength) {
@@ -39,8 +41,9 @@ export default class EachQuestion extends Component {
       this.setState({invalidQuestionNumToMovePopup: true})
     }
   }
-  // ----------------------------------- End section ---------------------------------------//
+  // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ End section ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ //
 
+  // Accordion
   onClickToggle = () => {
     if(this.state.accordionOpen) {
       this.setState({accordionOpen: false, accordionClass: 'hide'})
@@ -49,11 +52,25 @@ export default class EachQuestion extends Component {
     }
   }
 
-  dropdownToggle = (e) => {
+  // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv Dropdown menu section: vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv //
+  onClickToggleDropdownMenu = (e) => {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
-    // ใส่ class active ที่ button ให้หน่อยครับ พอกดปุ่ม dropdownclick แล้วถ้าไปคลิกที่อื่น หรือที่ปุ่มเดิมเอา class active ออกครับ
+    this.setState( (prevState) => {
+      return {showDropdownMenu: !prevState.showDropdownMenu}
+    }, () => {
+      document.addEventListener('click', this.onClickOutsideToCloseDropdownMenu)
+    })
   }
+
+  onClickOutsideToCloseDropdownMenu = (event) => {
+    if(this.dropdownMenuRef && !this.dropdownMenuRef.contains(event.target)) {
+      this.setState({showDropdownMenu: false}, () => {
+        document.removeEventListener('click', this.onClickOutsideToCloseDropdownMenu)
+      })
+    }
+  }
+  // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ End section ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ //
 
   renderQuestionField = (field) => {
     return <input type="text" id={field.id} placeholder="ตั้งคำถามที่นี่" {...field.input}/>
@@ -111,15 +128,23 @@ export default class EachQuestion extends Component {
             component={this.renderQuestionField}
           />
           <div className="inline-child">
+            {/* vvvvvvvvvvvvvvvvvvvvvv Dropdown Menu vvvvvvvvvvvvvvvvvvvvvv */}
             <span className="position-relative">
+              {/* Toggle icon */}
               <button
                 type="button"
-                onClick={ (e) => {this.dropdownToggle(e)} }
+                onClick={ this.onClickToggleDropdownMenu }
                 className="dropdown-toggle iconize small"
               >
-                <i className="twf twf-ellipsis" />
+                { this.state.showDropdownMenu
+                  ? <i className="twf twf-ellipsis-vert" /> // show this icon when expand
+                  : <i className="twf twf-ellipsis" /> // show this icon when collapsed
+                }
               </button>
-              <ul className="dropdown-list">
+              {/* Content */}
+              <ul className={`dropdown-list ${this.state.showDropdownMenu ? this.state.showDropdownMenuClass : ''}`}
+                ref={(node) => this.dropdownMenuRef = node}
+              >
                 <li>
                   <button
                     type="button"
@@ -154,6 +179,7 @@ export default class EachQuestion extends Component {
                 </li>
               </ul>
             </span>
+            {/* ^^^^^^^^^^^^^^^^^^^ End of Dropdown menu ^^^^^^^^^^^^^^^^^^^ */}
             <button
               type="button"
               className="plain"
