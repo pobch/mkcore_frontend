@@ -26,6 +26,17 @@ export default class ViewRoomInfo extends Component {
               <div className="float-left col-5">{datetimeStart ? `ถึง ${dateFormat(datetimeEnd, 'dd/mm/yyyy, hh:MM TT')}` : ''}</div>
             </div>
             <div className="spacing-top">{this.props.room.description}</div>
+            <div>
+              { this.props.room.attached_links[0].link_url 
+                && <span>{this.props.room.attached_links[0].link_url} <span>{this.props.room.attached_links[0].content_type}</span></span>
+              }
+              { this.props.room.attached_links[1].link_url 
+                && <span>{this.props.room.attached_links[1].link_url} <span>{this.props.room.attached_links[1].content_type}</span></span>
+              }
+              { this.props.room.attached_links[2].link_url 
+                && <span>{this.props.room.attached_links[2].link_url} <span>{this.props.room.attached_links[2].content_type}</span></span>
+              }
+            </div>
           </div>
         </div>
       </div>

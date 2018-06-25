@@ -29,8 +29,10 @@ class DropdownMenuDraftRoom extends Component {
     this.setState({ confirmPublishPopup: true, publishRoomId: id })
   }
 
-  onConfirmedPublishRoom = (id) => {
-    this.props.publishRoom(id)
+  onConfirmedPublishRoom = () => {
+    this.props.publishRoom(this.state.publishRoomId)
+    this.closeModal()
+    this.setState({publishRoomId: null})
   }
 
   onClickDeleteRoom = (e, id) => {
@@ -39,8 +41,10 @@ class DropdownMenuDraftRoom extends Component {
     this.setState({ confirmDeletePopup: true, deleteRoomId: id })
   }
 
-  onConfirmedDeleteRoom = (id) => {
-    this.props.deleteRoom(id)
+  onConfirmedDeleteRoom = () => {
+    this.props.deleteRoom(this.state.deleteRoomId)
+    this.closeModal()
+    this.setState({deleteRoomId: null})
   }
 
   closeModal = () => {
@@ -109,11 +113,8 @@ class DropdownMenuDraftRoom extends Component {
           <ConfirmModal
             className={ this.state.confirmPublishPopup ? 'show' : 'hide' }
             modalBody="เมื่อเผยแพร่แล้วจะแก้ไขไม่ได้"
-            onCancel={ () => {this.closeModal()} }
-            onConfirm={ () => {
-              this.closeModal()
-              this.onConfirmedPublishRoom(this.state.publishRoomId)
-            }}
+            onCancel={ this.closeModal }
+            onConfirm={ this.onConfirmedPublishRoom }
           />
         </Portal>
 
@@ -122,11 +123,8 @@ class DropdownMenuDraftRoom extends Component {
           <ConfirmModal
             className={ this.state.confirmDeletePopup ? 'show' : 'hide' }
             modalBody="ยืนยันว่าต้องการลบห้องนี้?"
-            onCancel={ () => {this.closeModal()} }
-            onConfirm={ () => {
-              this.closeModal()
-              this.onConfirmedDeleteRoom(this.state.deleteRoomId)
-            }}
+            onCancel={ this.closeModal }
+            onConfirm={ this.onConfirmedDeleteRoom }
           />
         </Portal>
 

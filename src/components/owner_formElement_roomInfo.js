@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Field} from 'redux-form'
+import {Field, FieldArray} from 'redux-form'
 import Moment from 'moment'
 import momentLocalizer from 'react-widgets-moment'
 import { DateTimePicker } from 'react-widgets'
@@ -34,6 +34,63 @@ export default class RoomInfoEdit extends Component {
           inputProps={{
             component: props => <input {...props} readOnly /> // To disable mobile keyboard
           }}/>
+      </div>
+    )
+  }
+
+  renderDropdownList = (field) => {
+    return (
+      // Set initialValues in reduxForm() HOC
+      <span>
+        <label>{field.label}</label>
+        <select {...field.input}>
+          <option key="doc" value="doc">Doc</option>
+          <option key="video" value="video">Video</option>
+          <option key="audio" value="audio">Audio</option>
+          <option key="others" value="others">Others</option>
+        </select>
+      </span>
+    )
+  }
+
+  renderAttachedLinksField = ({fields}) => {
+    return (
+      <div>
+        <Field
+          name={`${fields.name}[0].link_url`}
+          component={this.renderField}
+          label="แนบ Link#1"
+          type="text"
+        />
+        <Field
+          name={`${fields.name}[0].content_type`}
+          component={this.renderDropdownList}
+          label="Content Type#1"
+        />
+
+        <Field
+          name={`${fields.name}[1].link_url`}
+          component={this.renderField}
+          label="แนบ Link#2"
+          type="text"
+        />
+        <Field
+          name={`${fields.name}[1].content_type`}
+          component={this.renderDropdownList}
+          label="Content Type#2"
+        />
+
+        <Field
+          name={`${fields.name}[2].link_url`}
+          component={this.renderField}
+          label="แนบ Link#3"
+          type="text"
+        />
+        <Field
+          name={`${fields.name}[2].content_type`}
+          component={this.renderDropdownList}
+          label="Content Type#3"
+        />
       </div>
     )
   }
@@ -77,6 +134,10 @@ export default class RoomInfoEdit extends Component {
           component={this.renderDateTime}
           label="จบ"
           type=""
+        />
+        <FieldArray
+          name="attached_links"
+          component={this.renderAttachedLinksField}
         />
       </div>
     )
