@@ -4,8 +4,8 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import dateFormat from 'dateformat'
 
-import DropdownMenuDraftRoom from '../containers/ddMenu_owner_room_draft'
-import DropdownMenuPublishedRoom from '../containers/ddMenu_owner_room_published'
+import DropdownMenuDraftRoom from '../containers/owner_rooms_list_ddMenu_draft'
+import DropdownMenuPublishedRoom from '../containers/owner_rooms_list_ddMenu_published'
 
 import BotNavbar from '../components/botNavbar'
 
