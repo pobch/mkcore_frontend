@@ -188,7 +188,7 @@
   width: 80%;
   max-width: 600px;
   min-height: 16em;
-  max-height: 60vh;
+  max-height: 80vh;
   overflow: auto;
   background-color: var(--primary-background-color);
   box-shadow: var(--box-shadow);

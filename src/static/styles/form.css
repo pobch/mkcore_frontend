@@ -63,7 +63,7 @@
   padding-left: 0;
 }
 .form-minimal.number .form-group label + div,
-.form-minimal.number .form-group label + div + button {
+.form-minimal.number .form-group > button {
   line-height: 1.45em;
 }
 .form-minimal.number .form-group label + * {

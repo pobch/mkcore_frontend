@@ -60,35 +60,54 @@ class OwnerRoomsList extends Component {
     e.nativeEvent.stopImmediatePropagation();
   }
 
+  dropdownToggle = (e) => {
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+    // ใส่ class active ที่ button ให้หน่อยครับ พอกดปุ่ม dropdownclick แล้วถ้าไปคลิกที่อื่น หรือที่ปุ่มเดิมเอา class active ออกครับ
+  }
+
   renderDraftRooms = (draftRooms) => {
     return _.map(draftRooms, (room) => {
       return (
-        <li className="list-item clearfix spacing-side anmt-fadein pointer"
+        <li className="list-item with-dropdown spacing-side anmt-fadein pointer"
           key={room.id}
           onClick={() => this.props.history.push(`/owner/rooms/${room.id}`)}
         >
-          <div className="float-left col-5">
+          <div>
             <h3>{room.title}</h3>
             <div className="list-item-meta">
               <div>{room.room_code}</div>
               {room.start_at ? <div>{dateFormat(new Date(room.start_at), 'dd/mm/yy, h:MMTT')}</div> : null}
             </div>
           </div>
-          <div className="float-right align-right col-5 inline-child">
+          <div>
             <button
               type="button"
-              className="iconize"
-              onClick={ (e) => {this.openConfirmPublishModal(e, room.id)} }
+              onClick={ (e) => {this.dropdownToggle(e)} }
+              className="dropdown-toggle iconize"
             >
-              <i className="twf twf-file-text-o" />
+              <i className="twf twf-ellipsis" />
             </button>
-            <button
-              type="button"
-              onClick={ (e) => {this.openConfirmDeleteModal(e, room.id)} }
-              className="iconize delete"
-            >
-              <i className="twf twf-trash-o" />
-            </button>
+            <ul className="dropdown-list">
+              <li>
+                <button
+                  type="button"
+                  onClick={ (e) => {this.openConfirmPublishModal(e, room.id)} }
+                  className="plain"
+                >
+                  เผยแพร่
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={ (e) => {this.openConfirmDeleteModal(e, room.id)} }
+                  className="invalid"
+                >
+                  ลบ
+                </button>
+              </li>
+            </ul>
           </div>
         </li>
       )
@@ -98,11 +117,11 @@ class OwnerRoomsList extends Component {
   renderPublishedRooms = (publishedRooms) => {
     return _.map(publishedRooms, (room) => {
       return (
-        <li className="list-item clearfix spacing-side pointer"
+        <li className="list-item with-dropdown spacing-side anmt-fadein pointer"
           key={room.id}
           onClick={() => this.props.history.push(`/owner/rooms/${room.id}/view`)}
         >
-          <div className="float-left col-5">
+          <div>
             <h3>{room.title}</h3>
             <div className="list-item-meta">
               <div>{room.room_code}</div>
@@ -110,34 +129,47 @@ class OwnerRoomsList extends Component {
             </div>
           </div>
 
-          <div className="float-right align-right col-5 inline-child">
-            <Link
-              className="btn iconize"
-              to={{
-                pathname: `/owner/rooms/${room.id}/joinreqs`,
-                state: {room_title: room.title, room_id: room.id}
-              }}
-              onClick={ (e) => {this.handleRequestLink(e)} }
-            >
-              <i className="twf twf-ln-users" />
-            </Link>
-            <Link
-              to={{
-                pathname: '/owner/rooms/create/noGuests',
-                state: { oldRoom: room }
-              }}
-              onClick={ (e) => {this.handleRequestLink(e)} }
-              className="btn iconize"
-            >
-              <i className="twf twf-docs" />
-            </Link>
+          <div>
             <button
               type="button"
-              onClick={ (e) => {this.openConfirmDeleteModal(e, room.id)} }
-              className="iconize delete"
+              onClick={ (e) => {this.dropdownToggle(e)} }
+              className="dropdown-toggle iconize"
             >
-              <i className="twf twf-trash-o" />
+              <i className="twf twf-ellipsis" />
             </button>
+            <ul className="dropdown-list">
+              <li>
+                <Link
+                  to={{
+                    pathname: `/owner/rooms/${room.id}/joinreqs`,
+                    state: {room_title: room.title, room_id: room.id}
+                  }}
+                  onClick={ (e) => {this.handleRequestLink(e)} }
+                >
+                  ผู้เข้าร่วม
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={{
+                    pathname: '/owner/rooms/create/noGuests',
+                    state: { oldRoom: room }
+                  }}
+                  onClick={ (e) => {this.handleRequestLink(e)} }
+                >
+                  คัดลอก
+                </Link>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={ (e) => {this.openConfirmDeleteModal(e, room.id)} }
+                  className="invalid"
+                >
+                  ลบ
+                </button>
+              </li>
+            </ul>
           </div>
         </li>
       )

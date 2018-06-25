@@ -105,7 +105,7 @@ class ViewJoinReqs extends Component {
                   <i className="twf twf-arrow-bold-right" />
                 </button>
               </div>
-              <div className="feedback bottom brand-contrast">คัดลอกสมาชิกจากห้องอื่นที่เผยแพร่แล้วมาได้ แต่จะใช้ได้ก็ต่อเมื่อยังไม่มีใครขอเข้าร่วมห้อง</div>
+              <div className="feedback bottom brand-contrast">คัดลอกสมาชิกจากห้องอื่นที่เผยแพร่แล้วมาได้<br/>*ใช้ได้ก็ต่อเมื่อยังไม่มีใครขอเข้าร่วมห้อง</div>
             </div>
           )}
 

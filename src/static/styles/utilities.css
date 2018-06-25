@@ -60,7 +60,8 @@
   margin-top: 0.6em;
   margin-bottom: 0;
 }
-.feedback.invalid {
+.invalid,
+.invalid:hover {
   color: var(--fail-color);
 }
 .spacing-cover {
@@ -103,4 +104,7 @@
 }
 .absolute-left {
   position: absolute;
+}
+.circle {
+  border-radius: 50%;
 }
