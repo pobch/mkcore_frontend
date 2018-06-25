@@ -1,29 +1,7 @@
-
-.with-dropdown {
-  position: relative;
-}
-.with-dropdown:after {
-  clear: both;
-  content: "";
-  display: table;
-}
-.with-dropdown > *:first-child {
-  position: relative;
-  width: 80%;
-  width: calc( 100% - 3em );
-  float: left;
-}
-.with-dropdown > *:last-child {
-  position: relative;
-  width: 20%;
-  width: 3em;
-  float: right;
-  text-align: right;
-}
 .dropdown-toggle.active + .dropdown-list {
   opacity: 1;
   visibility: visible;
-  z-index: auto;
+  z-index: 1;
 }
 .dropdown-list {
   display: block;

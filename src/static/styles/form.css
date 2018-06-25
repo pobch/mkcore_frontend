@@ -79,6 +79,15 @@
   padding: 1.5em 0;
   text-align: right;
 }
+.form-minimal.number .form-group.children-3.two-icons label + * {
+  width: calc(100% - 6em);
+  padding-right: 0;
+}
+.form-minimal.number .form-group.children-3.two-icons > *:last-child {
+  width: 4em;
+  padding: 1.5em 0;
+  text-align: right;
+}
 .form-inline {
   background-color: var(--primary-background-color);
 }

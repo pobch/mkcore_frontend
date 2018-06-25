@@ -69,18 +69,18 @@ class OwnerRoomsList extends Component {
   renderDraftRooms = (draftRooms) => {
     return _.map(draftRooms, (room) => {
       return (
-        <li className="list-item with-dropdown spacing-side anmt-fadein pointer"
+        <li className="list-item clearfix spacing-side anmt-fadein pointer"
           key={room.id}
           onClick={() => this.props.history.push(`/owner/rooms/${room.id}`)}
         >
-          <div>
+          <div className="float-left col-8">
             <h3>{room.title}</h3>
             <div className="list-item-meta">
               <div>{room.room_code}</div>
               {room.start_at ? <div>{dateFormat(new Date(room.start_at), 'dd/mm/yy, h:MMTT')}</div> : null}
             </div>
           </div>
-          <div>
+          <div className="float-right col-2 position-relative align-right">
             <button
               type="button"
               onClick={ (e) => {this.dropdownToggle(e)} }
@@ -117,11 +117,11 @@ class OwnerRoomsList extends Component {
   renderPublishedRooms = (publishedRooms) => {
     return _.map(publishedRooms, (room) => {
       return (
-        <li className="list-item with-dropdown spacing-side anmt-fadein pointer"
+        <li className="list-item clearfix spacing-side anmt-fadein pointer"
           key={room.id}
           onClick={() => this.props.history.push(`/owner/rooms/${room.id}/view`)}
         >
-          <div>
+          <div className="float-left col-8">
             <h3>{room.title}</h3>
             <div className="list-item-meta">
               <div>{room.room_code}</div>
@@ -129,7 +129,7 @@ class OwnerRoomsList extends Component {
             </div>
           </div>
 
-          <div>
+          <div className="float-right col-2 position-relative align-right">
             <button
               type="button"
               onClick={ (e) => {this.dropdownToggle(e)} }

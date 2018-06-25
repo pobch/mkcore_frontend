@@ -63,6 +63,12 @@ export default class EachQuestion extends Component {
     }
   }
 
+  dropdownToggle = (e) => {
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+    // ใส่ class active ที่ button ให้หน่อยครับ พอกดปุ่ม dropdownclick แล้วถ้าไปคลิกที่อื่น หรือที่ปุ่มเดิมเอา class active ออกครับ
+  }
+
   renderQuestionField = (field) => {
     return <input type="text" id={field.id} placeholder="ตั้งคำถามที่นี่" {...field.input}/>
   }
@@ -111,29 +117,52 @@ export default class EachQuestion extends Component {
   render() {
     return (
       <li ref={this.props.liRef} className={`list-item accordion form-minimal number ${this.state.accordionClass}`}>
-        <div className="accordion-header form-group children-3 spacing-side">
+        <div className="accordion-header form-group children-3 two-icons clearfix spacing-side">
           <label htmlFor={`survey-item-${this.props.index + 1}`}>{this.props.index + 1}</label>
           <Field
             id={`survey-item-${this.props.index + 1}`}
             name={`${this.props.value}.question`}
             component={this.renderQuestionField}
           />
-          <button type="button" onClick={this.onClickMoveQuestion}>Move</button>
           <div className="inline-child">
-            <button
-              type="button"
-              onClick={this.props.onClickAddNewQuestionWithCloneChoices}
-              className="plain"
-            >
-              <i className="twf twf-et-documents" />
-            </button>
-            <button
-              type="button"
-              onClick={this.props.onClickDelete}
-              className="plain delete"
-            >
-              <i className="twf twf-trash-o" />
-            </button>
+            <span className="position-relative">
+              <button
+                type="button"
+                onClick={ (e) => {this.dropdownToggle(e)} }
+                className="dropdown-toggle iconize small"
+              >
+                <i className="twf twf-ellipsis" />
+              </button>
+              <ul className="dropdown-list">
+                <li>
+                  <button
+                    type="button"
+                    onClick={this.props.onClickAddNewQuestionWithCloneChoices}
+                    className="plain"
+                  >
+                    คัดลอก
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={this.props.onClickDelete}
+                    className="invalid"
+                  >
+                    ลบ
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={this.onClickMoveQuestion}
+                    className="plain"
+                  >
+                    Move
+                  </button>
+                </li>
+              </ul>
+            </span>
             <button
               type="button"
               className="plain"
@@ -179,14 +208,14 @@ export default class EachQuestion extends Component {
             onCancel={ this.closeModal }
             onConfirm={ this.onConfirmedMoveQuestion }
           >
-            Reorder this question to : # 
+            Reorder this question to : #
             <input
               onChange={(e) => {this.setState({inputValueOfMoveTo: e.target.value})}}
               value={this.state.inputValueOfMoveTo}
             />
           </MoveQuestionInputModal>
         </Portal>
-        
+
         <Portal>
           {/* Wrong move-to question number modal */}
           <SaveCompleteModal
