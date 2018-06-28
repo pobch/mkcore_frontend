@@ -8,12 +8,16 @@ import DropdownMenuDraftRoom from '../containers/owner_rooms_list_ddMenu_draft'
 import DropdownMenuPublishedRoom from '../containers/owner_rooms_list_ddMenu_published'
 
 import BotNavbar from '../components/botNavbar'
+import Portal from '../components/portal'
+import ConfirmModal from '../components/modal_confirm'
 
-import {fetchOwnRooms, resetError} from '../actions'
+import {fetchOwnRooms, resetError, publishRoom, deleteRoom} from '../actions'
 
 
 class OwnerRoomsList extends Component {
   state = {
+    confirmPublishPopup: false,
+    publishRoomId: null,
     confirmDeletePopup: false,
     deleteRoomId: null
   }
@@ -26,6 +30,32 @@ class OwnerRoomsList extends Component {
   componentWillUnmount() {
     // Reset Error msg when leaving the page
     this.props.resetError()
+  }
+
+  onClickPublishRoom = (e, id) => {
+    e.stopPropagation();
+    this.setState({ confirmPublishPopup: true, publishRoomId: id })
+  }
+
+  onConfirmedPublishRoom = () => {
+    this.props.publishRoom(this.state.publishRoomId)
+    this.closeModal()
+    this.setState({publishRoomId: null})
+  }
+
+  onClickDeleteRoom = (e, id) => {
+    e.stopPropagation();
+    this.setState({ confirmDeletePopup: true, deleteRoomId: id })
+  }
+
+  onConfirmedDeleteRoom = () => {
+    this.props.deleteRoom(this.state.deleteRoomId)
+    this.closeModal()
+    this.setState({deleteRoomId: null})
+  }
+
+  closeModal = () => {
+    this.setState({ confirmDeletePopup: false, confirmPublishPopup: false })
   }
 
   renderDraftRooms = (draftRooms) => {
@@ -45,6 +75,8 @@ class OwnerRoomsList extends Component {
 
           <DropdownMenuDraftRoom
             room={room}
+            onClickPublishRoom={this.onClickPublishRoom}
+            onClickDeleteRoom={this.onClickDeleteRoom}
           />
         </li>
       )
@@ -102,6 +134,26 @@ class OwnerRoomsList extends Component {
         </div>
 
         <BotNavbar/>
+        
+        {/* Confirm Publish Room Modal */}
+        <Portal>
+          <ConfirmModal
+            className={ this.state.confirmPublishPopup ? 'show' : 'hide' }
+            modalBody="เมื่อเผยแพร่แล้วจะแก้ไขไม่ได้"
+            onCancel={ this.closeModal }
+            onConfirm={ this.onConfirmedPublishRoom }
+          />
+        </Portal>
+
+        {/* Confirm Delete Room Modal */}
+        <Portal>
+          <ConfirmModal
+            className={ this.state.confirmDeletePopup ? 'show' : 'hide' }
+            modalBody="ยืนยันว่าต้องการลบห้องนี้?"
+            onCancel={ this.closeModal }
+            onConfirm={ this.onConfirmedDeleteRoom }
+          />
+        </Portal>
 
       </div>
     )
@@ -124,4 +176,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {fetchOwnRooms, resetError})(OwnerRoomsList)
+export default connect(mapStateToProps, {fetchOwnRooms, resetError, publishRoom, deleteRoom})(OwnerRoomsList)
