@@ -54,8 +54,6 @@ export default class EachQuestion extends Component {
 
   // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv Dropdown menu section: vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv //
   onClickToggleDropdownMenu = (e) => {
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
     this.setState( (prevState) => {
       return {showDropdownMenu: !prevState.showDropdownMenu}
     }, () => {

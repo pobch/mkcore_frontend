@@ -2,10 +2,9 @@ import _ from 'lodash'
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import dateFormat from 'dateformat'
 
-import DropdownMenuDraftRoom from '../containers/owner_rooms_list_ddMenu_draft'
-import DropdownMenuPublishedRoom from '../containers/owner_rooms_list_ddMenu_published'
+import EachLiDraftRoomWithDropdown from '../components/li_room_draft'
+import EachLiPublishedRoomWithDropdown from '../containers/li_room_published'
 
 import BotNavbar from '../components/botNavbar'
 import Portal from '../components/portal'
@@ -40,7 +39,6 @@ class OwnerRoomsList extends Component {
   onConfirmedPublishRoom = () => {
     this.props.publishRoom(this.state.publishRoomId)
     this.closeModal()
-    this.setState({publishRoomId: null})
   }
 
   onClickDeleteRoom = (e, id) => {
@@ -51,34 +49,25 @@ class OwnerRoomsList extends Component {
   onConfirmedDeleteRoom = () => {
     this.props.deleteRoom(this.state.deleteRoomId)
     this.closeModal()
-    this.setState({deleteRoomId: null})
   }
 
   closeModal = () => {
-    this.setState({ confirmDeletePopup: false, confirmPublishPopup: false })
+    this.setState({ 
+      confirmDeletePopup: false, deleteRoomId: null,
+      confirmPublishPopup: false, publishRoomId: null 
+    })
   }
 
   renderDraftRooms = (draftRooms) => {
     return _.map(draftRooms, (room) => {
       return (
-        <li className="list-item clearfix spacing-side anmt-fadein pointer"
+        <EachLiDraftRoomWithDropdown
           key={room.id}
-          onClick={() => this.props.history.push(`/owner/rooms/${room.id}`)}
-        >
-          <div className="float-left col-8">
-            <h3>{room.title}</h3>
-            <div className="list-item-meta">
-              <div>{room.room_code}</div>
-              {room.start_at ? <div>{dateFormat(new Date(room.start_at), 'dd/mm/yy, h:MMTT')}</div> : null}
-            </div>
-          </div>
-
-          <DropdownMenuDraftRoom
-            room={room}
-            onClickPublishRoom={this.onClickPublishRoom}
-            onClickDeleteRoom={this.onClickDeleteRoom}
-          />
-        </li>
+          room={room}
+          onClickPublishRoom={this.onClickPublishRoom}
+          onClickDeleteRoom={this.onClickDeleteRoom}
+          history={this.props.history}
+        />
       )
     })
   }
@@ -86,22 +75,12 @@ class OwnerRoomsList extends Component {
   renderPublishedRooms = (publishedRooms) => {
     return _.map(publishedRooms, (room) => {
       return (
-        <li className="list-item clearfix spacing-side anmt-fadein pointer"
+        <EachLiPublishedRoomWithDropdown
           key={room.id}
-          onClick={() => this.props.history.push(`/owner/rooms/${room.id}/view`)}
-        >
-          <div className="float-left col-8">
-            <h3>{room.title}</h3>
-            <div className="list-item-meta">
-              <div>{room.room_code}</div>
-              {room.start_at ? <div>{dateFormat(new Date(room.start_at), 'dd/mm/yy, h:MMTT')}</div> : null}
-            </div>
-          </div>
-
-          <DropdownMenuPublishedRoom
-            room={room}
-          />  
-        </li>
+          room={room}
+          onClickDeleteRoom={this.onClickDeleteRoom}
+          history={this.props.history}
+        />  
       )
     })
   }
