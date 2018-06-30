@@ -54,6 +54,7 @@
   width: 100%;
   padding-top: 0.6em;
   padding-bottom: 0.6em;
+  font-weight: 400;
   background-color: transparent;
 }
 .dropdown-list .form-inline input {

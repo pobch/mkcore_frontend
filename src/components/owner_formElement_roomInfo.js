@@ -41,55 +41,55 @@ export default class RoomInfoEdit extends Component {
   renderDropdownList = (field) => {
     return (
       // Set initialValues in reduxForm() HOC
-      <span>
+      <div className="form-group">
         <label>{field.label}</label>
         <select {...field.input}>
-          <option key="doc" value="doc">Doc</option>
-          <option key="video" value="video">Video</option>
-          <option key="audio" value="audio">Audio</option>
-          <option key="others" value="others">Others</option>
+          <option key="doc" value="doc">เอกสาร</option>
+          <option key="video" value="video">วิดีโอ</option>
+          <option key="audio" value="audio">ไฟล์เสียง</option>
+          <option key="others" value="others">อื่นๆ</option>
         </select>
-      </span>
+      </div>
     )
   }
 
   renderAttachedLinksField = ({fields}) => {
     return (
-      <div>
+      <div className="attachment-fields">
         <Field
           name={`${fields.name}[0].link_url`}
           component={this.renderField}
-          label="แนบ Link#1"
+          label="แนบลิงค์ 1"
           type="text"
         />
         <Field
           name={`${fields.name}[0].content_type`}
           component={this.renderDropdownList}
-          label="Content Type#1"
+          label="ประเภทลิงค์ 1"
         />
 
         <Field
           name={`${fields.name}[1].link_url`}
           component={this.renderField}
-          label="แนบ Link#2"
+          label="แนบลิงค์ 2"
           type="text"
         />
         <Field
           name={`${fields.name}[1].content_type`}
           component={this.renderDropdownList}
-          label="Content Type#2"
+          label="ประเภทลิงค์ 2"
         />
 
         <Field
           name={`${fields.name}[2].link_url`}
           component={this.renderField}
-          label="แนบ Link#3"
+          label="แนบลิงค์ 3"
           type="text"
         />
         <Field
           name={`${fields.name}[2].content_type`}
           component={this.renderDropdownList}
-          label="Content Type#3"
+          label="ประเภทลิงค์ 3"
         />
       </div>
     )

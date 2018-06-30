@@ -49,7 +49,7 @@
 }
 .form-minimal .form-group label + * {
   width: calc(100% - 8em);
-  padding-left: 0;
+  padding-left: 1em;
   border: none;
 }
 .form-minimal .form-group label + * input {
@@ -69,6 +69,7 @@
 .form-minimal.number .form-group label + * {
   width: calc(100% - 2em);
   padding-right: 0;
+  padding-left: 0;
 }
 .form-minimal.number .form-group.children-3 label + * {
   width: calc(100% - 5em);

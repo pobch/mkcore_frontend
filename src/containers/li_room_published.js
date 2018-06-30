@@ -51,7 +51,7 @@ class EachLiPublishedRoomWithDropdown extends Component {
   render() {
     const {room, onClickDeleteRoom, history} = this.props
     return (
-      <li 
+      <li
         className={`list-item clearfix spacing-side anmt-fadein pointer ` +
           `${this.state.showDropdownMenu ? this.state.showDropdownMenuClass : ''}`}
         onClick={() => history.push(`/owner/rooms/${room.id}/view`)}
@@ -81,10 +81,12 @@ class EachLiPublishedRoomWithDropdown extends Component {
             ref={(node) => this.dropdownMenuRef = node}
           >
             <li>
-              <button type="button"
+              <button
+                type="button"
                 onClick={this.onClickExport(room.id)}
+                className="plain"
               >
-                Export Result
+                ดาวน์โหลดสถิติ
               </button>
             </li>
             <li>
@@ -95,7 +97,7 @@ class EachLiPublishedRoomWithDropdown extends Component {
                 }}
                 onClick={ this.handleRequestLink }
               >
-                ผู้เข้าร่วม
+                รายชื่อผู้เข้าร่วม
               </Link>
             </li>
             <li>

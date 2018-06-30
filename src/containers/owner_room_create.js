@@ -93,9 +93,9 @@ function mapStateToProps(state) {
     errors: state.errors,
     initialValues: {
       attached_links: [ 
-        {link_url: '', content_type: 'others'}, 
-        {link_url: '', content_type: 'others'},
-        {link_url: '', content_type: 'others'}
+        {link_url: '', content_type: 'doc'},
+        {link_url: '', content_type: 'doc'},
+        {link_url: '', content_type: 'doc'}
       ]
     }
   }
