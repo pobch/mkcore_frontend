@@ -64,4 +64,4 @@ deploy_prod:
   script: *deploy_definition
   when: manual
   only:
-    - master
+    - tags
