@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import dateFormat from 'dateformat'
 
+
 export default class ViewRoomInfo extends Component {
 
   static propTypes = {
@@ -11,12 +12,6 @@ export default class ViewRoomInfo extends Component {
   render() {
     const datetimeStart = this.props.room.start_at ? new Date(this.props.room.start_at) : null
     const datetimeEnd = this.props.room.end_at ? new Date(this.props.room.end_at) : null
-    const attachmentTypes = {
-      doc: "เอกสาร",
-      video: "วิดีโอ",
-      audio: "ไฟล์เสียง",
-      others: "อื่นๆ"
-    };
     return (
       <div className="spacing-side">
         <div className="spacing-cover  primary-bg">
@@ -33,13 +28,13 @@ export default class ViewRoomInfo extends Component {
             <div className="spacing-top">{this.props.room.description}</div>
             <div className="spacing-top stacked-child">
               { this.props.room.attached_links[0].link_url
-                && <a href={this.props.room.attached_links[0].link_url} target="_blank">ลิงค์ไปยัง {attachmentTypes[{this.props.room.attached_links[0].content_type}]}</a>
+                && <span>{this.props.room.attached_links[0].link_url} <span>{this.props.room.attached_links[0].content_type}</span></span>
               }
               { this.props.room.attached_links[1].link_url
-                && <a href={this.props.room.attached_links[1].link_url} target="_blank">ลิงค์ไปยัง {attachmentTypes[{this.props.room.attached_links[1].content_type}]}</a>
+                && <span>{this.props.room.attached_links[1].link_url} <span>{this.props.room.attached_links[1].content_type}</span></span>
               }
               { this.props.room.attached_links[2].link_url
-                && <a href={this.props.room.attached_links[2].link_url} target="_blank">ลิงค์ไปยัง {attachmentTypes[{this.props.room.attached_links[2].content_type}]}</a>
+                && <span>{this.props.room.attached_links[2].link_url} <span>{this.props.room.attached_links[2].content_type}</span></span>
               }
             </div>
           </div>
