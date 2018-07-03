@@ -44,10 +44,10 @@ export default class RoomInfoEdit extends Component {
       <div className="form-group">
         <label>{field.label}</label>
         <select {...field.input}>
-          <option key="doc" value="doc">เอกสาร</option>
-          <option key="video" value="video">วิดีโอ</option>
-          <option key="audio" value="audio">ไฟล์เสียง</option>
-          <option key="others" value="others">อื่นๆ</option>
+          <option key="doc" value="เอกสาร">เอกสาร</option>
+          <option key="video" value="วิดีโอ">วิดีโอ</option>
+          <option key="audio" value="ไฟล์เสียง">ไฟล์เสียง</option>
+          <option key="others" value="อื่นๆ">อื่นๆ</option>
         </select>
       </div>
     )

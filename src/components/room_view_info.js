@@ -28,13 +28,13 @@ export default class ViewRoomInfo extends Component {
             <div className="spacing-top">{this.props.room.description}</div>
             <div className="spacing-top stacked-child">
               { this.props.room.attached_links[0].link_url
-                && <span>{this.props.room.attached_links[0].link_url} <span>{this.props.room.attached_links[0].content_type}</span></span>
+                && <a href={this.props.room.attached_links[0].link_url} target="_blank">ลิงค์ไปยัง {this.props.room.attached_links[0].content_type}</a>
               }
               { this.props.room.attached_links[1].link_url
-                && <span>{this.props.room.attached_links[1].link_url} <span>{this.props.room.attached_links[1].content_type}</span></span>
+                && <a href={this.props.room.attached_links[1].link_url} target="_blank">ลิงค์ไปยัง {this.props.room.attached_links[1].content_type}</a>
               }
               { this.props.room.attached_links[2].link_url
-                && <span>{this.props.room.attached_links[2].link_url} <span>{this.props.room.attached_links[2].content_type}</span></span>
+                && <a href={this.props.room.attached_links[2].link_url} target="_blank">ลิงค์ไปยัง {this.props.room.attached_links[2].content_type}</a>
               }
             </div>
           </div>
