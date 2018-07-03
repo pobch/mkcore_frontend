@@ -4,7 +4,7 @@ export function validateOwnRoomCreateEdit(values) {
 
   for(let field of requiredFields) {
     if(!values[field]) {
-      errors[field] = 'This field is required'
+      errors[field] = 'กรุณากรอกข้อมูลลงในช่องนี้'
     }
   }
 

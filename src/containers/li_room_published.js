@@ -11,7 +11,7 @@ class EachLiPublishedRoomWithDropdown extends Component {
 
   state = {
     showDropdownMenu: false,
-    showDropdownMenuClass: 'show'
+    showDropdownMenuClass: 'dropdownshow'
   }
 
   static propTypes = {

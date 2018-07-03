@@ -16,7 +16,7 @@
   font-size: 1.2em;
   border-bottom: 1px solid var(--border-color);
 }
-.list-item.show {
+.list-item.dropdownshow {
   z-index: 1;
 }
 .list-item.empty {

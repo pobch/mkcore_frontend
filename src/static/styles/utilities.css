@@ -37,6 +37,7 @@
   text-align: right;
 }
 .stacked-child > * {
+  display: block;
   margin-bottom: 0.8em;
 }
 .stacked-child > *:empty,

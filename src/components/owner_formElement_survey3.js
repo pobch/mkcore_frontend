@@ -14,7 +14,7 @@ export default class EachQuestion extends Component {
     inputValueOfMoveTo: '',
     invalidQuestionNumToMovePopup: false,
     showDropdownMenu: false,
-    showDropdownMenuClass: 'show'
+    showDropdownMenuClass: 'dropdownshow'
   }
 
   static propTypes = {

@@ -7,7 +7,7 @@ export default class EachLiDraftRoomWithDropdown extends Component {
 
   state = {
     showDropdownMenu: false,
-    showDropdownMenuClass: 'show'
+    showDropdownMenuClass: 'dropdownshow'
   }
 
   static propTypes = {
@@ -37,7 +37,7 @@ export default class EachLiDraftRoomWithDropdown extends Component {
   render() {
     const {room, onClickPublishRoom, onClickDeleteRoom, history} = this.props
     return (
-      <li 
+      <li
         className={`list-item clearfix spacing-side anmt-fadein pointer ` +
           `${this.state.showDropdownMenu ? this.state.showDropdownMenuClass : ''}`}
         onClick={() => history.push(`/owner/rooms/${room.id}`)}
