@@ -37,13 +37,28 @@ variables:
     - envsubst < templates/deployment.yml > generated/deployment.yml
     - kubectl apply -f generated/deployment.yml
 
-build_image:
+build_dev:
   <<: *job_definition
   stage: build
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker build -t $APP_IMAGE .
+    - docker build --build-arg APP_ENV=dev -t $APP_IMAGE .
     - docker push $CI_REGISTRY_IMAGE:$IMAGE_TAG
+  only:
+    - develop
+
+build_prod:
+  <<: *job_definition
+  stage: build
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build --build-arg APP_ENV=prod -t $APP_IMAGE .
+    - docker push $CI_REGISTRY_IMAGE:$IMAGE_TAG
+  only:
+    refs:
+      - master
+    variables:
+      - $CI_COMMIT_TAG
 
 deploy_dev:
   <<: *job_definition
@@ -52,6 +67,8 @@ deploy_dev:
     APP_ID: mkapp-dev
     APP_DOMAIN: dev-app.makrub.com
   script: *deploy_definition
+  after_script:
+    - kubectl delete pods -l app=$APP_ID
   only:
     - develop
 
