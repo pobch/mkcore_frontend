@@ -2,7 +2,7 @@
   width: 2.5em;
   height: 2.5em;
 }
-.dropdown-list.show {
+.dropdown-list.dropdownshow {
   opacity: 1;
   visibility: visible;
   z-index: 1;
