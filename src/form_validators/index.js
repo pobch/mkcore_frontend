@@ -8,5 +8,9 @@ export function validateOwnRoomCreateEdit(values) {
     }
   }
 
+  if(values['room_code'] && /\W/g.test(String(values['room_code']))) {
+    errors['room_code'] = 'ตัวอักษรภาษาอังกฤษ ตัวเลข หรือ _ เท่านั้น'
+  }
+
   return errors
 }
