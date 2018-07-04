@@ -75,7 +75,7 @@
   width: calc(100% - 5em);
   padding-right: 0;
 }
-.form-minimal.number .form-group.children-3 > *:last-child {
+.form-minimal.number .form-group.children-3 > *:nth-child(3) {
   width: 3em;
   padding: 1.5em 0;
   text-align: right;
