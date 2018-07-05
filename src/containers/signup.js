@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import Loading from '../components/loading'
 
 import { signUpAction } from '../actions'
-import icon from '../static/hello-2.svg'
+import icon from '../static/logo.png'
 
 
 class SignUp extends Component {
@@ -63,7 +63,7 @@ class SignUp extends Component {
       <div className="login">
         <div className="wrapper-background fixed brand-bg" />
         <div className="login-header align-center">
-          <img src={icon} width="150" height="150" alt="Icon"/>
+          <img src={icon} width="184" height="37" alt="Logo"/>
         </div>
         <div>{error}</div>
         <form

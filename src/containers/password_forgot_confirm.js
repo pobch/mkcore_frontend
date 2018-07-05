@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {reduxForm, Field} from 'redux-form'
 
 import {passwordForgotConfirmAction} from '../actions'
-import icon from '../static/hello-2.svg'
+import icon from '../static/logo.png'
 
 import Portal from '../components/portal'
 import SaveCompleteModal from '../components/modal_save_complete'
@@ -44,7 +44,7 @@ class PasswordForgotConfirm extends Component {
       <div className="login">
         <div className="wrapper-background fixed brand-bg" />
         <div className="login-header align-center">
-          <img src={icon} width="150" height="150" alt="Icon"/>
+          <img src={icon} width="184" height="37" alt="Logo"/>
         </div>
         <form className="login-form" onSubmit={handleSubmit(this.onSubmit)}>
           <Field

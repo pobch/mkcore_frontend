@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
 import Loading from '../components/loading'
-import icon from '../static/hello-2.svg'
+import icon from '../static/logo.png'
 
 import {signUpConfirmAction} from '../actions'
 
@@ -35,7 +35,7 @@ class SignUpConfirm extends Component {
         <div className="login">
           <div className="wrapper-background fixed brand-bg" />
           <div className="login-header align-center">
-            <img src={icon} width="150" height="150" alt="Icon"/>
+            <img src={icon} width="184" height="37" alt="Logo"/>
           </div>
           <div className="spacing-top spacing-cover align-center fail-bg brand-contrast">
             มีข้อผิดพลาดกับลิงค์ยืนยันบัญชีของคุณ
@@ -52,7 +52,7 @@ class SignUpConfirm extends Component {
       <div className="login">
         <div className="wrapper-background fixed brand-bg" />
         <div className="login-header align-center">
-          <img src={icon} width="150" height="150" alt="Icon"/>
+          <img src={icon} width="184" height="37" alt="Logo"/>
         </div>
         <div className="spacing-top spacing-cover align-center primary-bg">
           ยืนยันเสร็จสมบูรณ์ ยินดีต้อนรับ

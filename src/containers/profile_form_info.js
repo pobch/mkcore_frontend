@@ -7,7 +7,7 @@ import SaveCompleteModal from '../components/modal_save_complete'
 import Loading from '../components/loading'
 
 import {updateProfile} from '../actions'
-import icon from '../static/hello-2.svg'
+import icon from '../static/avatar.png'
 
 
 class FormProfileInfo extends Component {

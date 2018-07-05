@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {reduxForm, Field} from 'redux-form'
+import { Link } from 'react-router-dom'
 
 import {passwordForgotAction} from '../actions'
-import icon from '../static/hello-2.svg'
+import icon from '../static/logo.png'
 
 import Portal from '../components/portal'
 import SaveCompleteModal from '../components/modal_save_complete'
@@ -26,7 +27,7 @@ class PasswordForgot extends Component {
       <div className="login">
         <div className="wrapper-background fixed brand-bg" />
         <div className="login-header align-center">
-          <img src={icon} width="150" height="150" alt="Icon"/>
+          <img src={icon} width="184" height="37" alt="Logo"/>
         </div>
         <form className="login-form align-center" onSubmit={handleSubmit(this.onSubmit)}>
           <h3 className="brand-contrast">กรอกที่อยู่อีเมลของคุณที่ใช้ในการสมัคร</h3>
@@ -41,6 +42,10 @@ class PasswordForgot extends Component {
             <i className="twf twf-arrow-bold-right" />
           </button>
         </form>
+
+        <div className="login-footer">
+          <Link to="/" className="brand-contrast">ย้อนกลับ</Link>
+        </div>
 
         <Portal>
           <SaveCompleteModal
