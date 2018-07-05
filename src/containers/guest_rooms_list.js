@@ -59,8 +59,8 @@ class GuestRoomsList extends Component {
           <div className="float-left col-7">
             <h3>{room.title}</h3>
             <div className="list-item-meta">
-              {room.room_code}
-              {room.start_at ? ` -- ${dateFormat(new Date(room.start_at), 'dd/mm/yy, h:MMTT')}` : null}
+              <div>{room.room_code}</div>
+              {room.start_at ? <div>{dateFormat(new Date(room.start_at), 'dd/mm/yy, h:MMTT')}</div> : null}
             </div>
           </div>
           <div className="float-right align-right col-3">
