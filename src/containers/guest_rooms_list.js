@@ -136,7 +136,7 @@ class GuestRoomsList extends Component {
         <div className="wrapper-background fixed" />
         <div className="header fixed">หน้าแรก</div>
         <div className="body">
-          <div className="body-header spacing-side">
+          <div className="body-header spacing-side brand-bg">
             <JoinRoom/>
           </div>
           <div className="body-content">
@@ -171,24 +171,33 @@ class GuestRoomsList extends Component {
                 })
               }
             </ul>
-            <div className="list-title spacing-side">รอการยืนยันการเข้าร่วม</div>
+            { _.isEmpty(this.props.pendingRoomsInfo) ?
+              null :
+              <div className="list-title spacing-side">รอการยืนยันการเข้าร่วม</div>
+            }
             <ul className="list-body">
               { _.isEmpty(this.props.pendingRoomsInfo) ?
-                <li className="list-item empty">ไม่มีห้องที่รอยืนยัน</li> :
+                null :
                 this.renderPendingRooms(this.props.pendingRoomsInfo)
               }
             </ul>
-            <div className="list-title spacing-side">ยังไม่ตอบแบบสอบถาม</div>
+            { _.isEmpty(this.props.roomsNotYetSubmitAns) ?
+              null :
+              <div className="list-title spacing-side">ยังไม่ตอบแบบสอบถาม</div>
+            }
             <ul className="list-body">
               { _.isEmpty(this.props.roomsNotYetSubmitAns) ?
-                <li className="list-item empty">ไม่มีห้องที่ยังไม่ตอบแบบสอบถาม</li> :
+                null :
                 this.renderGuestRoomsEditable(this.props.roomsNotYetSubmitAns)
               }
             </ul>
-            <div className="list-title spacing-side">ตอบแบบสอบถามแล้ว / ไม่มีแบบสอบถาม</div>
+            { _.isEmpty(this.props.roomsSubmittedAnsOrWithoutSurvey) ?
+              null :
+              <div className="list-title spacing-side">ตอบแบบสอบถามแล้ว / ไม่มีแบบสอบถาม</div>
+            }
             <ul className="list-body">
               { _.isEmpty(this.props.roomsSubmittedAnsOrWithoutSurvey) ?
-                <li className="list-item empty">ไม่มีห้อง</li> :
+                null :
                 this.renderGuestRoomsViewOnly(this.props.roomsSubmittedAnsOrWithoutSurvey)
               }
             </ul>

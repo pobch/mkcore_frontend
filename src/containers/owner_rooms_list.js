@@ -52,9 +52,9 @@ class OwnerRoomsList extends Component {
   }
 
   closeModal = () => {
-    this.setState({ 
+    this.setState({
       confirmDeletePopup: false, deleteRoomId: null,
-      confirmPublishPopup: false, publishRoomId: null 
+      confirmPublishPopup: false, publishRoomId: null
     })
   }
 
@@ -80,7 +80,7 @@ class OwnerRoomsList extends Component {
           room={room}
           onClickDeleteRoom={this.onClickDeleteRoom}
           history={this.props.history}
-        />  
+        />
       )
     })
   }
@@ -92,28 +92,37 @@ class OwnerRoomsList extends Component {
         <div className="header fixed">ห้องของฉัน</div>
         <div className="body">
           <div className="body-header spacing-side">
-            <Link className="btn" to="/owner/rooms/create">สร้างห้อง</Link>
+            <Link className="btn" to="/owner/rooms/create">
+              <i className="twf twf-minimal-plus before" />
+              สร้างห้อง
+            </Link>
           </div>
           <div className="body-content">
-            <div className="list-title spacing-side">แบบร่าง</div>
+            { _.isEmpty(this.props.draftRooms) ?
+              null :
+              <div className="list-title spacing-side">แบบร่าง</div>
+            }
             <ul className="list-body">
-              { _.isEmpty(this.props.draftRooms)
-                ? <li className="list-item empty">ยังไม่มีห้องที่ถูกสร้าง</li>
-                : this.renderDraftRooms(this.props.draftRooms)
+              { _.isEmpty(this.props.draftRooms) ?
+                null :
+                this.renderDraftRooms(this.props.draftRooms)
               }
             </ul>
-            <div className="list-title spacing-side">เผยแพร่แล้ว</div>
+            { _.isEmpty(this.props.publishedRooms) ?
+              null :
+              <div className="list-title spacing-side">เผยแพร่แล้ว</div>
+            }
             <ul className="list-body">
-              { _.isEmpty(this.props.publishedRooms)
-                ? <li className="list-item empty">ยังไม่มีห้องที่ถูกเผยแพร่</li>
-                : this.renderPublishedRooms(this.props.publishedRooms)
+              { _.isEmpty(this.props.publishedRooms) ?
+                null :
+                this.renderPublishedRooms(this.props.publishedRooms)
               }
             </ul>
           </div>
         </div>
 
         <BotNavbar/>
-        
+
         {/* Confirm Publish Room Modal */}
         <Portal>
           <ConfirmModal
