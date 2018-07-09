@@ -12,5 +12,15 @@ export function validateOwnRoomCreateEdit(values) {
     errors['room_code'] = 'ตัวอักษรภาษาอังกฤษ ตัวเลข หรือ _ เท่านั้น'
   }
 
+  const linkUrlError = []
+  values['attached_links'] && values['attached_links'].forEach( (element, indx) => {
+    if(element.link_url && !/^https?:\/\//i.test(element.link_url)) {
+      linkUrlError[indx] = {link_url: 'ต้องขึ้นต้นด้วย http:// หรือ https://'}
+    }
+  })
+  if(linkUrlError.length) {
+    errors['attached_links'] = linkUrlError
+  }
+
   return errors
 }
