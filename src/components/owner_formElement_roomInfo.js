@@ -7,6 +7,15 @@ import { DateTimePicker } from 'react-widgets'
 Moment.locale('en')
 momentLocalizer()
 
+
+// redux-form validator :
+const number = value =>
+  value && isNaN(Number(value)) ? 'Must be a number' : undefined
+
+const minValue1 = value =>
+  value && value < 1 ? `Must be at least 1` : undefined
+
+
 export default class RoomInfoEdit extends Component {
 
   renderField = (field) => {
@@ -134,6 +143,19 @@ export default class RoomInfoEdit extends Component {
           component={this.renderDateTime}
           label="จบ"
           type=""
+        />
+        <Field
+          name="last_date_to_join"
+          component={this.renderDateTime}
+          label="Last date that guest can join"
+          type=""
+        />
+        <Field
+          name="guest_ttl_in_days"
+          component={this.renderField}
+          label="TTL in days"
+          type="number"
+          validate={[number, minValue1]}
         />
         <FieldArray
           name="attached_links"

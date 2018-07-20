@@ -1,7 +1,6 @@
 import axios from 'axios'
 import _ from 'lodash'
 import FileSaver from 'file-saver' // for export result
-import { createSocket } from 'dgram';
 
 export const SIGN_UP = 'sign_up'
 export const SIGN_UP_CONFIRM = 'sign_up_activate_confirm'
