@@ -61,8 +61,9 @@ const URL_FETCH_OWNROOM_BY_ROOM_CODE = `${BASE_API_URL}rooms/search/?room_code=`
 const URL_RETRIEVE_UPDATE_OWNROOM = `${BASE_API_URL}rooms/` // + id
 const URL_FETCH_JOINREQS_BY_ROOM_ID = `${BASE_API_URL}joinreqs/byroomid/` // + room_id to search
 const URL_RETRIEVE_UPDATE_DEL_JOINREQ = `${BASE_API_URL}joinreqs/` // +  a joinReq's id
-const URL_BULK_UPDATE_JOINREQS = `${BASE_API_URL}joinreqs/accept-all/` // POST {"ids": [2,3,4]}
-const URL_BULK_CREATE_JOINREQS = `${BASE_API_URL}joinreqs/bulkcreate/` // POST [{<row to create>}, {...}]
+// const URL_BULK_UPDATE_JOINREQS = `${BASE_API_URL}joinreqs/accept-all/` // POST {"ids": [2,3,4]}
+const URL_BULK_CREATEUPDATE_JOINREQS = `${BASE_API_URL}joinreqs/bulkcreateupdate/` 
+                                                          // POST/PATCH [{<row to create/update>}, {...}]
 const URL_FETCH_PENDINGROOMS_INFO = `${BASE_API_URL}joinreqs/pending/`
 const URL_JOIN_ROOM = `${BASE_API_URL}join/`
 const URL_LEAVE_ROOM = `${BASE_API_URL}unjoin/`
@@ -222,29 +223,37 @@ export function fetchJoinReqsOfOwnRoom(room_id) {
   }
 }
 
-export function bulkCloneJoinReqsFromRoomCode(fromRoomCode, targetRoomId) {
+export function bulkCloneJoinReqsFromRoomCode(fromRoomCode, targetRoomId, targetRoomTTL) {
   return async (dispatch) => {
     const room = await axios.get(`${URL_FETCH_OWNROOM_BY_ROOM_CODE}${fromRoomCode}`)
     const fromRoomId = +room.data.id
-    dispatch(bulkCloneJoinReqsFromRoomId(fromRoomId, targetRoomId))
+    dispatch(bulkCloneJoinReqsFromRoomId(fromRoomId, targetRoomId, targetRoomTTL))
   }
 }
 
-export function bulkCloneJoinReqsFromRoomId(fromRoomId, targetRoomId) {
+function bulkCloneJoinReqsFromRoomId(fromRoomId, targetRoomId, targetRoomTTL) {
   return async (dispatch) => {
-    // build each row to create:
+    // fetch existing join reqs :
     const oldRows = await axios.get(`${URL_FETCH_JOINREQS_BY_ROOM_ID}${fromRoomId}/`)
+    const dateNow = new Date()
+    let expireDate = null
+    if(targetRoomTTL) { // can be null
+      expireDate = new Date()
+      expireDate.setDate(dateNow.getDate() + targetRoomTTL)
+    }
+    // build each row to create for target room :
     const newRows = oldRows.data.map(row => {
       return {
         created_by_room_owner: true,
         user: row.user,
         room: targetRoomId,
         accepted: row.accepted,
-        accept_date: row.accepted ? new Date() : null
+        accept_date: row.accepted ? dateNow : null,
+        expire_date: row.accepted ? expireDate : null
       }
     })
     // bulk create new join reqs
-    const response = await axios.post(URL_BULK_CREATE_JOINREQS, newRows)
+    const response = await axios.post(URL_BULK_CREATEUPDATE_JOINREQS, newRows)
     dispatch({
       type: BULK_CREATE_JOINREQS,
       payload: response // if not error, response.data is array of new created rows
@@ -252,27 +261,50 @@ export function bulkCloneJoinReqsFromRoomId(fromRoomId, targetRoomId) {
   }
 }
 
-export function acceptJoinReq(guestRoomRelationId) {
+export function acceptAllJoinReqs(ids, targetRoomTTL) {
+  // 'ids' is array of not-yet-accepted-join-reqs id
   return async (dispatch) => {
+    // build array of bulk PATCH:
+    const dateNow = new Date()
+    let expireDate = null
+    if(targetRoomTTL) { // can be null
+      expireDate = new Date()
+      expireDate.setDate(dateNow.getDate() + targetRoomTTL)
+    }
+    const updateRows = ids.map(id => {
+      return {
+        id,
+        accepted: true,
+        accept_date: dateNow,
+        expire_date: expireDate
+      }
+    })
+    // bulk update :
+    const response = await axios.patch(URL_BULK_CREATEUPDATE_JOINREQS, updateRows)
+    dispatch({
+      type: ACCEPT_ALL_JOINREQS,
+      payload: response // array type
+    })
+  }
+}
+
+export function acceptJoinReq(guestRoomRelationId, targetRoomTTL) {
+  return async (dispatch) => {
+    const dateNow = new Date()
+    let expireDate = null
+    if(targetRoomTTL) { // can be null
+      expireDate = new Date()
+      expireDate.setDate(dateNow.getDate() + targetRoomTTL)
+    }
     const response = await axios.patch(`${URL_RETRIEVE_UPDATE_DEL_JOINREQ}${guestRoomRelationId}/`,
       { accepted: true, 
-        accept_date: new Date() 
+        accept_date: dateNow,
+        expire_date: expireDate
       }
     )
     dispatch({
       type: ACCEPT_JOINREQ,
       payload: response // obj type
-    })
-  }
-}
-
-export function acceptAllJoinReqs(ids) {
-  // 'ids' is array of not-yet-accepted-join-reqs id
-  return async (dispatch) => {
-    const response = await axios.post(URL_BULK_UPDATE_JOINREQS, {ids})
-    dispatch({
-      type: ACCEPT_ALL_JOINREQS,
-      payload: response // array type
     })
   }
 }

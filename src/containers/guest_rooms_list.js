@@ -155,7 +155,7 @@ class GuestRoomsList extends Component {
                     // e.g., key = room_code, value = [ 'error msg1', 'error msg2' ]
                     return (
                       <li key={key}>
-                        เกิดเหตุขัดข้อง {value}
+                        เกิดเหตุขัดข้อง {key}
                         <ul className="list-body">
                           {_.map(value, (v,indx) => {
                             return (

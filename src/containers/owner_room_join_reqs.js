@@ -7,8 +7,8 @@ import Portal from '../components/portal'
 import ConfirmModal from '../components/modal_confirm'
 
 import {
-  fetchJoinReqsOfOwnRoom, acceptJoinReq, acceptAllJoinReqs, denyJoinReq,
-  bulkCloneJoinReqsFromRoomCode, bulkCloneJoinReqsFromRoomId, RESET_JOINREQS_LIST
+  fetchJoinReqsOfOwnRoom, fetchOwnRoom, acceptJoinReq, acceptAllJoinReqs, denyJoinReq,
+  bulkCloneJoinReqsFromRoomCode, RESET_JOINREQS_LIST
 } from '../actions'
 
 
@@ -23,6 +23,7 @@ class ViewJoinReqs extends Component {
     window.scrollTo(0,0)
     const {id} = this.props.match.params
     this.props.fetchJoinReqsOfOwnRoom(id)
+    this.props.fetchOwnRoom(id)
   }
 
   componentWillUnmount() {
@@ -38,20 +39,8 @@ class ViewJoinReqs extends Component {
   // Click confirm on modal:
   onCloneJoinReqsConfirmed = () => {
     const targetRoomId = +this.props.match.params.id
-    const frontendOwnRooms = _.keyBy(this.props.ownRooms, 'room_code')
-    if(frontendOwnRooms[this.state.cloneFromRoomCodeInput]) {
-      // case: frontend already fetched full ownRooms list:
-      const fromRoomId = +frontendOwnRooms[this.state.cloneFromRoomCodeInput].id
-      this.props.bulkCloneJoinReqsFromRoomId(fromRoomId, targetRoomId)
-    } else {
-      // case:
-      //  1. frontend already fetched only 1 ownRoom, so we have to search the full list in backend
-      //  2. frontend already fetched full ownRooms list but not found the room with matching room_code,
-      //     this code block still force to search the full list again in backend (this case may cause
-      //     performance issue)
-      const fromRoomCode = this.state.cloneFromRoomCodeInput
-      this.props.bulkCloneJoinReqsFromRoomCode(fromRoomCode, targetRoomId)
-    }
+    const fromRoomCode = this.state.cloneFromRoomCodeInput
+    this.props.bulkCloneJoinReqsFromRoomCode(fromRoomCode, targetRoomId, this.props.ownRoom.guest_ttl_in_days)
     this.setState({cloneFromRoomCodeInput: ''})
     this.setState({cloneJoinReqsConfirmPopup: false})
   }
@@ -63,7 +52,7 @@ class ViewJoinReqs extends Component {
   /* ----------------------------- End section ----------------------------------- */
 
   onClickAcceptAll = () => {
-    this.props.acceptAllJoinReqs(this.props.joinReqsInfoNotAcceptedIds)
+    this.props.acceptAllJoinReqs(this.props.joinReqsInfoNotAcceptedIds, this.props.ownRoom.guest_ttl_in_days)
   }
 
   render() {
@@ -127,7 +116,7 @@ class ViewJoinReqs extends Component {
                     <div className="float-right inline-child">
                       <button
                         type="button"
-                        onClick={() => {this.props.acceptJoinReq(req.id)}}
+                        onClick={() => {this.props.acceptJoinReq(req.id, this.props.ownRoom.guest_ttl_in_days)}}
                         className="iconize"
                       >
                         <i className="twf twf-check" />
@@ -188,7 +177,7 @@ class ViewJoinReqs extends Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   const joinReqsInfoNotAccepted = []
   const joinReqsInfoNotAcceptedIds = []
   const joinReqsInfoAccepted = []
@@ -213,18 +202,18 @@ function mapStateToProps(state) {
     joinReqsInfoNotAccepted,
     joinReqsInfoAccepted,
     joinReqsInfoNotAcceptedIds,
-    ownRooms: state.ownRooms
+    ownRoom: _.find(state.ownRooms, ['id', +ownProps.match.params.id])
   }
 }
 
 export default connect(mapStateToProps,
   {
     fetchJoinReqsOfOwnRoom,
+    fetchOwnRoom,
     acceptJoinReq,
     acceptAllJoinReqs,
     denyJoinReq,
     bulkCloneJoinReqsFromRoomCode,
-    bulkCloneJoinReqsFromRoomId,
     resetJoinReqsList: () => ({type: RESET_JOINREQS_LIST})
   }
 )(ViewJoinReqs)
