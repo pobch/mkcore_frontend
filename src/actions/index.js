@@ -61,9 +61,10 @@ const URL_FETCH_OWNROOM_BY_ROOM_CODE = `${BASE_API_URL}rooms/search/?room_code=`
 const URL_RETRIEVE_UPDATE_OWNROOM = `${BASE_API_URL}rooms/` // + id
 const URL_FETCH_JOINREQS_BY_ROOM_ID = `${BASE_API_URL}joinreqs/byroomid/` // + room_id to search
 const URL_RETRIEVE_UPDATE_DEL_JOINREQ = `${BASE_API_URL}joinreqs/` // +  a joinReq's id
-// const URL_BULK_UPDATE_JOINREQS = `${BASE_API_URL}joinreqs/accept-all/` // POST {"ids": [2,3,4]}
-const URL_BULK_CREATEUPDATE_JOINREQS = `${BASE_API_URL}joinreqs/bulkcreateupdate/` 
-                                                          // POST/PATCH [{<row to create/update>}, {...}]
+const URL_BULK_UPDATE_JOINREQS = `${BASE_API_URL}joinreqs/bulkupdate/` 
+                                                    // POST {"ids": [2,3,4], "eachRowData": {"accepted": true, ...}}
+const URL_BULK_CREATE_JOINREQS = `${BASE_API_URL}joinreqs/bulkcreate/` 
+                                                    // POST [{<row to create>}, {...}, ...]
 const URL_FETCH_PENDINGROOMS_INFO = `${BASE_API_URL}joinreqs/pending/`
 const URL_JOIN_ROOM = `${BASE_API_URL}join/`
 const URL_LEAVE_ROOM = `${BASE_API_URL}unjoin/`
@@ -253,7 +254,7 @@ function bulkCloneJoinReqsFromRoomId(fromRoomId, targetRoomId, targetRoomTTL) {
       }
     })
     // bulk create new join reqs
-    const response = await axios.post(URL_BULK_CREATEUPDATE_JOINREQS, newRows)
+    const response = await axios.post(URL_BULK_CREATE_JOINREQS, newRows)
     dispatch({
       type: BULK_CREATE_JOINREQS,
       payload: response // if not error, response.data is array of new created rows
@@ -271,16 +272,16 @@ export function acceptAllJoinReqs(ids, targetRoomTTL) {
       expireDate = new Date()
       expireDate.setDate(dateNow.getDate() + targetRoomTTL)
     }
-    const updateRows = ids.map(id => {
-      return {
-        id,
+    const dataToSend = {
+      ids, // array
+      eachRowData: {
         accepted: true,
         accept_date: dateNow,
         expire_date: expireDate
       }
-    })
+    }
     // bulk update :
-    const response = await axios.patch(URL_BULK_CREATEUPDATE_JOINREQS, updateRows)
+    const response = await axios.post(URL_BULK_UPDATE_JOINREQS, dataToSend)
     dispatch({
       type: ACCEPT_ALL_JOINREQS,
       payload: response // array type
