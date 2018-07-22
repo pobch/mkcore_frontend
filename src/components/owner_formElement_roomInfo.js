@@ -53,10 +53,10 @@ export default class RoomInfoEdit extends Component {
       <div className="form-group">
         <label>{field.label}</label>
         <select {...field.input}>
-          <option key="doc" value="เอกสาร">เอกสาร</option>
-          <option key="video" value="วิดีโอ">วิดีโอ</option>
-          <option key="audio" value="ไฟล์เสียง">ไฟล์เสียง</option>
-          <option key="others" value="อื่นๆ">อื่นๆ</option>
+          <option value="">--โปรดเลือก--</option>
+          <option key="doc" value="doc">เอกสาร</option>
+          <option key="audio" value="audio">ไฟล์เสียง</option>
+          <option key="others" value="others">อื่นๆ</option>
         </select>
       </div>
     )
@@ -64,43 +64,39 @@ export default class RoomInfoEdit extends Component {
 
   renderAttachedLinksField = ({fields}) => {
     return (
-      <div className="attachment-fields">
-        <Field
-          name={`${fields.name}[0].link_url`}
-          component={this.renderField}
-          label="แนบลิงค์ 1"
-          type="text"
-        />
-        <Field
-          name={`${fields.name}[0].content_type`}
-          component={this.renderDropdownList}
-          label="ประเภทลิงค์ 1"
-        />
-
-        <Field
-          name={`${fields.name}[1].link_url`}
-          component={this.renderField}
-          label="แนบลิงค์ 2"
-          type="text"
-        />
-        <Field
-          name={`${fields.name}[1].content_type`}
-          component={this.renderDropdownList}
-          label="ประเภทลิงค์ 2"
-        />
-
-        <Field
-          name={`${fields.name}[2].link_url`}
-          component={this.renderField}
-          label="แนบลิงค์ 3"
-          type="text"
-        />
-        <Field
-          name={`${fields.name}[2].content_type`}
-          component={this.renderDropdownList}
-          label="ประเภทลิงค์ 3"
-        />
-      </div>
+      <ul>
+          { fields.map( (name, indx) => {
+            return (
+              <li key={indx} className="attachment-fields">   
+                <Field
+                  name={`${name}.link_title`}
+                  component={this.renderField}
+                  label="Title"
+                  type="text"
+                />
+                <Field
+                  name={`${name}.video_url`}
+                  component={this.renderField}
+                  label="Video"
+                  type="text"
+                />
+                <Field
+                  name={`${name}.link_url`}
+                  component={this.renderField}
+                  label="Other Link"
+                  type="text"
+                />
+                <Field
+                  name={`${name}.content_type`}
+                  component={this.renderDropdownList}
+                  label="Other Link's Type"
+                />
+                <button type="button" onClick={() => fields.remove(indx)}>Delete</button>
+              </li>
+            )
+          })}
+        <button type="button" onClick={() => fields.push({})}>Add Link</button>
+      </ul>
     )
   }
 
@@ -111,49 +107,49 @@ export default class RoomInfoEdit extends Component {
         <Field
           name="room_code"
           component={this.renderField}
-          label="รหัสห้อง"
+          label="*รหัสห้อง"
           type={this.props.roomCodeDisabled ? 'disabled' : 'text'}
         />
         <Field
           name="title"
           component={this.renderField}
-          label="ชื่อ"
+          label="*ชื่อ"
           type="text"
         />
         <Field
           name="instructor_name"
           component={this.renderField}
-          label="เจ้าของห้อง"
+          label="*เจ้าของห้อง"
           type="text"
         />
         <Field
           name="description"
           component={this.renderField}
-          label="รายละเอียด"
+          label="*รายละเอียด"
           type="textarea"
         />
         <Field
           name="start_at"
           component={this.renderDateTime}
-          label="เริ่ม"
+          label="เวลาเริ่ม"
           type=""
         />
         <Field
           name="end_at"
           component={this.renderDateTime}
-          label="จบ"
+          label="เวลาจบ"
           type=""
         />
         <Field
           name="last_date_to_join"
           component={this.renderDateTime}
-          label="Last date that guest can join"
+          label="ขอเข้าร่วมห้องได้ถึงเวลา"
           type=""
         />
         <Field
           name="guest_ttl_in_days"
           component={this.renderField}
-          label="TTL in days"
+          label="ผู้เข้าร่วมจะมีสิทธิอยู่ในห้องได้ (วัน)"
           type="number"
           validate={[number, minValue1]}
         />

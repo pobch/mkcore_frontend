@@ -119,7 +119,8 @@ function mapStateToProps(state, ownProps) {
     room: roomData,
     currentMaxQuestionId,
     initialValues: _.pick(roomData, ['title', 'description', 'room_code', 'room_password', 
-      'instructor_name', 'survey', 'start_at', 'end_at', 'image_url', 'attached_links'
+      'instructor_name', 'survey', 'start_at', 'end_at', 'last_date_to_join', 'guest_ttl_in_days', 
+      'image_url', 'attached_links'
     ])
   }
 }

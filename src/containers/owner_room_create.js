@@ -90,14 +90,7 @@ class CreateRoom extends Component {
 
 function mapStateToProps(state) {
   return {
-    errors: state.errors,
-    initialValues: {
-      attached_links: [ 
-        {link_url: '', content_type: 'doc'},
-        {link_url: '', content_type: 'doc'},
-        {link_url: '', content_type: 'doc'}
-      ]
-    }
+    errors: state.errors
   }
 }
 
