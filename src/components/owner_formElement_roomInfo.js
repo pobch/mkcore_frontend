@@ -24,10 +24,10 @@ export default class RoomInfoEdit extends Component {
         { field.meta.touched && field.meta.error ? <span className="feedback invalid anmt-fadein">*{field.meta.error}</span> : '' }
         <label htmlFor={field.input.name}>{field.label}</label>
         { field.type === 'disabled'
-          ? <input id={field.input.name} className="form-control" type='text' {...field.input} disabled/>
+          ? <input id={field.input.name} className="form-control" type='text' {...field.input} disabled placeholder={field.placeholder}/>
           : field.type === 'textarea'
-          ? <textarea id={field.input.name} className="form-control" {...field.input} rows="5" cols="25"/>
-          : <input id={field.input.name} className="form-control" type={field.type} {...field.input} autoComplete="off"/>
+          ? <textarea id={field.input.name} className="form-control" {...field.input} rows="5" cols="25" placeholder={field.placeholder}/>
+          : <input id={field.input.name} className="form-control" type={field.type} {...field.input} autoComplete="off" placeholder={field.placeholder}/>
         }
       </div>
     )
@@ -64,39 +64,43 @@ export default class RoomInfoEdit extends Component {
 
   renderAttachedLinksField = ({fields}) => {
     return (
-      <ul>
+      <div className="form-attachment">
+        <ul className="form-attachment">
           { fields.map( (name, indx) => {
             return (
-              <li key={indx} className="attachment-fields">   
+              <li key={indx} className="attachment-fields">
                 <Field
                   name={`${name}.link_title`}
                   component={this.renderField}
-                  label="Title"
+                  label="ชื่อไฟล์แนบ"
                   type="text"
                 />
                 <Field
                   name={`${name}.video_url`}
                   component={this.renderField}
-                  label="Video"
+                  label="URL วิดีโอ"
                   type="text"
+                  placeholder="ใส่ URL ของวิดีโอ (ถ้ามี)"
                 />
                 <Field
                   name={`${name}.link_url`}
                   component={this.renderField}
-                  label="Other Link"
+                  label="URL ไฟล์แนบ"
                   type="text"
+                  placeholder="ใส่ URL ของไฟล์แนบเพื่อดาวน์โหลด (ถ้ามี)"
                 />
                 <Field
                   name={`${name}.content_type`}
                   component={this.renderDropdownList}
-                  label="Other Link's Type"
+                  label="ประเภทไฟล์"
                 />
-                <button type="button" onClick={() => fields.remove(indx)}>Delete</button>
+                <button type="button" onClick={() => fields.remove(indx)}>ลบ</button>
               </li>
             )
           })}
-        <button type="button" onClick={() => fields.push({})}>Add Link</button>
-      </ul>
+        </ul>
+        <button type="button" onClick={() => fields.push({})}>เพิ่มไฟล์แนบ</button>
+      </div>
     )
   }
 
@@ -143,13 +147,14 @@ export default class RoomInfoEdit extends Component {
         <Field
           name="last_date_to_join"
           component={this.renderDateTime}
-          label="ขอเข้าร่วมห้องได้ถึงเวลา"
+          label="วันสิ้นสุดการเข้าร่วม"
           type=""
         />
         <Field
           name="guest_ttl_in_days"
           component={this.renderField}
-          label="ผู้เข้าร่วมจะมีสิทธิอยู่ในห้องได้ (วัน)"
+          label="ช่วงเวลาสูงสุด (วัน)"
+          placeholder="ช่วงเวลาสูงสุดที่อยู่ในห้องได้ (วัน)"
           type="number"
           validate={[number, minValue1]}
         />

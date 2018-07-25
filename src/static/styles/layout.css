@@ -1,14 +1,14 @@
 #root {
   width: 100%;
-  max-width: 720px;
+  max-width: 960px;
   margin-right: auto;
   margin-left: auto;
 }
 .fixed {
   position: fixed;
-  left: calc(50% - 360px);
+  left: calc(50% - 480px);
   width: 100%;
-  max-width: 720px;
+  max-width: 960px;
 }
 .wrapper-background {
   height: 100%;
