@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 
 import TopTabBar from '../components/topTabBar'
 import ViewRoomInfo from '../components/room_view_info'
+import ViewAttachedLinks from '../components/room_view_attachedLinks'
 import ViewRoomSurvey from '../components/room_view_survey1'
 import Loading from '../components/loading'
 
@@ -30,14 +31,18 @@ class OwnerViewRoom extends Component {
         <div className="header fixed">รายละเอียดห้อง</div>
         <TopTabBar
           titleTab1="ข้อมูล"
-          titleTab2="แบบสอบถาม"
+          titleTab2={ _.isEmpty(this.props.room.attached_links) ? '' : 'ลิงค์แนบ' }
+          titleTab3={ _.isEmpty(this.props.room.survey) ? '' : 'แบบสอบถาม' }
         />
         <div className="tab-content">
           <div className="tab-body">
-            <div className='tab-item'>
+            <div className="tab-item">
               <ViewRoomInfo room={this.props.room}/>
             </div>
-            <div className='tab-item'>
+            <div className="tab-item">
+              <ViewAttachedLinks room={this.props.room}/>
+            </div>
+            <div className="tab-item">
               <ViewRoomSurvey room={this.props.room}/>
             </div>
           </div>

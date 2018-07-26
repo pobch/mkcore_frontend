@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Field, FieldArray} from 'redux-form'
+import {Field} from 'redux-form'
 import Moment from 'moment'
 import momentLocalizer from 'react-widgets-moment'
 import { DateTimePicker } from 'react-widgets'
@@ -43,63 +43,6 @@ export default class RoomInfoEdit extends Component {
           inputProps={{
             component: props => <input {...props} readOnly /> // To disable mobile keyboard
           }}/>
-      </div>
-    )
-  }
-
-  renderDropdownList = (field) => {
-    return (
-      // Set initialValues in reduxForm() HOC
-      <div className="form-group">
-        <label>{field.label}</label>
-        <select {...field.input}>
-          <option value="">--โปรดเลือก--</option>
-          <option key="doc" value="doc">เอกสาร</option>
-          <option key="audio" value="audio">ไฟล์เสียง</option>
-          <option key="others" value="others">อื่นๆ</option>
-        </select>
-      </div>
-    )
-  }
-
-  renderAttachedLinksField = ({fields}) => {
-    return (
-      <div className="form-attachment">
-        <ul className="form-attachment">
-          { fields.map( (name, indx) => {
-            return (
-              <li key={indx} className="attachment-fields">
-                <Field
-                  name={`${name}.link_title`}
-                  component={this.renderField}
-                  label="ชื่อไฟล์แนบ"
-                  type="text"
-                />
-                <Field
-                  name={`${name}.video_url`}
-                  component={this.renderField}
-                  label="URL วิดีโอ"
-                  type="text"
-                  placeholder="ใส่ URL ของวิดีโอ (ถ้ามี)"
-                />
-                <Field
-                  name={`${name}.link_url`}
-                  component={this.renderField}
-                  label="URL ไฟล์แนบ"
-                  type="text"
-                  placeholder="ใส่ URL ของไฟล์แนบเพื่อดาวน์โหลด (ถ้ามี)"
-                />
-                <Field
-                  name={`${name}.content_type`}
-                  component={this.renderDropdownList}
-                  label="ประเภทไฟล์"
-                />
-                <button type="button" onClick={() => fields.remove(indx)}>ลบ</button>
-              </li>
-            )
-          })}
-        </ul>
-        <button type="button" onClick={() => fields.push({})}>เพิ่มไฟล์แนบ</button>
       </div>
     )
   }
@@ -157,10 +100,6 @@ export default class RoomInfoEdit extends Component {
           placeholder="ช่วงเวลาสูงสุดที่อยู่ในห้องได้ (วัน)"
           type="number"
           validate={[number, minValue1]}
-        />
-        <FieldArray
-          name="attached_links"
-          component={this.renderAttachedLinksField}
         />
       </div>
     )

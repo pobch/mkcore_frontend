@@ -6,6 +6,7 @@ import {reduxForm} from 'redux-form'
 
 import TopTabBar from '../components/topTabBar'
 import ViewRoomInfo from '../components/room_view_info'
+import ViewAttachedLinks from '../components/room_view_attachedLinks'
 import GuestAnswer from '../components/guest_formElement_answer1'
 import Loading from '../components/loading'
 import Portal from '../components/portal'
@@ -95,12 +96,16 @@ class GuestEditRoom extends Component {
         <div className="header fixed">{`ห้อง "${this.props.room.title}"`}</div>
         <TopTabBar
           titleTab1="ข้อมูล"
-          titleTab2="แบบสอบถาม"
+          titleTab2={ _.isEmpty(this.props.room.attached_links) ? '' : 'ลิงค์แนบ' }
+          titleTab3="แบบสอบถาม"
         />
         <div className="tab-content">
           <div className="tab-body">
             <div className='tab-item'>
               <ViewRoomInfo room={this.props.room}/>
+            </div>
+            <div className='tab-item'>
+              <ViewAttachedLinks room={this.props.room}/>
             </div>
             <div className='tab-item'>
               <form className="form-minimal number" onSubmit={handleSubmit(this.onSubmit)}>

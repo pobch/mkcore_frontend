@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom'
 
 import TopTabBar from '../components/topTabBar'
 import RoomInfoEdit from '../components/owner_formElement_roomInfo'
+import AttachLinks from '../components/owner_formElement_attachLinks'
 import SurveyEdit from '../components/owner_formElement_survey1'
 import Portal from '../components/portal'
 import SaveCompleteModal from '../components/modal_save_complete'
@@ -64,17 +65,21 @@ class EditRoom extends Component {
         <div className="header fixed">แก้ไขห้อง</div>
         <TopTabBar
           titleTab1="ข้อมูล"
-          titleTab2="แบบสอบถาม"
+          titleTab2="ลิงค์แนบ"
+          titleTab3="แบบสอบถาม"
         />
         <form
           className="tab-content"
           onSubmit={ handleSubmit(this.onSubmit) }
         >
           <div className="tab-body">
-            <div className='tab-item'>
+            <div className="tab-item">
               <RoomInfoEdit roomCodeDisabled={true}/>
             </div>
-            <div className='tab-item'>
+            <div className="tab-item">
+              <AttachLinks/>
+            </div>
+            <div className="tab-item">
               <SurveyEdit currentMaxQuestionId={this.props.currentMaxQuestionId}/>
             </div>
           </div>

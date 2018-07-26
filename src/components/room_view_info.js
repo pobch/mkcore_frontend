@@ -37,21 +37,6 @@ export default class ViewRoomInfo extends Component {
             <div>
               {this.props.room.guest_ttl_in_days ? `ผู้เข้าร่วมจะมีสิทธิอยู่ในห้องได้ : ${this.props.room.guest_ttl_in_days} วัน` : ''}
             </div>
-            <ul className="spacing-top stacked-child">
-              { this.props.room.attached_links.map( (eachSection, indx) => {
-                return (
-                  <li key={indx}>
-                    <div>{eachSection.link_title}</div>
-                    { eachSection.video_url
-                      && <a href={encodeURI(eachSection.video_url)} target="_blank">Video</a>
-                    }
-                    { eachSection.link_url
-                      && <a href={encodeURI(eachSection.link_url)} target="_blank">ลิงค์ไปยัง {eachSection.content_type}</a>
-                    }
-                  </li>
-                )
-              })}
-            </ul>
           </div>
         </div>
       </div>

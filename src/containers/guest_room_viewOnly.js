@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom'
 import Loading from '../components/loading'
 import TopTabBar from '../components/topTabBar'
 import ViewRoomInfo from '../components/room_view_info'
+import ViewAttachedLinks from '../components/room_view_attachedLinks'
 import ViewRoomAnswer from '../components/room_view_answer1'
 
 import {fetchAnswerFromRoomId, fetchGuestRoom} from '../actions'
@@ -31,12 +32,16 @@ class GuestViewRoom extends Component {
         <div className="header fixed">{`ห้อง "${this.props.room.title}"`}</div>
         <TopTabBar
           titleTab1="ข้อมูล"
-          titleTab2="แบบสอบถาม"
+          titleTab2={ _.isEmpty(this.props.room.attached_links) ? '' : 'ลิงค์แนบ'}
+          titleTab3={ _.isEmpty(this.props.room.survey) ? '' : 'แบบสอบถาม'}
         />
         <div className="tab-content">
           <div className="tab-body">
             <div className='tab-item'>
               <ViewRoomInfo room={this.props.room}/>
+            </div>
+            <div className='tab-item'>
+              <ViewAttachedLinks room={this.props.room}/>
             </div>
             <div className='tab-item'>
               <ViewRoomAnswer

@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 
 import TopTabBar from '../components/topTabBar'
 import RoomInfoEdit from '../components/owner_formElement_roomInfo'
+import AttachLinks from '../components/owner_formElement_attachLinks'
 import SurveyEdit from '../components/owner_formElement_survey1'
 import Portal from '../components/portal'
 import SaveCompleteModal from '../components/modal_save_complete'
@@ -50,7 +51,8 @@ class CreateRoom extends Component {
         <div className="header fixed">สร้างห้อง</div>
         <TopTabBar
           titleTab1="ข้อมูล"
-          titleTab2="แบบสอบถาม"
+          titleTab2="ลิงค์แนบ"
+          titleTab3="แบบสอบถาม"
         />
         <form
           className="tab-content"
@@ -59,6 +61,9 @@ class CreateRoom extends Component {
           <div className='tab-body'>
             <div className='tab-item'>
               <RoomInfoEdit roomCodeDisabled={false}/>
+            </div>
+            <div className="tab-item">
+              <AttachLinks/>
             </div>
             <div className='tab-item'>
               <SurveyEdit currentMaxQuestionId={0}/>
