@@ -28,7 +28,7 @@
   -o-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
-.tab-nav.col-3 li {
+.tab-nav.column-3 li {
   width: 33.33%;
 }
 .tab-nav.first li:first-child,

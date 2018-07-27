@@ -51,7 +51,7 @@ class CreateRoom extends Component {
         <div className="header fixed">สร้างห้อง</div>
         <TopTabBar
           titleTab1="ข้อมูล"
-          titleTab2="ลิงค์แนบ"
+          titleTab2="ไฟล์แนบ"
           titleTab3="แบบสอบถาม"
         />
         <form

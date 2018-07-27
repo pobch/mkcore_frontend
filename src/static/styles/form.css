@@ -188,3 +188,7 @@
 .answer-item.active:before {
   background-color: var(--primary-text-color);
 }
+.attachment-fields {
+  position: relative;
+  margin-bottom: 1em;
+}

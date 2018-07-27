@@ -32,7 +32,7 @@ class GuestViewRoom extends Component {
         <div className="header fixed">{`ห้อง "${this.props.room.title}"`}</div>
         <TopTabBar
           titleTab1="ข้อมูล"
-          titleTab2={ _.isEmpty(this.props.room.attached_links) ? '' : 'ลิงค์แนบ'}
+          titleTab2={ _.isEmpty(this.props.room.attached_links) ? '' : 'ไฟล์แนบ'}
           titleTab3={ _.isEmpty(this.props.room.survey) ? '' : 'แบบสอบถาม'}
         />
         <div className="tab-content">

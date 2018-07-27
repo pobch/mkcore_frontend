@@ -11,25 +11,37 @@ export default class TopTabBar extends Component {
   }
 
   static propTypes = {
+    noOfTabs: PropTypes.string,
     titleTab1: PropTypes.string.isRequired,
     titleTab2: PropTypes.string.isRequired,
     titleTab3: PropTypes.string.isRequired
   }
 
   render() {
+    const { titleTab2, titleTab3 } = this.props
+    let noOfTabs;
+
+    if ( titleTab2 && titleTab3 ) {
+      noOfTabs = 'column-3';
+    } else if ( titleTab2 || titleTab3 ) {
+      noOfTabs = 'column-2';
+    } else {
+      noOfTabs = 'column-1';
+    }
+
     return (
-      <ul 
-        className={ 
-          this.state.tab1Active 
-          ? 'tab-nav clearfix first' 
+      <ul
+        className={
+          this.state.tab1Active
+          ? `tab-nav ${noOfTabs} clearfix first`
           : (
             this.state.tab2Active
-            ? 'tab-nav clearfix second'
-            : 'tab-nav clearfix third'
+            ? `tab-nav ${noOfTabs} clearfix second`
+            : `tab-nav ${noOfTabs} clearfix third`
           )
         }
       >
-        { this.props.titleTab1 && 
+        { this.props.titleTab1 &&
           <li
             onClick={() => {this.setState({tab1Active: true, tab2Active: false, tab3Active: false})}}
           >{this.props.titleTab1}

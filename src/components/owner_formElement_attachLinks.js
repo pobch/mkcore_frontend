@@ -41,6 +41,15 @@ export default class AttachLinks extends Component {
           { fields.map( (name, indx) => {
             return (
               <li key={indx} className="attachment-fields">
+                <div className="align-right">
+                  <button
+                    type="button"
+                    onClick={() => fields.remove(indx)}
+                    className="delete size-small"
+                  >
+                    <i className="twf twf-trash-o" />ลบ
+                  </button>
+                </div>
                 <Field
                   name={`${name}.link_title`}
                   component={this.renderField}
@@ -66,19 +75,25 @@ export default class AttachLinks extends Component {
                   component={this.renderDropdownList}
                   label="ประเภทไฟล์"
                 />
-                <button type="button" onClick={() => fields.remove(indx)}>ลบ</button>
               </li>
             )
           })}
         </ul>
-        <button type="button" onClick={() => fields.push({})}>เพิ่มไฟล์แนบ</button>
+        <button
+          type="button"
+          onClick={() => fields.push({})}
+          className="full large brand-basic"
+        >
+          <i className="twf twf-minimal-plus before" />
+          เพิ่มไฟล์แนบ
+        </button>
       </div>
     )
   }
 
   render() {
     return (
-      <div className="form-minimal list-item spacing-side">
+      <div className="form-minimal spacing-side">
         <FieldArray
           name="attached_links"
           component={this.renderAttachedLinksField}

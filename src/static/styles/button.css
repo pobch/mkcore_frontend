@@ -17,9 +17,16 @@ button,input[type=submit],.btn {
 }
 button i {
   vertical-align: middle;
+  margin-right: 0.5em;
+}
+.iconize i {
+  margin-right: 0;
 }
 button.iconize,input[type=submit].iconize,.btn.iconize {
   padding: 0.8em;
+  font-size: 0.8em;
+}
+button.size-small {
   font-size: 0.8em;
 }
 button.iconize.small,input[type=submit].iconize.small,.btn.iconize.small {
