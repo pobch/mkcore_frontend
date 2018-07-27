@@ -14,17 +14,17 @@ export default class ViewAttachedLinks extends Component {
   }
 
   getEmbedVideoUrl = (url) => {
-    var videoUrl = false;
+    let videoUrl = false;
     if (url.indexOf('youtube') !== -1) {
-      var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-      var match = url.match(regExp);
+      let regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+      let match = url.match(regExp);
 
-      if (match && match[2].length == 11) {
+      if (match && match[2].length === 11) {
         videoUrl = '//www.youtube.com/embed/' + match[2];
       }
     } else if (url.indexOf('vimeo') !== -1) {
-      var vimeoRegex = /(?:vimeo)\.com.*(?:videos|video|channels|)\/([\d]+)/i;
-      var match = url.match(vimeoRegex);
+      let vimeoRegex = /(?:vimeo)\.com.*(?:videos|video|channels|)\/([\d]+)/i;
+      let match = url.match(vimeoRegex);
 
       if (match && match[1]) {
         videoUrl = "//player.vimeo.com/video/" + match[1];
@@ -33,7 +33,7 @@ export default class ViewAttachedLinks extends Component {
 
     if (videoUrl) {
       return (
-        <div className="external-video"><iframe width="1280" height="720" src={videoUrl} /></div>
+        <div className="external-video"><iframe title="Attached video" width="1280" height="720" src={videoUrl} /></div>
       );
     }
   }

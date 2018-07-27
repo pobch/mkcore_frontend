@@ -47,7 +47,7 @@ class FormProfileInfo extends Component {
     }
 
     const {handleSubmit} = this.props
-    const {imageUploadClick} = this.props
+    // const {imageUploadClick} = this.props
     return (
       <div className="form-minimal">
         <form onSubmit={handleSubmit(this.onSubmit)}>

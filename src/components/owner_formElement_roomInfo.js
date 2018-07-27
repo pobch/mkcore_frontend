@@ -60,7 +60,7 @@ export default class RoomInfoEdit extends Component {
         <Field
           name="title"
           component={this.renderField}
-          label="*ชื่อ"
+          label="*ชื่อห้อง"
           type="text"
         />
         <Field
