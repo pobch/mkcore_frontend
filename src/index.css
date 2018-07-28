@@ -13,7 +13,8 @@
 @import './static/styles/modal.css'; /* Modal */
 @import './static/styles/navbar.css'; /* Navbar */
 @import './static/styles/react-widgets.css'; /* Override React Widgets */
-@import './static/styles/tab.css'; /* Responsive */
+@import './static/styles/tab.css'; /* Tab */
+@import './static/styles/table.css'; /* Table */
 @import './static/styles/utilities.css'; /* Utilities */
 
 /* Pages */

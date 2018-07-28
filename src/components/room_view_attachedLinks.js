@@ -13,14 +13,16 @@ export default class ViewAttachedLinks extends Component {
     return false;
   }
 
-  getEmbedVideoUrl = (url) => {
+  getVideoTemplate = (url) => {
     let videoUrl = false;
+    let videoSrc = 'self-host';
     if (url.indexOf('youtube') !== -1) {
       let regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
       let match = url.match(regExp);
 
       if (match && match[2].length === 11) {
         videoUrl = '//www.youtube.com/embed/' + match[2];
+        videoSrc = 'external';
       }
     } else if (url.indexOf('vimeo') !== -1) {
       let vimeoRegex = /(?:vimeo)\.com.*(?:videos|video|channels|)\/([\d]+)/i;
@@ -28,12 +30,22 @@ export default class ViewAttachedLinks extends Component {
 
       if (match && match[1]) {
         videoUrl = "//player.vimeo.com/video/" + match[1];
+        videoSrc = 'external';
       }
+    } else if (url.indexOf('.mp4') !== -1) {
+      videoUrl = url
     }
 
     if (videoUrl) {
       return (
-        <div className="external-video"><iframe title="Attached video" width="1280" height="720" src={videoUrl} /></div>
+        <div className={`${videoSrc}-video spacing-top`}>
+          <div className="video-inner">
+            {videoSrc == 'external' ?
+              <iframe title="Attached video" width="1280" height="720" src={videoUrl} /> :
+              <video onContextMenu={this.disableVidieoRightClick} width="1280" height="720" controls><source src={encodeURI(videoUrl)} type="video/mp4" /></video>
+            }
+          </div>
+        </div>
       );
     }
   }
@@ -50,16 +62,16 @@ export default class ViewAttachedLinks extends Component {
         <ul className="stacked-child">
           { this.props.room.attached_links.map( (eachSection, indx) => {
             return (
-              <li className="spacing-cover primary-bg stacked-child" key={indx}>
+              <li className="spacing-cover primary-bg" key={indx}>
                 <h3>{eachSection.link_title}</h3>
-                { eachSection.video_url
-                  &&
-                  (eachSection.video_url.indexOf('.mp4') !== -1)
-                    ? <video onContextMenu={this.disableVidieoRightClick} width="1280" height="720" controls><source src={encodeURI(eachSection.video_url)} type="video/mp4" /></video>
-                    : this.getEmbedVideoUrl(encodeURI(eachSection.video_url))
-                }
+                <span className="divider" />
+                { eachSection.video_url && this.getVideoTemplate(encodeURI(eachSection.video_url)) }
                 { eachSection.link_url
-                  && <div className="align-right"><a className="btn" href={encodeURI(eachSection.link_url)} download><i className={`twf twf-${contentTypeIcon[eachSection.content_type]} before`} />ดาวน์โหลดไฟล์แนบ</a></div>
+                  &&
+                  <div className="inline-child spacing-top">
+                    <h4>ไฟล์แนบ :</h4>
+                    <a className="plain" href={encodeURI(eachSection.link_url)} download><i className={`twf twf-${contentTypeIcon[eachSection.content_type]} before`} />ดาวน์โหลด</a>
+                  </div>
                 }
               </li>
             )

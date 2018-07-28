@@ -18,8 +18,11 @@
 .rw-i-calendar:before {
   content: "\ea1f"
 }
-.rw-btn .rw-i {
+.rw-btn > .rw-i {
   display: block;
+}
+.rw-btn-select > .rw-i {
+  line-height: 1.5;
 }
 .rw-select {
   cursor: pointer;
@@ -230,4 +233,13 @@
 }
 .rw-list-option:last-child {
   border-bottom: none;
+}
+.empty input {
+  display: none;
+}
+.empty .rw-select {
+  width: 100%;
+}
+.empty .rw-select button {
+  width: 50%;
 }

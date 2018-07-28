@@ -13,31 +13,47 @@ export default class ViewRoomInfo extends Component {
     const datetimeStart = this.props.room.start_at ? new Date(this.props.room.start_at) : null
     const datetimeEnd = this.props.room.end_at ? new Date(this.props.room.end_at) : null
     const datetimeLastJoin = this.props.room.last_date_to_join ? new Date(this.props.room.last_date_to_join) : null
+
     return (
       <div className="spacing-side">
         <div className="spacing-cover  primary-bg">
           <h2>{this.props.room.title}</h2>
-          <div className="stacked-child">
-            <div className="clearfix">
-              <div className="float-left col-5">รหัสสำหรับเข้าร่วม : {this.props.room.room_code}</div>
-              <div className="float-left col-5">โดย : {this.props.room.instructor_name}</div>
-            </div>
-            <div className="spacing-top">รายละเอียด :<br/>{this.props.room.description}</div>
-            <div className="clearfix">
-              <div className="float-left col-5">
-                {datetimeStart ? `เริ่มตั้งแต่ : ${dateFormat(datetimeStart, 'dd/mm/yyyy, hh:MM TT')}` : ''}
-              </div>
-              <div className="float-left col-5">
-                {datetimeStart ? `ถึง : ${dateFormat(datetimeEnd, 'dd/mm/yyyy, hh:MM TT')}` : ''}
-              </div>
-            </div>
-            <div>
-              {datetimeLastJoin ? `ขอเข้าร่วมห้องได้จนถึง : ${dateFormat(datetimeLastJoin, 'dd/mm/yyyy, hh:MM TT')}` : ''}
-            </div>
-            <div>
-              {this.props.room.guest_ttl_in_days ? `ผู้เข้าร่วมจะมีสิทธิอยู่ในห้องได้ : ${this.props.room.guest_ttl_in_days} วัน` : ''}
-            </div>
-          </div>
+          <table className="table alternate first-10em">
+            <tbody>
+              <tr>
+                <td>รหัสสำหรับเข้าร่วม :</td>
+                <td>{this.props.room.room_code}</td>
+              </tr>
+              <tr>
+                <td>รายละเอียด :</td>
+                <td>{this.props.room.description}</td>
+              </tr>
+              {datetimeStart &&
+                <tr>
+                  <td>เริ่มตั้งแต่ :</td>
+                  <td>{dateFormat(datetimeStart, 'dd/mm/yyyy, hh:MM TT')}</td>
+                </tr>
+              }
+              {datetimeEnd &&
+                <tr>
+                  <td>ถึง :</td>
+                  <td>{dateFormat(datetimeEnd, 'dd/mm/yyyy, hh:MM TT')}</td>
+                </tr>
+              }
+              {datetimeLastJoin &&
+                <tr>
+                  <td>เข้าร่วมห้องได้ถึง :</td>
+                  <td>{dateFormat(datetimeLastJoin, 'dd/mm/yyyy, hh:MM TT')}</td>
+                </tr>
+              }
+              {this.props.room.guest_ttl_in_days &&
+                <tr>
+                  <td>อยู่ในห้องได้สูงสุด :</td>
+                  <td>{this.props.room.guest_ttl_in_days} วัน</td>
+                </tr>
+              }
+            </tbody>
+          </table>
         </div>
       </div>
     )

@@ -61,7 +61,7 @@ export default class AttachLinks extends Component {
                   component={this.renderField}
                   label="URL วิดีโอ"
                   type="text"
-                  placeholder="ใส่ URL ของวิดีโอ (ถ้ามี)"
+                  placeholder="ใส่ URL ของ youtube/vimeo หรือ ไฟล์.mp4 (ถ้ามี)"
                 />
                 <Field
                   name={`${name}.link_url`}

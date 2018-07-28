@@ -38,6 +38,7 @@ export default class RoomInfoEdit extends Component {
       <div className="form-group">
         <label htmlFor={name}>{label}</label>
         <DateTimePicker
+          className={value ? null : 'empty'}
           onChange={onChange}
           value={value ? new Date(value) : null}
           inputProps={{
