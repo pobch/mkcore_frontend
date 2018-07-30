@@ -11,6 +11,7 @@ import {
 import Portal from '../components/portal'
 import ConfirmModal from '../components/modal_confirm'
 import BotNavbar from '../components/botNavbar'
+import ErrorMessage from '../components/error_message'
 
 import JoinRoom from '../containers/guest_join_room'
 
@@ -140,37 +141,6 @@ class GuestRoomsList extends Component {
             <JoinRoom/>
           </div>
           <div className="body-content">
-            <ul className="list-body">
-              { typeof this.props.errors === 'string'
-                ? <li className="list-item empty error">{this.props.errors}</li>
-                : _.map(this.props.errors, (value,key) => {
-                  if(key === 'detail') {
-                    // if key = detail, value will be string (e.g., 'Not found')
-                    return (
-                      <li className="list-item empty error" key={key}>
-                        เกิดเหตุขัดข้อง {value}
-                      </li>
-                    )
-                  } else {
-                    // e.g., key = room_code, value = [ 'error msg1', 'error msg2' ]
-                    return (
-                      <li key={key}>
-                        เกิดเหตุขัดข้อง {key}
-                        <ul className="list-body">
-                          {_.map(value, (v,indx) => {
-                            return (
-                              <li className="list-item empty error" key={indx}>
-                                เกิดเหตุขัดข้อง {v}
-                              </li>
-                            )
-                          })}
-                        </ul>
-                      </li>
-                    )
-                  }
-                })
-              }
-            </ul>
             { _.isEmpty(this.props.pendingRoomsInfo) ?
               null :
               <div className="list-title spacing-side">รอการยืนยันการเข้าร่วม</div>
@@ -204,6 +174,10 @@ class GuestRoomsList extends Component {
 
           </div>
         </div>
+
+        { this.props.errors.guestRoomsError &&
+          <ErrorMessage errors={this.props.errors} />
+        }
 
         <BotNavbar/>
 

@@ -10,6 +10,7 @@ import AttachLinks from '../components/owner_formElement_attachLinks'
 import SurveyEdit from '../components/owner_formElement_survey1'
 import Portal from '../components/portal'
 import SaveCompleteModal from '../components/modal_save_complete'
+import ErrorMessage from '../components/error_message'
 
 import { createRoom } from '../actions'
 
@@ -39,7 +40,7 @@ class CreateRoom extends Component {
       await this.props.createRoom(values)
       this.setState({openSaveCompleteModal: true})
     } catch(error) {
-      // console.log('err', error)
+      console.error('There is an error when creating room')
     }
   }
 
@@ -78,6 +79,10 @@ class CreateRoom extends Component {
             </button>
           </div>
         </form>
+
+        { this.props.errors.ownRoomsError &&
+          <ErrorMessage errors={this.props.errors.ownRoomsError} />
+        }
 
         <Portal>
           <SaveCompleteModal
