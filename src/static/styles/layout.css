@@ -10,6 +10,9 @@
   width: 100%;
   max-width: 960px;
 }
+.wrapper {
+  position: relative;
+}
 .wrapper-background {
   height: 100%;
   z-index: -1;
@@ -57,4 +60,18 @@
   padding: 1em 0;
   font-size: 1.5rem;
   box-shadow: var(--box-shadow);
+}
+.error-message {
+  bottom: 1rem;
+  padding: 0 2rem;
+  text-align: center;
+}
+.error-message .list-item {
+  color: var(--brand-contrast-color);
+  background-color: var(--fail-color);
+  border: none;
+  margin-bottom: 0.3rem;
+}
+.error-message .list-item:last-child {
+  margin-bottom: 0;
 }

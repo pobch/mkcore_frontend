@@ -7,24 +7,24 @@ import _ from 'lodash'
 
 export default function ErrorMessage(props) {
   return (
-    <ul className="list-body error-message">
+    <ul className="list-body error-message fixed spacing-side">
       { typeof props.errors === 'string'
-        ? <li className="list-item empty error">{props.errors}</li>
+        ? <li className="list-item">{props.errors}</li>
         : _.map(props.errors, (value,key) => {
           if(key === 'detail') {
             // if key = detail, value will be string (e.g., 'Not found')
             return (
-              <li className="list-item empty error" key={key}>
+              <li className="list-item" key={key}>
                 เกิดเหตุขัดข้อง {value}
               </li>
             )
           } else {
             // e.g., key = room_code, value = [ 'room with this room code already exists.', 'error msg2' ]
             return (
-              // Array of components: 
+              // Array of components:
               _.map(value, (arrayValue, arrayIndx) => {
                 return (
-                  <li className="list-item empty error" key={`${key}${arrayIndx}`}>
+                  <li className="list-item" key={`${key}${arrayIndx}`}>
                     เกิดเหตุขัดข้อง {arrayValue}
                   </li>
                 )
