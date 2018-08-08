@@ -28,7 +28,7 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <BrowserRouter basename="/app">
+        <BrowserRouter>
           <Switch>
             <Route exact path="/" render={() => <Redirect to="/guest/rooms"/>} />
             <Route exact path="/login" component={onlyAnonCanAccess(LogIn)} />
