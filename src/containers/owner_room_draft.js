@@ -132,7 +132,7 @@ function mapStateToProps(state, ownProps) {
 
 export default connect(mapStateToProps, { fetchOwnRoom, updateRoom })(
   reduxForm({
-    form: 'editOwnRoomForm',
+    form: 'editDraftRoomForm',
     enableReinitialize: true,
     validate: validateOwnRoomCreateEdit
   })(EditRoom)

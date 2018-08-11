@@ -15,7 +15,7 @@ import SaveCompleteModal from '../components/modal_save_complete'
 
 import {
   fetchGuestRoom, saveNewAnswer, updateAnswer,
-  fetchAnswerFromRoomId, resetError
+  fetchAnswerFromRoomId, resetError, fetchJoinReqOfMeByRoomId
 } from '../actions'
 
 
@@ -31,6 +31,7 @@ class GuestEditRoom extends Component {
     const roomId = this.props.match.params.id
     this.props.fetchAnswerFromRoomId(roomId)
     this.props.fetchGuestRoom(roomId)
+    this.props.fetchJoinReqOfMeByRoomId(roomId)
   }
 
   componentWillUnmount() {
@@ -84,11 +85,12 @@ class GuestEditRoom extends Component {
   }
 
   render() {
-    if(!this.props.survey || !this.props.room) {
+    if(!this.props.survey || !this.props.room || !this.props.joinReqsInfo.myRelationAtCurrentRoom) {
       return <Loading />
     }
 
     const { handleSubmit } = this.props
+    const { expire_date } = this.props.joinReqsInfo.myRelationAtCurrentRoom
 
     return (
       <div className="wrapper">
@@ -102,7 +104,7 @@ class GuestEditRoom extends Component {
         <div className="tab-content">
           <div className="tab-body">
             <div className='tab-item'>
-              <ViewRoomInfo room={this.props.room}/>
+              <ViewRoomInfo room={this.props.room} expireDate={new Date(expire_date)}/>
             </div>
             <div className='tab-item'>
               <ViewAttachedLinks room={this.props.room}/>
@@ -200,13 +202,14 @@ function mapStateToProps(state, ownProps) {
     survey,
     initialValues: {answer: answerField},
     answerExist,
-    rowId
+    rowId,
+    joinReqsInfo: state.joinReqsInfo
   }
 }
 
 export default connect(mapStateToProps,
   {
-    fetchGuestRoom, saveNewAnswer, updateAnswer, fetchAnswerFromRoomId, resetError
+    fetchGuestRoom, saveNewAnswer, updateAnswer, fetchAnswerFromRoomId, resetError, fetchJoinReqOfMeByRoomId
   })(
     reduxForm({
       form: 'answerForm',

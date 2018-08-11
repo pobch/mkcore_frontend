@@ -8,13 +8,13 @@ import PasswordForgot from '../containers/password_forgot'
 import PasswordForgotConfirm from '../containers/password_forgot_confirm'
 import GuestRoomsList from '../containers/guest_rooms_list'
 import OwnerRoomsList from '../containers/owner_rooms_list'
-import EditRoom from '../containers/owner_room_editable'
-import GuestEditRoom from '../containers/guest_room_editable'
-import GuestViewRoom from '../containers/guest_room_viewOnly'
+import DraftRoom from '../containers/owner_room_draft'
+import GuestRoomAnswerNotSubmit from '../containers/guest_room_answerNotSubmit'
+import GuestRoomAnswerSubmitted from '../containers/guest_room_answerSubmitted'
 import ViewJoinReqs from '../containers/owner_room_join_reqs'
 import Profile from '../containers/profile'
 import CreateRoom from '../containers/owner_room_create'
-import OwnerViewRoom from '../containers/owner_room_viewOnly'
+import PublishedRoom from '../containers/owner_room_published'
 
 import onlyUserCanAccess from '../hoc/only_user_can_access'
 import onlyAnonCanAccess from '../hoc/only_anon_can_access'
@@ -38,13 +38,13 @@ class App extends Component {
             <Route exact path="/password/forgot" component={PasswordForgot}/>
             <Route exact path="/password/forgot/confirm/:uid/:token" component={PasswordForgotConfirm}/>
             <Route exact path="/guest/rooms" component={onlyUserCanAccess(GuestRoomsList)} />
-            <Route exact path="/guest/rooms/:id(\d+)" component={GuestEditRoom}/>
-            <Route exact path="/guest/rooms/:id(\d+)/view" component={GuestViewRoom}/>
+            <Route exact path="/guest/rooms/:id(\d+)" component={GuestRoomAnswerNotSubmit}/>
+            <Route exact path="/guest/rooms/:id(\d+)/view" component={GuestRoomAnswerSubmitted}/>
             <Route exact path="/owner/rooms" component={onlyUserCanAccess(OwnerRoomsList)}/>
             <Route exact path="/owner/rooms/create" component={CreateRoom}/>
             <Route exact path="/owner/rooms/create/clone" component={CreateRoomCloneWithoutGuests}/>
-            <Route exact path="/owner/rooms/:id(\d+)" component={EditRoom} />
-            <Route exact path="/owner/rooms/:id(\d+)/view" component={OwnerViewRoom}/>
+            <Route exact path="/owner/rooms/:id(\d+)" component={DraftRoom} />
+            <Route exact path="/owner/rooms/:id(\d+)/view" component={PublishedRoom}/>
             <Route exact path="/owner/rooms/:id(\d+)/joinreqs" component={ViewJoinReqs}/>
             <Route exact path="/profile" component={onlyUserCanAccess(Profile)}/>
             <Route component={NotFound} />

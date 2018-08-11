@@ -9,7 +9,7 @@ import ViewRoomInfo from '../components/room_view_info'
 import ViewAttachedLinks from '../components/room_view_attachedLinks'
 import ViewRoomAnswer from '../components/room_view_answer1'
 
-import {fetchAnswerFromRoomId, fetchGuestRoom} from '../actions'
+import {fetchAnswerFromRoomId, fetchGuestRoom, fetchJoinReqOfMeByRoomId} from '../actions'
 
 
 class GuestViewRoom extends Component {
@@ -19,12 +19,15 @@ class GuestViewRoom extends Component {
     const roomId = this.props.match.params.id
     this.props.fetchAnswerFromRoomId(roomId)
     this.props.fetchGuestRoom(roomId)
+    this.props.fetchJoinReqOfMeByRoomId(roomId)
   }
 
   render() {
-    if(!this.props.room) {
+    if(!this.props.room || !this.props.joinReqsInfo.myRelationAtCurrentRoom) {
       return <Loading />
     }
+
+    const { expire_date } = this.props.joinReqsInfo.myRelationAtCurrentRoom
 
     return (
       <div className="wrapper">
@@ -38,7 +41,7 @@ class GuestViewRoom extends Component {
         <div className="tab-content">
           <div className="tab-body">
             <div className='tab-item'>
-              <ViewRoomInfo room={this.props.room}/>
+              <ViewRoomInfo room={this.props.room} expireDate={new Date(expire_date)} />
             </div>
             <div className='tab-item'>
               <ViewAttachedLinks room={this.props.room}/>
@@ -86,7 +89,11 @@ function mapStateToProps(state, ownProps) {
     room,
     survey, // can be []
     answer, // can be []
+    joinReqsInfo: state.joinReqsInfo
   }
 }
 
-export default connect(mapStateToProps, {fetchAnswerFromRoomId, fetchGuestRoom})(GuestViewRoom)
+export default connect(
+  mapStateToProps, 
+  {fetchAnswerFromRoomId, fetchGuestRoom, fetchJoinReqOfMeByRoomId}
+)(GuestViewRoom)

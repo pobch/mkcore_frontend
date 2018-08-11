@@ -6,7 +6,14 @@ import dateFormat from 'dateformat'
 export default class ViewRoomInfo extends Component {
 
   static propTypes = {
-    room: PropTypes.object.isRequired
+    room: PropTypes.object.isRequired,
+    // A parent component will pass 'expireDate' prop in case of accessing from a guest page.
+    // Otherwise, in case of an owner page, this prop won't exist.
+    expireDate: PropTypes.instanceOf(Date)
+  }
+
+  static defaultProps = {
+    expireDate: null
   }
 
   render() {
@@ -46,11 +53,18 @@ export default class ViewRoomInfo extends Component {
                   <td>{dateFormat(datetimeLastJoin, 'dd/mm/yyyy, hh:MM TT')}</td>
                 </tr>
               }
-              {this.props.room.guest_ttl_in_days &&
-                <tr>
-                  <td>อยู่ในห้องได้สูงสุด :</td>
-                  <td>{this.props.room.guest_ttl_in_days} วัน</td>
-                </tr>
+              {this.props.expireDate 
+                ? <tr>
+                    <td>อยู่ในห้องได้จนถึง :</td>
+                    <td>{dateFormat(this.props.expireDate, 'dd/mm/yyyy, hh:MM TT')}</td>
+                  </tr>
+                : (
+                  this.props.room.guest_ttl_in_days &&
+                  <tr>
+                    <td>อยู่ในห้องได้สูงสุด :</td>
+                    <td>{this.props.room.guest_ttl_in_days} วัน</td>
+                  </tr> 
+                )
               }
             </tbody>
           </table>

@@ -20,6 +20,7 @@ export const DELETE_OWN_ROOM = 'delete_own_room'
 export const ERROR_IN_OWNROOMS = 'ownrooms_error_from_api'
 
 export const FETCH_JOINREQS_OF_OWN_ROOM = 'fetch_join_requests_of_one_own_room'
+export const FETCH_JOINREQ_OF_ME = 'fetch_a_join_request_of_me_in_the_specific_room'
 export const ACCEPT_JOINREQ = 'accept_one_join_request'
 export const ACCEPT_ALL_JOINREQS = 'accept_all_pending_join_reqs'
 export const BULK_CREATE_JOINREQS = 'bulk_create_join_reqs'
@@ -60,6 +61,7 @@ const URL_FETCH_OWNROOMS = `${BASE_API_URL}rooms/?query=owner`
 const URL_FETCH_OWNROOM_BY_ROOM_CODE = `${BASE_API_URL}rooms/search/?room_code=` // + room_code to search
 const URL_RETRIEVE_UPDATE_OWNROOM = `${BASE_API_URL}rooms/` // + id
 const URL_FETCH_JOINREQS_BY_ROOM_ID = `${BASE_API_URL}joinreqs/byroomid/` // + room_id to search
+const URL_FETCH_JOINREQ_OF_ME_BY_ROOM_ID = `${BASE_API_URL}joinreqs/me/byroomid/` // + room_id to search
 const URL_RETRIEVE_UPDATE_DEL_JOINREQ = `${BASE_API_URL}joinreqs/` // +  a joinReq's id
 const URL_BULK_UPDATE_JOINREQS = `${BASE_API_URL}joinreqs/bulkupdate/` 
                                                     // POST {"ids": [2,3,4], "eachRowData": {"accepted": true, ...}}
@@ -209,6 +211,16 @@ export function fetchPendingRooms() {
     const response = await axios.get(URL_FETCH_PENDINGROOMS_INFO)
     dispatch({
       type: FETCH_PENDING_ROOMS_INFO,
+      payload: response
+    })
+  }
+}
+
+export function fetchJoinReqOfMeByRoomId(room_id) {
+  return async (dispatch) => {
+    const response = await axios.get(`${URL_FETCH_JOINREQ_OF_ME_BY_ROOM_ID}${room_id}/`)
+    dispatch({
+      type: FETCH_JOINREQ_OF_ME,
       payload: response
     })
   }
