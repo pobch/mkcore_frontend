@@ -71,6 +71,8 @@ export default class ViewAttachedLinks extends Component {
                   <div className="inline-child spacing-top">
                     <h4>ไฟล์แนบ :</h4>
                     <a className="plain" href={encodeURI(eachSection.link_url)} download><i className={`twf twf-${contentTypeIcon[eachSection.content_type]} before`} />ดาวน์โหลด</a>
+                    <h4>รายละเอียด :</h4>
+                    <div>{ eachSection.link_description }</div>
                   </div>
                 }
               </li>

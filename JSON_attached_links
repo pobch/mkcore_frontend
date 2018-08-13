@@ -4,7 +4,8 @@ attached_links :
     link_title: 'Lesson 1',
     video_url: 'https://xxxxxx/xx.mp4',
     link_url: 'https://yyyyy/abc.pdf',
-    content_type: 'doc'
+    content_type: 'doc',
+    link_description: 'this is description'
   },
   ...
 ]

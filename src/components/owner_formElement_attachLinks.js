@@ -75,6 +75,12 @@ export default class AttachLinks extends Component {
                   component={this.renderDropdownList}
                   label="ประเภทไฟล์"
                 />
+                <Field
+                  name={`${name}.link_description`}
+                  component={this.renderField}
+                  label="รายละเอียด"
+                  type="textarea"
+                />
               </li>
             )
           })}

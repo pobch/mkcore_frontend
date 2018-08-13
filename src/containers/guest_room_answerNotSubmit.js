@@ -90,7 +90,7 @@ class GuestEditRoom extends Component {
     }
 
     const { handleSubmit } = this.props
-    const { expire_date } = this.props.joinReqsInfo.myRelationAtCurrentRoom
+    const { expire_date } = this.props.joinReqsInfo.myRelationAtCurrentRoom // can be null
 
     return (
       <div className="wrapper">
@@ -104,7 +104,7 @@ class GuestEditRoom extends Component {
         <div className="tab-content">
           <div className="tab-body">
             <div className='tab-item'>
-              <ViewRoomInfo room={this.props.room} expireDate={new Date(expire_date)}/>
+              <ViewRoomInfo room={this.props.room} expireDate={ expire_date && new Date(expire_date) }/>
             </div>
             <div className='tab-item'>
               <ViewAttachedLinks room={this.props.room}/>

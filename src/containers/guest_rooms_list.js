@@ -49,7 +49,7 @@ class GuestRoomsList extends Component {
     this.closeModal()
   }
 
-  renderGuestRoomsEditable = (guestRooms) => {
+  renderGuestRoomsNotYetSubmitAns = (guestRooms) => {
     return _.map(guestRooms, (room) => {
       return (
         <li
@@ -77,7 +77,7 @@ class GuestRoomsList extends Component {
     })
   }
 
-  renderGuestRoomsViewOnly = (guestRooms) => {
+  renderGuestRoomsAnsSubmittedOrNoSurvey = (guestRooms) => {
     return _.map(guestRooms, (room) => {
       return (
         <li
@@ -158,7 +158,7 @@ class GuestRoomsList extends Component {
             <ul className="list-body">
               { _.isEmpty(this.props.roomsNotYetSubmitAns) ?
                 null :
-                this.renderGuestRoomsEditable(this.props.roomsNotYetSubmitAns)
+                this.renderGuestRoomsNotYetSubmitAns(this.props.roomsNotYetSubmitAns)
               }
             </ul>
             { _.isEmpty(this.props.roomsSubmittedAnsOrWithoutSurvey) ?
@@ -168,7 +168,7 @@ class GuestRoomsList extends Component {
             <ul className="list-body">
               { _.isEmpty(this.props.roomsSubmittedAnsOrWithoutSurvey) ?
                 null :
-                this.renderGuestRoomsViewOnly(this.props.roomsSubmittedAnsOrWithoutSurvey)
+                this.renderGuestRoomsAnsSubmittedOrNoSurvey(this.props.roomsSubmittedAnsOrWithoutSurvey)
               }
             </ul>
 
