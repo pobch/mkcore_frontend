@@ -1,6 +1,6 @@
 .tab-nav li {
   position: relative;
-  width: 50%;
+  width: 100%;
   padding-top: 1em;
   padding-bottom: 1em;
   font-size: 1.1em;
@@ -27,6 +27,9 @@
   -moz-transition: all 0.2s ease;
   -o-transition: all 0.2s ease;
   transition: all 0.2s ease;
+}
+.tab-nav.column-2 li {
+  width: 50%;
 }
 .tab-nav.column-3 li {
   width: 33.33%;
