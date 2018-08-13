@@ -60,7 +60,7 @@ class EachLiPublishedRoomWithDropdown extends Component {
           <h3>{room.title}</h3>
           <div className="list-item-meta">
             <div>{room.room_code}</div>
-            {room.start_at ? <div>{dateFormat(new Date(room.start_at), 'dd/mm/yy, h:MMTT')}</div> : null}
+            {room.start_at ? <div>Start: {dateFormat(new Date(room.start_at), 'dd/mm/yy, h:MMTT')}</div> : null}
           </div>
         </div>
         {/* Dropdown menu */}
