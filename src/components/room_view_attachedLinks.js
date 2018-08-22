@@ -62,19 +62,39 @@ export default class ViewAttachedLinks extends Component {
         <ul className="stacked-child">
           { this.props.room.attached_links.map( (eachSection, indx) => {
             return (
-              <li className="spacing-cover primary-bg" key={indx}>
-                <h3>{eachSection.link_title}</h3>
-                <span className="divider" />
-                { eachSection.video_url && this.getVideoTemplate(encodeURI(eachSection.video_url)) }
-                { eachSection.link_url
-                  &&
-                  <div className="inline-child spacing-top">
-                    <h4>ไฟล์แนบ :</h4>
-                    <a className="plain" href={encodeURI(eachSection.link_url)} download><i className={`twf twf-${contentTypeIcon[eachSection.content_type]} before`} />ดาวน์โหลด</a>
-                    <h4>รายละเอียด :</h4>
-                    <div>{ eachSection.link_description }</div>
-                  </div>
-                }
+              <li className="spacing-cover primary-bg accordion" key={indx}>
+                <div className="accordion-header clearfix">
+                  <h3 className="float-left">{eachSection.link_title}</h3>
+                  <button
+                    type="button"
+                    className="plain"
+                    onClick={this.onClickToggle}
+                  >
+                    <i className="twf twf-chevron-right" />
+                  </button>
+                </div>
+                <div className="accordion-body">
+                  { eachSection.video_url && this.getVideoTemplate(encodeURI(eachSection.video_url)) }
+                  { eachSection.link_url || eachSection.link_description ?
+                    <table className="table alternate first-8em spacing-top">
+                      <tbody>
+                        { eachSection.link_url &&
+                          <tr>
+                            <td>ไฟล์แนบ :</td>
+                            <td><a className="plain" href={encodeURI(eachSection.link_url)} download><i className={`twf twf-${contentTypeIcon[eachSection.content_type]} before`} />ดาวน์โหลด</a></td>
+                          </tr>
+                        }
+                        { eachSection.link_description &&
+                          <tr>
+                            <td>รายละเอียด :</td>
+                            <td>{eachSection.link_description}</td>
+                          </tr>
+                        }
+                      </tbody>
+                    </table> :
+                    ""
+                  }
+                </div>
               </li>
             )
           })}

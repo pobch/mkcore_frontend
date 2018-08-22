@@ -52,6 +52,14 @@
   padding-left: 1em;
   border: none;
 }
+.form-minimal .form-group.children-3 label + * {
+  width: calc(100% - 11em);
+  padding-right: 0;
+}
+.form-minimal .form-group.children-3 > *:last-child {
+  width: 3em;
+  padding: 1.5em 0;
+}
 .form-minimal .form-group label + * input {
   padding-left: 0;
   border: none;

@@ -1,6 +1,9 @@
 .table {
   width: 100%;
 }
+.first-8em td:first-child {
+  width: 8em;
+}
 .first-10em td:first-child {
   width: 10em;
 }

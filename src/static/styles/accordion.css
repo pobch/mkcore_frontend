@@ -1,4 +1,12 @@
-
+.accordion-header h3 {
+  width: calc( 100% - 2em );
+  margin-bottom: 0;
+}
+.accordion-header h3 + button {
+  width: 2em;
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+}
 .accordion-body,
 .accordion .accordion-header .twf-chevron-right {
   -webkit-transition: max-height 0.2s ease, transform 0.2s ease, padding 0.3s ease;
@@ -13,6 +21,9 @@
   padding-bottom: 0;
   overflow: hidden;
   background-color: var(--primary-background-color);
+}
+.accordion-body.transparent {
+  background-color: transparent;
 }
 .accordion.show .twf-chevron-right {
   -ms-transform: rotate(90deg);
