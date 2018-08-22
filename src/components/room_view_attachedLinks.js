@@ -15,14 +15,14 @@ export default class ViewAttachedLinks extends Component {
 
   getVideoTemplate = (url) => {
     let videoUrl = false;
-    let videoSrc = 'self-host';
+    let videoSrc = 'external';
+
     if (url.indexOf('youtube') !== -1) {
       let regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
       let match = url.match(regExp);
 
       if (match && match[2].length === 11) {
         videoUrl = '//www.youtube.com/embed/' + match[2];
-        videoSrc = 'external';
       }
     } else if (url.indexOf('vimeo') !== -1) {
       let vimeoRegex = /(?:vimeo)\.com.*(?:videos|video|channels|)\/([\d]+)/i;
@@ -30,10 +30,12 @@ export default class ViewAttachedLinks extends Component {
 
       if (match && match[1]) {
         videoUrl = "//player.vimeo.com/video/" + match[1];
-        videoSrc = 'external';
       }
-    } else if (url.indexOf('.mp4') !== -1) {
-      videoUrl = url
+    } else {
+      videoUrl = url;
+      if (url.indexOf('.mp4') !== -1) {
+        videoSrc = 'self-host';
+      }
     }
 
     if (videoUrl) {
