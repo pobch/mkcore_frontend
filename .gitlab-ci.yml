@@ -17,13 +17,29 @@ variables:
     - export IMAGE_TAG=$(if [ "$IMAGE_TAG" == "master" ]; then echo "latest"; else echo "$CI_COMMIT_REF_NAME"; fi)
     - export APP_IMAGE="$CI_REGISTRY_IMAGE:$IMAGE_TAG"
 
-build_image:
+build_dev:
   <<: *job_definition
   stage: build
+  variables:
+    APP_ENV: dev
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker build --build-arg APP_ENV=dev -t $APP_IMAGE .
+    - docker build --build-arg app_env=$APP_ENV -t $APP_IMAGE .
     - docker push $CI_REGISTRY_IMAGE:$IMAGE_TAG
+  only:
+    - develop
+
+build_prod:
+  <<: *job_definition
+  stage: build
+  variables:
+    APP_ENV: prod
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build --build-arg app_env=$APP_ENV -t $APP_IMAGE .
+    - docker push $CI_REGISTRY_IMAGE:$IMAGE_TAG
+  only:
+    - master
 
 deploy:
   stage: deploy
