@@ -73,6 +73,7 @@ export default class ViewAttachedLinks extends Component {
                     <h3 className="float-left">{eachSection.link_title}</h3>
                   </React.Fragment>
                 )}
+                initialOpen={false}
               >
                 { eachSection.video_url && this.getVideoTemplate(encodeURI(eachSection.video_url)) }
                 { eachSection.link_url || eachSection.link_description ?
