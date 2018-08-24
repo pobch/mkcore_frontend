@@ -44,9 +44,10 @@ export default class ViewAttachedLinks extends Component {
         <div className={`${videoSrc}-video spacing-top`}>
           <div className="video-inner">
             {videoSrc === 'external' ?
-              <iframe title="Attached video" width="1280" height="720" src={videoUrl} /> :
+              <iframe title="Attached video" width="1280" height="720" src={videoUrl} allowFullScreen /> :
               <video onContextMenu={this.disableVidieoRightClick} width="1280" height="720" controls><source src={encodeURI(videoUrl)} type="video/mp4" /></video>
             }
+            <div className="video-hidden-button" />
           </div>
         </div>
       );
