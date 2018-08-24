@@ -1,11 +1,8 @@
 .accordion-header h3 {
-  width: calc( 100% - 2em );
   margin-bottom: 0;
 }
-.accordion-header h3 + button {
-  width: 2em;
-  padding-top: 0.3em;
-  padding-bottom: 0.3em;
+.accordion-header h3 + .accordion-arrow-absolute {
+  right: 0; 
 }
 .accordion-body,
 .accordion .accordion-header .twf-chevron-right {
@@ -38,4 +35,11 @@
 .accordion.show .accordion-body.no-spacing {
   padding-top: 0;
   padding-bottom: 0;
+}
+.accordion-arrow-absolute {
+  position: absolute;
+  top: 50%;
+  right: 1.5rem;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }

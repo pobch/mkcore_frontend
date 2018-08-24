@@ -65,21 +65,14 @@ export default class ViewAttachedLinks extends Component {
         <ul className="stacked-child">
           { this.props.room.attached_links.map( (eachSection, indx) => {
             return (
-              <LiAccordion key={indx} 
+              <LiAccordion key={indx}
                 extraLiClassName="spacing-cover primary-bg"
                 headerElement={(
                   <React.Fragment>
                     <h3 className="float-left">{eachSection.link_title}</h3>
-                    <button
-                      type="button"
-                      className="plain"
-                      onClick={this.onClickToggle}
-                    >
-                      <i className="twf twf-chevron-right" />
-                    </button>
                   </React.Fragment>
                 )}
-              >               
+              >
                 { eachSection.video_url && this.getVideoTemplate(encodeURI(eachSection.video_url)) }
                 { eachSection.link_url || eachSection.link_description ?
                   <table className="table alternate first-8em spacing-top">

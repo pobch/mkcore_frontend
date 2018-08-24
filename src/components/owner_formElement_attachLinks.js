@@ -46,7 +46,7 @@ export default class AttachLinks extends Component {
                 extraLiClassName="attachment-fields"
                 headerElement={(
                   <React.Fragment>
-                    <div className="align-right">
+                    <div className="top-delete-button">
                       <button
                         type="button"
                         onClick={() => fields.remove(indx)}

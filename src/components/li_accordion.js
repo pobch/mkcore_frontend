@@ -15,7 +15,7 @@ export default class LiAccordion extends Component {
     extraHeaderClassName: '',
     extraBodyClassName: ''
   }
-  
+
   state = {
     accordionOpen: this.props.initialOpen,
     accordionClass: this.props.initialOpen ? 'show' : 'hide'
@@ -32,19 +32,17 @@ export default class LiAccordion extends Component {
   render() {
     return (
       <li className={`accordion ${this.props.extraLiClassName} ${this.state.accordionClass}`}>
-        <div className={`accordion-header clearfix ${this.props.extraHeaderClassName}`}>
+        <div className={`accordion-header position-relative clearfix ${this.props.extraHeaderClassName}`}>
           {this.props.headerElement}
-          <div className="inline-child">
-            <button
-              type="button"
-              className="plain"
-              onClick={this.onClickToggle}
-            >
-              <i className="twf twf-chevron-right" />
-            </button>
-          </div>
+          <button
+            type="button"
+            className="plain accordion-arrow-absolute"
+            onClick={this.onClickToggle}
+          >
+            <i className="twf twf-chevron-right" />
+          </button>
         </div>
-        <div className={`accordion-body no-spacing ${this.props.extraBodyClassName}`}>
+        <div className={`accordion-body no-spacing transparent ${this.props.extraBodyClassName}`}>
           {this.props.children}
         </div>
       </li>
