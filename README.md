@@ -4,7 +4,8 @@
 Developing
 
 ## Demo : 
-https://mkcore-app.herokuapp.com
+https://dev-app.makrub.com 
+(Deprecated) https://mkcore-app.herokuapp.com
 
 ## What the purpose of this app?
 Survey owners can create their own surveys/questions, and then receive the unique code. Each survey will match with 1 unique code, which is used for accessing to answer the survey. On the other hand, only Guest users who have the code will be able to access to the survey and answer all questions.  
