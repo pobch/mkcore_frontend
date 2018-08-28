@@ -2,6 +2,9 @@
   padding-right: 10%;
   padding-left: 10%;
 }
+.login-form {
+  margin-top: 1.5rem;
+}
 .login-form label {
   display: block;
   margin-bottom: 0.6rem;
@@ -15,7 +18,7 @@
 }
 .login-header {
   padding-top: 8rem;
-  padding-bottom: 8rem;
+  padding-bottom: 6rem;
 }
 .login-button {
   width: 2.8em;
@@ -44,4 +47,10 @@
   margin: 3em 0;
   font-weight: 300;
   text-align: center;
+}
+.facebook {
+  margin-bottom: 1.25rem;
+}
+.facebook i {
+  margin-right: 1.25em;
 }

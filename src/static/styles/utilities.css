@@ -73,6 +73,9 @@
   margin-top: 0.6em;
   margin-bottom: 0;
 }
+.success {
+  color: var(--success-color);
+}
 .invalid {
   color: var(--fail-color);
 }
@@ -157,4 +160,16 @@
 }
 .drive-viewer-toolstrip {
   display: none;
+}
+
+.full-placeholder {
+  display: table;
+  height: 100%;
+  z-index: 100;
+  background-color: var(--primary-background-color);
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
+}
+.full-placeholder-wrapper {
+  display: table-cell;
+  vertical-align: middle;
 }

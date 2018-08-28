@@ -56,6 +56,11 @@ class LogIn extends Component {
         <div className={ error ? 'feedback invalid' : 'feedback success' }>
           { error ? error : (authenticated ? 'Log in successfully' : '') }
         </div>
+        <button className="facebook large full" type="button" onClick={this.handleClick}>
+          <i className="twf twf-facebook-square" />
+          Login ด้วย facebook
+        </button>
+        <div className="brand-contrast align-center">หรือ</div>
         <form
           className="login-form"
           onSubmit={ handleSubmit(this.onSubmit) }
@@ -81,7 +86,6 @@ class LogIn extends Component {
         </form>
         <div className="login-footer">
           <Link className="brand-contrast" to="/signup">สร้างบัญชีใหม่</Link>
-          <button type="button" onClick={this.handleClick}>Login with facebook</button>
         </div>
       </div>
     )

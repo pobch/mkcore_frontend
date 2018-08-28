@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import { facebookLogin } from '../actions';
 import Loading from '../components/loading';
+import DummyScreen from '../components/dummy_screen';
 
 class AuthFacebook extends Component {
   static propTypes = {
@@ -51,11 +52,11 @@ class AuthFacebook extends Component {
     const hasCode = code !== undefined && code.length > 0;
 
     if (!hasCode) {
-      return 'Invalid Facebook Authentication';
+      return <DummyScreen text="เกิดข้อผิดพลาด กรุณารอสักครู่และลองใหม่" />;
     }
 
     if (facebookLoginError) {
-      return 'Facebook Login Error';
+      return <DummyScreen text="เกิดข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ" />;
     }
 
     if (loading) {
@@ -63,7 +64,11 @@ class AuthFacebook extends Component {
     }
 
     return (
-      <p>Facebook Login Completed</p>
+      <DummyScreen
+        icon="check-circle-o"
+        text="Login เสร็จสมบูรณ์ กรุณารีเฟชรเพจ"
+        status="success"
+      />
     )
   }
 }

@@ -22,14 +22,18 @@ button i {
 .iconize i {
   margin-right: 0;
 }
-button.iconize,input[type=submit].iconize,.btn.iconize {
+button.iconize,
+input[type=submit].iconize,
+.btn.iconize {
   padding: 0.8em;
   font-size: 0.8em;
 }
 button.size-small {
   font-size: 0.8em;
 }
-button.iconize.small,input[type=submit].iconize.small,.btn.iconize.small {
+button.iconize.small,
+input[type=submit].iconize.small,
+.btn.iconize.small {
   padding: 0.425em;
 }
 button:focus,input:focus,textarea:focus {
@@ -38,6 +42,10 @@ button:focus,input:focus,textarea:focus {
 button:hover,input[type=submit]:hover,.btn:hover {
   color: var(--brand-contrast-color);
   background-color: var(--secondary-brand-color);
+}
+button.facebook {
+  color: #fff;
+  background-color: #3b5998;
 }
 button.brand-basic,input[type=submit].brand-basic,.btn.brand-basic {
   padding: 0;
