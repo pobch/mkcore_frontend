@@ -25,47 +25,7 @@ Survey owners can create their own surveys/questions, and then receive the uniqu
   - If joining completed, the joined room will be on the list
   - Click 'Edit Survey' to access and answer the survey
 
-## Generating SSL for local development
-In order to login via facebook, https redirect URL need to be used.
+## Enable SSL
 ```
-mkdir temp
-openssl genrsa -des3 -out temp/rootCA.key 2048
-openssl req -x509 -new -nodes -key temp/rootCA.key -sha256 -days 1024 -out temp/rootCA.pem
-
-
-# Create CSR File
-cat > temp/server.csr.cnf <<EOL
-[req]
-default_bits = 2048
-prompt = no
-default_md = sha256
-distinguished_name = dn
-
-[dn]
-C=TH
-ST=Bangkok
-L=Bangkok
-O=Makrub
-OU=Development
-emailAddress=system.admin@makrub.com
-CN = localhost
-EOL
-```
-
-```
-# V3 Ext file
-cat > temp/v3.ext <<EOL
-authorityKeyIdentifier=keyid,issuer
-basicConstraints=CA:FALSE
-keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
-subjectAltName = @alt_names
-
-[alt_names]
-DNS.1 = localhost
-EOL
-```
-
-```
-openssl req -new -sha256 -nodes -out temp/server.csr -newkey rsa:2048 -keyout temp/server.key -config <( cat temp/server.csr.cnf )
-openssl x509 -req -in temp/server.csr -CA temp/rootCA.pem -CAkey temp/rootCA.key -CAcreateserial -out temp/server.crt -days 500 -sha256 -extfile temp/v3.ext
+HTTPS=true yarn start
 ```

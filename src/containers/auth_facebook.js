@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import queryString from 'query-string';
+import qs from 'qs';
 import PropTypes from 'prop-types';
 
 import { facebookLogin } from '../actions';
@@ -22,7 +22,7 @@ class AuthFacebook extends Component {
     super(props);
 
     const { location } = props;
-    const parsed = queryString.parse(location.search);
+    const parsed = qs.parse(location.search.substr(1));
 
     const { code } = parsed;
 
