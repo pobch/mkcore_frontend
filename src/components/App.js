@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 import LogIn from '../containers/login'
+import AuthFacebook from '../containers/auth_facebook';
 import SignUp from '../containers/signup'
 import SignUpConfirm from '../containers/signup_confirm'
 import PasswordForgot from '../containers/password_forgot'
@@ -32,6 +33,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" render={() => <Redirect to="/guest/rooms"/>} />
             <Route exact path="/login" component={onlyAnonCanAccess(LogIn)} />
+            <Route exact path="/auth/facebook" component={onlyAnonCanAccess(AuthFacebook)} />
             <Route exact path="/signup" component={onlyAnonCanAccess(SignUp)}/>
             <Route exact path="/signup/after-submit" component={SignUpAfterSubmit}/>
             <Route exact path="/signup/activate/confirm/:uid/:token" component={SignUpConfirm}/>

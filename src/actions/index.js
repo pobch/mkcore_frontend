@@ -7,6 +7,7 @@ export const SIGN_UP_CONFIRM = 'sign_up_activate_confirm'
 export const AUTHENTICATED = 'authenticated'
 export const UNAUTHENTICATED = 'unauthenticated'
 export const AUTHEN_ERROR = 'authentication_error'
+export const AUTHEN_FACEBOOK_ERROR = 'auth_facebook_error';
 export const CLEAR_AUTH_ERROR_MSG = 'clear_authen_error_msg'
 export const PASSWORD_FORGOT = 'forgot_password'
 export const PASSWORD_FORGOT_CONFIRM = 'forgot_password_confirm_with_uid_token'
@@ -53,6 +54,7 @@ const BASE_API_URL = process.env.REACT_APP_API_URL // environment variable
 const URL_SIGNUP = `${BASE_API_URL}auth/register/`
 const URL_SIGNUP_CONFIRM = `${BASE_API_URL}auth/confirmation/` // + ?uid=xxx&token=yyy
 const URL_LOGIN = `${BASE_API_URL}auth/login/`
+const URL_FACEBOOK_LOGIN = `${BASE_API_URL}auth/facebook/`
 const URL_PASSWORD_FORGOT = `${BASE_API_URL}djoser/password/reset/`
 const URL_PASSWORD_FORGOT_CONFIRM = `${BASE_API_URL}djoser/password/reset/confirm/`
 const URL_RETRIEVE_UPDATE_PROFILE = `${BASE_API_URL}users/` // + user_id from localStorage
@@ -100,6 +102,23 @@ export function logInAction(values, callback) {
       })
     }
   }
+}
+
+export function facebookLogin({ code }, callback) {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(URL_FACEBOOK_LOGIN, { params: { code }});
+
+      localStorage.setItem('user_id', data.id);
+      localStorage.setItem('email', data.email);
+      localStorage.setItem('token', data.token);
+
+      dispatch({ type: AUTHENTICATED });
+      callback();
+    } catch (error) {
+      dispatch({ type: AUTHEN_FACEBOOK_ERROR, error });
+    }
+  };
 }
 
 export function passwordForgotAction(values) {

@@ -7,11 +7,10 @@ import { logInAction, onLeaveLogInPage, resetError } from '../actions'
 import icon from '../static/logo.png'
 import { facebook } from '../utilities';
 
-class LogIn extends Component {
-  componentDidMount() {
-    console.log('component did mount');
-  }
+const FACEBOOK_APP_ID = process.env.REACT_APP_FACEBOOK_APP_ID;
+const FACEBOOK_REDIRECT_URI = process.env.REACT_APP_FACEBOOK_REDIRECT_URI;
 
+class LogIn extends Component {
   componentWillUnmount(){
     // remove error msg (if any) when leaving this page
     this.props.onLeaveLogInPage()
@@ -19,9 +18,7 @@ class LogIn extends Component {
   }
 
   handleClick = () => {
-    const appId = '259845357981095';
-    const redirectURI = 'https://localhost:3000/app/auth/facebook';
-    facebook.connect(appId, redirectURI);
+    facebook.connect(FACEBOOK_APP_ID, FACEBOOK_REDIRECT_URI);
   }
 
   renderField = (field) => {
