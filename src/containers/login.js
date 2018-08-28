@@ -5,12 +5,23 @@ import { Link } from 'react-router-dom'
 
 import { logInAction, onLeaveLogInPage, resetError } from '../actions'
 import icon from '../static/logo.png'
+import { facebook } from '../utilities';
 
 class LogIn extends Component {
+  componentDidMount() {
+    console.log('component did mount');
+  }
+
   componentWillUnmount(){
     // remove error msg (if any) when leaving this page
     this.props.onLeaveLogInPage()
     this.props.resetError()
+  }
+
+  handleClick = () => {
+    const appId = '259845357981095';
+    const redirectURI = 'https://localhost:3000/app/auth/facebook';
+    facebook.connect(appId, redirectURI);
   }
 
   renderField = (field) => {
@@ -73,6 +84,7 @@ class LogIn extends Component {
         </form>
         <div className="login-footer">
           <Link className="brand-contrast" to="/signup">สร้างบัญชีใหม่</Link>
+          <button type="button" onClick={this.handleClick}>Login with facebook</button>
         </div>
       </div>
     )
