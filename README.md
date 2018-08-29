@@ -4,7 +4,7 @@
 Developing
 
 ## Demo : 
-https://dev-app.makrub.com  
+https://dev.makrub.com  
 (Deprecated) https://mkcore-app.herokuapp.com
 
 ## What the purpose of this app?
