@@ -73,7 +73,7 @@ export default class ViewAttachedLinks extends Component {
                     <h3 className="float-left">{eachSection.link_title}</h3>
                   </React.Fragment>
                 )}
-                initialOpen={false}
+                initialOpen={indx === 0 ? true : false}
               >
                 { eachSection.video_url && this.getVideoTemplate(encodeURI(eachSection.video_url)) }
                 { eachSection.link_url || eachSection.link_description ?
@@ -88,7 +88,7 @@ export default class ViewAttachedLinks extends Component {
                       { eachSection.link_description &&
                         <tr>
                           <td>รายละเอียด :</td>
-                          <td>{eachSection.link_description}</td>
+                          <td style={{ whiteSpace: 'pre-wrap' }}>{eachSection.link_description}</td>
                         </tr>
                       }
                     </tbody>

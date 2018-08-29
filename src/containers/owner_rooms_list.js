@@ -100,7 +100,14 @@ class OwnerRoomsList extends Component {
           <div className="body-content">
             { _.isEmpty(this.props.draftRooms) ?
               null :
-              <div className="list-title spacing-side">แบบร่าง</div>
+              <React.Fragment>
+                <div className="list-title spacing-side">แบบร่าง</div>
+                <div className="list-item clearfix spacing-side"
+                  style={{color: 'grey', fontSize: '1rem'}}
+                >
+                  * ต้องกด "เผยแพร่" ห้อง เพื่อเป็นการเปิดให้มีการเข้าร่วมห้องได้
+                </div>
+              </React.Fragment>
             }
             <ul className="list-body">
               { _.isEmpty(this.props.draftRooms) ?
