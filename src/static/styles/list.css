@@ -38,3 +38,9 @@
 .list-item-meta > *:last-child {
   margin-bottom: 0;
 }
+.drafted {
+  background-color: #f7f7f7;
+}
+.drafted + .list-body .list-item > .col-8 {
+  opacity: 0.3;
+}

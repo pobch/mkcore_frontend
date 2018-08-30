@@ -79,6 +79,9 @@
 .invalid {
   color: var(--fail-color);
 }
+.weight-light {
+  font-weight: 300;
+}
 .spacing-cover {
   padding: 1.5rem;
 }

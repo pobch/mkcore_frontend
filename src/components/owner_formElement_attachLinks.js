@@ -43,24 +43,21 @@ export default class AttachLinks extends Component {
           { fields.map( (name, indx) => {
             return (
               <LiAccordion key={indx}
-                extraLiClassName="attachment-fields"
                 headerElement={(
                   <React.Fragment>
-                    <div className="top-delete-button">
-                      <button
-                        type="button"
-                        onClick={() => fields.remove(indx)}
-                        className="delete size-small"
-                      >
-                        <i className="twf twf-trash-o" />ลบ
-                      </button>
-                    </div>
                     <Field
                       name={`${name}.link_title`}
                       component={this.renderField}
                       label="ชื่อไฟล์แนบ"
                       type="text"
                     />
+                    <button
+                      type="button"
+                      onClick={() => fields.remove(indx)}
+                      className="accordion-delete-absolute delete iconize"
+                    >
+                      <i className="twf twf-trash-o" />
+                    </button>
                   </React.Fragment>
                 )}
                 initialOpen

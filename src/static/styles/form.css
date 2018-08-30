@@ -1,3 +1,9 @@
+.form-attachment .accordion {
+  margin-bottom: 2px;
+}
+.form-attachment button.full {
+  margin-top: 1.5em;
+}
 .form-group {
   margin-bottom: 1em;
   text-align: left;
@@ -195,8 +201,4 @@
 }
 .answer-item.active:before {
   background-color: var(--primary-text-color);
-}
-.attachment-fields {
-  position: relative;
-  margin-bottom: 3em;
 }
