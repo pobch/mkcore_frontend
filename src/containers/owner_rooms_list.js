@@ -100,7 +100,7 @@ class OwnerRoomsList extends Component {
           <div className="body-content">
             { _.isEmpty(this.props.draftRooms) ?
               null :
-              <div className="list-title spacing-side drafted">แบบร่าง <span className="invalid weight-light">(รอการเผยแพร่)</span></div>
+              <div className="list-title spacing-side drafted">แบบร่าง <span className="invalid weight-light">(*รอการเผยแพร่)</span></div>
             }
             <ul className="list-body">
               { _.isEmpty(this.props.draftRooms) ?
