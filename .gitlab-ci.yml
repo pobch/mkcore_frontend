@@ -39,7 +39,7 @@ build_prod:
     - docker build --build-arg app_env=$APP_ENV -t $APP_IMAGE .
     - docker push $CI_REGISTRY_IMAGE:$IMAGE_TAG
   only:
-    - master
+    - tags
 
 deploy:
   stage: deploy
