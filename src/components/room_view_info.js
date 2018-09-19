@@ -53,18 +53,23 @@ export default class ViewRoomInfo extends Component {
                   <td>{dateFormat(datetimeLastJoin, 'dd/mm/yyyy, hh:MM TT')}</td>
                 </tr>
               }
-              {this.props.expireDate 
+              {this.props.expireDate // for guest, must provide extra props 'expireDate'
                 ? <tr>
                     <td>อยู่ในห้องได้จนถึง :</td>
                     <td>{dateFormat(this.props.expireDate, 'dd/mm/yyyy, hh:MM TT')}</td>
                   </tr>
                 : (
-                  this.props.room.guest_ttl_in_days &&
+                  this.props.room.guest_ttl_in_days && // for owner
                   <tr>
                     <td>อยู่ในห้องได้สูงสุด :</td>
                     <td>{this.props.room.guest_ttl_in_days} วัน</td>
                   </tr> 
                 )
+              }
+              {this.props.room.social_urls.facebook && 
+                <tr>
+                  <td><a target="_blank" href={this.props.room.social_urls.facebook}>icon</a></td>
+                </tr>
               }
             </tbody>
           </table>

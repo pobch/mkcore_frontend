@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export function validateOwnRoomCreateEdit(values) {
   const errors = {}
   const requiredFields = ['room_code', 'title', 'description', 'instructor_name']
@@ -20,6 +22,16 @@ export function validateOwnRoomCreateEdit(values) {
   })
   if(linkUrlError.length) {
     errors['attached_links'] = linkUrlError
+  }
+
+  const socialUrlsError = {}
+  values['social_urls'] && _.forEach(values['social_urls'], (url, key) => {
+    if(url && !/^https?:\/\//i.test(url)) {
+      socialUrlsError[key] = 'ต้องขึ้นต้นด้วย http:// หรือ https://'
+    }
+  })
+  if(!_.isEmpty(socialUrlsError)) {
+    errors['social_urls'] = socialUrlsError
   }
 
   return errors

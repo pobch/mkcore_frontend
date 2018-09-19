@@ -102,6 +102,13 @@ export default class RoomInfoEdit extends Component {
           type="number"
           validate={[number, minValue1]}
         />
+        <div>Social Media</div>
+        <Field
+          name="social_urls.facebook"
+          component={this.renderField}
+          label="Facebook"
+          type="text"
+        />
       </div>
     )
   }
