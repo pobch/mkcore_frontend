@@ -63,13 +63,8 @@ export default class ViewRoomInfo extends Component {
                   <tr>
                     <td>อยู่ในห้องได้สูงสุด :</td>
                     <td>{this.props.room.guest_ttl_in_days} วัน</td>
-                  </tr> 
+                  </tr>
                 )
-              }
-              {this.props.room.social_urls.facebook && 
-                <tr>
-                  <td><a target="_blank" href={this.props.room.social_urls.facebook}>icon</a></td>
-                </tr>
               }
             </tbody>
           </table>

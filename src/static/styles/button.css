@@ -102,3 +102,22 @@ button.large,input[type=submit].large,.btn.large {
   color: var(--secondary-text-color);
   background-color: var(--secondary-background-color);
 }
+.messenger-icon {
+  position: fixed;
+  right: calc(50% - 470px);
+  top: 10px;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  z-index: 100;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 15px 20px 0 rgba(0,0,0,0.2);
+  text-align: center;
+}
+.messenger-icon img {
+  display: inline-block;
+  max-width: 35px;
+  height: auto;
+  vertical-align: middle;
+}

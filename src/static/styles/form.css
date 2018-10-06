@@ -1,7 +1,7 @@
 .form-attachment .accordion {
   margin-bottom: 2px;
 }
-.form-attachment button.full {
+.form-attachment ul + button.full {
   margin-top: 1.5em;
 }
 .form-group {
@@ -48,13 +48,13 @@
   float: left;
 }
 .form-minimal .form-group label {
-  width: 8em;
+  width: 9em;
   padding: 1.5em 0.6em 1.5em 1.5em;
   margin-bottom: 0;
   font-size: 1em;
 }
 .form-minimal .form-group label + * {
-  width: calc(100% - 8em);
+  width: calc(100% - 9em);
   padding-left: 1em;
   border: none;
 }

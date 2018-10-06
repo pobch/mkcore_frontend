@@ -10,7 +10,7 @@ import ViewAttachedLinks from '../components/room_view_attachedLinks'
 import ViewRoomAnswer from '../components/room_view_answer1'
 
 import {fetchAnswerFromRoomId, fetchGuestRoom, fetchJoinReqOfMeByRoomId} from '../actions'
-
+import messenger from '../static/messenger.png'
 
 class GuestViewRoom extends Component {
 
@@ -28,6 +28,20 @@ class GuestViewRoom extends Component {
     }
 
     const { expire_date } = this.props.joinReqsInfo.myRelationAtCurrentRoom // can be null
+
+    let fbIcon = '';
+    if ( this.props.room.social_urls.facebook ) {
+      let fbLink = this.props.room.social_urls.facebook
+      if ( fbLink.substr(-1) === '/' ) {
+        fbLink = fbLink.substr(0, fbLink.length - 1);
+      }
+      const fbId = fbLink.substring(fbLink.lastIndexOf("/") + 1);
+      fbIcon = (
+        <a className="messenger-icon" target="_blank" href={`https://m.me/${fbId}`}>
+          <img src={messenger} width="100" height="100" alt="Messenger"/>
+        </a>
+      )
+    }
 
     return (
       <div className="wrapper">
@@ -59,6 +73,7 @@ class GuestViewRoom extends Component {
             </Link>
           </div>
         </div>
+        {fbIcon}
       </div>
     )
   }
@@ -94,6 +109,6 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default connect(
-  mapStateToProps, 
+  mapStateToProps,
   {fetchAnswerFromRoomId, fetchGuestRoom, fetchJoinReqOfMeByRoomId}
 )(GuestViewRoom)

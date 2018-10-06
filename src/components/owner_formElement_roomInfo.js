@@ -97,16 +97,16 @@ export default class RoomInfoEdit extends Component {
         <Field
           name="guest_ttl_in_days"
           component={this.renderField}
-          label="ช่วงเวลาสูงสุด (วัน)"
+          label="ช่วงเวลาสูงสุด"
           placeholder="ช่วงเวลาสูงสุดที่อยู่ในห้องได้ (วัน)"
           type="number"
           validate={[number, minValue1]}
         />
-        <div>Social Media</div>
         <Field
           name="social_urls.facebook"
           component={this.renderField}
-          label="Facebook"
+          label="Facebook URL"
+          placeholder="สำหรับสอบถามผ่าน fb messenger"
           type="text"
         />
       </div>

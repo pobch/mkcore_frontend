@@ -10,6 +10,10 @@
   .fixed {
     left: 0;
   }
+  .messenger-icon {
+    top: 5px;
+    right: 15px;
+  }
 }
 @media only screen and (max-width: 480px) {
   .hidden-m {
@@ -23,5 +27,14 @@
   .rw-datetime-picker .rw-select button {
     width: 50%;
     padding: 0.8em;
+  }
+  .messenger-icon {
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+  }
+  .messenger-icon img {
+    max-width: 25px;
   }
 }

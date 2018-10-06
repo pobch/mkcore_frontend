@@ -17,7 +17,7 @@ import {
   fetchGuestRoom, saveNewAnswer, updateAnswer,
   fetchAnswerFromRoomId, resetError, fetchJoinReqOfMeByRoomId
 } from '../actions'
-
+import messenger from '../static/messenger.png'
 
 class GuestEditRoom extends Component {
 
@@ -92,6 +92,20 @@ class GuestEditRoom extends Component {
     const { handleSubmit } = this.props
     const { expire_date } = this.props.joinReqsInfo.myRelationAtCurrentRoom // can be null
 
+    let fbIcon = '';
+    if ( this.props.room.social_urls.facebook ) {
+      let fbLink = this.props.room.social_urls.facebook
+      if ( fbLink.substr(-1) === '/' ) {
+        fbLink = fbLink.substr(0, fbLink.length - 1);
+      }
+      const fbId = fbLink.substring(fbLink.lastIndexOf("/") + 1);
+      fbIcon = (
+        <a className="messenger-icon" target="_blank" href={`https://m.me/${fbId}`}>
+          <img src={messenger} width="100" height="100" alt="Messenger"/>
+        </a>
+      )
+    }
+
     return (
       <div className="wrapper">
         <div className="wrapper-background fixed secondary-bg" />
@@ -131,6 +145,7 @@ class GuestEditRoom extends Component {
             </Link>
           </div>
         </div>
+        {fbIcon}
 
         {/* Confirm Finish Answer Modal */}
         <Portal>
