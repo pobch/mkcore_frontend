@@ -7,7 +7,7 @@ import _ from 'lodash'
 
 export default function ErrorMessage(props) {
   return (
-    <ul className="list-body error-message fixed spacing-side">
+    <ul className="list-body error-message spacing-side">
       { typeof props.errors === 'string'
         ? <li className="list-item">{props.errors}</li>
         : _.map(props.errors, (value,key) => {
@@ -19,6 +19,7 @@ export default function ErrorMessage(props) {
               </li>
             )
           } else {
+            // Validation Error 
             // e.g., key = room_code, value = [ 'room with this room code already exists.', 'error msg2' ]
             return (
               // Array of components:

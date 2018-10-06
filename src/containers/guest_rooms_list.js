@@ -176,7 +176,7 @@ class GuestRoomsList extends Component {
         </div>
 
         { this.props.errors.guestRoomsError &&
-          <ErrorMessage errors={this.props.errors} />
+          <ErrorMessage errors={this.props.errors.guestRoomsError} />
         }
 
         <BotNavbar/>
