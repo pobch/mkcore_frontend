@@ -113,31 +113,35 @@ class GuestEditRoom extends Component {
         <TopTabBar
           titleTab1="ข้อมูล"
           titleTab2={ _.isEmpty(this.props.room.attached_links) ? '' : 'ไฟล์แนบ' }
-          titleTab3="แบบสอบถาม"
+          titleTab3={ _.isEmpty(this.props.room.survey) ? '' : "แบบสอบถาม"}
         />
         <div className="tab-content">
           <div className="tab-body">
             <div className='tab-item'>
               <ViewRoomInfo room={this.props.room} expireDate={ expire_date && new Date(expire_date) }/>
             </div>
-            <div className='tab-item'>
-              <ViewAttachedLinks room={this.props.room}/>
-            </div>
-            <div className='tab-item'>
-              <form className="form-minimal number" onSubmit={handleSubmit(this.onSubmit)}>
-                <GuestAnswer
-                  survey={this.props.survey}
-                  onClickSave={
-                    handleSubmit(values => {
-                      this.onSubmit({
-                        ...values,
-                        fromSaveButton: true
+            {_.isEmpty(this.props.room.attached_links) ||
+              <div className='tab-item'>
+                <ViewAttachedLinks room={this.props.room}/>
+              </div>
+            }
+            {_.isEmpty(this.props.room.survey) ||
+              <div className='tab-item'>
+                <form className="form-minimal number" onSubmit={handleSubmit(this.onSubmit)}>
+                  <GuestAnswer
+                    survey={this.props.survey}
+                    onClickSave={
+                      handleSubmit(values => {
+                        this.onSubmit({
+                          ...values,
+                          fromSaveButton: true
+                        })
                       })
-                    })
-                  }
-                />
-              </form>
-            </div>
+                    }
+                  />
+                </form>
+              </div>
+            }
           </div>
           <div className="tab-footer fixed clearfix spacing-side">
             <Link to="/guest/rooms" className="float-left">

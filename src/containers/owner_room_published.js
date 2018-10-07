@@ -47,7 +47,7 @@ class OwnerViewRoom extends Component {
         <div className="header fixed">รายละเอียดห้อง</div>
         <TopTabBar
           titleTab1="ข้อมูล"
-          titleTab2="ไฟล์แนบ"
+          titleTab2={ _.isEmpty(this.props.room.attached_links) ? '' : "ไฟล์แนบ"}
           titleTab3={ _.isEmpty(this.props.room.survey) ? '' : 'แบบสอบถาม' }
         />
         <form className="tab-content" onSubmit={handleSubmit(this.onSubmit)}>
@@ -55,12 +55,16 @@ class OwnerViewRoom extends Component {
             <div className="tab-item">
               <ViewRoomInfo room={this.props.room}/>
             </div>
-            <div className="tab-item">
-              <AttachLinks />
-            </div>
-            <div className="tab-item">
-              <ViewRoomSurvey room={this.props.room}/>
-            </div>
+            {_.isEmpty(this.props.room.attached_links) ||
+              <div className="tab-item">
+                <AttachLinks />
+              </div>
+            }
+            {_.isEmpty(this.props.room.survey) ||
+              <div className="tab-item">
+                <ViewRoomSurvey room={this.props.room}/>
+              </div>
+            }
           </div>
           <div className="tab-footer fixed clearfix spacing-side">
             <Link to="/owner/rooms" className="float-left">

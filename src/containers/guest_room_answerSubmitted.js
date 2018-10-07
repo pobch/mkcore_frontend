@@ -57,15 +57,19 @@ class GuestViewRoom extends Component {
             <div className='tab-item'>
               <ViewRoomInfo room={this.props.room} expireDate={ expire_date && new Date(expire_date) }/>
             </div>
-            <div className='tab-item'>
-              <ViewAttachedLinks room={this.props.room}/>
-            </div>
-            <div className='tab-item'>
-              <ViewRoomAnswer
-                survey={this.props.survey} // can be []
-                answer={this.props.answer} // can be []
-              />
-            </div>
+            {_.isEmpty(this.props.room.attached_links) ||
+              <div className='tab-item'>
+                <ViewAttachedLinks room={this.props.room}/>
+              </div>
+            }
+            {_.isEmpty(this.props.room.survey) ||
+              <div className='tab-item'>
+                <ViewRoomAnswer
+                  survey={this.props.survey} // can be []
+                  answer={this.props.answer} // can be []
+                />
+              </div>
+            }
           </div>
           <div className="tab-footer fixed clearfix spacing-side">
             <Link to="/guest/rooms" className="float-left">
