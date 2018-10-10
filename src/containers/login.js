@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
-import { Link } from 'react-router-dom'
 
-import { logInAction, onLeaveLogInPage, resetError } from '../actions'
+import { onLeaveLogInPage, resetError } from '../actions'
 import icon from '../static/logo.png'
 import { facebook } from '../utilities';
 
@@ -21,30 +19,7 @@ class LogIn extends Component {
     facebook.connect(FACEBOOK_APP_ID, FACEBOOK_REDIRECT_URI);
   }
 
-  renderField = (field) => {
-    const { touched, error } = field.meta
-    return (
-      <div className="form-group">
-        <div className="feedback invalid anmt-fadein">
-          { touched && error ? error : null }
-        </div>
-        <input
-          className={touched && error ? 'form-control invalid' : 'form-control'}
-          placeholder={ field.placeholder }
-          type={ field.type }
-          {...field.input}
-          autoComplete="off"
-        />
-      </div>
-    )
-  }
-
-  onSubmit = (values) => {
-    this.props.logInAction(values, () => {this.props.history.push('/')})
-  }
-
   render() {
-    const { handleSubmit } = this.props
     const { error, authenticated } = this.props.auth
 
     return (
@@ -60,47 +35,9 @@ class LogIn extends Component {
           <i className="twf twf-facebook-square" />
           Login ด้วย facebook
         </button>
-        <div className="brand-contrast align-center">หรือ</div>
-        <form
-          className="login-form"
-          onSubmit={ handleSubmit(this.onSubmit) }
-        >
-          <Field
-            name="email"
-            placeholder="อีเมล"
-            component={ this.renderField }
-            type="email"
-          />
-          <Field
-            name="password"
-            placeholder="รหัสผ่าน"
-            component={ this.renderField }
-            type="password"
-          />
-          <Link className="brand-contrast" to="/password/forgot">ลืมรหัสผ่าน?</Link>
-          <div className="align-center">
-            <button type="submit" className="login-button">
-              <i className="twf twf-arrow-bold-right" />
-            </button>
-          </div>
-        </form>
-        <div className="login-footer">
-          <Link className="brand-contrast" to="/signup">สร้างบัญชีใหม่</Link>
-        </div>
       </div>
     )
   }
-}
-
-function validate(values) {
-  const errors = {}
-  if (!values.email) {
-    errors.email = 'กรุณากรอกอีเมล'
-  }
-  if (!values.password) {
-    errors.password = 'กรุณากรอกพาสเวิร์ด'
-  }
-  return errors
 }
 
 function mapStateToProps(state) {
@@ -109,9 +46,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default reduxForm({
-  validate,
-  form: 'LogInForm'
-})(
-  connect(mapStateToProps, { logInAction, onLeaveLogInPage, resetError })(LogIn)
-)
+export default connect(mapStateToProps, { onLeaveLogInPage, resetError })(LogIn)

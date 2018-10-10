@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
 import FormProfileInfo from './profile_form_info'
-import FormProfilePassword from './profile_form_password'
 
 import BotNavbar from '../components/botNavbar'
 import Portal from '../components/portal'
@@ -37,7 +36,6 @@ class Profile extends Component {
         </div>
         <div className="body">
           <FormProfileInfo/>
-          <FormProfilePassword/>
         </div>
         <BotNavbar/>
 

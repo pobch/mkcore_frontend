@@ -2,15 +2,11 @@ import axios from 'axios'
 import _ from 'lodash'
 import FileSaver from 'file-saver' // for export result
 
-export const SIGN_UP = 'sign_up'
-export const SIGN_UP_CONFIRM = 'sign_up_activate_confirm'
 export const AUTHENTICATED = 'authenticated'
 export const UNAUTHENTICATED = 'unauthenticated'
 export const AUTHEN_ERROR = 'authentication_error'
 export const AUTHEN_FACEBOOK_ERROR = 'auth_facebook_error';
 export const CLEAR_AUTH_ERROR_MSG = 'clear_authen_error_msg'
-export const PASSWORD_FORGOT = 'forgot_password'
-export const PASSWORD_FORGOT_CONFIRM = 'forgot_password_confirm_with_uid_token'
 
 export const FETCH_OWNROOMS = 'fetch_rooms_the_user_owns'
 export const FETCH_OWN_ROOM = 'fetch_specific_room_the_user_owns'
@@ -51,12 +47,7 @@ export const EXPORT_ANSWERS_RESULT = 'export_all_answers_result_of_an_own_room'
 
 const BASE_API_URL = process.env.REACT_APP_API_URL // environment variable
 
-const URL_SIGNUP = `${BASE_API_URL}auth/register/`
-const URL_SIGNUP_CONFIRM = `${BASE_API_URL}auth/confirmation/` // + ?uid=xxx&token=yyy
-const URL_LOGIN = `${BASE_API_URL}auth/login/`
 const URL_FACEBOOK_LOGIN = `${BASE_API_URL}auth/facebook/`
-const URL_PASSWORD_FORGOT = `${BASE_API_URL}djoser/password/reset/`
-const URL_PASSWORD_FORGOT_CONFIRM = `${BASE_API_URL}djoser/password/reset/confirm/`
 const URL_RETRIEVE_UPDATE_PROFILE = `${BASE_API_URL}users/` // + user_id from localStorage
 const URL_FETCH_GUESTROOMS = `${BASE_API_URL}rooms/?query=guest`
 const URL_FETCH_OWNROOMS = `${BASE_API_URL}rooms/?query=owner`
@@ -77,33 +68,6 @@ const URL_FETCH_ANSWER_BY_ROOM_ID = `${BASE_API_URL}answers/byroomid/` // + room
 const URL_FETCH_MY_ANSWER = `${BASE_API_URL}answers/me/`
 const URL_EXPORT_ANSWERS = `${BASE_API_URL}export/answers/?room_id=` // + room_id to be exported
 
-
-export function logInAction(values, callback) {
-  const { email, password } = values
-
-  return async (dispatch) => {
-    try {
-      const response = await axios.post(URL_LOGIN, { email, password })
-      const { token } = response.data
-      localStorage.setItem('token', token)
-      const payload = token.split('.')[1]
-      const base64 = payload.replace(/-/g, '+').replace(/_/g, '/')
-      const { user_id } = JSON.parse(window.atob(base64))
-      localStorage.setItem('user_id', user_id)
-      localStorage.setItem('email', email)
-      dispatch({
-        type: AUTHENTICATED
-      })
-      callback()
-    } catch(error) {
-      dispatch({
-        type: AUTHEN_ERROR,
-        payload: 'Invalid email or password'
-      })
-    }
-  }
-}
-
 export function facebookLogin({ code }, callback) {
   return async (dispatch) => {
     try {
@@ -119,28 +83,6 @@ export function facebookLogin({ code }, callback) {
       dispatch({ type: AUTHEN_FACEBOOK_ERROR, error });
     }
   };
-}
-
-export function passwordForgotAction(values) {
-  const { email } = values
-
-  return async (dispatch) => {
-    await axios.post(URL_PASSWORD_FORGOT, { email }) // the response's body will be blank
-    dispatch({
-      type: PASSWORD_FORGOT
-    })
-  }
-}
-
-export function passwordForgotConfirmAction(values) {
-  const { uid, token, new_password } = values
-
-  return async (dispatch) => {
-    await axios.post(URL_PASSWORD_FORGOT_CONFIRM, { uid, token, new_password })
-    dispatch({
-      type: PASSWORD_FORGOT_CONFIRM
-    })
-  }
 }
 
 export function onLeaveLogInPage() {
@@ -401,27 +343,6 @@ export function createRoom(values) {
       })
       throw error // return error to catch{} in the container component who call this function  
     }
-  }
-}
-
-export function signUpAction(values, callback) {
-  return async (dispatch) => {
-    const response = await axios.post(URL_SIGNUP, values)
-    dispatch({
-      type: SIGN_UP,
-      payload: response
-    })
-    callback()
-  }
-}
-
-export function signUpConfirmAction(uid, token) {
-  return async (dispatch) => {
-    await axios.get(`${URL_SIGNUP_CONFIRM}?uid=${uid}&token=${token}`)
-    dispatch({
-      type: SIGN_UP_CONFIRM
-    })
-    // handle error in componentDidMount()
   }
 }
 

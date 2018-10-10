@@ -2,11 +2,7 @@ import React, { Component } from 'react'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 import LogIn from '../containers/login'
-import AuthFacebook from '../containers/auth_facebook';
-import SignUp from '../containers/signup'
-import SignUpConfirm from '../containers/signup_confirm'
-import PasswordForgot from '../containers/password_forgot'
-import PasswordForgotConfirm from '../containers/password_forgot_confirm'
+import AuthFacebook from '../containers/auth_facebook'
 import GuestRoomsList from '../containers/guest_rooms_list'
 import OwnerRoomsList from '../containers/owner_rooms_list'
 import DraftRoom from '../containers/owner_room_draft'
@@ -20,7 +16,6 @@ import PublishedRoom from '../containers/owner_room_published'
 import onlyUserCanAccess from '../hoc/only_user_can_access'
 import onlyAnonCanAccess from '../hoc/only_anon_can_access'
 
-import SignUpAfterSubmit from '../components/signup_after_submit'
 import CreateRoomCloneWithoutGuests from '../components/owner_room_create_clone'
 import NotFound from '../components/notfound'
 
@@ -34,11 +29,6 @@ class App extends Component {
             <Route exact path="/" render={() => <Redirect to="/guest/rooms"/>} />
             <Route exact path="/login" component={onlyAnonCanAccess(LogIn)} />
             <Route exact path="/auth/facebook" component={onlyAnonCanAccess(AuthFacebook)} />
-            <Route exact path="/signup" component={onlyAnonCanAccess(SignUp)}/>
-            <Route exact path="/signup/after-submit" component={SignUpAfterSubmit}/>
-            <Route exact path="/signup/activate/confirm/:uid/:token" component={SignUpConfirm}/>
-            <Route exact path="/password/forgot" component={PasswordForgot}/>
-            <Route exact path="/password/forgot/confirm/:uid/:token" component={PasswordForgotConfirm}/>
             <Route exact path="/guest/rooms" component={onlyUserCanAccess(GuestRoomsList)} />
             <Route exact path="/guest/rooms/:id(\d+)" component={GuestRoomAnswerNotSubmit}/>
             <Route exact path="/guest/rooms/:id(\d+)/view" component={GuestRoomAnswerSubmitted}/>
