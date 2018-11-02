@@ -26,3 +26,7 @@ Survey owners can create their own surveys/questions, and then receive the uniqu
   - If joining completed, the joined room will be on the list
   - Click 'Edit Survey' to access and answer the survey
 
+## Enable SSL
+```
+HTTPS=true yarn start
+```

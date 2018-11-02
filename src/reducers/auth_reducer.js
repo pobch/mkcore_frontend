@@ -1,7 +1,12 @@
 import _ from 'lodash'
 import axios from 'axios'
-import { AUTHENTICATED, AUTHEN_ERROR, UNAUTHENTICATED, CLEAR_AUTH_ERROR_MSG } from '../actions'
-
+import {
+  AUTHENTICATED,
+  AUTHEN_ERROR,
+  AUTHEN_FACEBOOK_ERROR,
+  UNAUTHENTICATED,
+  CLEAR_AUTH_ERROR_MSG,
+} from '../actions'
 
 export default function(state = {}, action) {
   switch(action.type) {
@@ -14,6 +19,8 @@ export default function(state = {}, action) {
     case CLEAR_AUTH_ERROR_MSG:
       // only clear error key, but maintain 'authenticated' status
       return _.omit(state, 'error')
+    case AUTHEN_FACEBOOK_ERROR:
+      return { ...state, facebookLoginError: action.error };
     case UNAUTHENTICATED:
       delete axios.defaults.headers.common['Authorization']
       return { authenticated: false }

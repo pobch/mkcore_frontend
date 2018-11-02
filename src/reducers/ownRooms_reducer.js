@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { 
-  FETCH_OWNROOMS, FETCH_OWN_ROOM,
+  FETCH_OWNROOMS, FETCH_OWN_ROOM, PUBLISH_OWN_ROOM,
   UPDATE_OWN_ROOM, CREATE_OWN_ROOM, DELETE_OWN_ROOM, 
   UNAUTHENTICATED, AUTHEN_ERROR 
 } from '../actions'
@@ -18,6 +18,10 @@ export default function(state = [], action) {
       const newState = [...state] // copy array
       newState[foundFirstIndex] = action.payload.data // replace new data to the same position
       return newState
+    case PUBLISH_OWN_ROOM:
+      const tempState = state.filter((value) => value.id !== action.payload.data.id)
+      tempState.splice(0,0,action.payload.data)
+      return tempState
     case CREATE_OWN_ROOM:
       return [action.payload.data, ...state]
     case DELETE_OWN_ROOM:

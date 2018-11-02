@@ -8,6 +8,7 @@ import showComponentReducer from './show_component'
 import errorReducer from './error_reducer'
 import pendingRoomsInfoReducer from './pendingRoomsInfo_reducer'
 import joinReqsInfoReducer from './joinReqsInfo_reducer'
+import profileReducer from './profile_reducer'
 
 
 const rootReducer = combineReducers({
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   joinReqsInfo: joinReqsInfoReducer,
   answers: answersReducer,
   showComponent: showComponentReducer,
-  errors: errorReducer
+  errors: errorReducer,
+  profile: profileReducer
 })
 
 export default rootReducer

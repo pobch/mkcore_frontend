@@ -1,0 +1,21 @@
+.table {
+  width: 100%;
+}
+.first-8em td:first-child {
+  width: 8em;
+}
+.first-10em td:first-child {
+  width: 10em;
+}
+.table td {
+  padding: 1rem;
+}
+.table:not(.alternate) td:first-child {
+  padding-left: 0;
+}
+.table:not(.alternate) td:last-child {
+  padding-right: 0;
+}
+.table.alternate tr:nth-child(odd) {
+  background-color: var(--secondary-background-color);
+}

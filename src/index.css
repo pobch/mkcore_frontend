@@ -1,34 +1,25 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-}
+@import './static/styles/animation.css'; /* Animation */
+@import './static/styles/variables.css'; /* Global variables */
 
-.btn {
-  margin-right: 5px;
-}
+@import './static/styles/accordion.css'; /* Accordion*/
+@import './static/styles/button.css'; /* Button*/
+@import './static/styles/default.css'; /* Native HTML tag */
+@import './static/styles/dropdown.css'; /* Dropdown */
+@import './static/styles/font.css'; /* Form */
+@import './static/styles/form.css'; /* Form */
+@import './static/styles/layout.css'; /* Layout */
+@import './static/styles/list.css'; /* List */
+@import './static/styles/loading.css'; /* Loading */
+@import './static/styles/modal.css'; /* Modal */
+@import './static/styles/navbar.css'; /* Navbar */
+@import './static/styles/react-widgets.css'; /* Override React Widgets */
+@import './static/styles/tab.css'; /* Tab */
+@import './static/styles/table.css'; /* Table */
+@import './static/styles/utilities.css'; /* Utilities */
 
-.long-text {
-  overflow-wrap: break-word;
-}
+/* Pages */
+@import './static/styles/survey.css'; /* Survey */
+@import './static/styles/login.css'; /* Login */
 
-/* #myModal {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  opacity: 1;
-  visibility: visible;
-}
-
-#myModalContent {
-  position: absolute;
-  top: 40%;
-  left: 30%;
-  background-color: white;
-  padding: 1rem 1.5rem;
-  width: 24rem;
-  border-radius: 0.5rem;
-} */
+/* Responsive */
+@import './static/styles/responsive.css'; /* Responsive */

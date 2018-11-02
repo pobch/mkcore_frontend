@@ -1,4 +1,4 @@
-import {Component} from 'react'
+import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 
 
@@ -16,6 +16,6 @@ export default class Portal extends Component {
   }
 
   render() {
-    return ReactDOM.createPortal(this.props.children, this.el)
+    return ReactDOM.createPortal(<div onClick={(e) => e.stopPropagation()}>{this.props.children}</div>, this.el)
   }
 }

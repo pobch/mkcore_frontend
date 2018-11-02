@@ -1,0 +1,6 @@
+.survey-list + button {
+  margin-top: 1.5em;
+}
+.survey-list:empty + button {
+  margin-top: 0;
+}

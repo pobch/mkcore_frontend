@@ -1,0 +1,178 @@
+.clearfix:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+.col-2 {
+  width: 20%;
+}
+.col-3 {
+  width: 30%;
+}
+.col-4 {
+  width: 40%;
+}
+.col-5 {
+  width: 50%;
+}
+.col-6 {
+  width: 60%;
+}
+.col-7 {
+  width: 70%;
+}
+.col-8 {
+  width: 80%;
+}
+.float-left {
+  float: left;
+}
+.float-right {
+  float: right;
+}
+.align-center {
+  text-align: center;
+}
+.align-right {
+  text-align: right;
+}
+.stacked-child > * {
+  display: block;
+  margin-bottom: 0.8em;
+}
+.stacked-child > *:empty,
+.stacked-child > *:last-child {
+  margin-bottom: 0;
+}
+.inline-child > * {
+  display: inline-block;
+  margin-right: 0.75em;
+}
+.inline-child > *.float-right {
+  margin-right: 0;
+  margin-left: 0.75em;
+}
+.inline-child > *:empty,
+.inline-child > *:last-child {
+  margin-right: 0;
+  margin-left: 0;
+}
+.brand-contrast,
+.brand-contrast:hover {
+  color: var(--brand-contrast-color);
+}
+.feedback {
+  font-size: 0.8em;
+  margin-bottom: 0.4em;
+  text-align: left;
+}
+.feedback:empty {
+  display: none;
+}
+.feedback.bottom {
+  margin-top: 0.6em;
+  margin-bottom: 0;
+}
+.success {
+  color: var(--success-color);
+}
+.invalid {
+  color: var(--fail-color);
+}
+.weight-light {
+  font-weight: 300;
+}
+.spacing-cover {
+  padding: 1.5rem;
+}
+.spacing-side {
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+}
+.spacing-top {
+  margin-top: 1.5rem;
+}
+.spacing-top:empty {
+  margin-top: 0;
+}
+.spacing-vertical {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.pointer {
+  cursor: pointer;
+}
+.pending-opacity {
+  opacity: 0.4;
+}
+.primary-bg {
+  background-color: var(--primary-background-color);
+}
+.secondary-bg {
+  background-color: var(--secondary-background-color);
+}
+.brand-bg {
+  background-color: var(--primary-brand-color);
+}
+.fail-bg {
+  background-color: var(--fail-color);
+}
+.large-size {
+  font-size: 3em;
+}
+.absolute-left {
+  position: absolute;
+}
+.circle {
+  border-radius: 50%;
+}
+.position-relative {
+  position: relative;
+}
+.divider {
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin: 1.5em 0;
+  background-color: var(--border-color);
+}
+.top-delete-button {
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+}
+.external-video .video-inner {
+  position: relative;
+  padding-bottom: 56.25%;
+}
+.external-video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.video-hidden-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 80px;
+  opacity: 0;
+}
+.drive-viewer-toolstrip {
+  display: none;
+}
+
+.full-placeholder {
+  display: table;
+  height: 100%;
+  z-index: 100;
+  background-color: var(--primary-background-color);
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
+}
+.full-placeholder-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}

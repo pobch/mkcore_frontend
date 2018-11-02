@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import reduxThunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 import './index.css';
 import App from './components/App';
@@ -11,8 +12,7 @@ import reducers from './reducers'
 import { AUTHENTICATED } from './actions'
 
 
-const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore)
-const store = createStoreWithMiddleware(reducers)
+const store = createStore(reducers, composeWithDevTools(applyMiddleware(reduxThunk))) 
 
 const token = localStorage.getItem('token')
 

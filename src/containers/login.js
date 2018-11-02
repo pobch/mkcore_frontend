@@ -4,7 +4,11 @@ import { Field, reduxForm } from 'redux-form'
 import { Link } from 'react-router-dom'
 
 import { logInAction, onLeaveLogInPage, resetError } from '../actions'
+import icon from '../static/logo.png'
+import { facebook } from '../utilities';
 
+const FACEBOOK_APP_ID = process.env.REACT_APP_FACEBOOK_APP_ID;
+const FACEBOOK_REDIRECT_URI = process.env.REACT_APP_FACEBOOK_REDIRECT_URI;
 
 class LogIn extends Component {
   componentWillUnmount(){
@@ -13,19 +17,24 @@ class LogIn extends Component {
     this.props.resetError()
   }
 
+  handleClick = () => {
+    facebook.connect(FACEBOOK_APP_ID, FACEBOOK_REDIRECT_URI);
+  }
+
   renderField = (field) => {
     const { touched, error } = field.meta
     return (
       <div className="form-group">
-        <input 
-          className={touched && error ? 'form-control is-invalid' : 'form-control'}
+        <div className="feedback invalid anmt-fadein">
+          { touched && error ? error : null }
+        </div>
+        <input
+          className={touched && error ? 'form-control invalid' : 'form-control'}
           placeholder={ field.placeholder }
           type={ field.type }
           {...field.input}
+          autoComplete="off"
         />
-        <div className="invalid-feedback" >
-          { touched && error ? error : null }
-        </div>
       </div>
     )
   }
@@ -39,35 +48,44 @@ class LogIn extends Component {
     const { error, authenticated } = this.props.auth
 
     return (
-      <div>
-        <h5 className="text-xs-left" >Log in page</h5>
-        (Please wait about 5 sec for Heroku's services starting from sleep mode)
-        <div className="text-danger mt-3">
-          <h6>Test Account :</h6>
-          <ul>
-            <li><h6><i>E-mail: test@pob.com</i></h6></li>
-            <li><h6><i>Password: guestpass123</i></h6></li>
-          </ul>
+      <div className="login">
+        <div className="wrapper-background fixed brand-bg" />
+        <div className="login-header align-center">
+          <img src={icon} width="184" height="37" alt="Logo"/>
         </div>
-
-        <form onSubmit={ handleSubmit(this.onSubmit) } >
+        <div className={ error ? 'feedback invalid' : 'feedback success' }>
+          { error ? error : (authenticated ? 'Log in successfully' : '') }
+        </div>
+        <button className="facebook large full" type="button" onClick={this.handleClick}>
+          <i className="twf twf-facebook-square" />
+          Login ด้วย facebook
+        </button>
+        <div className="brand-contrast align-center">หรือ</div>
+        <form
+          className="login-form"
+          onSubmit={ handleSubmit(this.onSubmit) }
+        >
           <Field
             name="email"
-            placeholder="Your e-mail address"
+            placeholder="อีเมล"
             component={ this.renderField }
-            type="text"
+            type="email"
           />
-          <Field 
+          <Field
             name="password"
-            placeholder="Your password"
+            placeholder="รหัสผ่าน"
             component={ this.renderField }
             type="password"
           />
-          <button type="submit" className="btn btn-primary">Submit</button>
-          <Link className="btn btn-info" to="/">Home</Link>
+          <Link className="brand-contrast" to="/password/forgot">ลืมรหัสผ่าน?</Link>
+          <div className="align-center">
+            <button type="submit" className="login-button">
+              <i className="twf twf-arrow-bold-right" />
+            </button>
+          </div>
         </form>
-        <div className="text-danger long-text" >
-          { error ? error : (authenticated ? 'Log in successfully' : '') }
+        <div className="login-footer">
+          <Link className="brand-contrast" to="/signup">สร้างบัญชีใหม่</Link>
         </div>
       </div>
     )
@@ -77,10 +95,10 @@ class LogIn extends Component {
 function validate(values) {
   const errors = {}
   if (!values.email) {
-    errors.email = 'Please enter your e-mail address'
+    errors.email = 'กรุณากรอกอีเมล'
   }
   if (!values.password) {
-    errors.password = 'Password cannot be blank'
+    errors.password = 'กรุณากรอกพาสเวิร์ด'
   }
   return errors
 }

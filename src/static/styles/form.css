@@ -1,0 +1,204 @@
+.form-attachment .accordion {
+  margin-bottom: 2px;
+}
+.form-attachment ul + button.full {
+  margin-top: 1.5em;
+}
+.form-group {
+  margin-bottom: 1em;
+  text-align: left;
+  word-break: break-word
+}
+.form-group label {
+  display: block;
+  margin-bottom: 0.25em;
+}
+.form-group-spacing {
+  width: 100%;
+  line-height: 1;
+  padding: 1.5em;
+}
+.form-minimal .form-group {
+  margin-bottom: 2px;
+  background-color: var(--primary-background-color);
+}
+.form-minimal .form-group:last-child {
+  margin-bottom: 0;
+}
+.form-minimal .form-group.secondary {
+  background-color: var(--secondary-background-color);
+}
+.form-minimal .form-group .feedback {
+  display: block;
+  position: relative;
+  left: 8.5em;
+  width: 100%;
+  margin: 0;
+  padding: 0 1.5em;
+}
+.form-minimal .form-group.disabled {
+  background-color: var(--disabled-color);
+}
+.form-minimal .form-group:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+.form-minimal .form-group > * {
+  float: left;
+}
+.form-minimal .form-group label {
+  width: 9em;
+  padding: 1.5em 0.6em 1.5em 1.5em;
+  margin-bottom: 0;
+  font-size: 1em;
+}
+.form-minimal .form-group label + * {
+  width: calc(100% - 9em);
+  padding-left: 1em;
+  border: none;
+}
+.form-minimal .form-group.children-3 label + * {
+  width: calc(100% - 11em);
+  padding-right: 0;
+}
+.form-minimal .form-group.children-3 > *:last-child {
+  width: 3em;
+  padding: 1.5em 0;
+}
+.form-minimal .form-group label + * input {
+  padding-left: 0;
+  border: none;
+}
+.form-minimal.number .form-group label {
+  width: 2em;
+  line-height: 1.45em;
+  padding-right: 0;
+  padding-left: 0;
+}
+.form-minimal.number .form-group label + div,
+.form-minimal.number .form-group > button {
+  line-height: 1.45em;
+}
+.form-minimal.number .form-group label + * {
+  width: calc(100% - 2em);
+  padding-right: 0;
+  padding-left: 0;
+}
+.form-minimal.number .form-group.children-3 label + * {
+  width: calc(100% - 5em);
+  padding-right: 0;
+}
+.form-minimal.number .form-group.children-3 > *:nth-child(3) {
+  width: 3em;
+  padding: 1.5em 0;
+  text-align: right;
+}
+.form-minimal.number .form-group.children-3.two-icons label + * {
+  width: calc(100% - 6em);
+  padding-right: 0;
+}
+.form-minimal.number .form-group.children-3.two-icons > *:last-child {
+  width: 4em;
+  padding: 1.5em 0;
+  text-align: right;
+}
+.form-inline {
+  background-color: var(--primary-background-color);
+}
+.form-inline input {
+  width: calc(100% - 3em);
+  font-size: 1em;
+}
+.form-inline input + * {
+  width: 3em;
+  padding: 1.5em 0;
+}
+.image-upload {
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: var(--primary-background-color);
+}
+.image-upload img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+.radio-set {
+  display: block;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  cursor: pointer;
+}
+.radio-set:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+.radio-set:last-child {
+  border-bottom: 0;
+}
+.radio-set input {
+  display: none;
+}
+.radio-check {
+  display: block;
+  width: 1em;
+  height: 1em;
+  margin-right: 1em;
+  border: 2px solid #cdcdcd;
+  border-radius: 50%;
+  float: left;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+.radio-text {
+  display: block;
+  width: calc(100% - 2em);
+  float: right;
+  word-break: break-word;
+}
+.radio-check:before {
+  display: block;
+  content: "\e9b0";
+  color: var(--brand-contrast-color);
+  font: normal normal normal 0.8em/1 'kyoto';
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+.radio-set:hover .radio-check {
+  background-color: var(--secondary-background-color);
+}
+.radio-set input:checked + .radio-check {
+  background-color: var(--primary-brand-color);
+  border-color: var(--primary-brand-color);
+}
+.radio-set input:checked + .radio-check:before {
+  opacity: 1;
+  visibility: visible;
+}
+.answer-item {
+  opacity: 0.4;
+}
+.answer-item:before {
+  content: "";
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  margin-right: 1em;
+  border: 2px solid var(--primary-text-color);
+  border-radius: 50%;
+}
+.answer-item.active {
+  opacity: 1;
+}
+.answer-item.active:before {
+  background-color: var(--primary-text-color);
+}
