@@ -33,8 +33,8 @@ export default class EachQuestion extends Component {
   // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv Move question section: vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv //
   onConfirmedMoveQuestion = () => {
     const { inputValueOfMoveTo } = this.state
-    if(inputValueOfMoveTo && inputValueOfMoveTo > 0 && inputValueOfMoveTo <= this.props.arrayLength) {
-      let newIndex = inputValueOfMoveTo - 1
+    if(inputValueOfMoveTo && +inputValueOfMoveTo > 0 && inputValueOfMoveTo <= this.props.arrayLength) {
+      let newIndex = +inputValueOfMoveTo - 1
       this.props.moveToNewIndex(newIndex)
     } else {
       // open another modal if receive invalid question order:

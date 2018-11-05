@@ -4,6 +4,20 @@ import {Field, FieldArray} from 'redux-form'
 import LiAccordion from './li_accordion'
 
 export default class AttachLinks extends Component {
+  state = {
+    focusIndex: 0 // Save an Index that we want to scroll to
+  }
+
+  liRefs = []
+
+  componentDidUpdate(prevProps, prevState) {
+    // Scroll to the updated <li>
+    const { focusIndex } = this.state
+    if (prevState.focusIndex !== focusIndex && this.liRefs[focusIndex]) {
+      window.scrollTo(0, this.liRefs[focusIndex].offsetTop)
+    }
+  }
+
   renderField = (field) => {
     let formGroupClass = field.type === 'disabled' ? "form-group disabled" : "form-group";
 
@@ -42,7 +56,9 @@ export default class AttachLinks extends Component {
         <ul>
           { fields.map( (name, indx) => {
             return (
-              <LiAccordion key={indx}
+              <LiAccordion
+                key={indx}
+                liRef={(ref) => {this.liRefs[indx] = ref}}
                 headerElement={(
                   <React.Fragment>
                     <Field
@@ -58,6 +74,35 @@ export default class AttachLinks extends Component {
                     >
                       <i className="twf twf-trash-o" />
                     </button>
+                    {indx > 0 &&
+                      <button
+                        type="button"
+                        onClick={() => {
+                          // save a new index that we want to scroll to, then use it in componentDidUpdate()
+                          this.setState({
+                            focusIndex: indx-1
+                          })
+                          // redux-form's move() also triggers re-render
+                          fields.move(indx, indx-1)                
+                        }}
+                      >
+                        Up
+                      </button>
+                    }
+                    {indx < fields.length - 1 &&
+                      <button
+                        type="button"
+                        onClick={() => {
+                          // same logic as above, use `indx + 1` instead
+                          this.setState({
+                            focusIndex: indx+1
+                          })
+                          fields.move(indx, indx+1)
+                        }}
+                      >
+                        Down
+                      </button>
+                    }
                   </React.Fragment>
                 )}
                 initialOpen
