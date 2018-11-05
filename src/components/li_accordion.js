@@ -7,7 +7,8 @@ export default class LiAccordion extends Component {
     extraHeaderClassName: PropTypes.string,
     extraBodyClassName: PropTypes.string,
     headerElement: PropTypes.element.isRequired,
-    initialOpen: PropTypes.bool.isRequired
+    initialOpen: PropTypes.bool.isRequired,
+    liRef: PropTypes.func
   }
 
   static defaultProps = {
@@ -31,7 +32,10 @@ export default class LiAccordion extends Component {
 
   render() {
     return (
-      <li className={`accordion ${this.props.extraLiClassName} ${this.state.accordionClass}`}>
+      <li 
+        ref={this.props.liRef}
+        className={`accordion ${this.props.extraLiClassName} ${this.state.accordionClass}`}
+      >
         <div className={`accordion-header position-relative clearfix ${this.props.extraHeaderClassName}`}>
           {this.props.headerElement}
           <button
