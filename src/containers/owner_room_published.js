@@ -5,7 +5,11 @@ import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
 
 import TopTabBar from '../components/topTabBar'
-import ViewRoomInfo from '../components/room_view_info'
+// ============ iOS facebook messenger bug work around ===================
+import RoomInfoEdit from '../components/owner_formElement_roomInfo'
+import {validateOwnRoomCreateEdit} from '../form_validators'
+// import ViewRoomInfo from '../components/room_view_info'
+// =======================================================================
 import AttachLinks from '../components/owner_formElement_attachLinks'
 import ViewRoomSurvey from '../components/room_view_survey1'
 import Loading from '../components/loading'
@@ -28,8 +32,12 @@ class OwnerViewRoom extends Component {
 
   onSubmit = (values) => {
     const { id } = this.props.match.params
-    const { attached_links } = values
-    this.props.updateRoom(id, { attached_links })
+    // ================ iOS facebook messenger bug work around =================
+    const { attached_links, social_urls } = values
+    this.props.updateRoom(id, { attached_links, social_urls })
+    // const { attached_links } = values
+    // this.props.updateRoom(id, { attached_links })
+    // =========================================================================
     this.setState({openSaveCompleteModal: true})
   }
 
@@ -53,7 +61,10 @@ class OwnerViewRoom extends Component {
         <form className="tab-content" onSubmit={handleSubmit(this.onSubmit)}>
           <div className="tab-body">
             <div className="tab-item">
-              <ViewRoomInfo room={this.props.room}/>
+              {/* =========== iOS facebook messenger bug work around ======== */}
+              {/* <ViewRoomInfo room={this.props.room}/> */}
+              <RoomInfoEdit roomCodeDisabled={true}/>
+              {/* ============================================================ */}
             </div>
             {_.isEmpty(this.props.room.attached_links) ||
               <div className="tab-item">
@@ -93,13 +104,23 @@ function mapStateToProps(state, ownProps) {
   const { attached_links } = roomData
   return {
     room: roomData,
-    initialValues: { attached_links }
+    // ================ iOS facebook messenger bug work around ==============
+    initialValues: _.pick(roomData, [
+      'title', 'description', 'room_code', 'room_password', 'instructor_name', 
+      'survey', 'start_at', 'end_at', 'last_date_to_join', 'guest_ttl_in_days',
+      'image_url', 'attached_links', 'social_urls'
+    ])
+    // initialValues: { attached_links }
+    // =======================================================================
   }
 }
 
 export default connect(mapStateToProps, {fetchOwnRoom, updateRoom})(
   reduxForm({
     form: 'editPublishedRoomForm',
-    enableReinitialize: true
+    enableReinitialize: true,
+    // ================ iOS facebook messenger bug work around ==============
+    validate: validateOwnRoomCreateEdit
+    // =======================================================================
   })(OwnerViewRoom)
 )
