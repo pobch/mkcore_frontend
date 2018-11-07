@@ -7,7 +7,6 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import './index.css';
 import App from './components/App';
-import registerServiceWorker from './registerServiceWorker';
 import reducers from './reducers'
 import { AUTHENTICATED } from './actions'
 
@@ -26,5 +25,3 @@ ReactDOM.render(
     <App />
   </Provider>, 
   document.getElementById('root'));
-  
-registerServiceWorker();
