@@ -43,7 +43,7 @@ class OwnerViewRoom extends Component {
 
   render() {
 
-    if(!this.props.room) {
+    if (!this.props.room) {
       return <Loading />
     }
 
@@ -100,18 +100,22 @@ class OwnerViewRoom extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  const roomData = _.find(state.ownRooms, ['id', +ownProps.match.params.id]) // return found 'object'
-  const { attached_links } = roomData
-  return {
-    room: roomData,
-    // ================ iOS facebook messenger bug work around ==============
-    initialValues: _.pick(roomData, [
-      'title', 'description', 'room_code', 'room_password', 'instructor_name', 
-      'survey', 'start_at', 'end_at', 'last_date_to_join', 'guest_ttl_in_days',
-      'image_url', 'attached_links', 'social_urls'
-    ])
-    // initialValues: { attached_links }
-    // =======================================================================
+  try {
+    const roomData = _.find(state.ownRooms, ['id', +ownProps.match.params.id]) // return found 'object'
+    const { attached_links } = roomData
+    return {
+      room: roomData,
+      // ================ iOS facebook messenger bug work around ==============
+      initialValues: _.pick(roomData, [
+        'title', 'description', 'room_code', 'room_password', 'instructor_name', 
+        'survey', 'start_at', 'end_at', 'last_date_to_join', 'guest_ttl_in_days',
+        'image_url', 'attached_links', 'social_urls'
+      ])
+      // initialValues: { attached_links }
+      // =======================================================================
+    }
+  } catch(error) {
+    return
   }
 }
 

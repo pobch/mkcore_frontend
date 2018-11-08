@@ -7,6 +7,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import './index.css';
 import App from './components/App';
+import ErrorBoundary from './components/ErrorBoundary'
 import reducers from './reducers'
 import { AUTHENTICATED } from './actions'
 
@@ -21,7 +22,9 @@ if(token) {
 }
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>, 
+  <ErrorBoundary>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </ErrorBoundary>,
   document.getElementById('root'));

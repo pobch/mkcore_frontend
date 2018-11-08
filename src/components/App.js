@@ -31,7 +31,7 @@ class App extends Component {
       <div className="container">
         <BrowserRouter basename="/app">
           <Switch>
-            <Route exact path="/" render={() => <Redirect to="/guest/rooms"/>} />
+            <Route exact path="/" render={(routeProps) => <Redirect to="/guest/rooms"/>} />
             <Route exact path="/login" component={onlyAnonCanAccess(LogIn)} />
             <Route exact path="/auth/facebook" component={onlyAnonCanAccess(AuthFacebook)} />
             <Route exact path="/signup" component={onlyAnonCanAccess(SignUp)}/>
