@@ -18,7 +18,15 @@ const token = localStorage.getItem('token')
 
 if(token) {
   // console.log('Token payload :', JSON.parse(window.atob(token.split('.')[1])))
-  store.dispatch({ type: AUTHENTICATED })
+  const jwtPayload = token.split('.')[1]
+  const base64 = jwtPayload.replace(/-/g, '+').replace(/_/g, '/')
+  const { exp } = JSON.parse(window.atob(base64))
+  
+  if (exp > Date.now() / 1000) {
+    store.dispatch({ type: AUTHENTICATED })
+  } else {
+    localStorage.clear()
+  }
 }
 
 ReactDOM.render(
