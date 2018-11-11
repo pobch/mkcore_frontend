@@ -184,49 +184,45 @@ class GuestEditRoom extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  try {
-    // ownProps.match.params.id is String type
-    const room = _.find(state.guestRooms, ['id', +ownProps.match.params.id])
-    if(!room) {
-      return {
-        room,
-        survey: null
-      }
-    }
-
-    // build initialValues
-    const {survey} = room
-    const existAnswerRow = _.find(state.answers, ['room', +ownProps.match.params.id])
-    let answerField = []
-    let answerExist = false
-    let rowId = null
-    if(existAnswerRow) { // case: the guest has already answered the survey before.
-      answerField = existAnswerRow.answer
-      answerExist = true
-      rowId = existAnswerRow.id
-    } else { // case: there is the room's survey and the guest has never answered the survey yet
-      survey.forEach((eachQuestion, indx) => {
-        // Important !!! this is the initial structure of each answer:
-        const eachAnswer = {
-          id: indx + 1,
-          questionId: eachQuestion.id,
-          question: eachQuestion.question,
-          answerType: eachQuestion.answerType
-        }
-        // no initialValues for 'answerText' and 'answerChoice'
-        answerField.push(eachAnswer)
-      })
-    }
+  // ownProps.match.params.id is String type
+  const room = _.find(state.guestRooms, ['id', +ownProps.match.params.id])
+  if(!room) {
     return {
       room,
-      survey,
-      initialValues: {answer: answerField},
-      answerExist,
-      rowId,
-      joinReqsInfo: state.joinReqsInfo
+      survey: null
     }
-  } catch(error) {
-    return
+  }
+
+  // build initialValues
+  const {survey} = room
+  const existAnswerRow = _.find(state.answers, ['room', +ownProps.match.params.id])
+  let answerField = []
+  let answerExist = false
+  let rowId = null
+  if(existAnswerRow) { // case: the guest has already answered the survey before.
+    answerField = existAnswerRow.answer
+    answerExist = true
+    rowId = existAnswerRow.id
+  } else { // case: there is the room's survey and the guest has never answered the survey yet
+    survey.forEach((eachQuestion, indx) => {
+      // Important !!! this is the initial structure of each answer:
+      const eachAnswer = {
+        id: indx + 1,
+        questionId: eachQuestion.id,
+        question: eachQuestion.question,
+        answerType: eachQuestion.answerType
+      }
+      // no initialValues for 'answerText' and 'answerChoice'
+      answerField.push(eachAnswer)
+    })
+  }
+  return {
+    room,
+    survey,
+    initialValues: {answer: answerField},
+    answerExist,
+    rowId,
+    joinReqsInfo: state.joinReqsInfo
   }
 }
 

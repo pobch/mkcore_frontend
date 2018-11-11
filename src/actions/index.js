@@ -86,6 +86,11 @@ export function logInAction(values, callback) {
       const response = await axios.post(URL_LOGIN, { email, password })
       const { token } = response.data
       localStorage.setItem('token', token)
+      const payload = token.split('.')[1]
+      const base64 = payload.replace(/-/g, '+').replace(/_/g, '/')
+      const { user_id } = JSON.parse(window.atob(base64))
+      localStorage.setItem('user_id', user_id)
+      localStorage.setItem('email', email)
       dispatch({
         type: AUTHENTICATED
       })
