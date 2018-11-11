@@ -84,31 +84,35 @@ class GuestViewRoom extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  // ownProps.match.params.id is String type
-  const room = _.find(state.guestRooms, ['id', +ownProps.match.params.id])
-  if(!room) {
-    return {
-      room
+  try {
+    // ownProps.match.params.id is String type
+    const room = _.find(state.guestRooms, ['id', +ownProps.match.params.id])
+    if(!room) {
+      return {
+        room
+      }
     }
-  }
-  const {survey} = room // survey can be [] in case of no survey in that room
-  let answer
+    const {survey} = room // survey can be [] in case of no survey in that room
+    let answer
 
-  // case: no survey >> no answer row in RoomAnswer table in db >> existAnswerRow === undefined
-  if(_.isEmpty(survey)) {
-    answer = []
-  } else {
-  // case: have survey >> guest already answered >> there is answer row in RoomAnswer table in db
-    const existAnswerRow = _.find(state.answers, ['room', +ownProps.match.params.id])
-    answer = existAnswerRow.answer
-  }
+    // case: no survey >> no answer row in RoomAnswer table in db >> existAnswerRow === undefined
+    if(_.isEmpty(survey)) {
+      answer = []
+    } else {
+    // case: have survey >> guest already answered >> there is answer row in RoomAnswer table in db
+      const existAnswerRow = _.find(state.answers, ['room', +ownProps.match.params.id])
+      answer = existAnswerRow.answer
+    }
 
 
-  return {
-    room,
-    survey, // can be []
-    answer, // can be []
-    joinReqsInfo: state.joinReqsInfo
+    return {
+      room,
+      survey, // can be []
+      answer, // can be []
+      joinReqsInfo: state.joinReqsInfo
+    }
+  } catch(error) {
+    return
   }
 }
 
