@@ -108,6 +108,7 @@ class EditRoom extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
+  // same logic as owner_room_create_clone.js
   const roomData = _.keyBy(state.ownRooms, 'id')[ownProps.match.params.id]
   let currentMaxQuestionId = 0
   if(roomData) {

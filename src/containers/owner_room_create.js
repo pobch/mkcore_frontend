@@ -25,7 +25,8 @@ class CreateRoom extends Component {
 
   static propTypes = {
     // receive from parent component (if any):
-    initialValues: PropTypes.object
+    initialValues: PropTypes.object,
+    currentMaxQuestionId: PropTypes.number
   }
 
   componentDidMount() {
@@ -45,7 +46,7 @@ class CreateRoom extends Component {
   }
 
   render() {
-    const { handleSubmit } = this.props
+    const { handleSubmit, currentMaxQuestionId } = this.props
     return (
       <div className="wrapper">
         <div className="wrapper-background fixed secondary-bg" />
@@ -67,7 +68,7 @@ class CreateRoom extends Component {
               <AttachLinks/>
             </div>
             <div className='tab-item'>
-              <SurveyEdit currentMaxQuestionId={0}/>
+              <SurveyEdit currentMaxQuestionId={currentMaxQuestionId || 0}/>
             </div>
           </div>
           <div className="tab-footer fixed clearfix spacing-side">
