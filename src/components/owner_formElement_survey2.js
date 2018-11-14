@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import _ from 'lodash'
 
 import EachQuestion from '../components/owner_formElement_survey3'
 
@@ -11,12 +12,20 @@ export default class RenderSurvey extends Component {
   //    Therefore we have to make sure that this.props.currentMaxQuestionId has value at first render !!
   state = {
     newMaxQuestionId: this.props.currentMaxQuestionId + 1,
-    focusIndex: 0 // Save an Index that we want to scroll to
+    wantScroll: false // set tot `true` to trigger scrolling
   }
 
-  // Use ref to set scroll position after move element in FieldArray which is in <EachQuestion/>
+  // *** Behavior of assigning new refs to the refs array when a <li> is moved will be
+  //     different from the same task in owner_formElement_attachLinks.js because of
+  //     `rerenderOnEveryChange` props of <FieldArray> (my guess). So, we need to use
+  //     different logics for scrolling. ***
+  // Pass ref to <EachQuestion/>, prepare for scrolling.
   liRefs = []
   bottomPageRef = React.createRef()
+
+  // for scrolling
+  focusQuestionId = 0 // save a question id that will be moved
+  focusIndex = 0 // a target index that we want to scroll TO
 
   static propTypes = {
     currentMaxQuestionId: PropTypes.number.isRequired,
@@ -24,15 +33,13 @@ export default class RenderSurvey extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // Scroll to the updated <li>
-    const { focusIndex } = this.state
-    if (prevState.focusIndex !== focusIndex) {
-      if (this.liRefs[focusIndex]) {
-        // a <li> is moved
-        window.scrollTo(0, this.liRefs[focusIndex].offsetTop)
-      } else if (!this.liRefs[focusIndex] && focusIndex > 0) {
-        // a <li> is added to the bottom by our cloning feature
-        this.bottomPageRef.current.scrollIntoView({ behavior: 'smooth' })
+    // Scroll to the moved <li> position, not include the case of scrolling to bottom by cloning a <li> 
+    const { wantScroll } = this.state
+    if (wantScroll) {
+      if (this.props.fields.get(this.focusIndex).id === this.focusQuestionId) {
+        window.scrollTo(0, this.liRefs[this.focusIndex].offsetTop)
+        // after scrolling success, reset `wantScroll`
+        this.setState({ wantScroll: false })
       }
     }
   }
@@ -65,30 +72,37 @@ export default class RenderSurvey extends Component {
                   onClickDelete={() => {fields.remove(index)}}
 
                   onClickAddNewQuestionWithCloneChoices={() => {
-                    // We want to move to bottom of the page, but the component has not re-rendered yet.
-                    // So we have to save a future last index, which is `fields.length`, instead of
-                    //   a current last index, which is `fields.length - 1`.
-                    const focusIndex = fields.length
-                    
                     // redux-form's push() triggers re-render
                     fields.push({
                       ...defaultNewQuestion,
                       answerType: fields.get(index).answerType,
-                      choices: fields.get(index).choices
+                      choices: _.cloneDeep(fields.get(index).choices)
                     })
                     // also trigger re-render
                     this.setState(prevState => {
                       return {
                         newMaxQuestionId: prevState.newMaxQuestionId + 1,
-                        focusIndex
                       }
                     })
+                    // scroll to bottom
+                    this.bottomPageRef.current.scrollIntoView({ behavior: 'smooth' })
                   }}
 
                   moveToNewIndex={(newIndex) => {
-                    fields.move(index, newIndex) // redux-form's move() also trigger re-render
+                    // *** If we use `window.scrollTo(0, <refs>)` in this function, the result will not be
+                    //     as expected. (maybe because of `rerenderOnEveryChange` props?) ***
+                    
+                    // Prepare to move
+                    this.focusIndex = newIndex // target index to move TO
+                    this.focusQuestionId = fields.get(index).id // question id which is moved to target
+                    
+                    // Move
                     this.setState({
-                      focusIndex: newIndex
+                      wantScroll: true // trigger scrolling
+                    }, () => {
+                      // Use callback of `setState` to make sure that `fields.move()` will trigger re-render
+                      // after `wantScroll` is set to `true`.
+                      fields.move(index, newIndex)
                     })
                   }}
 
