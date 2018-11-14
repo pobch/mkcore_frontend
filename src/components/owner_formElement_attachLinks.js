@@ -4,19 +4,13 @@ import {Field, FieldArray} from 'redux-form'
 import LiAccordion from './li_accordion'
 
 export default class AttachLinks extends Component {
-  state = {
-    focusIndex: 0 // Save an Index that we want to scroll to
-  }
 
+  // *** Behavior of assigning new refs to the refs array when a <li> is moved will be
+  //     different from the same task in owner_formElement_survey2.js because of
+  //     `rerenderOnEveryChange` props of <FieldArray> (my guess). So, we need to use
+  //     different logics for scrolling. ***
+  // Create ref and pass to child component preparing for scrolling
   liRefs = []
-
-  componentDidUpdate(prevProps, prevState) {
-    // Scroll to the updated <li>
-    const { focusIndex } = this.state
-    if (prevState.focusIndex !== focusIndex && this.liRefs[focusIndex]) {
-      window.scrollTo(0, this.liRefs[focusIndex].offsetTop)
-    }
-  }
 
   renderField = (field) => {
     let formGroupClass = field.type === 'disabled' ? "form-group disabled" : "form-group";
@@ -78,12 +72,11 @@ export default class AttachLinks extends Component {
                       <button
                         type="button"
                         onClick={() => {
-                          // save a new index that we want to scroll to, then use it in componentDidUpdate()
-                          this.setState({
-                            focusIndex: indx-1
-                          })
-                          // redux-form's move() also triggers re-render
-                          fields.move(indx, indx-1)                
+                          // Scroll to the new position of the moved <li>
+                          // *** `window.scrollTo()` can be placed either before or after `fields.move()` ***
+                          window.scrollTo(0, this.liRefs[indx-1].offsetTop)
+                          // Move
+                          fields.move(indx, indx-1) // redux-form's move() triggers re-render
                         }}
                       >
                         Up
@@ -93,11 +86,11 @@ export default class AttachLinks extends Component {
                       <button
                         type="button"
                         onClick={() => {
-                          // same logic as above, use `indx + 1` instead
-                          this.setState({
-                            focusIndex: indx+1
-                          })
-                          fields.move(indx, indx+1)
+                          // Scroll to the new position of the moved <li>
+                          // *** `window.scrollTo()` can be placed either before or after `fields.move()` ***
+                          window.scrollTo(0, this.liRefs[indx+1].offsetTop)
+                          // Move
+                          fields.move(indx, indx+1) // trigger re-render
                         }}
                       >
                         Down
